@@ -77,7 +77,11 @@ export default function FlameLoader({
   );
 
   if (!fullScreen) {
-    return <div className="py-16 flex items-center justify-center w-full">{content}</div>;
+    return (
+      <div className={`py-12 flex items-center justify-center w-full ${className}`}>
+        {content}
+      </div>
+    );
   }
 
   return (

@@ -73,7 +73,6 @@ export default function PageTransitionLoader() {
         const currentUrl = new URL(window.location.href);
 
         if (targetUrl.origin === currentUrl.origin) {
-          // If going to a different route/query, trigger the flame loader
           if (
             targetUrl.pathname !== currentUrl.pathname ||
             targetUrl.search !== currentUrl.search
@@ -108,11 +107,33 @@ export default function PageTransitionLoader() {
 
   if (!loading) return null;
 
-  const isAdmin = pathname.startsWith("/admin");
+  // Check if we are inside the authenticated admin workspace (not admin login)
+  const isAdminWorkspace =
+    pathname.startsWith("/admin") &&
+    pathname !== "/admin/login" &&
+    pathname !== "/login";
 
+  // Inside the admin panel: only load the right-side data workspace (keep sidebar & header intact)
+  if (isAdminWorkspace) {
+    return (
+      <div
+        className={`fixed top-16 bottom-0 right-0 left-0 lg:left-72 z-30 flex items-center justify-center bg-[#F5F6F7]/90 backdrop-blur-sm transition-opacity duration-200 ${
+          isFading ? "opacity-0 pointer-events-none" : "opacity-100"
+        }`}
+      >
+        <FlameLoader
+          theme="light"
+          message="Loading workspace..."
+          fullScreen={false}
+        />
+      </div>
+    );
+  }
+
+  // Public site and login routes: clean full-screen transition
   return (
     <FlameLoader
-      theme={isAdmin ? "light" : "light"}
+      theme="light"
       message="Switching page..."
       fullScreen={true}
       className={`transition-opacity duration-200 ${
