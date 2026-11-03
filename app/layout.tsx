@@ -1,0 +1,28 @@
+import type { Metadata } from "next";
+import { Suspense } from "react";
+import "./globals.css";
+import SiteLayoutWrapper from "@/components/layout/SiteLayoutWrapper";
+import PageTransitionLoader from "@/components/common/PageTransitionLoader";
+
+export const metadata: Metadata = {
+  title: "Petronex Engineering | Industrial Solutions & Precision Sourcing",
+  description:
+    "Specialized sourcing partner for industrial chemicals, water treatment solutions, instrumentation, valves, tubing, and engineering services.",
+};
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="en" className="scroll-smooth">
+      <body className="flex flex-col min-h-screen bg-white">
+        <Suspense fallback={null}>
+          <PageTransitionLoader />
+        </Suspense>
+        <SiteLayoutWrapper>{children}</SiteLayoutWrapper>
+      </body>
+    </html>
+  );
+}

@@ -1,0 +1,413 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800;900&family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Official Exact Brand Palette */
+  --color-steel-grey: #929DA7;
+  --color-midnight-charcoal: #17191C;
+  --color-coral-orange: #FF4B32;
+
+  --color-white: #FFFFFF;
+  --color-off-white: #F5F6F7;
+  --color-text-primary: #17191C;
+  --color-text-secondary: #5F6871;
+  --color-border: #D8DDE2;
+
+  /* Mapped design tokens */
+  --ink: #17191C;
+  --ink-raised: #1F2327;
+  --ink-line: #2A2E34;
+  --red: #FF4B32;
+  --red-dark: #E03820;
+  --red-tint: rgba(255, 75, 50, 0.08);
+  --gold: #FF4B32;
+  --gold-tint: rgba(255, 75, 50, 0.12);
+
+  /* Neutrals */
+  --body: #5F6871;
+  --muted: #5F6871;
+  --surface: #F5F6F7;
+  --surface-2: #EBECEE;
+  --border: #D8DDE2;
+  --white: #FFFFFF;
+
+  /* Typography */
+  --font-head: "Plus Jakarta Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-body: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+
+  /* Rhythm */
+  --wrap: 1400px;
+  --wrap-slim: 860px;
+  --gutter: 24px;
+  --section-y: 96px;
+  --radius: 6px;
+  --radius-lg: 8px;
+
+  --shadow-sm: 0 1px 3px rgba(23, 25, 28, 0.06), 0 2px 6px rgba(23, 25, 28, 0.04);
+  --shadow-md: 0 4px 16px rgba(23, 25, 28, 0.08), 0 2px 4px rgba(23, 25, 28, 0.04);
+  --shadow-lg: 0 12px 32px rgba(23, 25, 28, 0.12), 0 4px 8px rgba(23, 25, 28, 0.06);
+
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 96px;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--body);
+  background: var(--white);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-head);
+  color: var(--color-midnight-charcoal);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+}
+
+h1 { font-size: clamp(2.35rem, 1.5rem + 3.6vw, 4.2rem); }
+h2 { font-size: clamp(1.85rem, 1.25rem + 2.2vw, 2.85rem); }
+h3 { font-size: clamp(1.18rem, 1.05rem + 0.6vw, 1.5rem); letter-spacing: -0.015em; }
+h4 { font-size: 1.05rem; letter-spacing: -0.01em; }
+
+::selection {
+  background: var(--color-coral-orange);
+  color: #FFFFFF;
+}
+
+/* Custom Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family: var(--font-head);
+  font-size: 0.92rem;
+  font-weight: 700;
+  line-height: 1;
+  padding: 13px 26px;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 0.2s var(--ease);
+}
+
+.btn-primary {
+  background: var(--color-coral-orange);
+  color: #FFFFFF;
+  border-color: var(--color-coral-orange);
+  box-shadow: 0 4px 14px rgba(255, 75, 50, 0.28);
+}
+.btn-primary:hover {
+  background: #E03820;
+  border-color: #E03820;
+  color: #FFFFFF;
+  box-shadow: 0 6px 20px rgba(255, 75, 50, 0.38);
+}
+
+.btn-secondary {
+  background: var(--color-midnight-charcoal);
+  color: #FFFFFF;
+  border-color: var(--color-midnight-charcoal);
+}
+.btn-secondary:hover {
+  background: #2A2E34;
+  border-color: #2A2E34;
+  color: #FFFFFF;
+}
+
+.btn-pill-dark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: var(--color-midnight-charcoal);
+  color: #FFFFFF;
+  border: 1px solid var(--color-midnight-charcoal);
+  border-radius: 9999px;
+  padding: 14px 28px;
+  font-family: var(--font-head);
+  font-size: 0.95rem;
+  font-weight: 700;
+  transition: all 0.2s var(--ease);
+}
+.btn-pill-dark:hover {
+  background: #2A2E34;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(23, 25, 28, 0.18);
+}
+
+.btn-pill-light {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: #FFFFFF;
+  color: var(--color-midnight-charcoal);
+  border: 1px solid var(--color-border);
+  border-radius: 9999px;
+  padding: 14px 28px;
+  font-family: var(--font-head);
+  font-size: 0.95rem;
+  font-weight: 700;
+  transition: all 0.2s var(--ease);
+}
+.btn-pill-light:hover {
+  background: var(--color-off-white);
+  border-color: var(--color-steel-grey);
+  transform: translateY(-1px);
+}
+
+.btn-outline {
+  background: transparent;
+  color: #FFFFFF;
+  border-color: rgba(255, 255, 255, 0.4);
+}
+.btn-outline:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #FFFFFF;
+  color: #FFFFFF;
+}
+
+.btn-outline-dark {
+  background: transparent;
+  color: var(--color-midnight-charcoal);
+  border-color: var(--color-border);
+}
+.btn-outline-dark:hover {
+  background: var(--color-off-white);
+  border-color: var(--color-steel-grey);
+  color: var(--color-midnight-charcoal);
+}
+
+.btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* Eyebrows */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-head);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-coral-orange);
+  margin-bottom: 12px;
+}
+.eyebrow-charcoal {
+  color: var(--color-midnight-charcoal);
+}
+.eyebrow-steel {
+  color: var(--color-steel-grey);
+}
+
+/* Card Components */
+.petro-card {
+  display: flex;
+  flex-direction: column;
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease), border-color 0.25s var(--ease);
+}
+.petro-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-steel-grey);
+}
+
+/* Chemical Product Card */
+.chem-card {
+  display: flex;
+  flex-direction: column;
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  height: 100%;
+  transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease), border-color 0.25s var(--ease);
+}
+.chem-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-coral-orange);
+}
+.chem-media {
+  position: relative;
+  background: var(--color-off-white);
+  line-height: 0;
+}
+.chem-media img {
+  width: 100%;
+  aspect-ratio: 292 / 136;
+  object-fit: cover;
+  display: block;
+}
+.chem-media::after {
+  content: "";
+  display: block;
+  height: 3px;
+  background: var(--color-coral-orange);
+}
+.chem-num {
+  font-family: var(--font-head);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  color: var(--color-coral-orange);
+}
+
+/* Division Cards */
+.division-card {
+  display: flex;
+  flex-direction: column;
+  background: #FFFFFF;
+  border: 1px solid var(--color-border);
+  border-top: 3px solid var(--color-coral-orange);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  height: 100%;
+  transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease), border-color 0.25s var(--ease);
+}
+.division-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-coral-orange);
+}
+
+/* Specification Tables */
+.table-scroll {
+  width: 100%;
+  overflow-x: auto;
+  margin: 18px 0;
+  -webkit-overflow-scrolling: touch;
+}
+.spec-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.915rem;
+  text-align: left;
+  border: 1px solid var(--color-border);
+  background: #FFFFFF;
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.spec-table caption {
+  font-family: var(--font-head);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  text-align: left;
+  padding: 0 0 8px 2px;
+}
+.spec-table th, .spec-table td {
+  padding: 11px 16px;
+  border-bottom: 1px solid var(--color-border);
+}
+.spec-table thead th {
+  font-family: var(--font-head);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: var(--color-off-white);
+  color: var(--color-midnight-charcoal);
+  border-bottom: 2px solid var(--color-border);
+}
+.spec-table tbody tr:last-child th,
+.spec-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+.spec-table tbody tr:hover td,
+.spec-table tbody tr:hover th {
+  background: rgba(255, 75, 50, 0.04);
+}
+.spec-table tbody th {
+  font-family: var(--font-head);
+  font-weight: 700;
+  color: var(--color-midnight-charcoal);
+  white-space: nowrap;
+}
+.spec-table td {
+  color: var(--color-text-secondary);
+}
+
+/* Target Screenshot 2 Hero Background & Glow */
+.hero-target-bg {
+  background: radial-gradient(100% 70% at 75% 45%, rgba(146, 157, 167, 0.28) 0%, rgba(245, 246, 247, 0.75) 55%, #FFFFFF 100%),
+              linear-gradient(180deg, #EAECEE 0%, #F5F6F7 60%, #FFFFFF 100%);
+  position: relative;
+}
+
+.hero-coral-glow {
+  position: absolute;
+  bottom: -40px;
+  right: 10%;
+  width: 580px;
+  height: 280px;
+  background: radial-gradient(circle, rgba(255, 75, 50, 0.28) 0%, rgba(255, 75, 50, 0.08) 50%, transparent 75%);
+  filter: blur(48px);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Dropdown Bridge & Hover Stability */
+.nav-dropdown-bridge::before {
+  content: "";
+  position: absolute;
+  top: -14px;
+  left: 0;
+  right: 0;
+  height: 16px;
+  background: transparent;
+}
+
+/* Flame Page Loader Animations */
+@keyframes flame-pulse {
+  0%, 100% {
+    transform: scale(1) translateY(0);
+    filter: drop-shadow(0 0 12px rgba(255, 75, 50, 0.4));
+  }
+  50% {
+    transform: scale(1.08) translateY(-3px);
+    filter: drop-shadow(0 0 22px rgba(255, 75, 50, 0.75)) drop-shadow(0 0 8px rgba(245, 158, 11, 0.5));
+  }
+}
+
+@keyframes flame-shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(250%);
+  }
+}
+
+.animate-flame-pulse {
+  animation: flame-pulse 1.8s ease-in-out infinite;
+}
+
+.animate-flame-shimmer {
+  animation: flame-shimmer 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}

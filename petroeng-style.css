@@ -1,0 +1,1267 @@
+/* ==========================================================================
+   Petro Engineering Private Limited
+   Built for an Elementor rebuild: flexbox containers only.
+   No CSS grid, no JS-driven layout. Every block below maps to a native
+   Elementor widget (Container / Heading / Text Editor / Image / Button /
+   Icon Box / Image Box / Accordion).
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Design tokens
+   -------------------------------------------------------------------------- */
+:root {
+  /* Brand — drawn from the Petro flame mark (red + gold) */
+  --ink:            #101826;
+  --ink-raised:     #1a2536;
+  --ink-line:       #26334a;
+  --red:            #c8102e;
+  --red-dark:       #a50d26;
+  --red-tint:       rgba(200, 16, 46, .08);
+  --gold:           #d4a02a;
+  --gold-tint:      rgba(212, 160, 42, .12);
+
+  /* Neutrals */
+  --body:           #3a4351;
+  --muted:          #6b7684;
+  --surface:        #f6f7f9;
+  --surface-2:      #eef1f4;
+  --border:         #dde3e9;
+  --white:          #ffffff;
+
+  /* Type */
+  --font-head: "Plus Jakarta Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-body: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+
+  /* Rhythm */
+  --wrap:      1400px;
+  --wrap-slim: 860px;
+  --gutter:    24px;
+  --section-y: 104px;
+  --radius:    4px;
+  --radius-lg: 8px;
+
+  --shadow-sm: 0 1px 2px rgba(16, 24, 38, .06), 0 4px 12px rgba(16, 24, 38, .04);
+  --shadow-md: 0 2px 4px rgba(16, 24, 38, .06), 0 12px 32px rgba(16, 24, 38, .10);
+  --shadow-lg: 0 4px 8px rgba(16, 24, 38, .08), 0 24px 56px rgba(16, 24, 38, .16);
+
+  --ease: cubic-bezier(.4, 0, .2, 1);
+}
+
+/* --------------------------------------------------------------------------
+   2. Reset & base
+   -------------------------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  /* offset anchor targets so the sticky header never covers a heading */
+  scroll-padding-top: 96px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--body);
+  background: var(--white);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+
+a { color: var(--red); text-decoration: none; transition: color .2s var(--ease); }
+a:hover { color: var(--red-dark); }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-head);
+  color: var(--ink);
+  margin: 0 0 .5em;
+  font-weight: 800;
+  line-height: 1.14;
+  letter-spacing: -.022em;
+}
+
+h1 { font-size: clamp(2.15rem, 1.35rem + 3.4vw, 3.9rem); }
+h2 { font-size: clamp(1.75rem, 1.2rem + 2.2vw, 2.85rem); }
+h3 { font-size: clamp(1.2rem, 1.05rem + .6vw, 1.5rem); letter-spacing: -.015em; }
+h4 { font-size: 1.09rem; letter-spacing: -.01em; }
+
+p { margin: 0 0 1.15em; }
+p:last-child { margin-bottom: 0; }
+
+ul, ol { margin: 0 0 1.15em; padding-left: 1.15em; }
+li { margin-bottom: .45em; }
+
+strong { font-weight: 700; color: var(--ink); }
+
+::selection { background: var(--red); color: #fff; }
+
+:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.skip-link {
+  position: absolute; left: -9999px; top: 0; z-index: 999;
+  background: var(--red); color: #fff; padding: 12px 22px; font-weight: 700;
+}
+.skip-link:focus { left: 12px; top: 12px; color: #fff; }
+
+/* --------------------------------------------------------------------------
+   3. Layout primitives  (Elementor: Container, boxed / full width)
+   -------------------------------------------------------------------------- */
+.wrap { width: 100%; max-width: var(--wrap); margin: 0 auto; padding: 0 var(--gutter); }
+.wrap-slim { max-width: var(--wrap-slim); }
+
+.section { padding: var(--section-y) 0; }
+.section-sm { padding: 68px 0; }
+
+.section-light  { background: var(--surface); }
+.section-dark   { background: var(--ink); }
+.section-dark, .section-dark p, .section-dark li { color: rgba(255, 255, 255, .74); }
+.section-dark h1, .section-dark h2, .section-dark h3, .section-dark h4 { color: #fff; }
+
+/* Flex row + columns. Elementor equivalent: a Container with
+   flex-direction:row, wrap:wrap, gap — children sized by width %. */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+}
+.row-tight { gap: 18px; }
+.row-wide  { gap: 56px; }
+
+.col-2 { flex: 1 1 calc(50%      - 14px); min-width: 0; }
+.col-3 { flex: 1 1 calc(33.333%  - 19px); min-width: 0; }
+.col-4 { flex: 1 1 calc(25%      - 21px); min-width: 0; }
+
+.row-tight > .col-2 { flex-basis: calc(50%     - 9px); }
+.row-tight > .col-3 { flex-basis: calc(33.333% - 12px); }
+.row-tight > .col-4 { flex-basis: calc(25%     - 13.5px); }
+
+/* .row-wide uses a 56px gap, so the basis has to subtract its share of that
+   gap too — otherwise the columns total more than 100% and wrap to one each. */
+.row-wide > .col-2 { flex-basis: calc(50%     - 28px); }
+.row-wide > .col-3 { flex-basis: calc(33.333% - 38px); }
+.row-wide > .col-4 { flex-basis: calc(25%     - 42px); }
+
+.items-center { align-items: center; }
+.justify-center { justify-content: center; }
+.text-center { text-align: center; }
+
+/* Column held to the slim measure but pushed against the left edge of its
+   container, so its left edge lines up with every other section on the page.
+   Text inside stays left-aligned — only the block moves. */
+.stack-left { max-width: var(--wrap-slim); margin-left: 0; margin-right: auto; }
+
+/* --------------------------------------------------------------------------
+   4. Section headers  (Elementor: Heading + Text Editor)
+   -------------------------------------------------------------------------- */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-head);
+  font-size: .745rem;
+  font-weight: 800;
+  letter-spacing: .19em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+}
+.section-dark .eyebrow { color: var(--gold); }
+
+.section-head { max-width: 760px; margin-bottom: 58px; }
+.section-head.text-center { margin-left: auto; margin-right: auto; }
+.section-head p {
+  font-size: 1.1rem;
+  color: var(--muted);
+  margin-top: 18px;
+  margin-bottom: 0;
+}
+.section-dark .section-head p { color: rgba(255, 255, 255, .68); }
+
+.lead { font-size: 1.16rem; line-height: 1.72; color: var(--muted); }
+
+/* --------------------------------------------------------------------------
+   5. Buttons  (Elementor: Button widget)
+   -------------------------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family: var(--font-head);
+  font-size: .935rem;
+  font-weight: 700;
+  letter-spacing: .005em;
+  line-height: 1;
+  padding: 17px 32px;
+  border: 2px solid transparent;
+  border-radius: var(--radius);
+  cursor: pointer;
+  text-align: center;
+  transition: background-color .2s var(--ease), color .2s var(--ease),
+              border-color .2s var(--ease), transform .2s var(--ease),
+              box-shadow .2s var(--ease);
+}
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: translateY(0); }
+
+.btn-primary { background: var(--red); border-color: var(--red); color: #fff; }
+.btn-primary:hover { background: var(--red-dark); border-color: var(--red-dark); color: #fff; box-shadow: 0 10px 24px rgba(200, 16, 46, .28); }
+
+.btn-outline { background: transparent; border-color: var(--border); color: var(--ink); }
+.btn-outline:hover { border-color: var(--ink); background: var(--ink); color: #fff; }
+
+.btn-ghost-light { background: transparent; border-color: rgba(255, 255, 255, .32); color: #fff; }
+.btn-ghost-light:hover { background: #fff; border-color: #fff; color: var(--ink); }
+
+.btn-gold { background: var(--gold); border-color: var(--gold); color: var(--ink); }
+.btn-gold:hover { background: #c08f1f; border-color: #c08f1f; color: var(--ink); box-shadow: 0 10px 24px rgba(212, 160, 42, .3); }
+
+.btn-group { display: flex; flex-wrap: wrap; gap: 14px; }
+.btn-group.justify-center { justify-content: center; }
+
+/* Text link with sliding arrow */
+.link-arrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-head); font-weight: 700; font-size: .93rem;
+  color: var(--red);
+}
+.link-arrow svg { transition: transform .2s var(--ease); flex: 0 0 auto; }
+.link-arrow:hover svg { transform: translateX(5px); }
+
+/* --------------------------------------------------------------------------
+   6. Header  (Elementor: sticky Container + Nav Menu)
+   -------------------------------------------------------------------------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  /* Deliberately solid, with no backdrop-filter. That filter promoted the
+     header onto its own compositing layer, which drops subpixel antialiasing
+     and renders the nav text soft — and it made the header a containing block
+     that trapped the fixed-position mobile drawer. The background was 96%
+     opaque anyway, so the blur was buying almost nothing. */
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Slim utility strip above the nav */
+.topbar {
+  background: var(--ink);
+  color: rgba(255, 255, 255, .68);
+  font-size: .82rem;
+}
+.topbar .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  min-height: 42px;
+  flex-wrap: wrap;
+}
+.topbar-list { display: flex; align-items: center; gap: 26px; flex-wrap: wrap; }
+.topbar a { color: rgba(255, 255, 255, .82); display: inline-flex; align-items: center; gap: 8px; }
+.topbar a:hover { color: var(--gold); }
+.topbar svg { flex: 0 0 auto; opacity: .75; }
+.topbar-tag { display: inline-flex; align-items: center; gap: 8px; }
+.topbar-tag strong { color: var(--gold); font-weight: 700; }
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  min-height: 84px;
+}
+
+.brand { display: inline-flex; align-items: center; flex: 0 0 auto; }
+.brand img { width: 208px; height: auto; }
+
+/* Primary nav */
+.nav { display: flex; align-items: center; gap: 4px; }
+.nav a {
+  font-family: var(--font-head);
+  font-size: .935rem;
+  font-weight: 600;
+  color: var(--ink);
+  padding: 10px 15px;
+  border-radius: var(--radius);
+  position: relative;
+  white-space: nowrap;
+}
+.nav a::after {
+  content: "";
+  position: absolute;
+  left: 15px; right: 15px; bottom: 2px;
+  height: 2px;
+  background: var(--red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .22s var(--ease);
+}
+.nav a:hover::after { transform: scaleX(1); }
+.nav a[aria-current="page"] { color: var(--red); }
+.nav a[aria-current="page"]::after { transform: scaleX(1); }
+
+/* Six nav items instead of five — tighten the padding so the row still fits
+   alongside the logo and the Get a Quote button without wrapping. */
+@media (min-width: 1025px) and (max-width: 1320px) {
+  .nav a { padding: 10px 11px; font-size: .9rem; }
+  .nav a::after { left: 11px; right: 11px; }
+}
+
+/* The CTA inside the nav belongs to the mobile drawer only. On desktop the
+   one in .header-cta is used instead, so hide this one or both would show. */
+.nav .btn { display: none; }
+
+.header-cta { display: flex; align-items: center; gap: 14px; flex: 0 0 auto; }
+.header-cta .btn { padding: 14px 26px; font-size: .9rem; }
+
+/* Drawer close button — only ever visible inside the mobile drawer */
+.nav-close { display: none; }
+
+/* Hamburger */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 46px; height: 46px;
+  padding: 0;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+}
+.nav-toggle span {
+  display: block;
+  width: 20px; height: 2px;
+  margin: 0 auto;
+  background: var(--ink);
+  transition: transform .25s var(--ease), opacity .2s var(--ease);
+}
+.nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* --------------------------------------------------------------------------
+   7. Hero  (Elementor: Container w/ background image + overlay)
+   -------------------------------------------------------------------------- */
+.hero {
+  position: relative;
+  background: var(--ink);
+  overflow: hidden;
+}
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: .3;
+}
+.hero-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg,
+    rgba(16, 24, 38, .96) 0%,
+    rgba(16, 24, 38, .88) 42%,
+    rgba(16, 24, 38, .62) 100%);
+}
+.hero .wrap { position: relative; z-index: 1; }
+
+.hero-home { padding: 128px 0 118px; }
+/* 920px rather than 830: the four hero stats need ~830px on their own once the
+   chemicals labels are in, and at 830 the last one wrapped to a second row. */
+.hero-copy { max-width: 920px; }
+.hero-home h1 { color: #fff; margin-bottom: 26px; }
+.hero-home h1 .accent {
+  color: var(--gold);
+  /* keeps the gold phrase on its own visual line without a <br> hack */
+  display: inline;
+}
+.hero-home p {
+  font-size: 1.19rem;
+  line-height: 1.72;
+  color: rgba(255, 255, 255, .78);
+  max-width: 660px;
+  margin-bottom: 38px;
+}
+.hero-home .btn-group { margin-bottom: 0; }
+
+/* Compact hero for interior pages */
+.hero-page { padding: 92px 0 88px; }
+.hero-page h1 { color: #fff; margin-bottom: 18px; }
+.hero-page p {
+  font-size: 1.12rem;
+  color: rgba(255, 255, 255, .74);
+  max-width: 660px;
+  margin: 0;
+}
+
+/* Hero stat strip */
+.hero-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 56px;
+  margin-top: 52px;
+  padding-top: 38px;
+  border-top: 1px solid rgba(255, 255, 255, .14);
+}
+.hero-stat { flex: 0 1 auto; }
+.hero-stat .num {
+  font-family: var(--font-head);
+  font-size: 2.1rem;
+  font-weight: 800;
+  color: var(--gold);
+  line-height: 1.1;
+  letter-spacing: -.02em;
+}
+.hero-stat .lbl {
+  font-size: .8rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .56);
+  margin-top: 6px;
+}
+
+/* --------------------------------------------------------------------------
+   8. Compliance strip  (Elementor: Icon List, inline)
+   -------------------------------------------------------------------------- */
+.compliance {
+  background: var(--ink-raised);
+  border-top: 1px solid var(--ink-line);
+  padding: 26px 0;
+}
+.compliance .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 16px 44px;
+}
+.compliance-label {
+  font-family: var(--font-head);
+  font-size: .745rem;
+  font-weight: 800;
+  letter-spacing: .17em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .42);
+}
+.compliance-item {
+  font-family: var(--font-head);
+  font-size: 1.02rem;
+  font-weight: 800;
+  letter-spacing: .07em;
+  color: rgba(255, 255, 255, .82);
+}
+
+/* --------------------------------------------------------------------------
+   9. Cards
+   -------------------------------------------------------------------------- */
+
+/* 9a. Image card — Elementor: Image Box */
+.card {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: transform .25s var(--ease), box-shadow .25s var(--ease), border-color .25s var(--ease);
+}
+.card:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); border-color: #cbd4dd; }
+
+.card-media { position: relative; overflow: hidden; background: var(--surface-2); }
+.card-media img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  transition: transform .5s var(--ease);
+}
+.card:hover .card-media img { transform: scale(1.045); }
+
+.card-body { padding: 26px 26px 28px; display: flex; flex-direction: column; flex: 1 1 auto; }
+.card-body h3 { margin-bottom: 10px; font-size: 1.2rem; }
+.card-body p { color: var(--muted); font-size: .96rem; margin-bottom: 18px; }
+.card-body .link-arrow { margin-top: auto; }
+
+.card-tag {
+  position: absolute; top: 14px; left: 14px;
+  background: rgba(16, 24, 38, .86);
+  color: #fff;
+  font-family: var(--font-head);
+  font-size: .69rem; font-weight: 800;
+  letter-spacing: .13em; text-transform: uppercase;
+  padding: 7px 12px;
+  border-radius: 3px;
+  /* No backdrop-filter here either — this badge carries small uppercase text,
+     and the composite layer it forces would soften it. The background is 86%
+     opaque, so the blur was invisible anyway. */
+}
+
+/* 9a-ii. Chemical group card  (Elementor: Image Box + Icon List)
+   Photo, gold rule, numbered eyebrow, then the item list — mirroring the
+   printed product portfolio so the two read as one family. */
+.chem-card {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  height: 100%;
+  transition: transform .25s var(--ease), box-shadow .25s var(--ease), border-color .25s var(--ease);
+}
+.chem-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: #cbd4dd; }
+
+.chem-media { position: relative; background: var(--surface-2); line-height: 0; }
+.chem-media img {
+  width: 100%;
+  aspect-ratio: 292 / 136;
+  object-fit: cover;
+  display: block;
+}
+/* the gold rule that sits under each photo in the portfolio */
+.chem-media::after {
+  content: "";
+  display: block;
+  height: 3px;
+  background: var(--gold);
+}
+
+.chem-body { padding: 20px 20px 24px; display: flex; flex-direction: column; flex: 1 1 auto; }
+.chem-num {
+  font-family: var(--font-head);
+  font-size: .72rem; font-weight: 800;
+  letter-spacing: .14em;
+  color: var(--gold);
+}
+.chem-card h3 {
+  font-size: .98rem;
+  line-height: 1.3;
+  margin: 7px 0 15px;
+  padding-bottom: 13px;
+  border-bottom: 1px solid var(--border);
+}
+
+.chem-list { list-style: none; padding: 0; margin: 0; }
+.chem-list li {
+  position: relative;
+  padding-left: 15px;
+  margin-bottom: 8px;
+  font-size: .875rem;
+  line-height: 1.45;
+  color: var(--muted);
+}
+.chem-list li:last-child { margin-bottom: 0; }
+.chem-list li::before {
+  content: "";
+  position: absolute;
+  left: 0; top: .52em;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--gold);
+}
+
+/* "+5 more" link under a truncated list on the homepage */
+.chem-more {
+  display: inline-block;
+  margin-top: 14px;
+  font-family: var(--font-head);
+  font-size: .8rem;
+  font-weight: 700;
+  color: var(--red);
+}
+.chem-more:hover { color: var(--red-dark); }
+
+/* 9a-iii. Division card — the two business lines on the homepage */
+.division {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--red);
+  border-radius: var(--radius-lg);
+  padding: 34px 32px 32px;
+  height: 100%;
+  transition: transform .25s var(--ease), box-shadow .25s var(--ease);
+}
+.division:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+.division.is-gold { border-top-color: var(--gold); }
+.division .ico {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 54px; height: 54px;
+  border-radius: var(--radius);
+  background: var(--red-tint); color: var(--red);
+  margin-bottom: 22px; flex: 0 0 auto;
+}
+.division.is-gold .ico { background: var(--gold-tint); color: #8a6612; }
+.division h3 { font-size: 1.35rem; margin-bottom: 12px; }
+.division p { color: var(--muted); font-size: .98rem; }
+.division .pill-list { margin-top: 20px; }
+.division .btn-group { margin-top: auto; padding-top: 26px; }
+
+/* 9b. Icon box — Elementor: Icon Box */
+.icon-box {
+  display: flex;
+  flex-direction: column;
+  padding: 34px 30px 34px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  border-top: 3px solid var(--border);
+  height: 100%;
+  transition: border-top-color .25s var(--ease), transform .25s var(--ease), box-shadow .25s var(--ease);
+}
+.icon-box:hover { border-top-color: var(--red); transform: translateY(-4px); box-shadow: var(--shadow-md); }
+
+.icon-box .ico {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 52px; height: 52px;
+  border-radius: var(--radius);
+  background: var(--red-tint);
+  color: var(--red);
+  margin-bottom: 22px;
+  flex: 0 0 auto;
+}
+.icon-box h3 { font-size: 1.12rem; margin-bottom: 10px; }
+.icon-box p { color: var(--muted); font-size: .955rem; margin-bottom: 0; }
+.icon-box .link-arrow { margin-top: 18px; }
+
+/* Icon box on dark */
+.icon-box-dark {
+  background: var(--ink-raised);
+  border-color: var(--ink-line);
+  border-top-color: var(--ink-line);
+}
+.icon-box-dark:hover { border-top-color: var(--gold); box-shadow: none; }
+.icon-box-dark h3 { color: #fff; }
+.icon-box-dark p { color: rgba(255, 255, 255, .66); }
+.icon-box-dark .ico { background: var(--gold-tint); color: var(--gold); }
+
+/* 9c. Numbered step — Elementor: Icon Box with number */
+.step {
+  display: flex;
+  flex-direction: column;
+  padding: 32px 28px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  height: 100%;
+  position: relative;
+}
+.step .step-num {
+  font-family: var(--font-head);
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--gold);
+  letter-spacing: -.03em;
+  margin-bottom: 18px;
+}
+.step h3 { font-size: 1.08rem; margin-bottom: 9px; }
+.step p { font-size: .935rem; color: var(--muted); margin-bottom: 0; }
+
+/* --------------------------------------------------------------------------
+   10. Alternating feature bands  (Elementor: Container row, reversed)
+   -------------------------------------------------------------------------- */
+.feature {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 62px;
+}
+.feature + .feature { margin-top: 96px; }
+.feature-reverse { flex-direction: row-reverse; }
+
+.feature-media { flex: 1 1 calc(50% - 31px); min-width: 0; }
+.feature-copy  { flex: 1 1 calc(50% - 31px); min-width: 0; }
+
+/* Feature band with no image. Without a media column the copy would stretch
+   the full container width, so hold it to a readable measure. */
+.feature-noimg .feature-copy { flex-basis: 100%; max-width: var(--wrap-slim); }
+
+.feature-media img {
+  width: 100%;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+.feature-copy h2 { font-size: clamp(1.6rem, 1.2rem + 1.5vw, 2.2rem); margin-bottom: 18px; }
+.feature-copy p { color: var(--muted); }
+
+/* Check list — Elementor: Icon List */
+.check-list { list-style: none; padding: 0; margin: 24px 0 0; }
+.check-list li {
+  position: relative;
+  padding-left: 32px;
+  margin-bottom: 13px;
+  font-size: .985rem;
+}
+.check-list li::before {
+  content: "";
+  position: absolute;
+  left: 0; top: .52em;
+  width: 16px; height: 9px;
+  border-left: 2.5px solid var(--red);
+  border-bottom: 2.5px solid var(--red);
+  transform: rotate(-45deg);
+}
+.section-dark .check-list li::before { border-color: var(--gold); }
+.check-list.gold li::before { border-color: var(--gold); }
+
+/* --------------------------------------------------------------------------
+   11. Product category blocks  (Elementor: Container + Image + Table)
+   -------------------------------------------------------------------------- */
+.prod {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 56px;
+  padding: 56px 0;
+  border-bottom: 1px solid var(--border);
+}
+.prod:last-child { border-bottom: 0; }
+.prod-reverse { flex-direction: row-reverse; }
+
+.prod-media { flex: 1 1 calc(50% - 28px); min-width: 0; }
+.prod-copy  { flex: 1 1 calc(50% - 28px); min-width: 0; }
+
+.prod-media img {
+  width: 100%;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+}
+.prod-copy h3 { font-size: clamp(1.35rem, 1.1rem + 1vw, 1.75rem); margin-bottom: 12px; }
+.prod-copy > p { color: var(--muted); font-size: .99rem; }
+
+/* Spec table — Elementor: Text Editor (tables paste in cleanly) */
+.spec-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 22px;
+  font-size: .91rem;
+}
+.spec-table caption {
+  caption-side: top;
+  text-align: left;
+  font-family: var(--font-head);
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-bottom: 12px;
+}
+.spec-table th, .spec-table td {
+  text-align: left;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.spec-table thead th {
+  font-family: var(--font-head);
+  font-size: .74rem;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: var(--surface);
+  border-bottom: 2px solid var(--border);
+  white-space: nowrap;
+}
+.spec-table tbody th { font-weight: 700; color: var(--ink); white-space: nowrap; }
+.spec-table tbody tr:last-child th,
+.spec-table tbody tr:last-child td { border-bottom: 0; }
+.spec-table tbody tr:hover { background: var(--surface); }
+
+.table-scroll { width: 100%; overflow-x: auto; }
+
+/* Pill list of sub-items */
+.pill-list { display: flex; flex-wrap: wrap; gap: 9px; margin: 20px 0 0; padding: 0; list-style: none; }
+.pill-list li { margin: 0; }
+.pill {
+  display: inline-block;
+  padding: 8px 15px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  font-size: .86rem;
+  font-weight: 500;
+  color: var(--body);
+}
+.section-dark .pill {
+  background: var(--ink-raised);
+  border-color: var(--ink-line);
+  color: rgba(255, 255, 255, .78);
+}
+
+/* Anchor jump nav */
+.jumpnav {
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 84px;
+  z-index: 50;
+}
+.jumpnav .wrap { display: flex; flex-wrap: nowrap; gap: 6px; overflow-x: auto; padding-top: 12px; padding-bottom: 12px; }
+.jumpnav a {
+  font-family: var(--font-head);
+  font-size: .845rem;
+  font-weight: 600;
+  color: var(--muted);
+  padding: 9px 15px;
+  border-radius: 100px;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+.jumpnav a:hover { color: var(--ink); background: var(--surface); border-color: var(--border); }
+
+/* --------------------------------------------------------------------------
+   12. Accordion  (Elementor: Accordion widget)
+   -------------------------------------------------------------------------- */
+.accordion { border-top: 1px solid var(--border); }
+.acc-item { border-bottom: 1px solid var(--border); }
+.acc-item summary {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 24px 2px;
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--font-head);
+  font-size: 1.06rem;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.45;
+  transition: color .2s var(--ease);
+}
+.acc-item summary::-webkit-details-marker { display: none; }
+.acc-item summary:hover { color: var(--red); }
+.acc-item summary .acc-icon {
+  flex: 0 0 auto;
+  position: relative;
+  width: 20px; height: 20px;
+  margin-top: 3px;
+}
+.acc-item summary .acc-icon::before,
+.acc-item summary .acc-icon::after {
+  content: "";
+  position: absolute;
+  background: var(--red);
+  transition: transform .25s var(--ease), opacity .25s var(--ease);
+}
+.acc-item summary .acc-icon::before { top: 9px; left: 0; width: 20px; height: 2px; }
+.acc-item summary .acc-icon::after  { left: 9px; top: 0; width: 2px; height: 20px; }
+.acc-item[open] summary .acc-icon::after { transform: rotate(90deg); opacity: 0; }
+.acc-item[open] summary { color: var(--red); }
+.acc-body { padding: 0 44px 26px 2px; color: var(--muted); font-size: .985rem; }
+
+/* --------------------------------------------------------------------------
+   13. Values band
+   -------------------------------------------------------------------------- */
+.values-band { text-align: center; }
+.values-band .big {
+  font-family: var(--font-head);
+  /* Always one line. The vw term shrinks the type on narrow screens so the
+     three values never wrap and never overflow; the rem cap stops it growing
+     past the slim (860px) container used on the About page. */
+  white-space: nowrap;
+  font-size: min(2.9rem, 5.2vw);
+  font-weight: 800;
+  letter-spacing: -.03em;
+  line-height: 1.16;
+  color: #fff;
+  /* `.values-band p` caps every paragraph at 620px and this headline is wider
+     than that, so clear the cap and centre the box itself — text-align alone
+     only centres text *inside* a box that was still pinned left. */
+  max-width: none;
+  margin: 0 auto 22px;
+}
+.values-band .big em { font-style: normal; color: var(--gold); }
+.values-band p { max-width: 620px; margin: 0 auto; font-size: 1.08rem; }
+
+/* --------------------------------------------------------------------------
+   14. CTA band
+   -------------------------------------------------------------------------- */
+.cta-band {
+  position: relative;
+  background: var(--ink);
+  overflow: hidden;
+}
+.cta-band .hero-bg { opacity: .16; }
+.cta-band .hero-scrim {
+  background: linear-gradient(100deg, rgba(16, 24, 38, .95) 0%, rgba(16, 24, 38, .8) 100%);
+}
+.cta-band .wrap { position: relative; z-index: 1; padding-top: 88px; padding-bottom: 88px; }
+.cta-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+}
+.cta-copy { flex: 1 1 520px; min-width: 0; }
+.cta-copy h2 { color: #fff; margin-bottom: 14px; }
+.cta-copy p { color: rgba(255, 255, 255, .74); font-size: 1.08rem; margin: 0; }
+.cta-actions { flex: 0 1 auto; display: flex; flex-wrap: wrap; gap: 14px; }
+
+/* --------------------------------------------------------------------------
+   15. Contact page
+   -------------------------------------------------------------------------- */
+.contact-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 30px 26px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  height: 100%;
+  transition: border-color .25s var(--ease), box-shadow .25s var(--ease), transform .25s var(--ease);
+}
+.contact-card:hover { border-color: #cbd4dd; box-shadow: var(--shadow-sm); transform: translateY(-3px); }
+.contact-card .ico {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 48px; height: 48px;
+  border-radius: var(--radius);
+  background: var(--red-tint);
+  color: var(--red);
+  margin-bottom: 20px;
+}
+.contact-card h3 { font-size: .78rem; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+.contact-card .val { font-family: var(--font-head); font-size: 1.06rem; font-weight: 700; color: var(--ink); line-height: 1.5; }
+.contact-card a.val:hover { color: var(--red); }
+.contact-card .sub { font-size: .89rem; color: var(--muted); margin-top: 5px; }
+
+/* Form — Elementor: Form widget replaces this wholesale */
+.form-panel {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 40px;
+  box-shadow: var(--shadow-sm);
+}
+.field { display: flex; flex-direction: column; margin-bottom: 20px; }
+.field label {
+  font-family: var(--font-head);
+  font-size: .84rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.field label .req { color: var(--red); }
+.field input,
+.field select,
+.field textarea {
+  font-family: var(--font-body);
+  font-size: .97rem;
+  color: var(--body);
+  padding: 14px 15px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--white);
+  width: 100%;
+  transition: border-color .2s var(--ease), box-shadow .2s var(--ease);
+}
+.field textarea { resize: vertical; min-height: 132px; line-height: 1.65; }
+.field select { appearance: none; -webkit-appearance: none; cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%236b7684' d='M6 8 0 2l1.4-1.4L6 5.2 10.6.6 12 2z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 15px center; padding-right: 40px; }
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px var(--red-tint);
+}
+.field input::placeholder, .field textarea::placeholder { color: #9aa4b0; }
+
+.form-note {
+  font-size: .855rem;
+  color: var(--muted);
+  margin: 16px 0 0;
+  line-height: 1.6;
+}
+
+/* Honeypot. Visually gone but still reachable by bots that fill every field.
+   Not display:none — some bots skip those. */
+.hp-field {
+  position: absolute !important;
+  left: -9999px !important;
+  width: 1px; height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Submission feedback */
+.form-status {
+  margin: 16px 0 0;
+  padding: 14px 16px;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-size: .9rem;
+  line-height: 1.6;
+}
+.form-status strong { display: block; margin-bottom: 3px; }
+.form-status-ok  { background: rgba(31, 122, 77, .09); border-left: 3px solid #1f7a4d; color: #1a5c3b; }
+.form-status-err { background: var(--red-tint);        border-left: 3px solid var(--red); color: var(--red-dark); }
+.form-status a { color: inherit; text-decoration: underline; }
+
+/* Sending state */
+#enquiry-form.is-sending button[type="submit"] { opacity: .65; pointer-events: none; }
+
+.map-embed {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  line-height: 0;
+  background: var(--surface-2);
+}
+.map-embed iframe { width: 100%; height: 420px; border: 0; display: block; }
+
+/* --------------------------------------------------------------------------
+   16. Footer
+   -------------------------------------------------------------------------- */
+.site-footer { background: var(--ink); color: rgba(255, 255, 255, .66); font-size: .945rem; }
+.footer-main { padding: 76px 0 56px; }
+.footer-top { display: flex; flex-wrap: wrap; gap: 48px; }
+
+.footer-brand { flex: 1 1 320px; min-width: 0; }
+.footer-brand img { width: 200px; margin-bottom: 22px; }
+.footer-brand p { color: rgba(255, 255, 255, .6); font-size: .945rem; max-width: 360px; }
+
+.footer-col { flex: 1 1 175px; min-width: 0; }
+.footer-col h4 {
+  color: #fff;
+  font-size: .765rem;
+  font-weight: 800;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.footer-col ul { list-style: none; padding: 0; margin: 0; }
+.footer-col li { margin-bottom: 11px; }
+.footer-col a { color: rgba(255, 255, 255, .66); }
+.footer-col a:hover { color: var(--gold); }
+
+.footer-contact { list-style: none; padding: 0; margin: 0; }
+.footer-contact li { display: flex; gap: 12px; margin-bottom: 16px; align-items: flex-start; }
+.footer-contact svg { flex: 0 0 auto; margin-top: 4px; color: var(--gold); opacity: .9; }
+.footer-contact a { color: rgba(255, 255, 255, .78); }
+.footer-contact a:hover { color: var(--gold); }
+
+.socials { display: flex; gap: 10px; margin-top: 26px; }
+.socials a {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px;
+  border: 1px solid var(--ink-line);
+  border-radius: var(--radius);
+  color: rgba(255, 255, 255, .72);
+  transition: background-color .2s var(--ease), border-color .2s var(--ease), color .2s var(--ease);
+}
+.socials a:hover { background: var(--red); border-color: var(--red); color: #fff; }
+
+.footer-bar {
+  border-top: 1px solid var(--ink-line);
+  padding: 24px 0;
+}
+.footer-bar .wrap {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  font-size: .875rem;
+  color: rgba(255, 255, 255, .48);
+}
+.footer-bar a { color: rgba(255, 255, 255, .62); }
+.footer-bar a:hover { color: var(--gold); }
+
+/* --------------------------------------------------------------------------
+   17. 404
+   -------------------------------------------------------------------------- */
+.err-page { padding: 132px 0; text-align: center; }
+.err-code {
+  font-family: var(--font-head);
+  font-size: clamp(5rem, 3rem + 12vw, 11rem);
+  font-weight: 800;
+  line-height: .95;
+  letter-spacing: -.05em;
+  color: var(--red);
+  margin-bottom: 18px;
+}
+
+/* --------------------------------------------------------------------------
+   18. Responsive — mirrors Elementor's default breakpoints
+   -------------------------------------------------------------------------- */
+
+/* Tablet ---------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  :root { --section-y: 78px; }
+
+  html { scroll-padding-top: 80px; }
+
+  .header-inner { min-height: 74px; }
+  .brand img { width: 178px; }
+
+  .nav-toggle { display: flex; }
+  .header-cta .btn-quote { display: none; }
+
+  /* Mobile drawer */
+  .nav {
+    position: fixed;
+    top: 0; right: 0; bottom: 0;
+    width: min(340px, 86vw);
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 0;
+    padding: 92px 24px 32px;
+    background: var(--ink);
+    box-shadow: -20px 0 60px rgba(16, 24, 38, .32);
+    transform: translateX(100%);
+    transition: transform .3s var(--ease);
+    overflow-y: auto;
+    z-index: 120;
+  }
+  .nav.is-open { transform: translateX(0); }
+  .nav a {
+    color: #fff;
+    font-size: 1.06rem;
+    font-weight: 600;
+    padding: 17px 4px;
+    border-bottom: 1px solid var(--ink-line);
+    border-radius: 0;
+  }
+  .nav a::after { display: none; }
+  .nav a:hover { color: var(--gold); }
+  .nav a[aria-current="page"] { color: var(--gold); }
+  .nav .btn {
+    display: inline-flex;   /* revealed here: the drawer is the only place it shows */
+    margin-top: 26px;
+    border-bottom: 0;
+    padding: 16px 26px;
+    color: #fff;
+    font-size: .95rem;
+  }
+  .nav .btn:hover { color: #fff; }
+
+  .nav-close {
+    position: absolute;
+    top: 22px; right: 22px;
+    width: 42px; height: 42px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: transparent;
+    border: 1px solid var(--ink-line);
+    border-radius: var(--radius);
+    color: #fff;
+    cursor: pointer;
+    padding: 0;
+  }
+  .nav-close:hover { background: var(--ink-raised); }
+
+  .nav-scrim {
+    position: fixed;
+    inset: 0;
+    background: rgba(16, 24, 38, .55);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .3s var(--ease), visibility .3s var(--ease);
+    /* MUST stay below .site-header's z-index (100). The drawer lives inside the
+       header, so it is trapped in the header's stacking context and can never
+       out-rank a sibling that sits above 100 — at 110 this scrim painted over
+       the whole menu, blurring it, dimming it and eating every tap.
+       No backdrop-filter here either: the 55% wash does the dimming, and the
+       filter only added blur and mobile GPU cost. */
+    z-index: 90;
+  }
+  .nav-scrim.is-open { opacity: 1; visibility: visible; }
+
+  body.nav-open { overflow: hidden; }
+
+  .jumpnav { top: 74px; }
+
+  /* Columns collapse */
+  .col-3, .row-tight > .col-3 { flex-basis: calc(50% - 14px); }
+  .col-4, .row-tight > .col-4 { flex-basis: calc(50% - 14px); }
+
+  .feature, .prod { gap: 40px; }
+  .feature + .feature { margin-top: 68px; }
+  .feature-media, .feature-copy,
+  .prod-media, .prod-copy { flex-basis: 100%; }
+  .feature-reverse, .prod-reverse { flex-direction: row; }
+
+  .hero-home { padding: 92px 0 84px; }
+  .hero-page { padding: 72px 0 68px; }
+  .hero-stats { gap: 26px 40px; margin-top: 40px; padding-top: 30px; }
+
+  .form-panel { padding: 32px 26px; }
+}
+
+/* Mobile ---------------------------------------------------------------- */
+@media (max-width: 767px) {
+  :root { --section-y: 60px; --gutter: 20px; }
+
+  body { font-size: 16px; }
+
+  .topbar { display: none; }
+
+  .col-2, .col-3, .col-4,
+  .row-tight > .col-2, .row-tight > .col-3, .row-tight > .col-4 { flex-basis: 100%; }
+
+  .row, .row-wide { gap: 20px; }
+
+  .section-head { margin-bottom: 40px; }
+
+  .hero-home { padding: 68px 0 62px; }
+  .hero-home p { font-size: 1.06rem; }
+  .hero-page { padding: 56px 0 52px; }
+  .btn-group .btn { flex: 1 1 100%; }
+  .hero-stats { gap: 24px 32px; }
+  .hero-stat { flex: 1 1 calc(50% - 16px); }
+  .hero-stat .num { font-size: 1.75rem; }
+
+  .compliance .wrap { gap: 12px 24px; }
+  .compliance-item { font-size: .9rem; }
+
+  .prod { padding: 40px 0; gap: 28px; }
+  .feature { gap: 30px; }
+  .feature + .feature { margin-top: 52px; }
+
+  .cta-band .wrap { padding-top: 62px; padding-bottom: 62px; }
+  .cta-actions { width: 100%; }
+  .cta-actions .btn { flex: 1 1 100%; }
+
+  .form-panel { padding: 26px 20px; }
+  .acc-body { padding-right: 8px; }
+
+  .footer-main { padding: 56px 0 40px; }
+  .footer-top { gap: 36px; }
+  .footer-brand, .footer-col { flex-basis: 100%; }
+  .footer-bar .wrap { flex-direction: column; align-items: flex-start; }
+
+  .map-embed iframe { height: 320px; }
+}
+
+/* Motion & print --------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+  .card:hover, .icon-box:hover, .btn:hover, .contact-card:hover { transform: none; }
+}
+
+@media print {
+  .site-header, .jumpnav, .cta-band, .nav-scrim, .site-footer { display: none; }
+  body { font-size: 12pt; color: #000; }
+}
