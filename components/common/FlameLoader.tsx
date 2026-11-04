@@ -1,11 +1,19 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import CinematicLoader from "@/components/common/CinematicLoader";
+
+export type LoaderVariant = "flame" | "fill" | "ring";
+export const DEFAULT_LOADER_VARIANT: LoaderVariant = "fill";
 
 interface FlameLoaderProps {
+  variant?: LoaderVariant;
   message?: string;
   fullScreen?: boolean;
   theme?: "light" | "dark" | "auto";
   className?: string;
+  exiting?: boolean;
 }
 
 export default function FlameLoader({
@@ -13,14 +21,26 @@ export default function FlameLoader({
   fullScreen = true,
   theme = "light",
   className = "",
+  exiting = false,
+  variant = DEFAULT_LOADER_VARIANT,
 }: FlameLoaderProps) {
   const isDark = theme === "dark";
+
+  if (variant !== "flame") {
+    if (!fullScreen) {
+      return (
+        <div className="relative h-[420px] w-full rounded-2xl overflow-hidden">
+          <CinematicLoader message={message} className="!absolute" />
+        </div>
+      );
+    }
+    return <CinematicLoader message={message} exiting={exiting} className={className} />;
+  }
 
   const content = (
     <div className="flex flex-col items-center justify-center text-center p-6 max-w-sm w-full mx-auto select-none">
       {/* Flame Icon with Ambient Warm Glow */}
-      <div className="relative mb-6 flex items-center justify-center">
-        {/* Soft Radial Ambient Glow */}
+      <div className="relative mb-6">
         <div
           className="absolute -inset-6 rounded-full blur-2xl opacity-60 pointer-events-none"
           style={{
@@ -29,11 +49,10 @@ export default function FlameLoader({
           }}
         />
 
-        {/* Pulsing Flame Graphic */}
-        <div className="relative w-16 h-24 flex items-center justify-center animate-flame-pulse">
+        <div className="relative z-10 flex items-center justify-center w-24 h-24 rounded-full bg-white shadow-[0_8px_30px_rgba(255,75,50,0.25)] border border-[#FF4B32]/20 animate-flame-pulse">
           <Image
-            src="/assets/img/flame-logo.png"
-            alt="Petro Engineering Flame"
+            src="/assets/img/flame-logo-clean.png"
+            alt="Petro Engineering Logo"
             width={53}
             height={80}
             priority
@@ -42,26 +61,27 @@ export default function FlameLoader({
         </div>
       </div>
 
-      {/* Brand Heading */}
+      {/* Brand Label */}
       <h3
-        className={`text-sm sm:text-base font-extrabold tracking-[0.25em] uppercase font-['Plus_Jakarta_Sans',sans-serif] ${
+        className={`font-['Plus_Jakarta_Sans'] font-extrabold text-base tracking-tight mb-1 ${
           isDark ? "text-white" : "text-[#17191C]"
         }`}
       >
         Petro Engineering
       </h3>
 
+      {/* Dynamic Status Message */}
       <p
-        className={`text-xs mt-1 tracking-wider uppercase font-semibold ${
+        className={`text-xs font-medium tracking-wide mb-5 ${
           isDark ? "text-[#929DA7]" : "text-[#5F6871]"
         }`}
       >
         {message}
       </p>
 
-      {/* High-End Slim Shimmer Progress Bar */}
+      {/* Shimmering Progress Bar */}
       <div
-        className={`mt-5 w-44 sm:w-52 h-1 rounded-full overflow-hidden relative ${
+        className={`w-48 h-1 rounded-full overflow-hidden relative ${
           isDark ? "bg-[#2A2E34]" : "bg-[#D8DDE2]"
         }`}
       >
@@ -77,21 +97,15 @@ export default function FlameLoader({
   );
 
   if (!fullScreen) {
-    return (
-      <div className={`py-12 flex items-center justify-center w-full ${className}`}>
-        {content}
-      </div>
-    );
+    return <div className="py-16 flex items-center justify-center w-full">{content}</div>;
   }
 
   return (
     <div
       role="status"
       aria-live="polite"
-      className={`fixed inset-0 z-[9999] flex items-center justify-center transition-all duration-300 ${
-        isDark
-          ? "bg-[#17191C]/95 backdrop-blur-md text-white"
-          : "bg-white/95 backdrop-blur-md text-[#17191C]"
+      className={`fixed inset-0 z-[9999] flex items-center justify-center transition-opacity duration-300 ${
+        isDark ? "bg-[#17191C]" : "bg-white/95 backdrop-blur-md"
       } ${className}`}
     >
       {content}
