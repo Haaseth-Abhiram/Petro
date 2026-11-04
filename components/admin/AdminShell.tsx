@@ -17,6 +17,7 @@ export default function AdminShell({ children }: AdminShellProps) {
   const [loading, setLoading] = useState(true);
   const [enquiriesBadge, setEnquiriesBadge] = useState(0);
   const [rfqBadge, setRfqBadge] = useState(0);
+  const [applicationsBadge, setApplicationsBadge] = useState(0);
 
   // If on login route, bypass admin shell completely
   const isLoginPage = pathname === "/admin/login";
@@ -46,6 +47,7 @@ export default function AdminShell({ children }: AdminShellProps) {
               if (sData.success && sData.stats) {
                 setEnquiriesBadge(sData.stats.enquiries?.new || 0);
                 setRfqBadge(sData.stats.rfqs?.new || 0);
+                setApplicationsBadge(sData.stats.applications?.new || 0);
               }
             })
             .catch(() => {});
@@ -67,36 +69,32 @@ export default function AdminShell({ children }: AdminShellProps) {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#17191C] flex items-center justify-center text-white">
+      <div className="min-h-screen bg-[#17191C] flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
-          <div className="w-10 h-10 border-4 border-[#FF4B32] border-t-transparent rounded-full animate-spin" />
-          <p className="text-xs font-semibold text-[#929DA7] tracking-wider uppercase">
-            Loading Admin Workspace...
-          </p>
+          <div className="w-10 h-10 border-3 border-[#FF4B32] border-t-transparent rounded-full animate-spin" />
+          <p className="text-sm font-semibold text-white/80">Securing Admin Session…</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#F5F6F7] text-[#17191C] flex">
-      {/* Sidebar */}
+    <div className="min-h-screen bg-[#F5F6F7] flex">
+      {/* Sidebar Navigation */}
       <AdminSidebar
         isOpen={sidebarOpen}
         onClose={() => setSidebarOpen(false)}
         user={user}
         enquiriesBadge={enquiriesBadge}
         rfqBadge={rfqBadge}
+        applicationsBadge={applicationsBadge}
       />
 
       {/* Main Content Area */}
-      <div className="flex-1 lg:pl-72 flex flex-col min-w-0 min-h-screen">
-        <AdminHeader
-          onToggleSidebar={() => setSidebarOpen(!sidebarOpen)}
-          user={user}
-        />
-        <main className="flex-1 p-4 sm:p-8 max-w-[1600px] w-full mx-auto">
-          {children}
+      <div className="flex-1 flex flex-col min-w-0 lg:pl-72 transition-all duration-200">
+        <AdminHeader onToggleSidebar={() => setSidebarOpen(true)} user={user} />
+        <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto">
+          <div className="max-w-7xl mx-auto">{children}</div>
         </main>
       </div>
     </div>

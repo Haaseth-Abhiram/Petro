@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -33,11 +33,29 @@ const err = "text-[11.5px] text-[#FF4B32] mt-1";
 
 export default function CareerForm({ defaultRole = "General Application" }: { defaultRole?: string }) {
   const [done, setDone] = useState(false);
+  const [refCode, setRefCode] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [cv, setCv] = useState<File | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   const [cvErr, setCvErr] = useState<string | null>(null);
+  const [roles, setRoles] = useState<string[]>(CAREER_ROLES);
+
+  // Dynamically load active published job roles
+  useEffect(() => {
+    fetch("/api/careers/jobs")
+      .then((r) => r.json())
+      .then((data) => {
+        if (data?.jobs?.length) {
+          const fetchedRoles = data.jobs.map((j: any) => j.role || j.title);
+          const combined = Array.from(new Set([...fetchedRoles, defaultRole, "General Application"])).filter(Boolean);
+          setRoles(combined);
+        }
+      })
+      .catch(() => {
+        // Fallback silently to static CAREER_ROLES
+      });
+  }, [defaultRole]);
 
   const pick = (f?: File | null) => {
     setCvErr(null);
@@ -47,10 +65,16 @@ export default function CareerForm({ defaultRole = "General Application" }: { de
     setCv(f);
   };
 
-  const { register, handleSubmit, reset, formState: { errors } } = useForm<FormData>({
+  const { register, handleSubmit, reset, setValue, formState: { errors } } = useForm<FormData>({
     resolver: zodResolver(schema),
     defaultValues: { fullName: "", email: "", phone: "", role: defaultRole, experience: "", link: "", message: "" },
   });
+
+  useEffect(() => {
+    if (defaultRole) {
+      setValue("role", defaultRole);
+    }
+  }, [defaultRole, setValue]);
 
   const onSubmit = async (d: FormData) => {
     setBusy(true);
@@ -62,6 +86,7 @@ export default function CareerForm({ defaultRole = "General Application" }: { de
       const res = await fetch("/api/careers", { method: "POST", body: fd });
       const out = await res.json();
       if (!res.ok || !out.success) throw new Error(out.message || "Could not submit your application");
+      setRefCode(out.reference || null);
       setDone(true);
       setCv(null);
       reset();
@@ -77,8 +102,13 @@ export default function CareerForm({ defaultRole = "General Application" }: { de
       <div className="rounded-2xl bg-[#FFF1EF] border border-[#FF4B32]/30 p-6 text-center">
         <CheckCircle2 className="w-12 h-12 text-[#FF4B32] mx-auto mb-3" />
         <h3 className="text-[18px] font-black text-[#17191C] mb-1">Application received</h3>
+        {refCode && (
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-[#17191C] text-[#FFA028] text-xs font-mono font-bold my-3 shadow-sm">
+            Reference: {refCode}
+          </div>
+        )}
         <p className="text-[13.5px] text-[#5F6871] mb-4">Thank you for your interest in Petro Engineering. Our team will review your profile and get in touch if there is a match.</p>
-        <button type="button" onClick={() => setDone(false)} className="text-[13px] font-extrabold text-[#FF4B32] hover:underline">Submit another application</button>
+        <button type="button" onClick={() => { setDone(false); setRefCode(null); }} className="text-[13px] font-extrabold text-[#FF4B32] hover:underline">Submit another application</button>
       </div>
     );
   }
@@ -91,8 +121,24 @@ export default function CareerForm({ defaultRole = "General Application" }: { de
       </div>
       <div><label className={label} htmlFor="c-email">Email address *</label><input id="c-email" type="email" className={input} placeholder="you@email.com" {...register("email")} />{errors.email && <p className={err}>{errors.email.message}</p>}</div>
       <div className="grid sm:grid-cols-2 gap-4">
-        <div><label className={label} htmlFor="c-role">Role of interest *</label><select id="c-role" className={input} {...register("role")}>{CAREER_ROLES.map((r) => <option key={r}>{r}</option>)}</select>{errors.role && <p className={err}>{errors.role.message}</p>}</div>
-        <div><label className={label} htmlFor="c-exp">Experience *</label><select id="c-exp" className={input} {...register("experience")}><option value="">Select…</option><option>Fresher / 0–1 years</option><option>2–5 years</option><option>6–10 years</option><option>10+ years</option></select>{errors.experience && <p className={err}>{errors.experience.message}</p>}</div>
+        <div>
+          <label className={label} htmlFor="c-role">Role of interest *</label>
+          <select id="c-role" className={input} {...register("role")}>
+            {roles.map((r) => <option key={r} value={r}>{r}</option>)}
+          </select>
+          {errors.role && <p className={err}>{errors.role.message}</p>}
+        </div>
+        <div>
+          <label className={label} htmlFor="c-exp">Experience *</label>
+          <select id="c-exp" className={input} {...register("experience")}>
+            <option value="">Select…</option>
+            <option>Fresher / 0–1 years</option>
+            <option>2–5 years</option>
+            <option>6–10 years</option>
+            <option>10+ years</option>
+          </select>
+          {errors.experience && <p className={err}>{errors.experience.message}</p>}
+        </div>
       </div>
       <div><label className={label} htmlFor="c-link">CV / LinkedIn link (optional)</label><input id="c-link" className={input} placeholder="https://" {...register("link")} /></div>
       <div>

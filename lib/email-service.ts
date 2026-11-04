@@ -7,7 +7,7 @@ interface SendEmailParams {
   subject: string;
   html: string;
   text?: string;
-  type: "rfq_submission" | "rfq_update" | "enquiry_submission" | "enquiry_update" | "general";
+  type: "rfq_submission" | "rfq_update" | "enquiry_submission" | "enquiry_update" | "career_application" | "general";
   referenceId?: string;
 }
 
@@ -501,5 +501,70 @@ export async function sendEnquiryStatusUpdateEmail(data: {
     html,
     type: data.isNew ? "enquiry_submission" : "enquiry_update",
     referenceId: data.id,
+  });
+}
+
+
+export interface CareerEmailData {
+  id: string;
+  applicationReference: string;
+  fullName: string;
+  email: string;
+  role: string;
+  experience: string;
+}
+
+export async function sendCareerApplicationEmail(data: CareerEmailData) {
+  const emailSubject = `Application Received [${data.applicationReference}] — ${data.role} | Petro Engineering`;
+
+  const contentHtml = `
+    <p class="text">Dear <strong>${data.fullName}</strong>,</p>
+    <p class="text">
+      Thank you for submitting your application to join the team at <strong>Petro Engineering</strong>. 
+      We have successfully received your credentials and resume.
+    </p>
+
+    <table class="details-table">
+      <tr>
+        <td class="details-label">Reference ID:</td>
+        <td class="details-val"><strong>${data.applicationReference}</strong></td>
+      </tr>
+      <tr>
+        <td class="details-label">Position of Interest:</td>
+        <td class="details-val"><strong>${data.role}</strong></td>
+      </tr>
+      <tr>
+        <td class="details-label">Experience Bracket:</td>
+        <td class="details-val">${data.experience}</td>
+      </tr>
+      <tr>
+        <td class="details-label">Initial Status:</td>
+        <td class="details-val"><strong style="color: #FF4B32;">New / Under Review</strong></td>
+      </tr>
+    </table>
+
+    <div class="notes-box">
+      <strong style="display: block; font-size: 11px; text-transform: uppercase; color: #FF4B32; margin-bottom: 4px;">Next Steps:</strong>
+      Our engineering recruitment desk evaluates applications against current project requisitions. If your background matches our technical specifications, a member of our team will contact you directly to coordinate the interview process.
+    </div>
+
+    <p class="text" style="margin-top: 24px;">
+      We appreciate your interest in building your career with Petro Engineering.
+    </p>
+  `;
+
+  const html = wrapBrandTemplate(
+    "Application Acknowledgement",
+    "Application Received",
+    contentHtml
+  );
+
+  return sendEmail({
+    to: data.email,
+    toName: data.fullName,
+    subject: emailSubject,
+    html,
+    type: "career_application",
+    referenceId: data.applicationReference,
   });
 }

@@ -22,6 +22,9 @@ import {
   X,
   ChevronRight,
   Shield,
+  Briefcase,
+  UserCheck,
+  BarChart3,
 } from "lucide-react";
 
 interface AdminSidebarProps {
@@ -34,6 +37,7 @@ interface AdminSidebarProps {
   } | null;
   enquiriesBadge?: number;
   rfqBadge?: number;
+  applicationsBadge?: number;
 }
 
 export default function AdminSidebar({
@@ -42,6 +46,7 @@ export default function AdminSidebar({
   user,
   enquiriesBadge = 0,
   rfqBadge = 0,
+  applicationsBadge = 0,
 }: AdminSidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
@@ -101,6 +106,41 @@ export default function AdminSidebar({
       label: "Industries",
       href: "/admin/industries",
       icon: Building2,
+    },
+  ];
+
+  // Careers & Recruitment items
+  const careersNavItems = [
+    {
+      label: "Careers Dashboard",
+      href: "/admin/careers",
+      icon: LayoutDashboard,
+    },
+    {
+      label: "Job Management",
+      href: "/admin/careers/jobs",
+      icon: Briefcase,
+    },
+    {
+      label: "Candidate Applications",
+      href: "/admin/careers/applications",
+      icon: UserCheck,
+      badge: applicationsBadge > 0 ? applicationsBadge : undefined,
+    },
+    {
+      label: "Job Categories",
+      href: "/admin/careers/categories",
+      icon: Layers,
+    },
+    {
+      label: "Recruitment Reports",
+      href: "/admin/careers/reports",
+      icon: BarChart3,
+    },
+    {
+      label: "Recruitment Settings",
+      href: "/admin/careers/settings",
+      icon: Settings,
     },
   ];
 
@@ -235,11 +275,73 @@ export default function AdminSidebar({
             );
           })}
 
+          {/* Careers & Recruitment section */}
+          <div className="pt-3 mt-3 border-t border-[#2A2E34]">
+            <div className="flex items-center justify-between px-3 pb-1.5">
+              <div className="flex items-center gap-1.5">
+                <Briefcase className="w-3.5 h-3.5 text-[#FF4B32]" />
+                <p className="text-[10px] font-bold uppercase tracking-wider text-[#FF4B32]">
+                  Careers &amp; Recruitment
+                </p>
+              </div>
+              {applicationsBadge > 0 && (
+                <span className="px-1.5 py-0.2 rounded-full text-[9px] font-extrabold bg-[#FF4B32] text-white">
+                  {applicationsBadge} NEW
+                </span>
+              )}
+            </div>
+
+            {careersNavItems.map((item) => {
+              const Icon = item.icon;
+              const isActive =
+                item.href === "/admin/careers"
+                  ? pathname === "/admin/careers"
+                  : pathname.startsWith(item.href);
+
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => {
+                    if (window.innerWidth < 1024) onClose();
+                  }}
+                  className={`group flex items-center justify-between px-3.5 py-2 rounded-lg text-xs font-semibold transition-all ${
+                    isActive
+                      ? "bg-[#FF4B32] text-white shadow-sm"
+                      : "text-[#929DA7] hover:bg-white/5 hover:text-white"
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <Icon
+                      className={`w-4 h-4 shrink-0 transition-colors ${
+                        isActive
+                          ? "text-white"
+                          : "text-[#929DA7] group-hover:text-white"
+                      }`}
+                    />
+                    <span>{item.label}</span>
+                  </div>
+                  {item.badge !== undefined && (
+                    <span
+                      className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                        isActive
+                          ? "bg-white text-[#FF4B32]"
+                          : "bg-[#FF4B32] text-white"
+                      }`}
+                    >
+                      {item.badge}
+                    </span>
+                  )}
+                </Link>
+              );
+            })}
+          </div>
+
           {/* Admin Management & Security section */}
           <div className="pt-3 mt-3 border-t border-[#2A2E34]">
             <div className="flex items-center gap-1.5 px-3 pb-1.5">
-              <Shield className="w-3 h-3 text-[#FF4B32]" />
-              <p className="text-[10px] font-bold uppercase tracking-wider text-[#FF4B32]">
+              <Shield className="w-3 h-3 text-[#FFA028]" />
+              <p className="text-[10px] font-bold uppercase tracking-wider text-[#FFA028]">
                 Admin Controls
               </p>
             </div>

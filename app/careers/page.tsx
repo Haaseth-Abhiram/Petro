@@ -5,11 +5,14 @@ import Reveal from "@/components/common/Reveal";
 import CareersBoard, { Job } from "@/components/common/CareersBoard";
 import CareerForm from "@/components/forms/CareerForm";
 import { COMPANY_INFO } from "@/data/company";
+import { query } from "@/lib/db";
 
 export const metadata = {
   title: "Careers | Petro Engineering",
   description: "Build a career in industrial sourcing, process instrumentation and water treatment with Petro Engineering Private Limited.",
 };
+
+export const dynamic = "force-dynamic";
 
 const perks = [
   { icon: Wrench, t: "Learning & Development", d: "Hands-on work with valves, fittings, analysers and RO chemistry, and a clear path to advance." },
@@ -18,16 +21,94 @@ const perks = [
   { icon: TrendingUp, t: "Room to Grow", d: "A focused, growing company where ownership comes early and good work is visible." },
 ];
 
-const jobs: Job[] = [
-  { role: "Sales Engineer", title: "Technical Sales & Sourcing Engineer", d: "Review enquiries and datasheets, source against specifications and prepare technical and commercial proposals.", img: "/assets/img/tube-fittings.jpg", exp: "2+ years", resp: ["Review RFQs, datasheets and MTOs", "Source from approved manufacturers", "Prepare technical and commercial proposals", "Follow up with clients until order closure"] },
-  { role: "Procurement Coordinator", title: "Procurement & Expediting Coordinator", d: "Manage purchase orders, vendor follow-up, milestones and consolidated deliveries for project orders.", img: "/assets/img/ball-valves.jpg", exp: "2+ years", resp: ["Issue and track purchase orders", "Expedite vendor milestones", "Coordinate consolidated shipments", "Maintain order documentation"] },
-  { role: "Quality Engineer", title: "Quality & Inspection Engineer", d: "Coordinate third-party inspection, verify MTCs and witness tests so documentation is ready for handover.", img: "/assets/img/service-inspection-qa.jpg", exp: "3+ years", resp: ["Coordinate third-party inspection", "Verify EN 10204 3.1 / 3.2 certificates", "Witness PMI and pressure tests", "Compile handover dossiers"] },
-  { role: "Chemical Engineer", title: "Chemical Application Engineer", d: "Recommend and support RO, cooling, boiler and ETP chemistry programmes against client water analysis.", img: "/assets/img/chem-01-ro-chemicals.jpg", exp: "2+ years", resp: ["Analyse client water reports", "Project dosage and cleaning schedules", "Support commissioning and monitoring", "Advise on injection points and set-up"] },
-  { role: "Logistics Executive", title: "Logistics & Export Executive", d: "Plan packing, dangerous goods documentation, customs clearance and door-to-site freight.", img: "/assets/img/chem-07-commercial-chemicals.jpg", exp: "1+ years", resp: ["Plan export packing and crating", "Prepare IMDG / IATA documentation", "Handle customs clearance", "Track shipments to site"] },
-  { role: "General Application", title: "Don't see your role?", d: "Send a general application and tell us how you can contribute. We keep every profile on file for upcoming needs.", img: "/assets/img/service-technical-consultation.jpg", exp: "Any level", resp: ["Tell us about your background", "Share the work you want to do", "We contact you when a role matches"] },
+const fallbackJobs: Job[] = [
+  { role: "Sales Engineer", title: "Technical Sales & Sourcing Engineer", d: "Review enquiries and datasheets, source against specifications and prepare technical and commercial proposals.", img: "/assets/img/tube-fittings.jpg", exp: "2+ years", resp: ["Review RFQs, datasheets and MTOs", "Source from approved manufacturers", "Prepare technical and commercial proposals", "Follow up with clients until order closure"], location: "Mumbai, India", employment_type: "Full-time", department: "Sales" },
+  { role: "Procurement Coordinator", title: "Procurement & Expediting Coordinator", d: "Manage purchase orders, vendor follow-up, milestones and consolidated deliveries for project orders.", img: "/assets/img/ball-valves.jpg", exp: "2+ years", resp: ["Issue and track purchase orders", "Expedite vendor milestones", "Coordinate consolidated shipments", "Maintain order documentation"], location: "Mumbai, India", employment_type: "Full-time", department: "Procurement" },
+  { role: "Quality Engineer", title: "Quality & Inspection Engineer", d: "Coordinate third-party inspection, verify MTCs and witness tests so documentation is ready for handover.", img: "/assets/img/service-inspection-qa.jpg", exp: "3+ years", resp: ["Coordinate third-party inspection", "Verify EN 10204 3.1 / 3.2 certificates", "Witness PMI and pressure tests", "Compile handover dossiers"], location: "Mumbai, India", employment_type: "Full-time", department: "Quality Assurance" },
+  { role: "Chemical Engineer", title: "Chemical Application Engineer", d: "Recommend and support RO, cooling, boiler and ETP chemistry programmes against client water analysis.", img: "/assets/img/chem-01-ro-chemicals.jpg", exp: "2+ years", resp: ["Analyse client water reports", "Project dosage and cleaning schedules", "Support commissioning and monitoring", "Advise on injection points and set-up"], location: "Mumbai, India", employment_type: "Full-time", department: "Chemicals" },
+  { role: "Logistics Executive", title: "Logistics & Export Executive", d: "Plan packing, dangerous goods documentation, customs clearance and door-to-site freight.", img: "/assets/img/chem-07-commercial-chemicals.jpg", exp: "1+ years", resp: ["Plan export packing and crating", "Prepare IMDG / IATA documentation", "Handle customs clearance", "Track shipments to site"], location: "Mumbai, India", employment_type: "Full-time", department: "Logistics" },
+  { role: "General Application", title: "Don't see your role?", d: "Send a general application and tell us how you can contribute. We keep every profile on file for upcoming needs.", img: "/assets/img/service-technical-consultation.jpg", exp: "Any level", resp: ["Tell us about your background", "Share the work you want to do", "We contact you when a role matches"], location: "India", employment_type: "Full-time", department: "General" },
 ];
 
-export default function CareersPage() {
+async function getPublishedJobs(): Promise<{ jobs: Job[]; departmentCount: number }> {
+  try {
+    const res = await query(`
+      SELECT 
+        j.id,
+        j.role,
+        j.title,
+        j.slug,
+        j.department,
+        j.location,
+        j.employment_type,
+        j.experience,
+        j.short_description,
+        j.description,
+        j.responsibilities,
+        j.image,
+        j.display_order
+      FROM jobs j
+      WHERE j.status = 'published'
+      ORDER BY j.display_order ASC, j.created_at DESC;
+    `);
+
+    if (res.rows && res.rows.length > 0) {
+      const mappedJobs: Job[] = res.rows.map((r: any) => {
+        let respArr: string[] = [];
+        if (Array.isArray(r.responsibilities)) {
+          respArr = r.responsibilities;
+        } else if (typeof r.responsibilities === "string") {
+          try {
+            respArr = JSON.parse(r.responsibilities);
+          } catch {
+            respArr = [r.responsibilities];
+          }
+        }
+
+        return {
+          id: r.id,
+          role: r.role || r.title,
+          title: r.title,
+          d: r.short_description || r.description || "",
+          img: r.image || "/assets/img/service-technical-consultation.jpg",
+          exp: r.experience || "2+ years",
+          resp: respArr,
+          location: r.location || "Mumbai, India",
+          employment_type: r.employment_type || "Full-time",
+          department: r.department || "Engineering",
+          slug: r.slug,
+        };
+      });
+
+      // Always include General Application card if not already in mapped list
+      const hasGeneral = mappedJobs.some((j) => j.role.toLowerCase().includes("general"));
+      if (!hasGeneral) {
+        mappedJobs.push({
+          role: "General Application",
+          title: "Don't see your role?",
+          d: "Send a general application and tell us how you can contribute. We keep every profile on file for upcoming needs.",
+          img: "/assets/img/service-technical-consultation.jpg",
+          exp: "Any level",
+          resp: ["Tell us about your background", "Share the work you want to do", "We contact you when a role matches"],
+          location: "India",
+          employment_type: "Full-time",
+          department: "General",
+        });
+      }
+
+      const departments = new Set(mappedJobs.map((j) => j.department).filter(Boolean));
+      return { jobs: mappedJobs, departmentCount: departments.size || 5 };
+    }
+  } catch (err) {
+    console.error("Failed to query published jobs in CareersPage, using fallback:", err);
+  }
+
+  return { jobs: fallbackJobs, departmentCount: 5 };
+}
+
+export default async function CareersPage() {
+  const { jobs, departmentCount } = await getPublishedJobs();
+
   return (
     <div className="w-full">
       {/* HERO */}
@@ -81,7 +162,7 @@ export default function CareersPage() {
               <p className="text-[13.5px] text-[#5F6871] mt-2 max-w-[460px]">Roles listed here are indicative of the areas we recruit for. Apply to any, or send a general application.</p>
             </div>
             <div className="flex gap-3">
-              {[{ n: jobs.length, l: "Open roles" }, { n: 5, l: "Departments" }].map((s) => (
+              {[{ n: jobs.length, l: "Open roles" }, { n: departmentCount, l: "Departments" }].map((s) => (
                 <div key={s.l} className="rounded-2xl bg-white border border-[#D8DDE2] shadow-sm px-5 py-3 text-center"><div className="text-[1.6rem] font-black text-[#FF4B32] leading-none">{s.n}</div><div className="text-[10px] font-extrabold tracking-[0.18em] text-[#5F6871] mt-1">{s.l.toUpperCase()}</div></div>
               ))}
             </div>
