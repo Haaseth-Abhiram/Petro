@@ -13,13 +13,14 @@ export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
     const search = searchParams.get("search") || "";
     const status = searchParams.get("status") || "";
+    const type = searchParams.get("type") || "all"; // 'all' | 'suggestions' | 'enquiries'
 
     let sql = `SELECT * FROM contact_messages WHERE 1=1`;
     const params: any[] = [];
 
     if (search.trim()) {
       params.push(`%${search.trim().toLowerCase()}%`);
-      sql += ` AND (LOWER(full_name) LIKE $${params.length} OR LOWER(company_name) LIKE $${params.length} OR LOWER(email) LIKE $${params.length} OR LOWER(subject) LIKE $${params.length})`;
+      sql += ` AND (LOWER(full_name) LIKE $${params.length} OR LOWER(company_name) LIKE $${params.length} OR LOWER(email) LIKE $${params.length} OR LOWER(subject) LIKE $${params.length} OR LOWER(message) LIKE $${params.length})`;
     }
 
     if (status.trim() && status !== "all") {
@@ -27,10 +28,37 @@ export async function GET(req: Request) {
       sql += ` AND status = $${params.length}`;
     }
 
+    // Filter by type: suggestions vs regular inquiries
+    if (type === "suggestions") {
+      sql += ` AND (LOWER(subject) LIKE '%suggestion%' OR LOWER(subject) LIKE '%feedback%' OR LOWER(message) LIKE '%suggestion%')`;
+    } else if (type === "enquiries") {
+      sql += ` AND NOT (LOWER(subject) LIKE '%suggestion%' OR LOWER(subject) LIKE '%feedback%')`;
+    }
+
     sql += ` ORDER BY created_at DESC;`;
 
     const result = await query(sql, params);
-    return NextResponse.json({ success: true, enquiries: result.rows });
+
+    // Get live counts for tabs
+    const countsRes = await query(`
+      SELECT 
+        COUNT(*) as total,
+        COUNT(*) FILTER (WHERE LOWER(subject) LIKE '%suggestion%' OR LOWER(subject) LIKE '%feedback%' OR LOWER(message) LIKE '%suggestion%') as suggestions_count,
+        COUNT(*) FILTER (WHERE NOT (LOWER(subject) LIKE '%suggestion%' OR LOWER(subject) LIKE '%feedback%')) as enquiries_count
+      FROM contact_messages;
+    `);
+
+    const counts = countsRes.rows[0] || {};
+
+    return NextResponse.json({
+      success: true,
+      enquiries: result.rows,
+      counts: {
+        total: parseInt(counts.total || "0", 10),
+        suggestions: parseInt(counts.suggestions_count || "0", 10),
+        enquiries: parseInt(counts.enquiries_count || "0", 10),
+      },
+    });
   } catch (err: any) {
     return NextResponse.json({ success: false, error: err.message }, { status: 500 });
   }

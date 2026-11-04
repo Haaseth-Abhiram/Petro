@@ -22,6 +22,7 @@ export async function GET() {
       recentEnquiriesRes,
       recentRfqsRes,
       recentLogsRes,
+      appsCountRes,
     ] = await Promise.all([
       query("SELECT COUNT(*) AS total, COUNT(*) FILTER (WHERE is_published = true) AS published FROM products;"),
       query("SELECT COUNT(*) AS total, COUNT(*) FILTER (WHERE division = 'chemicals') AS chemicals, COUNT(*) FILTER (WHERE division = 'instrumentation') AS instrumentation FROM product_categories;"),
@@ -35,6 +36,7 @@ export async function GET() {
       query("SELECT id, full_name, company_name, email, subject, status, created_at FROM contact_messages ORDER BY created_at DESC LIMIT 5;"),
       query("SELECT id, full_name, company_name, email, product_name, quantity, status, created_at FROM rfq_submissions ORDER BY created_at DESC LIMIT 5;"),
       query("SELECT id, admin_email, action, entity_type, details, created_at FROM audit_logs ORDER BY created_at DESC LIMIT 6;"),
+      query("SELECT COUNT(*) AS total, COUNT(*) FILTER (WHERE status = 'New') AS new FROM applications;"),
     ]);
 
     return NextResponse.json({
@@ -56,6 +58,10 @@ export async function GET() {
         rfqs: {
           total: parseInt(rfqCountRes.rows[0]?.total || "0", 10),
           new: parseInt(newRfqCountRes.rows[0]?.total || "0", 10),
+        },
+        applications: {
+          total: parseInt(appsCountRes.rows[0]?.total || "0", 10),
+          new: parseInt(appsCountRes.rows[0]?.new || "0", 10),
         },
         documents: parseInt(docsCountRes.rows[0]?.total || "0", 10),
         services: parseInt(servicesCountRes.rows[0]?.total || "0", 10),

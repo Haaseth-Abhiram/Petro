@@ -16,7 +16,11 @@ export async function POST(req: Request) {
       );
     }
 
-    const sub = subject || `Contact Enquiry - ${division || "General"}`;
+    const sub =
+      subject ||
+      (division === "Suggestion" || /suggestion|feedback/i.test(division || "")
+        ? "Website suggestion"
+        : `Contact Enquiry - ${division || "General"}`);
 
     const res = await query(
       `INSERT INTO contact_messages (full_name, company_name, email, phone, subject, message, status)
@@ -26,6 +30,37 @@ export async function POST(req: Request) {
     );
 
     const enquiryRecord = res.rows[0];
+
+    // If this inquiry is about instruments, also create an RFQ record in rfq_submissions
+    // so it immediately displays in RFQ in the Admin Portal!
+    const isInstrument =
+      /instrument|valve|fitting|tubing|analyser|impulse|manifold/i.test(division || "") ||
+      /instrument|valve|fitting|tubing|analyser|impulse|manifold/i.test(sub || "") ||
+      /instrument|valve|fitting|tubing|analyser|impulse|manifold/i.test(message || "");
+
+    if (isInstrument) {
+      try {
+        await query(
+          `INSERT INTO rfq_submissions (
+            full_name, company_name, email, phone, industry,
+            product_category, product_name, quantity, unit_of_measurement,
+            technical_specifications, additional_comments, status
+          ) VALUES ($1, $2, $3, $4, 'Instrumentation & Process Control', $5, $6, '1', 'Set / Lot', $7, $8, 'new');`,
+          [
+            fullName,
+            companyName || "Direct Inquiry",
+            email,
+            phone || "",
+            division || "Instrumentation & Valves",
+            sub || "Instrumentation Inquiry",
+            message,
+            message,
+          ]
+        );
+      } catch (rfqErr: any) {
+        console.warn("Failed to mirror instrument enquiry into rfq_submissions:", rfqErr.message);
+      }
+    }
 
     // Send acknowledgement email to client's registered email
     try {
@@ -44,7 +79,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json({
       success: true,
-      message: "Your enquiry has been received and logged in our system.",
+      message: "Your message has been received and logged in our system.",
       enquiryId: enquiryRecord.id,
     });
   } catch (err: any) {

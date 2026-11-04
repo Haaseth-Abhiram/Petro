@@ -14,14 +14,14 @@ import {
   FileText,
   Flame,
   Building2,
-  Users,
   Settings,
-  Clock,
   ExternalLink,
   LogOut,
   X,
   ChevronRight,
-  Shield,
+  Briefcase,
+  UserCheck,
+  BarChart3,
 } from "lucide-react";
 
 interface AdminSidebarProps {
@@ -34,6 +34,7 @@ interface AdminSidebarProps {
   } | null;
   enquiriesBadge?: number;
   rfqBadge?: number;
+  applicationsBadge?: number;
 }
 
 export default function AdminSidebar({
@@ -42,8 +43,10 @@ export default function AdminSidebar({
   user,
   enquiriesBadge = 0,
   rfqBadge = 0,
+  applicationsBadge = 0,
 }: AdminSidebarProps) {
-  const pathname = usePathname();
+  const rawPathname = usePathname();
+  const pathname = rawPathname || "";
   const router = useRouter();
 
   const handleLogout = async () => {
@@ -53,9 +56,7 @@ export default function AdminSidebar({
     window.location.href = "/login";
   };
 
-  const isSuperAdmin = user?.role === "Super Admin";
-
-  // Standard operational items visible to both Admin and Super Admin
+  // Operational items
   const operationalNavItems = [
     {
       label: "Dashboard",
@@ -106,22 +107,33 @@ export default function AdminSidebar({
     },
   ];
 
-  // System & Security controls strictly for Super Admin
-  const superAdminNavItems = [
+  // Careers & Recruitment items
+  const careersNavItems = [
     {
-      label: "Admin Users",
-      href: "/admin/users",
-      icon: Users,
+      label: "Careers Dashboard",
+      href: "/admin/careers",
+      icon: LayoutDashboard,
     },
     {
-      label: "Company Settings",
-      href: "/admin/settings",
+      label: "Job Management",
+      href: "/admin/careers/jobs",
+      icon: Briefcase,
+    },
+    {
+      label: "Candidate Applications",
+      href: "/admin/careers/applications",
+      icon: UserCheck,
+      badge: applicationsBadge > 0 ? applicationsBadge : undefined,
+    },
+    {
+      label: "Job Categories",
+      href: "/admin/careers/categories",
+      icon: Layers,
+    },
+    {
+      label: "Recruitment Settings",
+      href: "/admin/careers/settings",
       icon: Settings,
-    },
-    {
-      label: "Audit Logs",
-      href: "/admin/audit-logs",
-      icon: Clock,
     },
   ];
 
@@ -165,14 +177,14 @@ export default function AdminSidebar({
         {/* User Card */}
         <div className="p-4 mx-3 my-3 rounded-xl bg-white/5 border border-white/10 shrink-0">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-[#C80808] text-white font-black text-sm flex items-center justify-center shrink-0">
+            <div className="w-9 h-9 rounded-lg bg-[#FF4B32] text-white font-black text-sm flex items-center justify-center shrink-0">
               {user?.name ? user.name.charAt(0).toUpperCase() : "A"}
             </div>
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                 <p className="text-xs font-bold text-white truncate">
-                  {user?.name || (isSuperAdmin ? "Super Admin" : "Operations Admin")}
+                  {user?.name || "Administrator"}
                 </p>
               </div>
               <p className="text-[11px] text-[#929DA7] truncate">
@@ -182,13 +194,7 @@ export default function AdminSidebar({
           </div>
           <div className="mt-2.5 pt-2 border-t border-white/10 flex items-center justify-between text-[10px]">
             <span className="text-[#929DA7]">Role:</span>
-            <span
-              className={`font-semibold px-2 py-0.5 rounded ${
-                isSuperAdmin
-                  ? "bg-[#C80808]/20 text-[#C80808]"
-                  : "bg-white/10 text-white"
-              }`}
-            >
+            <span className="font-semibold px-2 py-0.5 rounded bg-[#FF4B32]/20 text-[#FF4B32]">
               {user?.role || "Admin"}
             </span>
           </div>
@@ -200,7 +206,7 @@ export default function AdminSidebar({
             Operational CMS
           </p>
 
-          {/* Operational links (Admin & Super Admin) */}
+          {/* Operational links */}
           {operationalNavItems.map((item) => {
             const Icon = item.icon;
             const isActive =
@@ -216,7 +222,7 @@ export default function AdminSidebar({
                 }}
                 className={`group flex items-center justify-between px-3.5 py-2.5 rounded-lg text-xs font-semibold transition-all ${
                   isActive
-                    ? "bg-[#C80808] text-white shadow-sm"
+                    ? "bg-[#FF4B32] text-white shadow-sm"
                     : "text-[#929DA7] hover:bg-white/5 hover:text-white"
                 }`}
               >
@@ -232,8 +238,8 @@ export default function AdminSidebar({
                   <span
                     className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
                       isActive
-                        ? "bg-white text-[#C80808]"
-                        : "bg-[#C80808] text-white"
+                        ? "bg-white text-[#FF4B32]"
+                        : "bg-[#FF4B32] text-white"
                     }`}
                   >
                     {item.badge}
@@ -243,56 +249,73 @@ export default function AdminSidebar({
             );
           })}
 
-          {/* Super Admin ONLY section */}
-          {isSuperAdmin && (
-            <div className="pt-3 mt-3 border-t border-[#2A2E34]">
-              <div className="flex items-center gap-1.5 px-3 pb-1.5">
-                <Shield className="w-3 h-3 text-[#C80808]" />
-                <p className="text-[10px] font-bold uppercase tracking-wider text-[#C80808]">
-                  Super Admin Controls
+          {/* Careers & Recruitment section */}
+          <div className="pt-3 mt-3 border-t border-[#2A2E34]">
+            <div className="flex items-center justify-between px-3 pb-1.5">
+              <div className="flex items-center gap-1.5">
+                <Briefcase className="w-3.5 h-3.5 text-[#FF4B32]" />
+                <p className="text-[10px] font-bold uppercase tracking-wider text-[#FF4B32]">
+                  Careers &amp; Recruitment
                 </p>
               </div>
-
-              {superAdminNavItems.map((item) => {
-                const Icon = item.icon;
-                const isActive =
-                  pathname === item.href || pathname.startsWith(item.href);
-
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    onClick={() => {
-                      if (window.innerWidth < 1024) onClose();
-                    }}
-                    className={`group flex items-center justify-between px-3.5 py-2.5 rounded-lg text-xs font-semibold transition-all ${
-                      isActive
-                        ? "bg-[#C80808] text-white shadow-sm"
-                        : "text-[#929DA7] hover:bg-white/5 hover:text-white"
-                    }`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <Icon
-                        className={`w-4 h-4 shrink-0 transition-colors ${
-                          isActive
-                            ? "text-white"
-                            : "text-[#929DA7] group-hover:text-white"
-                        }`}
-                      />
-                      <span>{item.label}</span>
-                    </div>
-                  </Link>
-                );
-              })}
+              {applicationsBadge > 0 && (
+                <span className="px-1.5 py-0.2 rounded-full text-[9px] font-extrabold bg-[#FF4B32] text-white">
+                  {applicationsBadge} NEW
+                </span>
+              )}
             </div>
-          )}
+
+            {careersNavItems.map((item) => {
+              const Icon = item.icon;
+              const isActive =
+                item.href === "/admin/careers"
+                  ? pathname === "/admin/careers"
+                  : pathname.startsWith(item.href);
+
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => {
+                    if (window.innerWidth < 1024) onClose();
+                  }}
+                  className={`group flex items-center justify-between px-3.5 py-2 rounded-lg text-xs font-semibold transition-all ${
+                    isActive
+                      ? "bg-[#FF4B32] text-white shadow-sm"
+                      : "text-[#929DA7] hover:bg-white/5 hover:text-white"
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <Icon
+                      className={`w-4 h-4 shrink-0 transition-colors ${
+                        isActive
+                          ? "text-white"
+                          : "text-[#929DA7] group-hover:text-white"
+                      }`}
+                    />
+                    <span>{item.label}</span>
+                  </div>
+                  {item.badge !== undefined && (
+                    <span
+                      className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                        isActive
+                          ? "bg-white text-[#FF4B32]"
+                          : "bg-[#FF4B32] text-white"
+                      }`}
+                    >
+                      {item.badge}
+                    </span>
+                  )}
+                </Link>
+              );
+            })}
+          </div>
         </nav>
 
         {/* Footer Actions */}
         <div className="p-3 border-t border-[#2A2E34] space-y-1 shrink-0 bg-[#121416]">
           <Link
             href="/"
-            target="_blank"
             className="flex items-center justify-between px-3.5 py-2 rounded-lg text-xs font-medium text-[#929DA7] hover:text-white hover:bg-white/5 transition-colors"
           >
             <div className="flex items-center gap-2.5">
@@ -304,7 +327,7 @@ export default function AdminSidebar({
 
           <button
             onClick={handleLogout}
-            className="w-full flex items-center gap-2.5 px-3.5 py-2 rounded-lg text-xs font-medium text-[#C80808] hover:bg-[#C80808]/10 transition-colors text-left"
+            className="w-full flex items-center gap-2.5 px-3.5 py-2 rounded-lg text-xs font-medium text-[#FF4B32] hover:bg-[#FF4B32]/10 transition-colors text-left"
           >
             <LogOut className="w-4 h-4" />
             <span>Sign Out</span>

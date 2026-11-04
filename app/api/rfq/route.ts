@@ -24,9 +24,15 @@ export async function POST(req: Request) {
       attachmentName,
     } = body;
 
-    if (!fullName || !email || !companyName || !productName) {
+    const safeCompany = (companyName && String(companyName).trim()) || "Direct Client / Individual";
+    const safeProduct =
+      (productName && String(productName).trim()) ||
+      (productCategory && String(productCategory).trim()) ||
+      "Instrumentation & Valves Specification";
+
+    if (!fullName || !email) {
       return NextResponse.json(
-        { success: false, message: "Full name, company, email, and product name are required." },
+        { success: false, message: "Full name and email are required to request a quote." },
         { status: 400 }
       );
     }
@@ -42,13 +48,13 @@ export async function POST(req: Request) {
       RETURNING id, full_name, company_name, product_name, created_at;`,
       [
         fullName,
-        companyName,
+        safeCompany,
         email,
         phone || "",
-        industry || "",
-        productCategory || "",
-        productName,
-        quantity ? String(quantity) : "",
+        industry || "Instrumentation",
+        productCategory || "Instrumentation & Valves",
+        safeProduct,
+        quantity ? String(quantity) : "1",
         unitOfMeasurement || "Pcs",
         technicalSpecifications || "",
         deliveryLocation || "",
@@ -66,8 +72,8 @@ export async function POST(req: Request) {
         id: rfqRecord.id,
         fullName: fullName,
         email: email,
-        companyName: companyName,
-        productName: productName,
+        companyName: safeCompany,
+        productName: safeProduct,
         quantity: quantity ? `${quantity} ${unitOfMeasurement || "Pcs"}` : undefined,
         status: "new",
         isNew: true,

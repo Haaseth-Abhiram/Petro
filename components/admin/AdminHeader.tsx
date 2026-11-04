@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import {
   Menu,
   Database,
-  ExternalLink,
+  Globe,
   ShieldCheck,
   Bell,
   RefreshCw,
@@ -29,51 +29,41 @@ export default function AdminHeader({
   onRefresh,
   isRefreshing = false,
 }: AdminHeaderProps) {
-  const pathname = usePathname();
+  const rawPathname = usePathname();
+  const pathname = rawPathname || "";
 
-  const getPageTitle = (path: string) => {
-    if (path.includes("/admin/products")) return "Product Catalogue";
-    if (path.includes("/admin/categories")) return "Product Categories";
-    if (path.includes("/admin/enquiries")) return "Customer Enquiries";
-    if (path.includes("/admin/quote-requests")) return "RFQ & Quotation Requests";
-    if (path.includes("/admin/content")) return "Website Content CMS";
-    if (path.includes("/admin/documents")) return "Documents & Engineering Library";
-    if (path.includes("/admin/services")) return "Engineering Services";
-    if (path.includes("/admin/industries")) return "Industries & Sectors";
-    if (path.includes("/admin/users")) return "Admin Users & Access Control";
-    if (path.includes("/admin/settings")) return "Company & System Settings";
-    if (path.includes("/admin/audit-logs")) return "Security & Audit Logs";
-    return "Management Dashboard";
-  };
+  // Generate breadcrumb from pathname
+  const segments = pathname
+    .split("/")
+    .filter(Boolean)
+    .map((seg) => seg.charAt(0).toUpperCase() + seg.slice(1).replace(/-/g, " "));
+
+  const currentPageTitle = segments[segments.length - 1] || "Dashboard";
 
   return (
-    <header className="h-16 bg-white border-b border-[#D8DDE2] sticky top-0 z-30 px-4 sm:px-8 flex items-center justify-between shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
-      {/* Left: Mobile Toggle & Page Title */}
-      <div className="flex items-center gap-3 sm:gap-4">
+    <header className="h-16 bg-white border-b border-[#D8DDE2] px-4 sm:px-8 flex items-center justify-between sticky top-0 z-20">
+      {/* Left: Mobile Toggle & Breadcrumbs */}
+      <div className="flex items-center gap-4">
         <button
           onClick={onToggleSidebar}
-          className="lg:hidden p-2 rounded-lg text-[#17191C] hover:bg-[#F5F6F7] border border-[#D8DDE2]"
-          aria-label="Open sidebar"
+          className="lg:hidden p-2 rounded-lg text-[#5F6871] hover:text-[#17191C] hover:bg-[#F5F6F7] transition-colors"
+          aria-label="Toggle navigation drawer"
         >
           <Menu className="w-5 h-5" />
         </button>
 
-        <div>
-          <div className="flex items-center gap-2 text-xs text-[#5F6871]">
-            <span>Admin</span>
-            <span>/</span>
-            <span className="font-semibold text-[#17191C]">
-              {getPageTitle(pathname)}
-            </span>
-          </div>
-          <h1 className="text-base sm:text-lg font-extrabold text-[#17191C] tracking-tight leading-none mt-0.5 hidden sm:block">
-            {getPageTitle(pathname)}
+        <div className="flex items-center gap-2 text-xs">
+          <span className="font-semibold text-[#5F6871] hidden sm:inline">Admin CMS</span>
+          <span className="text-[#929DA7] hidden sm:inline">/</span>
+          <h1 className="font-bold text-[#17191C] text-sm sm:text-base tracking-tight">
+            {currentPageTitle}
           </h1>
         </div>
       </div>
 
-      {/* Right: DB Status + Quick Actions */}
-      <div className="flex items-center gap-2 sm:gap-4">
+      {/* Right: Quick Actions & Profile */}
+      <div className="flex items-center gap-3">
+        {/* Refresh Action */}
         {onRefresh && (
           <button
             onClick={onRefresh}
@@ -88,20 +78,13 @@ export default function AdminHeader({
           </button>
         )}
 
-        {/* Database Connected Status Pill */}
-        <div className="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#17191C]/5 border border-[#D8DDE2] text-xs font-semibold text-[#17191C]">
-          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-          <span className="text-[#5F6871]">Supabase:</span>
-          <span className="text-[#17191C] font-bold">Connected</span>
-        </div>
-
-        {/* View Public Website */}
+        {/* View Public Website (Opens in same tab/page) */}
         <Link
           href="/"
-          target="_blank"
           className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#D8DDE2] text-xs font-semibold text-[#17191C] hover:bg-[#F5F6F7] transition-colors"
+          title="Open Public Website"
         >
-          <ExternalLink className="w-3.5 h-3.5 text-[#5F6871]" />
+          <Globe className="w-3.5 h-3.5 text-[#5F6871]" />
           <span>View Site</span>
         </Link>
 
@@ -115,7 +98,7 @@ export default function AdminHeader({
               {user?.name || "Administrator"}
             </p>
             <p className="text-[10px] text-[#5F6871] leading-none mt-1">
-              {user?.role || "Super Admin"}
+              {user?.role || "Admin"}
             </p>
           </div>
         </div>

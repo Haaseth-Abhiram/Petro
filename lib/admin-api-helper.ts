@@ -20,11 +20,12 @@ export async function requireSuperAdmin(): Promise<{ admin: SessionUser | null; 
   const { admin, errorResponse } = await requireAdmin();
   if (errorResponse) return { admin: null, errorResponse };
 
-  if (admin?.role !== "Super Admin") {
+  const role = (admin?.role || "").toLowerCase();
+  if (role !== "admin" && role !== "super admin") {
     return {
       admin: null,
       errorResponse: NextResponse.json(
-        { success: false, message: "Forbidden. Super Administrator privileges required." },
+        { success: false, message: "Forbidden. Administrator privileges required." },
         { status: 403 }
       ),
     };
