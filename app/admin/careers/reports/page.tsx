@@ -6,27 +6,13 @@ import {
   BarChart3,
   Download,
   Calendar,
-  Filter,
   RefreshCw,
-  Users,
   Briefcase,
   CheckCircle2,
-  Clock,
-  UserCheck,
   XCircle,
   TrendingUp,
   AlertCircle,
 } from "lucide-react";
-
-interface PositionCount {
-  role: string;
-  count: number;
-}
-
-interface TimelineItem {
-  date: string;
-  count: number;
-}
 
 interface ReportsData {
   stats: {
@@ -38,8 +24,8 @@ interface ReportsData {
     selected: number;
     rejected: number;
   };
-  byPosition: PositionCount[];
-  timeline: TimelineItem[];
+  byPosition: Array<{ role: string; count: number }>;
+  timeline: Array<{ date: string; count: number }>;
 }
 
 const defaultStats = {
@@ -52,9 +38,21 @@ const defaultStats = {
   rejected: 0,
 };
 
+function formatDisplayDate(val: any): string {
+  if (!val) return "—";
+  try {
+    const d = new Date(val);
+    if (isNaN(d.getTime())) return String(val);
+    return d.toLocaleDateString("en-IN", { month: "short", day: "numeric" });
+  } catch {
+    return String(val);
+  }
+}
+
 export default function RecruitmentReportsPage() {
   const [data, setData] = useState<ReportsData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [exporting, setExporting] = useState(false);
@@ -63,23 +61,36 @@ export default function RecruitmentReportsPage() {
   const fetchReports = async (start = startDate, end = endDate) => {
     try {
       setLoading(true);
+      setError(null);
       const params = new URLSearchParams();
       if (start) params.set("startDate", start);
       if (end) params.set("endDate", end);
 
       const res = await fetch(`/api/admin/careers/reports?${params.toString()}`);
+      if (!res.ok) {
+        throw new Error(`Failed to load reports (Status ${res.status})`);
+      }
       const d = await res.json();
-      if (d.success) {
+      if (d && d.success) {
         setData({
-          stats: d.stats || defaultStats,
-          byPosition: d.byPosition || d.byJob || [],
-          timeline: d.timeline || d.trends || [],
+          stats: {
+            totalApplications: Number(d.stats?.totalApplications) || 0,
+            new: Number(d.stats?.new) || 0,
+            underReview: Number(d.stats?.underReview) || 0,
+            shortlisted: Number(d.stats?.shortlisted) || 0,
+            interview: Number(d.stats?.interview) || 0,
+            selected: Number(d.stats?.selected) || 0,
+            rejected: Number(d.stats?.rejected) || 0,
+          },
+          byPosition: Array.isArray(d.byPosition) ? d.byPosition : (Array.isArray(d.byJob) ? d.byJob : []),
+          timeline: Array.isArray(d.timeline) ? d.timeline : (Array.isArray(d.trends) ? d.trends : []),
         });
       } else {
-        showToast("error", d.message || "Failed to load reports");
+        throw new Error(d?.message || "Failed to load reports");
       }
-    } catch {
-      showToast("error", "Network error while loading reports");
+    } catch (err: any) {
+      console.error("Error in fetchReports:", err);
+      setError(err?.message || "Could not retrieve recruitment reports");
     } finally {
       setLoading(false);
     }
@@ -100,7 +111,6 @@ export default function RecruitmentReportsPage() {
     if (startDate) params.set("startDate", startDate);
     if (endDate) params.set("endDate", endDate);
 
-    // Direct download trigger
     window.location.href = `/api/admin/careers/reports?${params.toString()}`;
     setTimeout(() => setExporting(false), 2000);
   };
@@ -124,16 +134,25 @@ export default function RecruitmentReportsPage() {
   };
 
   const stats = data?.stats || defaultStats;
-  const total = stats.totalApplications || 0;
+  const total = Number(stats.totalApplications) || 0;
   const byPosition = data?.byPosition || [];
   const timeline = data?.timeline || [];
+
+  if (loading) {
+    return (
+      <div className="flex flex-col items-center justify-center py-28 text-center">
+        <div className="w-10 h-10 border-4 border-[#FF4B32] border-t-transparent rounded-full animate-spin mb-4" />
+        <p className="text-sm font-semibold text-[#929DA7]">Calculating recruitment metrics…</p>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
       {/* Toast Notification */}
       {toast && (
         <div
-          className={`fixed bottom-6 right-6 z-50 flex items-center gap-2.5 px-4 py-3 rounded-xl shadow-2xl border text-sm font-semibold transition-all animate-[fadeIn_.3s_ease] ${
+          className={`fixed bottom-6 right-6 z-50 flex items-center gap-2.5 px-4 py-3 rounded-xl shadow-2xl border text-sm font-semibold transition-all ${
             toast.type === "success"
               ? "bg-[#17191C] border-[#FF4B32] text-white"
               : "bg-red-500 border-red-600 text-white"
@@ -156,7 +175,7 @@ export default function RecruitmentReportsPage() {
           </div>
           <h1 className="text-2xl font-black text-[#17191C] tracking-tight flex items-center gap-2.5">
             <BarChart3 className="w-6 h-6 text-[#FF4B32]" />
-            Recruitment Reports & Analytics
+            Recruitment Reports &amp; Analytics
           </h1>
           <p className="text-sm text-[#5F6871] mt-0.5">
             Analyze applicant flow, hiring pipeline conversion, and export candidate data to CSV.
@@ -245,10 +264,17 @@ export default function RecruitmentReportsPage() {
         </div>
       </div>
 
-      {loading ? (
-        <div className="py-24 text-center bg-white rounded-2xl border border-[#D8DDE2]">
-          <RefreshCw className="w-8 h-8 text-[#FF4B32] animate-spin mx-auto mb-3" />
-          <p className="text-sm font-bold text-[#17191C]">Calculating recruitment metrics...</p>
+      {error ? (
+        <div className="bg-red-50 border border-red-200 rounded-2xl p-6 text-center">
+          <AlertCircle className="w-8 h-8 text-red-500 mx-auto mb-2" />
+          <h3 className="text-sm font-bold text-red-800">Unable to load reports</h3>
+          <p className="text-xs text-red-600 mt-1 mb-4">{error}</p>
+          <button
+            onClick={() => fetchReports()}
+            className="px-4 py-2 bg-red-600 text-white text-xs font-bold rounded-xl hover:bg-red-700 transition"
+          >
+            Try Again
+          </button>
         </div>
       ) : (
         <>
@@ -414,13 +440,13 @@ export default function RecruitmentReportsPage() {
               </div>
             ) : (
               <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-2.5">
-                {timeline.slice(-14).map((t) => (
+                {timeline.slice(-14).map((t, idx) => (
                   <div
-                    key={t.date}
+                    key={(t.date || "d") + idx}
                     className="p-3 rounded-xl bg-[#F5F6F7] border border-[#D8DDE2] text-center"
                   >
                     <span className="text-[11px] font-semibold text-[#5F6871] block mb-1">
-                      {new Date(t.date).toLocaleDateString("en-IN", { month: "short", day: "numeric" })}
+                      {formatDisplayDate(t.date)}
                     </span>
                     <span className="text-lg font-black text-[#17191C]">{t.count}</span>
                     <span className="text-[10px] text-[#929DA7] block mt-0.5">received</span>

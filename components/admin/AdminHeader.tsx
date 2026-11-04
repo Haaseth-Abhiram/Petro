@@ -29,7 +29,8 @@ export default function AdminHeader({
   onRefresh,
   isRefreshing = false,
 }: AdminHeaderProps) {
-  const pathname = usePathname();
+  const rawPathname = usePathname();
+  const pathname = rawPathname || "";
 
   // Generate breadcrumb from pathname
   const segments = pathname

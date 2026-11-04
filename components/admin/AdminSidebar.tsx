@@ -48,7 +48,8 @@ export default function AdminSidebar({
   rfqBadge = 0,
   applicationsBadge = 0,
 }: AdminSidebarProps) {
-  const pathname = usePathname();
+  const rawPathname = usePathname();
+  const pathname = rawPathname || "";
   const router = useRouter();
 
   const handleLogout = async () => {
