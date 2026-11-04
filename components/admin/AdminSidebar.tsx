@@ -24,6 +24,7 @@ import {
   Shield,
   Briefcase,
   UserCheck,
+  FolderOpen,
   BarChart3,
 } from "lucide-react";
 
@@ -127,6 +128,11 @@ export default function AdminSidebar({
       href: "/admin/careers/applications",
       icon: UserCheck,
       badge: applicationsBadge > 0 ? applicationsBadge : undefined,
+    },
+    {
+      label: "Resume Folder",
+      href: "/admin/careers/applications?tab=resumes",
+      icon: FolderOpen,
     },
     {
       label: "Job Categories",

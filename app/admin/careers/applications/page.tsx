@@ -80,6 +80,17 @@ export default function CandidateApplicationsPage() {
   // In-app Resume Preview Modal
   const [previewApp, setPreviewApp] = useState<Application | null>(null);
 
+  // Sync tab/view from URL search params on mount
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const sp = new URLSearchParams(window.location.search);
+      const tab = sp.get("tab") || sp.get("view");
+      if (tab === "resumes" || tab === "resume") {
+        setViewMode("resumes");
+      }
+    }
+  }, []);
+
   const fetchApplications = async () => {
     try {
       setLoading(true);
@@ -191,29 +202,39 @@ export default function CandidateApplicationsPage() {
           <div className="inline-flex rounded-xl bg-[#F5F6F7] p-1 border border-[#D8DDE2]">
             <button
               type="button"
-              onClick={() => setViewMode("table")}
-              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+              onClick={() => {
+                setViewMode("table");
+                if (typeof window !== "undefined") {
+                  window.history.replaceState(null, "", "/admin/careers/applications");
+                }
+              }}
+              className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-bold transition-all ${
                 viewMode === "table"
-                  ? "bg-white text-[#17191C] shadow-sm"
+                  ? "bg-white text-[#17191C] shadow-sm ring-1 ring-black/5"
                   : "text-[#5F6871] hover:text-[#17191C]"
               }`}
             >
-              <LayoutList className="w-3.5 h-3.5 text-[#FF4B32]" />
-              <span>Table View</span>
+              <LayoutList className="w-4 h-4 text-[#FF4B32]" />
+              <span>Applications List</span>
             </button>
             <button
               type="button"
-              onClick={() => setViewMode("resumes")}
-              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+              onClick={() => {
+                setViewMode("resumes");
+                if (typeof window !== "undefined") {
+                  window.history.replaceState(null, "", "/admin/careers/applications?tab=resumes");
+                }
+              }}
+              className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-xs font-bold transition-all ${
                 viewMode === "resumes"
-                  ? "bg-white text-[#17191C] shadow-sm"
+                  ? "bg-white text-[#17191C] shadow-sm ring-1 ring-[#FFA028]/30"
                   : "text-[#5F6871] hover:text-[#17191C]"
               }`}
             >
-              <FolderOpen className="w-3.5 h-3.5 text-[#FFA028]" />
+              <FolderOpen className="w-4 h-4 text-[#FFA028]" />
               <span>Resume Folder</span>
               {total > 0 && (
-                <span className="ml-1 px-1.5 py-0.2 rounded-full text-[10px] font-extrabold bg-[#FF4B32] text-white">
+                <span className="ml-1 px-1.5 py-0.5 rounded-full text-[10px] font-extrabold bg-[#FF4B32] text-white">
                   {total}
                 </span>
               )}
@@ -224,21 +245,21 @@ export default function CandidateApplicationsPage() {
           <button
             type="button"
             onClick={handleExportExcel}
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 text-xs font-bold transition-colors shadow-sm"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-colors shadow-md shadow-emerald-600/20"
             title="Download candidates data formatted for Microsoft Excel"
           >
-            <FileSpreadsheet className="w-4 h-4 text-emerald-600" />
-            <span>Export Excel</span>
+            <FileSpreadsheet className="w-4 h-4 text-white" />
+            <span>Download Excel</span>
           </button>
 
           {/* Download PDF */}
           <button
             type="button"
             onClick={handleExportPdf}
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200 text-xs font-bold transition-colors shadow-sm"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#FF4B32] to-[#FFA028] hover:opacity-95 text-white text-xs font-bold transition-colors shadow-md shadow-[#FF4B32]/20"
             title="Download printable PDF summary report"
           >
-            <Download className="w-4 h-4 text-rose-600" />
+            <Download className="w-4 h-4 text-white" />
             <span>Download PDF</span>
           </button>
         </div>
@@ -416,17 +437,17 @@ export default function CandidateApplicationsPage() {
                         className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-[#17191C] hover:bg-[#FF4B32] text-white text-xs font-bold transition-colors shadow-sm"
                       >
                         <Eye className="w-3.5 h-3.5" />
-                        <span>Preview</span>
+                        <span>Preview Resume</span>
                       </button>
 
                       <a
                         href={`/api/admin/careers/applications/${app.id}/cv`}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl border border-[#D8DDE2] hover:border-[#17191C] text-[#17191C] text-xs font-bold hover:bg-[#F5F6F7] transition-colors"
+                        className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl border border-[#D8DDE2] hover:border-[#FF4B32] text-[#17191C] hover:text-[#FF4B32] text-xs font-bold hover:bg-[#F5F6F7] transition-colors"
                       >
                         <Download className="w-3.5 h-3.5 text-[#FF4B32]" />
-                        <span>Download</span>
+                        <span>Download CV</span>
                       </a>
                     </div>
                   </div>
