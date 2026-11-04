@@ -61,7 +61,6 @@ export default function AdminDashboardPage() {
   const stats = data?.stats;
   const recentRfqs = data?.recentRfqs || [];
   const recentEnquiries = data?.recentEnquiries || [];
-  const recentLogs = data?.recentLogs || [];
 
   return (
     <div className="space-y-8 animate-in fade-in duration-300">
@@ -412,62 +411,6 @@ export default function AdminDashboardPage() {
               Update headlines & phone/email
             </p>
           </Link>
-        </div>
-      </div>
-
-      {/* Security Audit Log Section */}
-      <div className="bg-white rounded-xl border border-[#D8DDE2] shadow-sm overflow-hidden">
-        <div className="p-5 border-b border-[#D8DDE2] flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-[#17191C] text-white flex items-center justify-center">
-              <Clock className="w-4 h-4" />
-            </div>
-            <div>
-              <h3 className="text-sm font-bold text-[#17191C]">
-                Security Audit Log
-              </h3>
-              <p className="text-[11px] text-[#5F6871]">
-                Live chronological record of administrative operations
-              </p>
-            </div>
-          </div>
-          <Link
-            href="/admin/audit-logs"
-            className="text-xs font-bold text-[#FF4B32] hover:text-[#E03820] flex items-center gap-1"
-          >
-            <span>View Full Log</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </Link>
-        </div>
-
-        <div className="divide-y divide-[#D8DDE2]">
-          {recentLogs.length === 0 ? (
-            <div className="p-8 text-center text-xs text-[#5F6871]">
-              No audit logs recorded yet.
-            </div>
-          ) : (
-            recentLogs.map((log: any) => (
-              <div
-                key={log.id}
-                className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs"
-              >
-                <div className="flex items-center gap-3">
-                  <span className="px-2 py-0.5 rounded bg-[#17191C] text-white text-[10px] font-mono font-bold shrink-0">
-                    {log.action}
-                  </span>
-                  <span className="font-semibold text-[#17191C]">
-                    {log.admin_email}
-                  </span>
-                  <span className="text-[#5F6871] hidden md:inline">
-                    on {log.entity_type}
-                  </span>
-                </div>
-                <span className="text-[#929DA7] text-[11px]">
-                  {new Date(log.created_at).toLocaleString()}
-                </span>
-              </div>
-            ))
-          )}
         </div>
       </div>
     </div>

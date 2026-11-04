@@ -78,13 +78,6 @@ export default function AdminHeader({
           </button>
         )}
 
-        {/* Database Connected Status Pill */}
-        <div className="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#17191C]/5 border border-[#D8DDE2] text-xs font-semibold text-[#17191C]">
-          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-          <span className="text-[#5F6871]">Supabase:</span>
-          <span className="text-[#17191C] font-bold">Connected</span>
-        </div>
-
         {/* View Public Website (Opens in same tab/page) */}
         <Link
           href="/"
