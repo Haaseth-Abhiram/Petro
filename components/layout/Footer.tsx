@@ -8,7 +8,7 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-[#17191C] text-white/75 text-sm border-t border-[#2A2E34]">
+    <footer className="bg-[#17191C]/90 text-white/75 text-sm border-t border-[#2A2E34]">
       {/* Main Footer Container */}
       <div className="max-w-[1400px] mx-auto px-6 py-16 lg:py-20">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8">
@@ -26,23 +26,23 @@ export default function Footer() {
             <p className="text-white/65 text-[14px] leading-relaxed max-w-sm">
               Sourcing and supply partner for oil & gas, petrochemical, process utilities and industrial analyser systems. Two divisions under one roof — chemicals & water treatment, and precision instrumentation.
             </p>
-            <div className="pt-2 text-[13px] text-white/80 space-y-2.5">
+            <div className="pt-2 text-[13px] text-white/65 space-y-2.5">
               <a
                 href={`tel:${COMPANY_INFO.contact.phoneRaw}`}
-                className="flex items-center text-white/80 hover:text-[#FF4B32] transition-colors"
+                className="flex items-center text-white/65 hover:text-[#C80808] transition-colors"
               >
-                <Phone className="w-3.5 h-3.5 text-[#FF4B32] mr-2 shrink-0" />
+                <Phone className="w-3.5 h-3.5 text-[#C80808] mr-2 shrink-0" />
                 <span>{COMPANY_INFO.contact.phone}</span>
               </a>
               <a
                 href={`mailto:${COMPANY_INFO.contact.email}`}
-                className="flex items-center text-white/80 hover:text-[#FF4B32] transition-colors"
+                className="flex items-center text-white/65 hover:text-[#C80808] transition-colors"
               >
-                <Mail className="w-3.5 h-3.5 text-[#FF4B32] mr-2 shrink-0" />
+                <Mail className="w-3.5 h-3.5 text-[#C80808] mr-2 shrink-0" />
                 <span>{COMPANY_INFO.contact.email}</span>
               </a>
-              <div className="flex items-start text-white/60">
-                <MapPin className="w-3.5 h-3.5 text-[#FF4B32] mr-2 shrink-0 mt-0.5" />
+              <div className="flex items-start text-white/65">
+                <MapPin className="w-3.5 h-3.5 text-[#C80808] mr-2 shrink-0 mt-0.5" />
                 <span>{COMPANY_INFO.contact.address}</span>
               </div>
             </div>
@@ -80,12 +80,12 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/login" className="text-white/70 hover:text-white transition-colors">
-                  Login
+                <Link href="/careers" className="text-white/70 hover:text-white transition-colors">
+                  Careers
                 </Link>
               </li>
               <li>
-                <Link href="/request-a-quote" className="text-[#FF4B32] font-semibold hover:underline flex items-center">
+                <Link href="/request-a-quote" className="text-[#C80808] font-semibold hover:underline flex items-center">
                   <span>Request a quote</span>
                   <ArrowRight className="w-3 h-3 ml-1" />
                 </Link>
@@ -195,9 +195,9 @@ export default function Footer() {
 
       {/* Bottom Sub-footer */}
       <div className="border-t border-[#2A2E34] bg-[#121416] py-6">
-        <div className="max-w-[1400px] mx-auto px-6 flex flex-col md:flex-row items-center justify-between text-xs text-white/50 space-y-3 md:space-y-0">
+        <div className="max-w-[1400px] mx-auto px-6 flex flex-col md:flex-row items-center justify-between text-xs text-white/65 space-y-3 md:space-y-0">
           <p>© {currentYear} {COMPANY_INFO.legalName}. All rights reserved.</p>
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-white/60">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-white/65">
             <span>ASME</span>
             <span>•</span>
             <span>NACE MR0175</span>
@@ -209,11 +209,7 @@ export default function Footer() {
             <span>EN 10204 3.1 / 3.2</span>
             <span>•</span>
             <span>ISO 9001:2015</span>
-            <span>•</span>
-            <Link href="/login" className="text-[#FF4B32] hover:underline font-bold">
-              Login
-            </Link>
-          </div>
+            </div>
         </div>
       </div>
     </footer>

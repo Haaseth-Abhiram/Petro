@@ -106,7 +106,7 @@ export default function RFQForm({
   return (
     <div className="bg-white rounded-[8px] border border-[#D8DDE2] shadow-[0_1px_2px_rgba(16,24,38,0.06),0_4px_12px_rgba(16,24,38,0.04)] overflow-hidden">
       {/* Form Header */}
-      <div className="bg-[#17191C] px-8 py-6 text-white border-b border-[#2A2E34]">
+      <div className="bg-[#17191C]/90 px-8 py-6 text-white border-b border-[#2A2E34]">
         <span className="eyebrow eyebrow-gold">TECHNICAL SPECIFICATION SOURCING</span>
         <h3 className="text-xl font-bold font-['Plus_Jakarta_Sans'] text-white mt-1">
           Request for Quotation (RFQ)
@@ -133,7 +133,7 @@ export default function RFQForm({
                 <span className="text-xs font-bold uppercase tracking-wider text-[#5F6871]">
                   RFQ Submission Summary
                 </span>
-                <span className="text-xs font-mono bg-[#FF4B32]/10 text-[#FF4B32] px-2 py-0.5 rounded font-bold">
+                <span className="text-xs font-mono bg-[#C80808]/10 text-[#C80808] px-2 py-0.5 rounded font-bold">
                   PETRO-RFQ-{(Math.random() * 90000 + 10000).toFixed(0)}
                 </span>
               </div>
@@ -173,8 +173,8 @@ export default function RFQForm({
               </div>
             </div>
 
-            <div className="p-3 bg-[#FF4B32]/5 border border-[#FF4B32]/20 rounded-[4px] text-xs text-[#5F6871] flex items-start space-x-2">
-              <Info className="w-4 h-4 text-[#FF4B32] shrink-0 mt-0.5" />
+            <div className="p-3 bg-[#C80808]/5 border border-[#C80808]/20 rounded-[4px] text-xs text-[#5F6871] flex items-start space-x-2">
+              <Info className="w-4 h-4 text-[#C80808] shrink-0 mt-0.5" />
               <span>Phase 1 Frontend Demonstration. The form is ready to be bound to a backend API handler in Phase 2.</span>
             </div>
 
@@ -191,7 +191,7 @@ export default function RFQForm({
             {/* Section 1 */}
             <div>
               <div className="flex items-center space-x-2 pb-2 mb-4 border-b border-[#D8DDE2]">
-                <span className="w-6 h-6 rounded-full bg-[#FF4B32] text-white font-bold text-xs flex items-center justify-center">
+                <span className="w-6 h-6 rounded-full bg-[#C80808] text-white font-bold text-xs flex items-center justify-center">
                   1
                 </span>
                 <h4 className="font-['Plus_Jakarta_Sans'] text-sm font-bold uppercase tracking-wider text-[#17191C]">
@@ -202,69 +202,69 @@ export default function RFQForm({
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="font-['Plus_Jakarta_Sans'] text-xs font-bold text-[#17191C] block mb-1.5">
-                    Full name <span className="text-[#FF4B32]">*</span>
+                    Full name <span className="text-[#C80808]">*</span>
                   </label>
                   <input
                     type="text"
                     {...register("fullName")}
                     placeholder="e.g. Ramesh Patel"
-                    className={`w-full px-4 py-3 rounded-[4px] border text-sm text-[#17191C] focus:outline-none focus:border-[#FF4B32] focus:ring-2 focus:ring-[#FF4B32]/10 transition-colors ${
-                      errors.fullName ? "border-[#FF4B32]" : "border-[#D8DDE2]"
+                    className={`w-full px-4 py-3 rounded-[4px] border text-sm text-[#17191C] focus:outline-none focus:border-[#C80808] focus:ring-2 focus:ring-[#C80808]/10 transition-colors ${
+                      errors.fullName ? "border-[#C80808]" : "border-[#D8DDE2]"
                     }`}
                   />
                   {errors.fullName && (
-                    <p className="text-xs text-[#FF4B32] mt-1">{errors.fullName.message}</p>
+                    <p className="text-xs text-[#C80808] mt-1">{errors.fullName.message}</p>
                   )}
                 </div>
 
                 <div>
                   <label className="font-['Plus_Jakarta_Sans'] text-xs font-bold text-[#17191C] block mb-1.5">
-                    Company Name <span className="text-[#FF4B32]">*</span>
+                    Company Name <span className="text-[#C80808]">*</span>
                   </label>
                   <input
                     type="text"
                     {...register("companyName")}
                     placeholder="e.g. Reliance Projects Ltd"
-                    className={`w-full px-4 py-3 rounded-[4px] border text-sm text-[#17191C] focus:outline-none focus:border-[#FF4B32] focus:ring-2 focus:ring-[#FF4B32]/10 transition-colors ${
-                      errors.companyName ? "border-[#FF4B32]" : "border-[#D8DDE2]"
+                    className={`w-full px-4 py-3 rounded-[4px] border text-sm text-[#17191C] focus:outline-none focus:border-[#C80808] focus:ring-2 focus:ring-[#C80808]/10 transition-colors ${
+                      errors.companyName ? "border-[#C80808]" : "border-[#D8DDE2]"
                     }`}
                   />
                   {errors.companyName && (
-                    <p className="text-xs text-[#FF4B32] mt-1">{errors.companyName.message}</p>
+                    <p className="text-xs text-[#C80808] mt-1">{errors.companyName.message}</p>
                   )}
                 </div>
 
                 <div>
                   <label className="font-['Plus_Jakarta_Sans'] text-xs font-bold text-[#17191C] block mb-1.5">
-                    Corporate Email <span className="text-[#FF4B32]">*</span>
+                    Corporate Email <span className="text-[#C80808]">*</span>
                   </label>
                   <input
                     type="email"
                     {...register("email")}
                     placeholder="procurement@company.com"
-                    className={`w-full px-4 py-3 rounded-[4px] border text-sm text-[#17191C] focus:outline-none focus:border-[#FF4B32] focus:ring-2 focus:ring-[#FF4B32]/10 transition-colors ${
-                      errors.email ? "border-[#FF4B32]" : "border-[#D8DDE2]"
+                    className={`w-full px-4 py-3 rounded-[4px] border text-sm text-[#17191C] focus:outline-none focus:border-[#C80808] focus:ring-2 focus:ring-[#C80808]/10 transition-colors ${
+                      errors.email ? "border-[#C80808]" : "border-[#D8DDE2]"
                     }`}
                   />
                   {errors.email && (
-                    <p className="text-xs text-[#FF4B32] mt-1">{errors.email.message}</p>
+                    <p className="text-xs text-[#C80808] mt-1">{errors.email.message}</p>
                   )}
                 </div>
 
                 <div>
                   <label className="font-['Plus_Jakarta_Sans'] text-xs font-bold text-[#17191C] block mb-1.5">
-                    Phone / WhatsApp <span className="text-[#FF4B32]">*</span>
+                    Phone / WhatsApp <span className="text-[#C80808]">*</span>
                   </label>
                   <input
                     type="tel"
                     {...register("phone")}
                     placeholder="+91 98765 43210"
-                    className={`w-full px-4 py-3 rounded-[4px] border text-sm text-[#17191C] focus:outline-none focus:border-[#FF4B32] focus:ring-2 focus:ring-[#FF4B32]/10 transition-colors ${
-                      errors.phone ? "border-[#FF4B32]" : "border-[#D8DDE2]"
+                    className={`w-full px-4 py-3 rounded-[4px] border text-sm text-[#17191C] focus:outline-none focus:border-[#C80808] focus:ring-2 focus:ring-[#C80808]/10 transition-colors ${
+                      errors.phone ? "border-[#C80808]" : "border-[#D8DDE2]"
                     }`}
                   />
                   {errors.phone && (
-                    <p className="text-xs text-[#FF4B32] mt-1">{errors.phone.message}</p>
+                    <p className="text-xs text-[#C80808] mt-1">{errors.phone.message}</p>
                   )}
                 </div>
               </div>
@@ -273,7 +273,7 @@ export default function RFQForm({
             {/* Section 2 */}
             <div>
               <div className="flex items-center space-x-2 pb-2 mb-4 border-b border-[#D8DDE2]">
-                <span className="w-6 h-6 rounded-full bg-[#FF4B32] text-white font-bold text-xs flex items-center justify-center">
+                <span className="w-6 h-6 rounded-full bg-[#C80808] text-white font-bold text-xs flex items-center justify-center">
                   2
                 </span>
                 <h4 className="font-['Plus_Jakarta_Sans'] text-sm font-bold uppercase tracking-wider text-[#17191C]">
@@ -284,11 +284,11 @@ export default function RFQForm({
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="font-['Plus_Jakarta_Sans'] text-xs font-bold text-[#17191C] block mb-1.5">
-                    Product Category <span className="text-[#FF4B32]">*</span>
+                    Product Category <span className="text-[#C80808]">*</span>
                   </label>
                   <select
                     {...register("productCategory")}
-                    className="w-full px-4 py-3 rounded-[4px] border border-[#D8DDE2] text-sm text-[#17191C] bg-white focus:outline-none focus:border-[#FF4B32]"
+                    className="w-full px-4 py-3 rounded-[4px] border border-[#D8DDE2] text-sm text-[#17191C] bg-white focus:outline-none focus:border-[#C80808]"
                   >
                     <optgroup label="Instrumentation & Valves">
                       <option value="Tube Fittings">Tube Fittings (Twin-Ferrule)</option>
@@ -315,46 +315,46 @@ export default function RFQForm({
 
                 <div>
                   <label className="font-['Plus_Jakarta_Sans'] text-xs font-bold text-[#17191C] block mb-1.5">
-                    Product or Equipment Name <span className="text-[#FF4B32]">*</span>
+                    Product or Equipment Name <span className="text-[#C80808]">*</span>
                   </label>
                   <input
                     type="text"
                     {...register("productName")}
                     placeholder="e.g. 1/2-inch SS316 5-Way Manifold or RO Antiscalant"
-                    className={`w-full px-4 py-3 rounded-[4px] border text-sm text-[#17191C] focus:outline-none focus:border-[#FF4B32] focus:ring-2 focus:ring-[#FF4B32]/10 transition-colors ${
-                      errors.productName ? "border-[#FF4B32]" : "border-[#D8DDE2]"
+                    className={`w-full px-4 py-3 rounded-[4px] border text-sm text-[#17191C] focus:outline-none focus:border-[#C80808] focus:ring-2 focus:ring-[#C80808]/10 transition-colors ${
+                      errors.productName ? "border-[#C80808]" : "border-[#D8DDE2]"
                     }`}
                   />
                   {errors.productName && (
-                    <p className="text-xs text-[#FF4B32] mt-1">{errors.productName.message}</p>
+                    <p className="text-xs text-[#C80808] mt-1">{errors.productName.message}</p>
                   )}
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="font-['Plus_Jakarta_Sans'] text-xs font-bold text-[#17191C] block mb-1.5">
-                      Quantity <span className="text-[#FF4B32]">*</span>
+                      Quantity <span className="text-[#C80808]">*</span>
                     </label>
                     <input
                       type="text"
                       {...register("quantity")}
                       placeholder="e.g. 100"
-                      className={`w-full px-4 py-3 rounded-[4px] border text-sm text-[#17191C] focus:outline-none focus:border-[#FF4B32] focus:ring-2 focus:ring-[#FF4B32]/10 transition-colors ${
-                        errors.quantity ? "border-[#FF4B32]" : "border-[#D8DDE2]"
+                      className={`w-full px-4 py-3 rounded-[4px] border text-sm text-[#17191C] focus:outline-none focus:border-[#C80808] focus:ring-2 focus:ring-[#C80808]/10 transition-colors ${
+                        errors.quantity ? "border-[#C80808]" : "border-[#D8DDE2]"
                       }`}
                     />
                     {errors.quantity && (
-                      <p className="text-xs text-[#FF4B32] mt-1">{errors.quantity.message}</p>
+                      <p className="text-xs text-[#C80808] mt-1">{errors.quantity.message}</p>
                     )}
                   </div>
 
                   <div>
                     <label className="font-['Plus_Jakarta_Sans'] text-xs font-bold text-[#17191C] block mb-1.5">
-                      Unit <span className="text-[#FF4B32]">*</span>
+                      Unit <span className="text-[#C80808]">*</span>
                     </label>
                     <select
                       {...register("unitOfMeasurement")}
-                      className="w-full px-3 py-3 rounded-[4px] border border-[#D8DDE2] text-sm text-[#17191C] bg-white focus:outline-none focus:border-[#FF4B32]"
+                      className="w-full px-3 py-3 rounded-[4px] border border-[#D8DDE2] text-sm text-[#17191C] bg-white focus:outline-none focus:border-[#C80808]"
                     >
                       <option value="Pieces (Pcs)">Pieces (Pcs)</option>
                       <option value="Meters (Mtr)">Meters (Mtr)</option>
@@ -368,11 +368,11 @@ export default function RFQForm({
 
                 <div>
                   <label className="font-['Plus_Jakarta_Sans'] text-xs font-bold text-[#17191C] block mb-1.5">
-                    Primary Sector / Industry <span className="text-[#FF4B32]">*</span>
+                    Primary Sector / Industry <span className="text-[#C80808]">*</span>
                   </label>
                   <select
                     {...register("industry")}
-                    className="w-full px-4 py-3 rounded-[4px] border border-[#D8DDE2] text-sm text-[#17191C] bg-white focus:outline-none focus:border-[#FF4B32]"
+                    className="w-full px-4 py-3 rounded-[4px] border border-[#D8DDE2] text-sm text-[#17191C] bg-white focus:outline-none focus:border-[#C80808]"
                   >
                     <option value="Oil & Gas (Upstream & Midstream)">Oil &amp; Gas (Upstream &amp; Midstream)</option>
                     <option value="Petrochemical & Refining">Petrochemical &amp; Refining</option>
@@ -386,18 +386,18 @@ export default function RFQForm({
 
               <div className="mt-4">
                 <label className="font-['Plus_Jakarta_Sans'] text-xs font-bold text-[#17191C] block mb-1.5">
-                  Technical Specifications &amp; Parameters <span className="text-[#FF4B32]">*</span>
+                  Technical Specifications &amp; Parameters <span className="text-[#C80808]">*</span>
                 </label>
                 <textarea
                   rows={3}
                   {...register("technicalSpecifications")}
                   placeholder="Detail pressure rating (6000 PSI), body metallurgy (SS316, Inconel, Monel), end connections, NACE MR0175, or raw water analysis..."
-                  className={`w-full px-4 py-3 rounded-[4px] border text-sm text-[#17191C] focus:outline-none focus:border-[#FF4B32] focus:ring-2 focus:ring-[#FF4B32]/10 transition-colors ${
-                    errors.technicalSpecifications ? "border-[#FF4B32]" : "border-[#D8DDE2]"
+                  className={`w-full px-4 py-3 rounded-[4px] border text-sm text-[#17191C] focus:outline-none focus:border-[#C80808] focus:ring-2 focus:ring-[#C80808]/10 transition-colors ${
+                    errors.technicalSpecifications ? "border-[#C80808]" : "border-[#D8DDE2]"
                   }`}
                 />
                 {errors.technicalSpecifications && (
-                  <p className="text-xs text-[#FF4B32] mt-1">{errors.technicalSpecifications.message}</p>
+                  <p className="text-xs text-[#C80808] mt-1">{errors.technicalSpecifications.message}</p>
                 )}
               </div>
             </div>
@@ -405,7 +405,7 @@ export default function RFQForm({
             {/* Section 3 */}
             <div>
               <div className="flex items-center space-x-2 pb-2 mb-4 border-b border-[#D8DDE2]">
-                <span className="w-6 h-6 rounded-full bg-[#FF4B32] text-white font-bold text-xs flex items-center justify-center">
+                <span className="w-6 h-6 rounded-full bg-[#C80808] text-white font-bold text-xs flex items-center justify-center">
                   3
                 </span>
                 <h4 className="font-['Plus_Jakarta_Sans'] text-sm font-bold uppercase tracking-wider text-[#17191C]">
@@ -416,35 +416,35 @@ export default function RFQForm({
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="font-['Plus_Jakarta_Sans'] text-xs font-bold text-[#17191C] block mb-1.5">
-                    Delivery Destination / Port <span className="text-[#FF4B32]">*</span>
+                    Delivery Destination / Port <span className="text-[#C80808]">*</span>
                   </label>
                   <input
                     type="text"
                     {...register("deliveryLocation")}
                     placeholder="e.g. Mumbai CIF / Hazira Site"
-                    className={`w-full px-4 py-3 rounded-[4px] border text-sm text-[#17191C] focus:outline-none focus:border-[#FF4B32] focus:ring-2 focus:ring-[#FF4B32]/10 transition-colors ${
-                      errors.deliveryLocation ? "border-[#FF4B32]" : "border-[#D8DDE2]"
+                    className={`w-full px-4 py-3 rounded-[4px] border text-sm text-[#17191C] focus:outline-none focus:border-[#C80808] focus:ring-2 focus:ring-[#C80808]/10 transition-colors ${
+                      errors.deliveryLocation ? "border-[#C80808]" : "border-[#D8DDE2]"
                     }`}
                   />
                   {errors.deliveryLocation && (
-                    <p className="text-xs text-[#FF4B32] mt-1">{errors.deliveryLocation.message}</p>
+                    <p className="text-xs text-[#C80808] mt-1">{errors.deliveryLocation.message}</p>
                   )}
                 </div>
 
                 <div>
                   <label className="font-['Plus_Jakarta_Sans'] text-xs font-bold text-[#17191C] block mb-1.5">
-                    Target Delivery Date / Timeline <span className="text-[#FF4B32]">*</span>
+                    Target Delivery Date / Timeline <span className="text-[#C80808]">*</span>
                   </label>
                   <input
                     type="text"
                     {...register("requiredDeliveryDate")}
                     placeholder="e.g. 4 Weeks / Immediate Shutdown"
-                    className={`w-full px-4 py-3 rounded-[4px] border text-sm text-[#17191C] focus:outline-none focus:border-[#FF4B32] focus:ring-2 focus:ring-[#FF4B32]/10 transition-colors ${
-                      errors.requiredDeliveryDate ? "border-[#FF4B32]" : "border-[#D8DDE2]"
+                    className={`w-full px-4 py-3 rounded-[4px] border text-sm text-[#17191C] focus:outline-none focus:border-[#C80808] focus:ring-2 focus:ring-[#C80808]/10 transition-colors ${
+                      errors.requiredDeliveryDate ? "border-[#C80808]" : "border-[#D8DDE2]"
                     }`}
                   />
                   {errors.requiredDeliveryDate && (
-                    <p className="text-xs text-[#FF4B32] mt-1">{errors.requiredDeliveryDate.message}</p>
+                    <p className="text-xs text-[#C80808] mt-1">{errors.requiredDeliveryDate.message}</p>
                   )}
                 </div>
               </div>
@@ -457,7 +457,7 @@ export default function RFQForm({
                 {selectedFile ? (
                   <div className="flex items-center justify-between p-3.5 rounded-[4px] bg-[#F5F6F7] border border-[#D8DDE2]">
                     <div className="flex items-center space-x-3 truncate">
-                      <FileCheck2 className="w-5 h-5 text-[#FF4B32] shrink-0" />
+                      <FileCheck2 className="w-5 h-5 text-[#C80808] shrink-0" />
                       <div className="truncate">
                         <p className="text-xs font-bold text-[#17191C] truncate">
                           {selectedFile.name}
@@ -470,13 +470,13 @@ export default function RFQForm({
                     <button
                       type="button"
                       onClick={handleRemoveFile}
-                      className="p-1 text-[#5F6871] hover:text-[#FF4B32]"
+                      className="p-1 text-[#5F6871] hover:text-[#C80808]"
                     >
                       <X className="w-4 h-4" />
                     </button>
                   </div>
                 ) : (
-                  <label className="border border-dashed border-[#D8DDE2] hover:border-[#FF4B32] rounded-[4px] p-5 flex flex-col items-center justify-center cursor-pointer bg-[#F5F6F7] hover:bg-white transition-colors">
+                  <label className="border border-dashed border-[#D8DDE2] hover:border-[#C80808] rounded-[4px] p-5 flex flex-col items-center justify-center cursor-pointer bg-[#F5F6F7] hover:bg-white transition-colors">
                     <UploadCloud className="w-6 h-6 text-[#5F6871] mb-1" />
                     <span className="text-xs font-semibold text-[#17191C]">
                       Click to browse datasheet or RFQ documents

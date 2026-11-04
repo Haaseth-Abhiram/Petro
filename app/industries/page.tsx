@@ -8,12 +8,12 @@ export default function IndustriesPage() {
   return (
     <div className="w-full">
       {/* 1. HERO */}
-      <section className="relative bg-[#17191C] text-white py-20 lg:py-24 overflow-hidden">
+      <section className="relative bg-[#17191C]/90 text-white py-20 lg:py-24 overflow-hidden">
         <div
-          className="absolute inset-0 bg-cover bg-center opacity-25 z-0"
+          className="absolute inset-0 bg-cover bg-center opacity-40 z-0"
           style={{ backgroundImage: "url('/assets/img/tube-fittings.jpg')" }}
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#17191C]/95 via-[#17191C]/90 to-[#17191C]/75 z-0" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#17191C]/85 via-[#17191C]/75 to-[#17191C]/55 z-0" />
 
         <div className="relative z-10 max-w-[1400px] mx-auto px-6">
           <div className="max-w-[820px]">
@@ -54,7 +54,7 @@ export default function IndustriesPage() {
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#17191C]/85 via-transparent to-transparent" />
                   <div className="absolute bottom-4 left-5 right-5 text-white">
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#FF4B32] block mb-1">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#C80808] block mb-1">
                       Sector Application
                     </span>
                     <h3 className="text-xl font-bold text-white">
@@ -76,7 +76,7 @@ export default function IndustriesPage() {
                       <ul className="space-y-1.5 text-xs text-[#5F6871]">
                         {ind.commonRequirements.map((req, idx) => (
                           <li key={idx} className="flex items-start">
-                            <CheckCircle2 className="w-3.5 h-3.5 text-[#FF4B32] mr-2 shrink-0 mt-0.5" />
+                            <CheckCircle2 className="w-3.5 h-3.5 text-[#C80808] mr-2 shrink-0 mt-0.5" />
                             <span>{req}</span>
                           </li>
                         ))}
@@ -87,7 +87,7 @@ export default function IndustriesPage() {
                   <div className="pt-4 border-t border-[#D8DDE2] flex items-center justify-between">
                     <Link
                       href={`/request-a-quote?industry=${encodeURIComponent(ind.name)}`}
-                      className="font-['Plus_Jakarta_Sans'] text-xs font-bold text-[#FF4B32] hover:text-[#E03820] inline-flex items-center"
+                      className="font-['Plus_Jakarta_Sans'] text-xs font-bold text-[#C80808] hover:text-[#8A0A0A] inline-flex items-center"
                     >
                       <span>Request {ind.name} Quote</span>
                       <ArrowRight className="w-3.5 h-3.5 ml-1" />
@@ -101,19 +101,19 @@ export default function IndustriesPage() {
       </section>
 
       {/* 3. CTA BAND */}
-      <section className="relative bg-[#17191C] overflow-hidden py-20 text-white">
+      <section className="relative bg-[#17191C]/90 overflow-hidden py-20 text-white">
         <div
           className="absolute inset-0 bg-cover bg-center opacity-15"
           style={{ backgroundImage: "url('/assets/img/tube-fittings.jpg')" }}
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#17191C]/95 to-[#17191C]/80" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#17191C]/85 to-[#17191C]/65" />
 
         <div className="relative z-10 max-w-[1400px] mx-auto px-6 text-center">
           <span className="eyebrow eyebrow-gold">SECTOR COMPLIANCE</span>
           <h2 className="text-white text-3xl sm:text-4xl font-extrabold tracking-tight mt-2 mb-4">
             Operating in a heavily regulated process sector?
           </h2>
-          <p className="text-white/75 text-base sm:text-lg max-w-[620px] mx-auto mb-8">
+          <p className="text-white/80 text-base sm:text-lg max-w-[620px] mx-auto mb-8">
             Our engineering team confirms NACE MR0175, ASME Section VIII and EN 10204 Type 3.1 &amp; 3.2 compliance before order placement.
           </p>
           <div className="flex justify-center gap-4">

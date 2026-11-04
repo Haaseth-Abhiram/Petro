@@ -137,7 +137,7 @@ export default function AdminIndustriesPage() {
 
         <button
           onClick={handleOpenAdd}
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-[#FF4B32] hover:bg-[#E03820] text-white text-xs font-bold transition-all shadow-sm"
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-[#C80808] hover:bg-[#8A0A0A] text-white text-xs font-bold transition-all shadow-sm"
         >
           <Plus className="w-4 h-4" />
           <span>Add New Sector</span>
@@ -147,13 +147,13 @@ export default function AdminIndustriesPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {loading ? (
           <div className="col-span-full py-16 text-center text-[#5F6871]">
-            <div className="w-7 h-7 border-3 border-[#FF4B32] border-t-transparent rounded-full animate-spin mx-auto mb-2" />
+            <div className="w-7 h-7 border-3 border-[#C80808] border-t-transparent rounded-full animate-spin mx-auto mb-2" />
             <p className="text-xs font-semibold">Loading sectors from database...</p>
           </div>
         ) : industries.map((ind) => (
           <div
             key={ind.id}
-            className="bg-white rounded-xl border border-[#D8DDE2] shadow-sm overflow-hidden flex flex-col justify-between hover:border-[#FF4B32] transition-colors"
+            className="bg-white rounded-xl border border-[#D8DDE2] shadow-sm overflow-hidden flex flex-col justify-between hover:border-[#C80808] transition-colors"
           >
             <div>
               <div className="h-36 bg-[#F5F6F7] relative border-b border-[#D8DDE2]">
@@ -165,7 +165,7 @@ export default function AdminIndustriesPage() {
               <div className="p-5">
                 <p className="text-[10px] font-mono text-[#929DA7] mb-1">/{ind.slug}</p>
                 <h3 className="text-base font-bold text-[#17191C] mb-1">{ind.name}</h3>
-                <p className="text-xs text-[#FF4B32] font-semibold mb-2">{ind.tagline}</p>
+                <p className="text-xs text-[#C80808] font-semibold mb-2">{ind.tagline}</p>
                 <p className="text-xs text-[#5F6871] line-clamp-2">{ind.short_overview}</p>
               </div>
             </div>
@@ -250,7 +250,7 @@ export default function AdminIndustriesPage() {
                 <button type="button" onClick={() => setShowModal(false)} className="px-4 py-2 text-xs font-bold text-[#5F6871]">
                   Cancel
                 </button>
-                <button type="submit" disabled={saving} className="px-5 py-2 rounded-lg bg-[#FF4B32] text-white text-xs font-bold">
+                <button type="submit" disabled={saving} className="px-5 py-2 rounded-lg bg-[#C80808] text-white text-xs font-bold">
                   {saving ? "Saving..." : "Save Sector"}
                 </button>
               </div>

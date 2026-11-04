@@ -16,7 +16,14 @@ import {
   HelpCircle,
   CheckCircle2,
   X,
+  ArrowRight,
+  FileText,
+  BarChart3,
+  User,
+  Building2,
+  Phone,
 } from "lucide-react";
+import PetroLogo from "@/components/common/PetroLogo";
 import { adminLoginSchema, AdminLoginFormData } from "@/lib/validations";
 import { authenticateAdmin, AuthResult } from "@/lib/auth";
 
@@ -63,213 +70,141 @@ export default function AdminLoginPage() {
     }
   };
 
+  const [mode, setMode] = useState<"login" | "signup">("login");
+  const [su, setSu] = useState({ name: "", company: "", email: "", phone: "" });
+  const [suBusy, setSuBusy] = useState(false);
+  const [suMsg, setSuMsg] = useState<{ ok: boolean; text: string } | null>(null);
+
+  const submitSignup = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSuMsg(null);
+    if (su.name.trim().length < 2 || !/^\S+@\S+\.\S+$/.test(su.email) || su.company.trim().length < 2) {
+      setSuMsg({ ok: false, text: "Please enter your name, company and a valid email." });
+      return;
+    }
+    setSuBusy(true);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ fullName: su.name, companyName: su.company, email: su.email, phone: su.phone, division: "Account request", subject: "Account / portal access request", message: `Requesting a customer account.\nName: ${su.name}\nCompany: ${su.company}\nEmail: ${su.email}\nPhone: ${su.phone || "not provided"}` }),
+      });
+      const out = await res.json();
+      if (!res.ok || !out.success) throw new Error(out.message || "Could not send request");
+      setSuMsg({ ok: true, text: "Request received. Our team will set up your account and email you." });
+      setSu({ name: "", company: "", email: "", phone: "" });
+    } catch (err: any) {
+      setSuMsg({ ok: false, text: err.message || "Something went wrong. Please try again." });
+    } finally {
+      setSuBusy(false);
+    }
+  };
+
+  const fieldCls = (bad: boolean) =>
+    `w-full pl-10 pr-3 py-2.5 rounded-xl border-2 text-[14px] text-[#17191C] placeholder:text-[#929DA7] bg-white transition-all outline-none ${
+      bad ? "border-[#C80808] bg-[#FBE9EC]/60" : "border-[#E7E9EE] hover:border-[#D8C9B3] focus:border-[#C80808] focus:shadow-[0_0_0_4px_rgba(200,8,8,0.10)]"
+    }`;
+  const lbl = "block text-[11px] font-extrabold uppercase tracking-wider text-[#17191C] mb-1";
+  const ico = "w-[17px] h-[17px] text-[#C80808] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none";
+
   return (
-    <div className="min-h-screen w-full bg-[#17191C] flex flex-col justify-between relative overflow-hidden py-10 px-4 sm:px-6 lg:px-8">
-      {/* Background Ambient Glow matching brand identity */}
-      <div className="absolute top-0 right-1/4 w-[500px] h-[300px] bg-[#FF4B32]/10 blur-[120px] pointer-events-none rounded-full" />
-      <div className="absolute bottom-0 left-1/4 w-[600px] h-[350px] bg-[#929DA7]/10 blur-[140px] pointer-events-none rounded-full" />
-
-      {/* Top Header / Back Navigation */}
-      <div className="max-w-5xl mx-auto w-full flex items-center justify-between z-10">
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-[#929DA7] hover:text-white transition-colors group"
-        >
-          <ArrowLeft className="w-4 h-4 text-[#FF4B32] group-hover:-translate-x-1 transition-transform" />
-          <span>Back to Website</span>
-        </Link>
-
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[11px] font-semibold text-[#929DA7]">
-          <ShieldCheck className="w-3.5 h-3.5 text-[#FF4B32]" />
-          <span>Secure Login</span>
+    <div className="h-screen w-full overflow-hidden grid lg:grid-cols-[1fr_1fr] bg-[#FFF8F0]">
+      {/* Brand panel */}
+      <aside className="relative hidden lg:flex flex-col justify-between overflow-hidden bg-[#17191C] text-white p-10 xl:p-12">
+        <Image src="/assets/img/service-technical-consultation.jpg" alt="" fill sizes="50vw" priority className="object-cover opacity-35" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#17191C]/92 via-[#3a0d0d]/80 to-[#8A0A0A]/65" />
+        <div className="absolute -top-24 -right-16 w-[440px] h-[440px] rounded-full bg-[#E0A21A]/25 blur-[110px] animate-blob" />
+        <div className="absolute -bottom-32 -left-20 w-[420px] h-[420px] rounded-full bg-[#C80808]/30 blur-[110px] animate-blob" />
+        <div className="absolute inset-0 dot-grid opacity-20" />
+        <div className="relative flex items-center justify-between">
+          <span className="rounded-2xl bg-white/95 shadow-xl px-4 py-2.5"><PetroLogo width={130} /></span>
+          <Link href="/" className="inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/20 hover:bg-white/20 px-4 py-1.5 text-[12.5px] font-semibold text-white transition-colors group"><ArrowLeft className="w-4 h-4 text-[#F2B93B] group-hover:-translate-x-1 transition-transform" />Back to website</Link>
         </div>
-      </div>
+        <div className="relative max-w-[480px]">
+          <span className="inline-flex items-center gap-3 text-[11px] font-extrabold uppercase tracking-[0.2em] text-[#F2B93B] mb-3"><span className="h-[3px] w-9 rounded bg-[#F2B93B]" />Customer portal</span>
+          <h2 className="text-[2.3rem] xl:text-[2.6rem] font-black leading-[1.08] mb-3 text-white">Your enquiries, quotes and orders <span className="text-gradient animate-gradient">in one place.</span></h2>
+          <p className="text-white/75 text-[14.5px] leading-relaxed mb-6">Sign in to track RFQs, review quotations and talk to our engineers.</p>
+          <ul className="space-y-2.5">
+            {[{ i: FileText, t: "Track every RFQ from receipt to reply" }, { i: BarChart3, t: "Live view of quotes, messages and activity" }, { i: ShieldCheck, t: "Secure, role-based access with an audit trail" }].map((x) => (
+              <li key={x.t} className="flex items-center gap-3 rounded-xl bg-white/[0.07] border border-white/15 backdrop-blur px-3.5 py-2.5 text-[14px] text-white/95 hover:bg-white/[0.13] hover:translate-x-1 transition-all"><span className="w-9 h-9 rounded-lg bg-gradient-to-br from-[#C80808] to-[#E0A21A] flex items-center justify-center shrink-0"><x.i className="w-[18px] h-[18px] text-white" /></span>{x.t}</li>
+            ))}
+          </ul>
+        </div>
+        <div className="relative flex flex-wrap gap-2">
+          {["ISO 9001:2015", "EN 10204 3.1 / 3.2", "NACE MR0175"].map((c) => (<span key={c} className="rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[11px] font-bold text-white/85">{c}</span>))}
+        </div>
+      </aside>
 
-      {/* Main Login Card Area */}
-      <div className="max-w-[460px] w-full mx-auto my-auto z-10 py-8">
-        <div className="bg-[#FFFFFF] rounded-2xl shadow-[0_24px_60px_rgba(0,0,0,0.35)] border border-[#D8DDE2] overflow-hidden">
-          {/* Card Header & Brand Logo */}
-          <div className="p-8 pb-6 text-center border-b border-[#D8DDE2] bg-[#F5F6F7]/50">
-            <Link href="/" className="inline-block mb-5">
-              <Image
-                src="/assets/img/logo.png"
-                alt="Petro Engineering Logo"
-                width={190}
-                height={38}
-                priority
-                className="h-9 w-auto object-contain mx-auto"
-              />
-            </Link>
+      {/* Form panel */}
+      <main className="relative flex items-center justify-center px-5 sm:px-10 overflow-hidden">
+        <div className="absolute -top-24 -right-20 w-[360px] h-[360px] rounded-full bg-[#E0A21A]/[0.18] blur-[90px]" />
+        <div className="absolute -bottom-24 -left-20 w-[360px] h-[360px] rounded-full bg-[#C80808]/[0.08] blur-[90px]" />
+        <Link href="/" className="lg:hidden absolute top-4 left-4 inline-flex items-center gap-1.5 text-[12px] font-semibold text-[#4a5159]"><ArrowLeft className="w-4 h-4 text-[#C80808]" />Home</Link>
 
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-[#17191C] tracking-tight mb-2">
-              Login
-            </h1>
-            <p className="text-[#5F6871] text-sm">
-              Sign in to your account.
-            </p>
-          </div>
+        <div className="relative w-full max-w-[430px]">
+          <div className="lg:hidden flex justify-center mb-3"><Link href="/"><PetroLogo width={130} /></Link></div>
+          <div className="rounded-3xl bg-white border border-[#F0E3D2] shadow-[0_30px_80px_rgba(200,8,8,0.14)] overflow-hidden animate-[routefade_.7s_ease-out_both] relative before:absolute before:inset-x-0 before:top-0 before:h-[4px] before:bg-gradient-to-r before:from-[#8A0A0A] before:via-[#C80808] before:to-[#F2B93B]">
+            {/* tabs */}
+            <div className="relative grid grid-cols-2 bg-[#FFF8F0] p-1.5 m-4 mb-0 rounded-2xl" role="tablist">
+              <span className="absolute top-1.5 bottom-1.5 w-[calc(50%-6px)] rounded-xl bg-gradient-to-r from-[#C80808] to-[#E0A21A] shadow-md transition-all duration-300" style={{ left: mode === "login" ? 6 : "calc(50%)" }} />
+              {(["login", "signup"] as const).map((m) => (
+                <button key={m} type="button" role="tab" aria-selected={mode === m} onClick={() => { setMode(m); setSuMsg(null); setAuthStatus(null); }} className={`relative z-10 py-2.5 text-[14px] font-extrabold transition-colors ${mode === m ? "text-white" : "text-[#4a5159] hover:text-[#17191C]"}`}>{m === "login" ? "Login" : "Sign up"}</button>
+              ))}
+            </div>
 
-          {/* Form Content */}
-          <div className="p-8 pt-6">
-            {/* Feedback / Architecture Notice */}
-            {authStatus && (
-              <div
-                className={`mb-6 p-4 rounded-xl border text-xs sm:text-sm leading-relaxed ${
-                  authStatus.success
-                    ? "bg-green-50 border-green-200 text-green-900"
-                    : "bg-[#F5F6F7] border-[#D8DDE2] text-[#17191C]"
-                }`}
-              >
-                <div className="flex items-start gap-2.5">
-                  <AlertCircle className="w-4 h-4 text-[#FF4B32] shrink-0 mt-0.5" />
-                  <div>
-                    <strong className="font-bold text-[#17191C] block mb-1">
-                      {authStatus.message}
-                    </strong>
-                    {authStatus.error && (
-                      <p className="text-[#5F6871] text-xs">
-                        {authStatus.error}
-                      </p>
-                    )}
-                  </div>
-                </div>
-              </div>
-            )}
-
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-5" noValidate>
-              {/* Email Address */}
-              <div>
-                <label
-                  htmlFor="email"
-                  className="block text-xs font-bold uppercase tracking-wider text-[#17191C] mb-1.5"
-                >
-                  Email Address
-                </label>
-                <div className="relative">
-                  <Mail className="w-4 h-4 text-[#929DA7] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
-                  <input
-                    id="email"
-                    type="email"
-                    autoComplete="email"
-                    placeholder="name@company.com"
-                    {...register("email")}
-                    className={`w-full pl-10 pr-4 py-2.5 rounded-lg border text-sm text-[#17191C] placeholder:text-[#929DA7] transition-all outline-none ${
-                      errors.email
-                        ? "border-[#FF4B32] bg-[#FF4B32]/5 focus:ring-2 focus:ring-[#FF4B32]/20"
-                        : "border-[#D8DDE2] focus:border-[#FF4B32] focus:ring-2 focus:ring-[#FF4B32]/10"
-                    }`}
-                  />
-                </div>
-                {errors.email && (
-                  <p className="text-[#FF4B32] text-xs mt-1.5 flex items-center gap-1 font-medium">
-                    <AlertCircle className="w-3.5 h-3.5" />
-                    <span>{errors.email.message}</span>
-                  </p>
-                )}
-              </div>
-
-              {/* Password */}
-              <div>
-                <div className="flex items-center justify-between mb-1.5">
-                  <label
-                    htmlFor="password"
-                    className="block text-xs font-bold uppercase tracking-wider text-[#17191C]"
-                  >
-                    Password
-                  </label>
-                  <button
-                    type="button"
-                    onClick={() => setShowForgotModal(true)}
-                    className="text-xs font-semibold text-[#FF4B32] hover:text-[#E03820] hover:underline"
-                  >
-                    Forgot password?
-                  </button>
-                </div>
-                <div className="relative">
-                  <Lock className="w-4 h-4 text-[#929DA7] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
-                  <input
-                    id="password"
-                    type={showPassword ? "text" : "password"}
-                    autoComplete="current-password"
-                    placeholder="••••••••••••"
-                    {...register("password")}
-                    className={`w-full pl-10 pr-11 py-2.5 rounded-lg border text-sm text-[#17191C] placeholder:text-[#929DA7] transition-all outline-none ${
-                      errors.password
-                        ? "border-[#FF4B32] bg-[#FF4B32]/5 focus:ring-2 focus:ring-[#FF4B32]/20"
-                        : "border-[#D8DDE2] focus:border-[#FF4B32] focus:ring-2 focus:ring-[#FF4B32]/10"
-                    }`}
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[#929DA7] hover:text-[#17191C] p-1"
-                    aria-label={showPassword ? "Hide password" : "Show password"}
-                  >
-                    {showPassword ? (
-                      <EyeOff className="w-4 h-4" />
-                    ) : (
-                      <Eye className="w-4 h-4" />
-                    )}
-                  </button>
-                </div>
-                {errors.password && (
-                  <p className="text-[#FF4B32] text-xs mt-1.5 flex items-center gap-1 font-medium">
-                    <AlertCircle className="w-3.5 h-3.5" />
-                    <span>{errors.password.message}</span>
-                  </p>
-                )}
-              </div>
-
-              {/* Remember Me Checkbox */}
-              <div className="flex items-center">
-                <input
-                  id="rememberMe"
-                  type="checkbox"
-                  {...register("rememberMe")}
-                  className="w-4 h-4 rounded border-[#D8DDE2] text-[#FF4B32] focus:ring-[#FF4B32] cursor-pointer"
-                />
-                <label
-                  htmlFor="rememberMe"
-                  className="ml-2.5 text-xs text-[#5F6871] font-medium cursor-pointer select-none"
-                >
-                  Remember me for 30 days
-                </label>
-              </div>
-
-              {/* Submit Button */}
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full inline-flex items-center justify-center gap-2 font-['Plus_Jakarta_Sans'] text-sm font-bold bg-[#FF4B32] hover:bg-[#E03820] text-white py-3 px-6 rounded-lg shadow-[0_4px_14px_rgba(255,75,50,0.28)] hover:shadow-[0_6px_20px_rgba(255,75,50,0.38)] transition-all cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
-              >
-                {isSubmitting ? (
-                  <>
-                    <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                    <span>Authenticating...</span>
-                  </>
-                ) : (
-                  <span>Login</span>
-                )}
-              </button>
-            </form>
-
-            {/* Direct Link to Help */}
-            <div className="mt-6 pt-5 border-t border-[#D8DDE2] text-center">
-              <Link
-                href="/contact"
-                className="text-xs font-semibold text-[#5F6871] hover:text-[#17191C] hover:underline"
-              >
-                Need assistance? Contact support →
-              </Link>
+            <div className="p-5 sm:p-6 pt-4">
+              {mode === "login" ? (
+                <>
+                  <h1 className="text-[1.45rem] font-black text-[#17191C] leading-tight">Welcome back</h1>
+                  <p className="text-[#4a5159] text-[13px] mb-4">Sign in to your account to continue.</p>
+                  {authStatus && (
+                    <div className={`mb-3 p-3 rounded-xl border text-[12.5px] ${authStatus.success ? "bg-green-50 border-green-200 text-green-900" : "bg-[#FBE9EC] border-[#C80808]/30 text-[#17191C]"}`}>
+                      <div className="flex items-start gap-2"><AlertCircle className="w-4 h-4 text-[#C80808] shrink-0 mt-0.5" /><div><strong className="font-bold block">{authStatus.message}</strong>{authStatus.error && <p className="text-[#4a5159] text-xs mt-0.5">{authStatus.error}</p>}</div></div>
+                    </div>
+                  )}
+                  <form onSubmit={handleSubmit(onSubmit)} className="space-y-3.5" noValidate>
+                    <div>
+                      <label htmlFor="email" className={lbl}>Email address</label>
+                      <div className="relative"><Mail className={ico} /><input id="email" type="email" autoComplete="email" placeholder="name@company.com" {...register("email")} className={fieldCls(!!errors.email)} /></div>
+                      {errors.email && <p className="text-[#C80808] text-xs mt-1 flex items-center gap-1 font-medium"><AlertCircle className="w-3.5 h-3.5" />{errors.email.message}</p>}
+                    </div>
+                    <div>
+                      <div className="flex items-center justify-between mb-1"><label htmlFor="password" className="text-[11px] font-extrabold uppercase tracking-wider text-[#17191C]">Password</label><button type="button" onClick={() => setShowForgotModal(true)} className="text-[11.5px] font-bold text-[#C80808] hover:underline">Forgot password?</button></div>
+                      <div className="relative"><Lock className={ico} /><input id="password" type={showPassword ? "text" : "password"} autoComplete="current-password" placeholder="••••••••••••" {...register("password")} className={`${fieldCls(!!errors.password)} pr-11`} />
+                        <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-[#929DA7] hover:text-[#17191C] p-1" aria-label={showPassword ? "Hide password" : "Show password"}>{showPassword ? <EyeOff className="w-[17px] h-[17px]" /> : <Eye className="w-[17px] h-[17px]" />}</button></div>
+                      {errors.password && <p className="text-[#C80808] text-xs mt-1 flex items-center gap-1 font-medium"><AlertCircle className="w-3.5 h-3.5" />{errors.password.message}</p>}
+                    </div>
+                    <div className="flex items-center"><input id="rememberMe" type="checkbox" {...register("rememberMe")} className="w-4 h-4 rounded border-[#D8DDE2] text-[#C80808] focus:ring-[#C80808] cursor-pointer" /><label htmlFor="rememberMe" className="ml-2.5 text-[12.5px] text-[#4a5159] font-medium cursor-pointer select-none">Remember me for 30 days</label></div>
+                    <button type="submit" disabled={isSubmitting} className="group w-full inline-flex items-center justify-center gap-2 text-[14.5px] font-extrabold bg-gradient-to-r from-[#8A0A0A] via-[#C80808] to-[#E0A21A] bg-[length:200%_100%] hover:bg-right text-white py-3 rounded-xl shadow-[0_12px_28px_rgba(200,8,8,0.35)] hover:-translate-y-0.5 disabled:opacity-70 transition-all duration-500">
+                      {isSubmitting ? (<><span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /><span>Authenticating...</span></>) : (<><span>Login</span><ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" /></>)}
+                    </button>
+                  </form>
+                  <p className="text-center text-[12.5px] text-[#4a5159] mt-4">New here? <button type="button" onClick={() => setMode("signup")} className="font-extrabold text-[#C80808] hover:underline">Create an account</button></p>
+                </>
+              ) : (
+                <>
+                  <h1 className="text-[1.45rem] font-black text-[#17191C] leading-tight">Create your account</h1>
+                  <p className="text-[#4a5159] text-[13px] mb-4">Tell us about you — we&apos;ll set up your access.</p>
+                  {suMsg && (<div className={`mb-3 p-3 rounded-xl border text-[12.5px] flex gap-2 ${suMsg.ok ? "bg-green-50 border-green-200 text-green-900" : "bg-[#FBE9EC] border-[#C80808]/30 text-[#17191C]"}`}>{suMsg.ok ? <CheckCircle2 className="w-4 h-4 text-green-700 shrink-0 mt-0.5" /> : <AlertCircle className="w-4 h-4 text-[#C80808] shrink-0 mt-0.5" />}<span>{suMsg.text}</span></div>)}
+                  <form onSubmit={submitSignup} className="space-y-3" noValidate>
+                    <div className="grid grid-cols-2 gap-3">
+                      <div><label htmlFor="su-name" className={lbl}>Full name</label><div className="relative"><User className={ico} /><input id="su-name" value={su.name} onChange={(e) => setSu({ ...su, name: e.target.value })} placeholder="Your name" className={fieldCls(false)} /></div></div>
+                      <div><label htmlFor="su-co" className={lbl}>Company</label><div className="relative"><Building2 className={ico} /><input id="su-co" value={su.company} onChange={(e) => setSu({ ...su, company: e.target.value })} placeholder="Company" className={fieldCls(false)} /></div></div>
+                    </div>
+                    <div><label htmlFor="su-email" className={lbl}>Work email</label><div className="relative"><Mail className={ico} /><input id="su-email" type="email" value={su.email} onChange={(e) => setSu({ ...su, email: e.target.value })} placeholder="name@company.com" className={fieldCls(false)} /></div></div>
+                    <div><label htmlFor="su-ph" className={lbl}>Phone <span className="font-medium normal-case text-[#929DA7]">(optional)</span></label><div className="relative"><Phone className={ico} /><input id="su-ph" value={su.phone} onChange={(e) => setSu({ ...su, phone: e.target.value })} placeholder="+91 98765 43210" className={fieldCls(false)} /></div></div>
+                    <button type="submit" disabled={suBusy} className="group w-full inline-flex items-center justify-center gap-2 text-[14.5px] font-extrabold bg-gradient-to-r from-[#8A0A0A] via-[#C80808] to-[#E0A21A] bg-[length:200%_100%] hover:bg-right text-white py-3 rounded-xl shadow-[0_12px_28px_rgba(200,8,8,0.35)] hover:-translate-y-0.5 disabled:opacity-70 transition-all duration-500">
+                      {suBusy ? (<><span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /><span>Sending...</span></>) : (<><span>Request access</span><ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" /></>)}
+                    </button>
+                  </form>
+                  <p className="text-center text-[12.5px] text-[#4a5159] mt-4">Already have an account? <button type="button" onClick={() => setMode("login")} className="font-extrabold text-[#C80808] hover:underline">Login</button></p>
+                </>
+              )}
             </div>
           </div>
+          <p className="text-center text-[11.5px] text-[#929DA7] mt-3">© {new Date().getFullYear()} Petro Engineering Private Limited · <Link href="/privacy" className="hover:text-[#C80808]">Privacy</Link> · <Link href="/terms" className="hover:text-[#C80808]">Terms</Link></p>
         </div>
-      </div>
-
-      {/* Footer Info */}
-      <div className="max-w-5xl mx-auto w-full text-center text-xs text-[#929DA7] z-10">
-        <p>© {new Date().getFullYear()} Petro Engineering Private Limited. All rights reserved.</p>
-      </div>
+      </main>
 
       {/* Forgot Password Modal */}
       {showForgotModal && (
@@ -283,7 +218,7 @@ export default function AdminLoginPage() {
               <X className="w-5 h-5" />
             </button>
 
-            <div className="w-12 h-12 rounded-full bg-[#FF4B32]/10 text-[#FF4B32] flex items-center justify-center mb-4">
+            <div className="w-12 h-12 rounded-full bg-[#C80808]/10 text-[#C80808] flex items-center justify-center mb-4">
               <HelpCircle className="w-6 h-6" />
             </div>
 

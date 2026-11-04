@@ -17,7 +17,7 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>;
 
-export default function ContactForm() {
+export default function ContactForm({ bare = false }: { bare?: boolean }) {
   const [submitted, setSubmitted] = useState<FormData | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -61,7 +61,7 @@ export default function ContactForm() {
   };
 
   return (
-    <div className="bg-white border border-[#D8DDE2] rounded-[8px] p-8 sm:p-10 shadow-[0_1px_2px_rgba(16,24,38,0.06),0_4px_12px_rgba(16,24,38,0.04)]">
+    <div className={bare ? "" : "bg-white border border-[#D8DDE2] rounded-[8px] p-8 sm:p-10 shadow-[0_1px_2px_rgba(16,24,38,0.06),0_4px_12px_rgba(16,24,38,0.04)]"}>
       {submitted ? (
         <div className="space-y-5">
           <div className="p-4 rounded-[4px] bg-[#1f7a4d]/10 border-l-[3px] border-[#1f7a4d] text-[#1a5c3b]">
@@ -80,8 +80,8 @@ export default function ContactForm() {
             <p className="mt-2 text-[#5F6871]"><strong>Message:</strong> {submitted.message}</p>
           </div>
 
-          <div className="p-3 bg-[#FF4B32]/5 border border-[#FF4B32]/20 rounded-[4px] text-xs text-[#5F6871] flex items-start space-x-2">
-            <Info className="w-4 h-4 text-[#FF4B32] shrink-0 mt-0.5" />
+          <div className="p-3 bg-[#C80808]/5 border border-[#C80808]/20 rounded-[4px] text-xs text-[#5F6871] flex items-start space-x-2">
+            <Info className="w-4 h-4 text-[#C80808] shrink-0 mt-0.5" />
             <span>This is a frontend demonstration. No email has been sent and no database record was stored.</span>
           </div>
 
@@ -101,35 +101,35 @@ export default function ContactForm() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="font-['Plus_Jakarta_Sans'] text-xs font-bold text-[#17191C] block mb-2">
-                Full name <span className="text-[#FF4B32]">*</span>
+                Full name <span className="text-[#C80808]">*</span>
               </label>
               <input
                 type="text"
                 {...register("fullName")}
                 placeholder="Your full name"
-                className={`w-full px-4 py-3 rounded-[4px] border text-sm text-[#17191C] focus:outline-none focus:border-[#FF4B32] focus:ring-2 focus:ring-[#FF4B32]/10 transition-colors ${
-                  errors.fullName ? "border-[#FF4B32]" : "border-[#D8DDE2]"
+                className={`w-full px-4 py-3 rounded-[4px] border text-sm text-[#17191C] focus:outline-none focus:border-[#C80808] focus:ring-2 focus:ring-[#C80808]/10 transition-colors ${
+                  errors.fullName ? "border-[#C80808]" : "border-[#D8DDE2]"
                 }`}
               />
               {errors.fullName && (
-                <p className="text-xs text-[#FF4B32] mt-1">{errors.fullName.message}</p>
+                <p className="text-xs text-[#C80808] mt-1">{errors.fullName.message}</p>
               )}
             </div>
 
             <div>
               <label className="font-['Plus_Jakarta_Sans'] text-xs font-bold text-[#17191C] block mb-2">
-                Company <span className="text-[#FF4B32]">*</span>
+                Company <span className="text-[#C80808]">*</span>
               </label>
               <input
                 type="text"
                 {...register("companyName")}
                 placeholder="Company / Organization"
-                className={`w-full px-4 py-3 rounded-[4px] border text-sm text-[#17191C] focus:outline-none focus:border-[#FF4B32] focus:ring-2 focus:ring-[#FF4B32]/10 transition-colors ${
-                  errors.companyName ? "border-[#FF4B32]" : "border-[#D8DDE2]"
+                className={`w-full px-4 py-3 rounded-[4px] border text-sm text-[#17191C] focus:outline-none focus:border-[#C80808] focus:ring-2 focus:ring-[#C80808]/10 transition-colors ${
+                  errors.companyName ? "border-[#C80808]" : "border-[#D8DDE2]"
                 }`}
               />
               {errors.companyName && (
-                <p className="text-xs text-[#FF4B32] mt-1">{errors.companyName.message}</p>
+                <p className="text-xs text-[#C80808] mt-1">{errors.companyName.message}</p>
               )}
             </div>
           </div>
@@ -137,46 +137,46 @@ export default function ContactForm() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="font-['Plus_Jakarta_Sans'] text-xs font-bold text-[#17191C] block mb-2">
-                Email address <span className="text-[#FF4B32]">*</span>
+                Email address <span className="text-[#C80808]">*</span>
               </label>
               <input
                 type="email"
                 {...register("email")}
                 placeholder="work@company.com"
-                className={`w-full px-4 py-3 rounded-[4px] border text-sm text-[#17191C] focus:outline-none focus:border-[#FF4B32] focus:ring-2 focus:ring-[#FF4B32]/10 transition-colors ${
-                  errors.email ? "border-[#FF4B32]" : "border-[#D8DDE2]"
+                className={`w-full px-4 py-3 rounded-[4px] border text-sm text-[#17191C] focus:outline-none focus:border-[#C80808] focus:ring-2 focus:ring-[#C80808]/10 transition-colors ${
+                  errors.email ? "border-[#C80808]" : "border-[#D8DDE2]"
                 }`}
               />
               {errors.email && (
-                <p className="text-xs text-[#FF4B32] mt-1">{errors.email.message}</p>
+                <p className="text-xs text-[#C80808] mt-1">{errors.email.message}</p>
               )}
             </div>
 
             <div>
               <label className="font-['Plus_Jakarta_Sans'] text-xs font-bold text-[#17191C] block mb-2">
-                Phone number <span className="text-[#FF4B32]">*</span>
+                Phone number <span className="text-[#C80808]">*</span>
               </label>
               <input
                 type="tel"
                 {...register("phone")}
                 placeholder="+91 98765 43210"
-                className={`w-full px-4 py-3 rounded-[4px] border text-sm text-[#17191C] focus:outline-none focus:border-[#FF4B32] focus:ring-2 focus:ring-[#FF4B32]/10 transition-colors ${
-                  errors.phone ? "border-[#FF4B32]" : "border-[#D8DDE2]"
+                className={`w-full px-4 py-3 rounded-[4px] border text-sm text-[#17191C] focus:outline-none focus:border-[#C80808] focus:ring-2 focus:ring-[#C80808]/10 transition-colors ${
+                  errors.phone ? "border-[#C80808]" : "border-[#D8DDE2]"
                 }`}
               />
               {errors.phone && (
-                <p className="text-xs text-[#FF4B32] mt-1">{errors.phone.message}</p>
+                <p className="text-xs text-[#C80808] mt-1">{errors.phone.message}</p>
               )}
             </div>
           </div>
 
           <div>
             <label className="font-['Plus_Jakarta_Sans'] text-xs font-bold text-[#17191C] block mb-2">
-              Area of requirement <span className="text-[#FF4B32]">*</span>
+              Area of requirement <span className="text-[#C80808]">*</span>
             </label>
             <select
               {...register("division")}
-              className="w-full px-4 py-3 rounded-[4px] border border-[#D8DDE2] text-sm text-[#17191C] bg-white focus:outline-none focus:border-[#FF4B32]"
+              className="w-full px-4 py-3 rounded-[4px] border border-[#D8DDE2] text-sm text-[#17191C] bg-white focus:outline-none focus:border-[#C80808]"
             >
               <option value="Instrumentation & Valves">Instrumentation &amp; Valves</option>
               <option value="Chemical & Water Treatment">Chemical &amp; Water Treatment</option>
@@ -187,18 +187,18 @@ export default function ContactForm() {
 
           <div>
             <label className="font-['Plus_Jakarta_Sans'] text-xs font-bold text-[#17191C] block mb-2">
-              Message / Specification details <span className="text-[#FF4B32]">*</span>
+              Message / Specification details <span className="text-[#C80808]">*</span>
             </label>
             <textarea
               rows={4}
               {...register("message")}
               placeholder="Tell us about the line items, quantities, pressure ratings or water parameters..."
-              className={`w-full px-4 py-3 rounded-[4px] border text-sm text-[#17191C] focus:outline-none focus:border-[#FF4B32] focus:ring-2 focus:ring-[#FF4B32]/10 transition-colors ${
-                errors.message ? "border-[#FF4B32]" : "border-[#D8DDE2]"
+              className={`w-full px-4 py-3 rounded-[4px] border text-sm text-[#17191C] focus:outline-none focus:border-[#C80808] focus:ring-2 focus:ring-[#C80808]/10 transition-colors ${
+                errors.message ? "border-[#C80808]" : "border-[#D8DDE2]"
               }`}
             />
             {errors.message && (
-              <p className="text-xs text-[#FF4B32] mt-1">{errors.message.message}</p>
+              <p className="text-xs text-[#C80808] mt-1">{errors.message.message}</p>
             )}
           </div>
 

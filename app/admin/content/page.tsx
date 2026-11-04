@@ -152,7 +152,7 @@ export default function AdminContentPage() {
         {/* Homepage Hero Section */}
         <div className="bg-white rounded-xl border border-[#D8DDE2] shadow-sm p-6 space-y-5">
           <div className="flex items-center gap-2 pb-3 border-b border-[#D8DDE2]">
-            <div className="w-8 h-8 rounded-lg bg-[#FF4B32]/10 text-[#FF4B32] flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-[#C80808]/10 text-[#C80808] flex items-center justify-center">
               <Sliders className="w-4 h-4" />
             </div>
             <div>
@@ -175,7 +175,7 @@ export default function AdminContentPage() {
                 required
                 value={content.heroTitleLine1}
                 onChange={(e) => setContent({ ...content, heroTitleLine1: e.target.value })}
-                className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs font-semibold focus:border-[#FF4B32] outline-none"
+                className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs font-semibold focus:border-[#C80808] outline-none"
               />
             </div>
 
@@ -188,7 +188,7 @@ export default function AdminContentPage() {
                 required
                 value={content.heroTitleLine2}
                 onChange={(e) => setContent({ ...content, heroTitleLine2: e.target.value })}
-                className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs font-semibold focus:border-[#FF4B32] outline-none"
+                className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs font-semibold focus:border-[#C80808] outline-none"
               />
             </div>
           </div>
@@ -201,14 +201,14 @@ export default function AdminContentPage() {
               rows={3}
               value={content.heroSubtitle}
               onChange={(e) => setContent({ ...content, heroSubtitle: e.target.value })}
-              className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs leading-relaxed focus:border-[#FF4B32] outline-none"
+              className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs leading-relaxed focus:border-[#C80808] outline-none"
             />
           </div>
 
           {/* CTA Buttons */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
             <div className="p-4 rounded-lg bg-[#F5F6F7] border border-[#D8DDE2] space-y-2">
-              <span className="text-[10px] font-bold uppercase text-[#FF4B32] block">
+              <span className="text-[10px] font-bold uppercase text-[#C80808] block">
                 Primary Button (Coral Orange)
               </span>
               <div className="grid grid-cols-2 gap-2">
@@ -347,7 +347,7 @@ export default function AdminContentPage() {
                 type="email"
                 value={content.companyEmail}
                 onChange={(e) => setContent({ ...content, companyEmail: e.target.value })}
-                className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs focus:border-[#FF4B32] outline-none"
+                className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs focus:border-[#C80808] outline-none"
               />
             </div>
 
@@ -359,7 +359,7 @@ export default function AdminContentPage() {
                 type="text"
                 value={content.companyPhone}
                 onChange={(e) => setContent({ ...content, companyPhone: e.target.value })}
-                className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs focus:border-[#FF4B32] outline-none"
+                className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs focus:border-[#C80808] outline-none"
               />
             </div>
 
@@ -371,7 +371,7 @@ export default function AdminContentPage() {
                 type="text"
                 value={content.companyAddress}
                 onChange={(e) => setContent({ ...content, companyAddress: e.target.value })}
-                className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs focus:border-[#FF4B32] outline-none"
+                className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs focus:border-[#C80808] outline-none"
               />
             </div>
           </div>
@@ -382,7 +382,7 @@ export default function AdminContentPage() {
           <button
             type="submit"
             disabled={saving}
-            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg bg-[#FF4B32] hover:bg-[#E03820] text-white text-xs font-bold shadow-[0_4px_12px_rgba(255,75,50,0.3)] transition-all disabled:opacity-50"
+            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg bg-[#C80808] hover:bg-[#8A0A0A] text-white text-xs font-bold shadow-[0_4px_12px_rgba(200,8,8,0.3)] transition-all disabled:opacity-50"
           >
             <Save className="w-4 h-4" />
             <span>{saving ? "Publishing to Supabase..." : "Save & Publish All Content"}</span>

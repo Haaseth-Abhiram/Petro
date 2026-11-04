@@ -165,7 +165,7 @@ export default function AdminSidebar({
         {/* User Card */}
         <div className="p-4 mx-3 my-3 rounded-xl bg-white/5 border border-white/10 shrink-0">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-[#FF4B32] text-white font-black text-sm flex items-center justify-center shrink-0">
+            <div className="w-9 h-9 rounded-lg bg-[#C80808] text-white font-black text-sm flex items-center justify-center shrink-0">
               {user?.name ? user.name.charAt(0).toUpperCase() : "A"}
             </div>
             <div className="min-w-0 flex-1">
@@ -185,7 +185,7 @@ export default function AdminSidebar({
             <span
               className={`font-semibold px-2 py-0.5 rounded ${
                 isSuperAdmin
-                  ? "bg-[#FF4B32]/20 text-[#FF4B32]"
+                  ? "bg-[#C80808]/20 text-[#C80808]"
                   : "bg-white/10 text-white"
               }`}
             >
@@ -216,7 +216,7 @@ export default function AdminSidebar({
                 }}
                 className={`group flex items-center justify-between px-3.5 py-2.5 rounded-lg text-xs font-semibold transition-all ${
                   isActive
-                    ? "bg-[#FF4B32] text-white shadow-sm"
+                    ? "bg-[#C80808] text-white shadow-sm"
                     : "text-[#929DA7] hover:bg-white/5 hover:text-white"
                 }`}
               >
@@ -232,8 +232,8 @@ export default function AdminSidebar({
                   <span
                     className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
                       isActive
-                        ? "bg-white text-[#FF4B32]"
-                        : "bg-[#FF4B32] text-white"
+                        ? "bg-white text-[#C80808]"
+                        : "bg-[#C80808] text-white"
                     }`}
                   >
                     {item.badge}
@@ -247,8 +247,8 @@ export default function AdminSidebar({
           {isSuperAdmin && (
             <div className="pt-3 mt-3 border-t border-[#2A2E34]">
               <div className="flex items-center gap-1.5 px-3 pb-1.5">
-                <Shield className="w-3 h-3 text-[#FF4B32]" />
-                <p className="text-[10px] font-bold uppercase tracking-wider text-[#FF4B32]">
+                <Shield className="w-3 h-3 text-[#C80808]" />
+                <p className="text-[10px] font-bold uppercase tracking-wider text-[#C80808]">
                   Super Admin Controls
                 </p>
               </div>
@@ -267,7 +267,7 @@ export default function AdminSidebar({
                     }}
                     className={`group flex items-center justify-between px-3.5 py-2.5 rounded-lg text-xs font-semibold transition-all ${
                       isActive
-                        ? "bg-[#FF4B32] text-white shadow-sm"
+                        ? "bg-[#C80808] text-white shadow-sm"
                         : "text-[#929DA7] hover:bg-white/5 hover:text-white"
                     }`}
                   >
@@ -304,7 +304,7 @@ export default function AdminSidebar({
 
           <button
             onClick={handleLogout}
-            className="w-full flex items-center gap-2.5 px-3.5 py-2 rounded-lg text-xs font-medium text-[#FF4B32] hover:bg-[#FF4B32]/10 transition-colors text-left"
+            className="w-full flex items-center gap-2.5 px-3.5 py-2 rounded-lg text-xs font-medium text-[#C80808] hover:bg-[#C80808]/10 transition-colors text-left"
           >
             <LogOut className="w-4 h-4" />
             <span>Sign Out</span>

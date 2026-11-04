@@ -83,7 +83,7 @@ export default function AdminHeader({
             aria-label="Refresh Data"
           >
             <RefreshCw
-              className={`w-4 h-4 ${isRefreshing ? "animate-spin text-[#FF4B32]" : ""}`}
+              className={`w-4 h-4 ${isRefreshing ? "animate-spin text-[#C80808]" : ""}`}
             />
           </button>
         )}
@@ -107,7 +107,7 @@ export default function AdminHeader({
 
         {/* Profile Avatar */}
         <div className="flex items-center gap-2 pl-2 border-l border-[#D8DDE2]">
-          <div className="w-8 h-8 rounded-full bg-[#17191C] text-white flex items-center justify-center text-xs font-bold ring-2 ring-[#FF4B32]/30">
+          <div className="w-8 h-8 rounded-full bg-[#17191C] text-white flex items-center justify-center text-xs font-bold ring-2 ring-[#C80808]/30">
             {user?.name ? user.name.charAt(0).toUpperCase() : "A"}
           </div>
           <div className="hidden xl:block text-left">

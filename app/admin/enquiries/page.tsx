@@ -151,7 +151,7 @@ export default function AdminEnquiriesPage() {
             placeholder="Search by sender name, company, email, or subject..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 rounded-lg border border-[#D8DDE2] text-xs sm:text-sm focus:border-[#FF4B32] outline-none"
+            className="w-full pl-10 pr-4 py-2 rounded-lg border border-[#D8DDE2] text-xs sm:text-sm focus:border-[#C80808] outline-none"
           />
         </div>
 
@@ -195,7 +195,7 @@ export default function AdminEnquiriesPage() {
               {loading ? (
                 <tr>
                   <td colSpan={5} className="py-12 text-center text-[#5F6871]">
-                    <div className="w-6 h-6 border-2 border-[#FF4B32] border-t-transparent rounded-full animate-spin mx-auto mb-2" />
+                    <div className="w-6 h-6 border-2 border-[#C80808] border-t-transparent rounded-full animate-spin mx-auto mb-2" />
                     <span>Loading enquiries...</span>
                   </td>
                 </tr>
@@ -243,7 +243,7 @@ export default function AdminEnquiriesPage() {
                       <span
                         className={`inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${
                           enq.status === "new"
-                            ? "bg-[#FF4B32] text-white"
+                            ? "bg-[#C80808] text-white"
                             : enq.status === "in_progress"
                             ? "bg-amber-100 text-amber-800"
                             : enq.status === "responded"
@@ -280,7 +280,7 @@ export default function AdminEnquiriesPage() {
           <div className="bg-white rounded-2xl max-w-2xl w-full border border-[#D8DDE2] shadow-2xl my-8 overflow-hidden animate-in fade-in zoom-in-95">
             <div className="p-6 border-b border-[#D8DDE2] flex items-center justify-between bg-[#F5F6F7]/50">
               <div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#FF4B32]">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#C80808]">
                   Enquiry Details
                 </span>
                 <h3 className="text-lg font-bold text-[#17191C]">
@@ -310,7 +310,7 @@ export default function AdminEnquiriesPage() {
                   <span className="text-[#929DA7] block text-[10px] uppercase font-bold">Email Address:</span>
                   <a
                     href={`mailto:${selectedEnquiry.email}?subject=RE: ${selectedEnquiry.subject}`}
-                    className="font-bold text-[#FF4B32] hover:underline flex items-center gap-1 mt-0.5"
+                    className="font-bold text-[#C80808] hover:underline flex items-center gap-1 mt-0.5"
                   >
                     <span>{selectedEnquiry.email}</span>
                     <ExternalLink className="w-3 h-3" />
@@ -321,9 +321,9 @@ export default function AdminEnquiriesPage() {
                   {selectedEnquiry.phone ? (
                     <a
                       href={`tel:${selectedEnquiry.phone}`}
-                      className="font-bold text-[#17191C] hover:text-[#FF4B32] flex items-center gap-1 mt-0.5"
+                      className="font-bold text-[#17191C] hover:text-[#C80808] flex items-center gap-1 mt-0.5"
                     >
-                      <Phone className="w-3 h-3 text-[#FF4B32]" />
+                      <Phone className="w-3 h-3 text-[#C80808]" />
                       <span>{selectedEnquiry.phone}</span>
                     </a>
                   ) : (
@@ -351,7 +351,7 @@ export default function AdminEnquiriesPage() {
                   <select
                     value={statusInput}
                     onChange={(e) => setStatusInput(e.target.value)}
-                    className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs font-bold outline-none focus:border-[#FF4B32]"
+                    className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs font-bold outline-none focus:border-[#C80808]"
                   >
                     {availableEnquiryStatuses.map((step) => (
                       <option key={step.value} value={step.value}>
@@ -380,7 +380,7 @@ export default function AdminEnquiriesPage() {
                   value={notesInput}
                   onChange={(e) => setNotesInput(e.target.value)}
                   placeholder="Private notes (e.g. called client on 02-Nov, quoted SS316 ball valves, awaiting specs)..."
-                  className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs outline-none focus:border-[#FF4B32]"
+                  className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs outline-none focus:border-[#C80808]"
                 />
               </div>
 
@@ -429,7 +429,7 @@ export default function AdminEnquiriesPage() {
                   <button
                     onClick={handleUpdate}
                     disabled={updating}
-                    className="px-5 py-2 rounded-lg bg-[#FF4B32] hover:bg-[#E03820] text-white text-xs font-bold shadow-sm disabled:opacity-50"
+                    className="px-5 py-2 rounded-lg bg-[#C80808] hover:bg-[#8A0A0A] text-white text-xs font-bold shadow-sm disabled:opacity-50"
                   >
                     {updating ? "Saving..." : "Save Status & Notes"}
                   </button>

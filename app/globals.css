@@ -8,7 +8,7 @@
   /* Official Exact Brand Palette */
   --color-steel-grey: #929DA7;
   --color-midnight-charcoal: #17191C;
-  --color-coral-orange: #FF4B32;
+  --color-coral-orange: #C80808;
 
   --color-white: #FFFFFF;
   --color-off-white: #F5F6F7;
@@ -20,11 +20,11 @@
   --ink: #17191C;
   --ink-raised: #1F2327;
   --ink-line: #2A2E34;
-  --red: #FF4B32;
-  --red-dark: #E03820;
-  --red-tint: rgba(255, 75, 50, 0.08);
-  --gold: #FF4B32;
-  --gold-tint: rgba(255, 75, 50, 0.12);
+  --red: #C80808;
+  --red-dark: #8A0A0A;
+  --red-tint: rgba(200,8,8, 0.08);
+  --gold: #C80808;
+  --gold-tint: rgba(200,8,8, 0.12);
 
   /* Neutrals */
   --body: #5F6871;
@@ -109,13 +109,13 @@ h4 { font-size: 1.05rem; letter-spacing: -0.01em; }
   background: var(--color-coral-orange);
   color: #FFFFFF;
   border-color: var(--color-coral-orange);
-  box-shadow: 0 4px 14px rgba(255, 75, 50, 0.28);
+  box-shadow: 0 4px 14px rgba(200,8,8, 0.28);
 }
 .btn-primary:hover {
-  background: #E03820;
-  border-color: #E03820;
+  background: #8A0A0A;
+  border-color: #8A0A0A;
   color: #FFFFFF;
-  box-shadow: 0 6px 20px rgba(255, 75, 50, 0.38);
+  box-shadow: 0 6px 20px rgba(200,8,8, 0.38);
 }
 
 .btn-secondary {
@@ -341,7 +341,7 @@ h4 { font-size: 1.05rem; letter-spacing: -0.01em; }
 }
 .spec-table tbody tr:hover td,
 .spec-table tbody tr:hover th {
-  background: rgba(255, 75, 50, 0.04);
+  background: rgba(200,8,8, 0.04);
 }
 .spec-table tbody th {
   font-family: var(--font-head);
@@ -366,7 +366,7 @@ h4 { font-size: 1.05rem; letter-spacing: -0.01em; }
   right: 10%;
   width: 580px;
   height: 280px;
-  background: radial-gradient(circle, rgba(255, 75, 50, 0.28) 0%, rgba(255, 75, 50, 0.08) 50%, transparent 75%);
+  background: radial-gradient(circle, rgba(200,8,8, 0.28) 0%, rgba(200,8,8, 0.08) 50%, transparent 75%);
   filter: blur(48px);
   pointer-events: none;
   z-index: 1;
@@ -387,11 +387,11 @@ h4 { font-size: 1.05rem; letter-spacing: -0.01em; }
 @keyframes flame-pulse {
   0%, 100% {
     transform: scale(1) translateY(0);
-    filter: drop-shadow(0 0 12px rgba(255, 75, 50, 0.4));
+    filter: drop-shadow(0 0 12px rgba(200,8,8, 0.4));
   }
   50% {
     transform: scale(1.08) translateY(-3px);
-    filter: drop-shadow(0 0 22px rgba(255, 75, 50, 0.75)) drop-shadow(0 0 8px rgba(245, 158, 11, 0.5));
+    filter: drop-shadow(0 0 22px rgba(200,8,8, 0.75)) drop-shadow(0 0 8px rgba(245, 158, 11, 0.5));
   }
 }
 
@@ -411,3 +411,103 @@ h4 { font-size: 1.05rem; letter-spacing: -0.01em; }
 .animate-flame-shimmer {
   animation: flame-shimmer 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
+
+/* responsive safeguards */
+body{overflow-x:clip}
+img{max-width:100%;height:auto}
+@media (max-width: 640px){
+  .btn{white-space:normal;text-align:center;line-height:1.3;max-width:100%}
+  .btn-pill-dark,.btn-pill-light{white-space:normal}
+}
+
+/* ---------- home: motion + colour system ---------- */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.rv-in{opacity:1;transform:none}
+@media (scripting: none){.rv{opacity:1;transform:none}}
+@media (prefers-reduced-motion: reduce){.rv{opacity:1;transform:none;transition:none}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes spin-slow{to{transform:rotate(360deg)}}
+@keyframes gradient-pan{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+.animate-marquee{animation:marquee 32s linear infinite}
+.animate-floaty{animation:floaty 7s ease-in-out infinite}
+.animate-spin-slow{animation:spin-slow 40s linear infinite}
+.animate-gradient{background-size:200% 200%;animation:gradient-pan 10s ease infinite}
+.text-gradient{background:linear-gradient(90deg,#C80808,#E0A21A);-webkit-background-clip:text;background-clip:text;color:transparent}
+.dot-grid{background-image:radial-gradient(rgba(255,255,255,.16) 1.2px,transparent 1.2px);background-size:22px 22px}
+@media (prefers-reduced-motion: reduce){.animate-marquee,.animate-floaty,.animate-spin-slow,.animate-gradient{animation:none}}
+
+.rv-left{transform:translateX(-48px)}.rv-right{transform:translateX(48px)}.rv-zoom{transform:scale(.92)}
+.rv-in.rv-left,.rv-in.rv-right,.rv-in.rv-zoom{transform:none}
+@keyframes blob{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,-24px) scale(1.08)}66%{transform:translate(-26px,20px) scale(.95)}}
+@keyframes shine{from{transform:translateX(-130%) skewX(-18deg)}to{transform:translateX(230%) skewX(-18deg)}}
+@keyframes draw{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.animate-blob{animation:blob 14s ease-in-out infinite}
+.shine{position:relative;overflow:hidden}
+.shine::after{content:"";position:absolute;top:0;bottom:0;width:40%;left:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);transform:translateX(-130%) skewX(-18deg)}
+.shine:hover::after{animation:shine .9s ease}
+.tilt{transition:transform .5s var(--ease),box-shadow .5s var(--ease)}
+.tilt:hover{transform:translateY(-8px) rotate(-.4deg)}
+.u-draw{position:relative}.u-draw::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:5px;border-radius:5px;background:linear-gradient(90deg,#C80808,#E0A21A);transform-origin:left;animation:draw 1.1s .5s var(--ease) both}
+@media (prefers-reduced-motion: reduce){.animate-blob{animation:none}.u-draw::after{animation:none}.tilt:hover{transform:none}}
+
+/* expanding divisions panels (desktop hover/focus) */
+@media (min-width: 1024px){
+  .dv-row{display:flex;flex-direction:row;gap:20px;height:640px}
+  .dv-panel{flex:1 1 0;min-width:0;transition:flex-grow .7s var(--ease)}
+  .dv-row:hover .dv-panel{flex-grow:.8}
+  .dv-row .dv-panel:hover,.dv-row .dv-panel:focus-within{flex-grow:1.7}
+  .dv-more{max-height:0;opacity:0;overflow:hidden;transition:max-height .6s var(--ease),opacity .5s var(--ease) .1s}
+  .dv-panel:hover .dv-more,.dv-panel:focus-within .dv-more,.dv-row:not(:hover) .dv-panel:first-child .dv-more{max-height:460px;opacity:1}
+  .dv-row:hover .dv-panel:first-child:not(:hover) .dv-more{max-height:0;opacity:0}
+}
+@keyframes ring-pulse{0%{transform:scale(.9);opacity:.7}100%{transform:scale(1.5);opacity:0}}
+.animate-ring{animation:ring-pulse 2.6s ease-out infinite}
+@media (prefers-reduced-motion: reduce){.animate-ring{animation:none}.dv-panel,.dv-more{transition:none}}
+@keyframes slide-fill{from{transform:translateX(-100%)}to{transform:translateX(0)}}
+
+@keyframes loader-fill{0%{clip-path:inset(0 100% 0 0)}70%{clip-path:inset(0 0 0 0)}100%{clip-path:inset(0 0 0 0)}}
+.loader-fill{animation:loader-fill 1.8s var(--ease) infinite}
+@media (prefers-reduced-motion: reduce){.loader-fill{animation:none}}
+
+@keyframes routeflow{from{transform:translateX(-100%)}to{transform:translateX(300%)}}
+@keyframes routetruck{from{left:0}to{left:100%}}
+@media (prefers-reduced-motion: reduce){.\[animation\:routeflow_3\.5s_linear_infinite\],.\[animation\:routetruck_14s_linear_infinite\]{animation:none!important}}
+
+@keyframes routefade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes routepop{0%{transform:scale(.5) rotate(-20deg);opacity:.4}70%{transform:scale(1.15)}100%{transform:none;opacity:1}}
+
+.ldr-spin{animation:spin-slow 14s linear infinite}
+.ldr-spin-rev{animation:spin-slow 3.2s linear infinite reverse}
+@keyframes ldr-float{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-8px) scale(1.04)}}
+.ldr-float{animation:ldr-float 2.4s ease-in-out infinite}
+@keyframes ldr-bar{0%{width:0%}87%,100%{width:99%}}
+.ldr-bar{animation:ldr-bar 2.6s cubic-bezier(.2,.7,.2,1) infinite}
+@media (prefers-reduced-motion: reduce){.ldr-spin,.ldr-spin-rev,.ldr-float,.ldr-bar{animation:none}.ldr-bar{width:100%}}
+
+.ldr-orbit{animation:spin-slow 9s linear infinite}
+.ldr-orbit-rev{animation:spin-slow 9s linear infinite reverse}
+@keyframes ldr-sweep{from{transform:translateX(-150%) skewX(-18deg)}to{transform:translateX(450%) skewX(-18deg)}}
+.ldr-sweep{animation:ldr-sweep 3.6s ease-in-out infinite}
+@media (prefers-reduced-motion: reduce){.ldr-orbit,.ldr-orbit-rev,.ldr-sweep{animation:none}}
+
+/* Language translation widget: hide Google own UI, keep our switcher */
+.goog-te-banner-frame,.goog-te-balloon-frame,#goog-gt-tt,.goog-tooltip,.goog-te-gadget-icon,iframe.skiptranslate{display:none!important}
+body{top:0!important}
+.goog-text-highlight{background:none!important;box-shadow:none!important}
+
+/* Consistent proportions on every screen size: on large monitors (24"-32"+) scale the whole UI up
+   so spacing, type and container widths look the same as on a laptop. Viewport-height units are
+   divided by the zoom so full-screen layouts (login, 404) still fit without scrolling. */
+:root { --z: 1; }
+@media (min-width: 1920px) { :root { --z: 1.25; } html { zoom: 1.25; } }
+@media (min-width: 2300px) { :root { --z: 1.5; } html { zoom: 1.5; } }
+@media (min-width: 2900px) { :root { --z: 1.85; } html { zoom: 1.85; } }
+@media (min-width: 3500px) { :root { --z: 2.3; } html { zoom: 2.3; } }
+.h-screen { height: calc(100vh / var(--z)); }
+.min-h-screen { min-height: calc(100vh / var(--z)); }
+.min-h-[70vh] { min-height: calc(70vh / var(--z)); }
+.max-h-[90vh] { max-height: calc(90vh / var(--z)); }
+.max-h-[50vh] { max-height: calc(50vh / var(--z)); }
+
+@keyframes routepop2{0%{opacity:0;transform:translateY(24px) scale(.95)}100%{opacity:1;transform:none}}

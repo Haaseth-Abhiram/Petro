@@ -27,7 +27,7 @@ export default function SuperAdminGuard({ children }: SuperAdminGuardProps) {
   if (loading) {
     return (
       <div className="py-24 text-center">
-        <div className="w-8 h-8 border-3 border-[#FF4B32] border-t-transparent rounded-full animate-spin mx-auto mb-3" />
+        <div className="w-8 h-8 border-3 border-[#C80808] border-t-transparent rounded-full animate-spin mx-auto mb-3" />
         <p className="text-xs font-semibold text-[#5F6871]">Verifying security privileges...</p>
       </div>
     );
@@ -36,7 +36,7 @@ export default function SuperAdminGuard({ children }: SuperAdminGuardProps) {
   if (role !== "Super Admin") {
     return (
       <div className="max-w-xl mx-auto my-12 bg-white rounded-2xl p-8 border border-[#D8DDE2] shadow-sm text-center">
-        <div className="w-14 h-14 rounded-2xl bg-[#FF4B32]/10 text-[#FF4B32] flex items-center justify-center mx-auto mb-4">
+        <div className="w-14 h-14 rounded-2xl bg-[#C80808]/10 text-[#C80808] flex items-center justify-center mx-auto mb-4">
           <ShieldAlert className="w-7 h-7" />
         </div>
         <h2 className="text-xl font-extrabold text-[#17191C] mb-2">

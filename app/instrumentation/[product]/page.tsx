@@ -85,16 +85,16 @@ export default function ProductOrCategoryPage({ params }: PageProps) {
     return (
       <div className="w-full bg-[#FFFFFF]">
         {/* 1. HERO & BREADCRUMBS */}
-        <section className="relative bg-[#17191C] text-white py-16 lg:py-20 overflow-hidden border-b border-[#2A2E34]">
+        <section className="relative bg-[#17191C]/90 text-white py-16 lg:py-20 overflow-hidden border-b border-[#2A2E34]">
           <div
-            className="absolute inset-0 bg-cover bg-center opacity-25 z-0"
+            className="absolute inset-0 bg-cover bg-center opacity-40 z-0"
             style={{ backgroundImage: `url('${heroImage}')` }}
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#17191C]/95 via-[#17191C]/90 to-[#17191C]/75 z-0" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#17191C]/85 via-[#17191C]/75 to-[#17191C]/55 z-0" />
 
           <div className="relative z-10 max-w-[1400px] mx-auto px-6">
             {/* Breadcrumb */}
-            <div className="flex items-center space-x-2 text-xs font-semibold text-white/60 mb-4">
+            <div className="flex items-center space-x-2 text-xs font-semibold text-white/80 mb-4">
               <Link href="/" className="hover:text-white transition-colors">
                 Home
               </Link>
@@ -102,12 +102,12 @@ export default function ProductOrCategoryPage({ params }: PageProps) {
               <Link href="/instrumentation" className="hover:text-white transition-colors">
                 Instrumentation
               </Link>
-              <ChevronRight className="w-3.5 h-3.5 text-[#FF4B32]" />
-              <span className="text-[#FF4B32]">{category.name}</span>
+              <ChevronRight className="w-3.5 h-3.5 text-[#C80808]" />
+              <span className="text-[#C80808]">{category.name}</span>
             </div>
 
             <div className="max-w-[840px]">
-              <span className="eyebrow">HIGH PRESSURE FLUID CONTROL</span>
+              <span className="eyebrow eyebrow-gold">HIGH PRESSURE FLUID CONTROL</span>
               <h1 className="text-white text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-[1.12] mb-4">
                 {category.name}
               </h1>
@@ -155,13 +155,13 @@ export default function ProductOrCategoryPage({ params }: PageProps) {
                 {/* Key Product Variants Card */}
                 <div className="p-6 bg-[#F5F6F7] border border-[#D8DDE2] rounded-xl">
                   <h4 className="font-['Plus_Jakarta_Sans'] text-xs font-bold uppercase tracking-wider text-[#17191C] mb-3 flex items-center gap-1.5">
-                    <Layers className="w-4 h-4 text-[#FF4B32]" />
+                    <Layers className="w-4 h-4 text-[#C80808]" />
                     <span>Key Product Configurations:</span>
                   </h4>
                   <ul className="space-y-2 text-sm text-[#5F6871]">
                     {category.keyProducts?.map((item, idx) => (
                       <li key={idx} className="flex items-start">
-                        <Check className="w-4 h-4 text-[#FF4B32] mr-2 shrink-0 mt-0.5" />
+                        <Check className="w-4 h-4 text-[#C80808] mr-2 shrink-0 mt-0.5" />
                         <span className="font-medium text-[#17191C]">{item}</span>
                       </li>
                     ))}
@@ -218,7 +218,7 @@ export default function ProductOrCategoryPage({ params }: PageProps) {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 border-t border-[#D8DDE2]">
                   <div>
                     <h5 className="text-xs font-bold uppercase tracking-wider text-[#17191C] mb-2 flex items-center gap-1.5">
-                      <ShieldCheck className="w-4 h-4 text-[#FF4B32]" />
+                      <ShieldCheck className="w-4 h-4 text-[#C80808]" />
                       <span>Applicable Standards:</span>
                     </h5>
                     <ul className="space-y-1.5 text-xs text-[#5F6871]">
@@ -236,7 +236,7 @@ export default function ProductOrCategoryPage({ params }: PageProps) {
 
                   <div>
                     <h5 className="text-xs font-bold uppercase tracking-wider text-[#17191C] mb-2 flex items-center gap-1.5">
-                      <FileCheck className="w-4 h-4 text-[#FF4B32]" />
+                      <FileCheck className="w-4 h-4 text-[#C80808]" />
                       <span>Target Applications:</span>
                     </h5>
                     <ul className="space-y-1.5 text-xs text-[#5F6871]">
@@ -269,7 +269,7 @@ export default function ProductOrCategoryPage({ params }: PageProps) {
                     className="p-6 bg-white border border-[#D8DDE2] rounded-xl flex flex-col justify-between hover:shadow-md transition-shadow"
                   >
                     <div>
-                      <span className="text-[11px] font-bold text-[#FF4B32] uppercase tracking-wider block mb-1">
+                      <span className="text-[11px] font-bold text-[#C80808] uppercase tracking-wider block mb-1">
                         {p.pressureRating || "High Pressure Rated"}
                       </span>
                       <h4 className="font-['Plus_Jakarta_Sans'] text-base font-bold text-[#17191C] mb-2">
@@ -282,7 +282,7 @@ export default function ProductOrCategoryPage({ params }: PageProps) {
 
                     <Link
                       href={`/request-a-quote?product=${encodeURIComponent(p.name)}`}
-                      className="font-['Plus_Jakarta_Sans'] text-xs font-bold text-[#FF4B32] hover:underline flex items-center gap-1 mt-2"
+                      className="font-['Plus_Jakarta_Sans'] text-xs font-bold text-[#C80808] hover:underline flex items-center gap-1 mt-2"
                     >
                       <span>Request Quote on Model</span>
                       <ArrowRight className="w-3.5 h-3.5" />
@@ -295,12 +295,12 @@ export default function ProductOrCategoryPage({ params }: PageProps) {
         )}
 
         {/* 4. FAST QUOTE CTA */}
-        <section className="py-16 bg-[#17191C] text-white">
+        <section className="py-16 bg-[#17191C]/90 text-white">
           <div className="max-w-[1400px] mx-auto px-6 text-center">
             <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight mb-3">
               Need custom sizing, materials, or fast delivery for {category.name}?
             </h3>
-            <p className="text-white/70 text-sm sm:text-base max-w-xl mx-auto mb-6">
+            <p className="text-white/80 text-sm sm:text-base max-w-xl mx-auto mb-6">
               Our engineering sales team provides verified technical quotes, material test certificates (MTC), and dimensional drawings.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4">
@@ -329,15 +329,15 @@ export default function ProductOrCategoryPage({ params }: PageProps) {
     return (
       <div className="w-full bg-[#FFFFFF]">
         {/* 1. HERO */}
-        <section className="relative bg-[#17191C] text-white py-16 lg:py-20 overflow-hidden border-b border-[#2A2E34]">
+        <section className="relative bg-[#17191C]/90 text-white py-16 lg:py-20 overflow-hidden border-b border-[#2A2E34]">
           <div
-            className="absolute inset-0 bg-cover bg-center opacity-25 z-0"
+            className="absolute inset-0 bg-cover bg-center opacity-40 z-0"
             style={{ backgroundImage: `url('/assets/img/tube-fittings.jpg')` }}
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-[#17191C]/95 via-[#17191C]/90 to-[#17191C]/75 z-0" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#17191C]/85 via-[#17191C]/75 to-[#17191C]/55 z-0" />
 
           <div className="relative z-10 max-w-[1400px] mx-auto px-6">
-            <div className="flex items-center space-x-2 text-xs font-semibold text-white/60 mb-4">
+            <div className="flex items-center space-x-2 text-xs font-semibold text-white/80 mb-4">
               <Link href="/" className="hover:text-white transition-colors">
                 Home
               </Link>
@@ -345,12 +345,12 @@ export default function ProductOrCategoryPage({ params }: PageProps) {
               <Link href="/instrumentation" className="hover:text-white transition-colors">
                 Instrumentation
               </Link>
-              <ChevronRight className="w-3.5 h-3.5 text-[#FF4B32]" />
-              <span className="text-[#FF4B32]">{product.name}</span>
+              <ChevronRight className="w-3.5 h-3.5 text-[#C80808]" />
+              <span className="text-[#C80808]">{product.name}</span>
             </div>
 
             <div className="max-w-[820px]">
-              <span className="eyebrow">FLUID CONTROL HARDWARE</span>
+              <span className="eyebrow eyebrow-gold">FLUID CONTROL HARDWARE</span>
               <h1 className="text-white text-3xl sm:text-4xl lg:text-[46px] font-black tracking-tight leading-[1.15] mb-4">
                 {product.name}
               </h1>
@@ -409,7 +409,7 @@ export default function ProductOrCategoryPage({ params }: PageProps) {
                   <ul className="space-y-2 text-sm text-[#5F6871]">
                     {product.keyFeatures?.map((feat, i) => (
                       <li key={i} className="flex items-start">
-                        <Check className="w-4 h-4 text-[#FF4B32] mr-2 shrink-0 mt-0.5" />
+                        <Check className="w-4 h-4 text-[#C80808] mr-2 shrink-0 mt-0.5" />
                         <span>{feat}</span>
                       </li>
                     ))}
@@ -469,7 +469,7 @@ export default function ProductOrCategoryPage({ params }: PageProps) {
                   </p>
                   <Link
                     href="/contact"
-                    className="inline-flex items-center text-xs font-bold text-[#FF4B32] hover:underline"
+                    className="inline-flex items-center text-xs font-bold text-[#C80808] hover:underline"
                   >
                     <span>Contact Engineering Desk</span>
                     <ArrowRight className="w-3.5 h-3.5 ml-1" />
@@ -490,9 +490,9 @@ export default function ProductOrCategoryPage({ params }: PageProps) {
     <div className="w-full bg-[#FFFFFF] py-16 lg:py-24">
       <div className="max-w-[1000px] mx-auto px-6 text-center">
         {/* Eyebrow */}
-        <div className="inline-flex items-center gap-2 mb-4 px-3.5 py-1.5 rounded-full bg-[#FF4B32]/10 border border-[#FF4B32]/20">
-          <HelpCircle className="w-3.5 h-3.5 text-[#FF4B32]" />
-          <span className="font-['Plus_Jakarta_Sans'] text-xs font-extrabold uppercase tracking-widest text-[#FF4B32]">
+        <div className="inline-flex items-center gap-2 mb-4 px-3.5 py-1.5 rounded-full bg-[#C80808]/10 border border-[#C80808]/20">
+          <HelpCircle className="w-3.5 h-3.5 text-[#C80808]" />
+          <span className="font-['Plus_Jakarta_Sans'] text-xs font-extrabold uppercase tracking-widest text-[#C80808]">
             Catalogue Item Reference: {params.product}
           </span>
         </div>
@@ -534,11 +534,11 @@ export default function ProductOrCategoryPage({ params }: PageProps) {
               <Link
                 key={cat.slug}
                 href={`/instrumentation/${cat.slug}`}
-                className="p-3 bg-white rounded-lg border border-[#D8DDE2] hover:border-[#FF4B32] hover:shadow-sm transition-all group"
+                className="p-3 bg-white rounded-lg border border-[#D8DDE2] hover:border-[#C80808] hover:shadow-sm transition-all group"
               >
-                <div className="text-xs font-bold text-[#17191C] group-hover:text-[#FF4B32] transition-colors flex items-center justify-between">
+                <div className="text-xs font-bold text-[#17191C] group-hover:text-[#C80808] transition-colors flex items-center justify-between">
                   <span>{cat.name}</span>
-                  <ChevronRight className="w-3.5 h-3.5 text-[#929DA7] group-hover:text-[#FF4B32] transition-colors" />
+                  <ChevronRight className="w-3.5 h-3.5 text-[#929DA7] group-hover:text-[#C80808] transition-colors" />
                 </div>
                 <p className="text-[11px] text-[#5F6871] line-clamp-1 mt-1">
                   {cat.shortDescription}

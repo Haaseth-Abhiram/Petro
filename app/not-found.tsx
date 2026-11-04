@@ -7,9 +7,9 @@ export default function NotFound() {
     <div className="w-full min-h-[70vh] flex items-center justify-center bg-[#FFFFFF] py-20 px-6">
       <div className="max-w-2xl mx-auto text-center">
         {/* Eyebrow */}
-        <div className="inline-flex items-center gap-2 mb-4 px-3.5 py-1.5 rounded-full bg-[#FF4B32]/10 border border-[#FF4B32]/20">
-          <span className="w-2 h-2 rounded-full bg-[#FF4B32]" />
-          <span className="font-['Plus_Jakarta_Sans'] text-xs font-extrabold uppercase tracking-widest text-[#FF4B32]">
+        <div className="inline-flex items-center gap-2 mb-4 px-3.5 py-1.5 rounded-full bg-[#C80808]/10 border border-[#C80808]/20">
+          <span className="w-2 h-2 rounded-full bg-[#C80808]" />
+          <span className="font-['Plus_Jakarta_Sans'] text-xs font-extrabold uppercase tracking-widest text-[#C80808]">
             Page Not Found • Error 404
           </span>
         </div>
@@ -17,7 +17,7 @@ export default function NotFound() {
         {/* Headline */}
         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-[#17191C] tracking-tight mb-4">
           Looking for a specific <br />
-          <span className="text-[#FF4B32]">industrial product?</span>
+          <span className="text-[#C80808]">industrial product?</span>
         </h1>
 
         {/* Description */}
@@ -58,49 +58,49 @@ export default function NotFound() {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 text-xs font-semibold">
             <Link
               href="/instrumentation/tube-fittings"
-              className="p-2 rounded bg-white border border-[#D8DDE2] hover:border-[#FF4B32] hover:text-[#FF4B32] transition-colors"
+              className="p-2 rounded bg-white border border-[#D8DDE2] hover:border-[#C80808] hover:text-[#C80808] transition-colors"
             >
               Tube Fittings
             </Link>
             <Link
               href="/instrumentation/ball-valves"
-              className="p-2 rounded bg-white border border-[#D8DDE2] hover:border-[#FF4B32] hover:text-[#FF4B32] transition-colors"
+              className="p-2 rounded bg-white border border-[#D8DDE2] hover:border-[#C80808] hover:text-[#C80808] transition-colors"
             >
               Ball Valves
             </Link>
             <Link
               href="/instrumentation/needle-valves"
-              className="p-2 rounded bg-white border border-[#D8DDE2] hover:border-[#FF4B32] hover:text-[#FF4B32] transition-colors"
+              className="p-2 rounded bg-white border border-[#D8DDE2] hover:border-[#C80808] hover:text-[#C80808] transition-colors"
             >
               Needle Valves
             </Link>
             <Link
               href="/instrumentation/manifold-valves"
-              className="p-2 rounded bg-white border border-[#D8DDE2] hover:border-[#FF4B32] hover:text-[#FF4B32] transition-colors"
+              className="p-2 rounded bg-white border border-[#D8DDE2] hover:border-[#C80808] hover:text-[#C80808] transition-colors"
             >
               Manifold Valves
             </Link>
             <Link
               href="/chemicals/ro-chemicals-and-components"
-              className="p-2 rounded bg-white border border-[#D8DDE2] hover:border-[#FF4B32] hover:text-[#FF4B32] transition-colors"
+              className="p-2 rounded bg-white border border-[#D8DDE2] hover:border-[#C80808] hover:text-[#C80808] transition-colors"
             >
               RO Chemicals
             </Link>
             <Link
               href="/chemicals/cooling-water-chemicals"
-              className="p-2 rounded bg-white border border-[#D8DDE2] hover:border-[#FF4B32] hover:text-[#FF4B32] transition-colors"
+              className="p-2 rounded bg-white border border-[#D8DDE2] hover:border-[#C80808] hover:text-[#C80808] transition-colors"
             >
               Cooling Water
             </Link>
             <Link
               href="/services"
-              className="p-2 rounded bg-white border border-[#D8DDE2] hover:border-[#FF4B32] hover:text-[#FF4B32] transition-colors"
+              className="p-2 rounded bg-white border border-[#D8DDE2] hover:border-[#C80808] hover:text-[#C80808] transition-colors"
             >
               Services
             </Link>
             <Link
               href="/request-a-quote"
-              className="p-2 rounded bg-white border border-[#D8DDE2] hover:border-[#FF4B32] hover:text-[#FF4B32] transition-colors"
+              className="p-2 rounded bg-white border border-[#D8DDE2] hover:border-[#C80808] hover:text-[#C80808] transition-colors"
             >
               Request a Quote
             </Link>

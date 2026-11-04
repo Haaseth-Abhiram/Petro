@@ -1,7 +1,10 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Check, ArrowRight } from "lucide-react";
+import { Check, ArrowRight, Search, ClipboardList, ShieldCheck, Users, Truck, Lightbulb, FileCheck, Phone, Star, Home as HomeIcon, ChevronRight } from "lucide-react";
+import Reveal from "@/components/common/Reveal";
+import PageHero from "@/components/common/PageHero";
+import CountUp from "@/components/common/CountUp";
 
 export default function ServicesPage() {
   const services = [
@@ -144,154 +147,128 @@ export default function ServicesPage() {
     },
   ];
 
+  const icons = [Search, ClipboardList, ShieldCheck, Users, Truck, Lightbulb];
+  const stepIcons = [Search, FileCheck, ShieldCheck, Truck];
+
   return (
     <div className="w-full">
-      {/* 1. HERO */}
-      <section className="relative bg-[#17191C] text-white py-20 lg:py-24 overflow-hidden">
-        <div
-          className="absolute inset-0 bg-cover bg-center opacity-25 z-0"
-          style={{ backgroundImage: "url('/assets/img/service-inspection-qa.jpg')" }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#17191C]/95 via-[#17191C]/90 to-[#17191C]/75 z-0" />
+      <PageHero
+        crumb="Services"
+        eyebrow="Engineering & procurement"
+        title="End-to-end support,"
+        accent="from enquiry to site delivery"
+        text="Six dedicated services for engineering contractors, plant operators and procurement heads — backed by material traceability, factory expediting and technical review."
+        bg="/assets/img/service-inspection-qa.jpg"
+        visual={
+          <div className="hidden lg:grid grid-cols-3 gap-3">
+            {services.map((s, k) => {
+              const Icon = icons[k];
+              return (
+                <a key={s.id} href={`#${s.id}`} className="group rounded-2xl bg-white/10 backdrop-blur border border-white/20 p-4 hover:bg-[#C80808] hover:border-[#E0A21A] hover:-translate-y-1.5 transition-all duration-300">
+                  <span className="flex items-center justify-between mb-3">
+                    <span className="w-10 h-10 rounded-xl bg-[#C80808] text-white group-hover:bg-white group-hover:text-[#C80808] flex items-center justify-center transition-colors"><Icon className="w-5 h-5" /></span>
+                    <span className="font-black text-2xl text-transparent [-webkit-text-stroke:1px_#F2B93B]">{s.num}</span>
+                  </span>
+                  <span className="block text-[12.5px] font-extrabold text-white leading-snug">{s.title}</span>
+                </a>
+              );
+            })}
+          </div>
+        }
+        marquee={services.map((s) => s.title)}
+        actions={
+          <>
+            <Link href="/request-a-quote" className="btn btn-primary">Submit Project RFQ <ArrowRight className="w-4 h-4 ml-2" /></Link>
+            <a href="#all-services" className="btn btn-outline">Explore the six services</a>
+          </>
+        }
+      />
 
-        <div className="relative z-10 max-w-[1400px] mx-auto px-6">
-          <div className="max-w-[820px]">
-            <span className="eyebrow eyebrow-gold">ENGINEERING &amp; PROCUREMENT</span>
-            <h1 className="text-white text-3xl sm:text-4xl lg:text-[48px] font-extrabold tracking-tight leading-[1.15] mb-4">
-              End-to-end support, from enquiry through to site delivery
-            </h1>
-            <p className="text-white/80 text-base sm:text-lg leading-relaxed max-w-[660px]">
-              Six dedicated services for engineering contractors, plant operators and procurement heads — backed by material traceability, factory expediting and technical review.
-            </p>
+      {/* SERVICE CARDS */}
+      <section id="all-services" className="relative py-10 sm:py-12 bg-gradient-to-b from-white via-[#FFF8F0] to-white scroll-mt-28 overflow-hidden">
+        <div className="absolute -top-20 -left-20 w-[360px] h-[360px] rounded-full bg-[#C80808]/[0.06] blur-[90px]" />
+        <div className="absolute -bottom-20 -right-20 w-[360px] h-[360px] rounded-full bg-[#E0A21A]/[0.14] blur-[90px]" />
+        <div className="relative max-w-[1240px] mx-auto px-5 sm:px-8">
+          <Reveal className="text-center max-w-[640px] mx-auto mb-7">
+            <span className="inline-flex items-center gap-3 text-[11px] font-extrabold uppercase tracking-[0.2em] text-[#C80808] mb-2"><span className="h-[3px] w-9 rounded bg-[#C80808]" />Our services</span>
+            <h2 className="text-[1.4rem] sm:text-[1.8rem] font-black leading-[1.15] text-[#17191C]">Six ways we keep your project moving</h2>
+          </Reveal>
+          <div className="grid lg:grid-cols-2 gap-5">
+            {services.map((s, k) => {
+              const Icon = icons[k];
+              return (
+                <Reveal key={s.id} delay={(k % 2) * 100}>
+                  <article id={s.id} className="group scroll-mt-28 h-full flex flex-col rounded-2xl overflow-hidden bg-white border border-[#E7E9EE] shadow-lg hover:shadow-2xl hover:border-[#C80808] hover:-translate-y-1.5 transition-all duration-500">
+                    <div className="relative h-[140px] overflow-hidden text-white">
+                      <Image src={s.img} alt={s.title} fill sizes="(min-width:1024px) 600px, 100vw" className="object-cover group-hover:scale-110 transition-transform duration-1000" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#17191C]/95 via-[#17191C]/50 to-transparent" />
+                      <span className="absolute top-3 left-3 w-10 h-10 rounded-xl bg-[#C80808] flex items-center justify-center shadow-lg"><Icon className="w-5 h-5" /></span>
+                      <span className="absolute top-2 right-3 font-black text-4xl text-transparent [-webkit-text-stroke:1.5px_#F2B93B]">{s.num}</span>
+                      <h3 className="absolute bottom-0 p-4 text-[16px] sm:text-[17px] font-black text-white leading-tight">{s.title}</h3>
+                    </div>
+                    <div className="flex flex-col flex-1 p-4">
+                      <p className="text-[13px] leading-relaxed mb-3">{s.desc}</p>
+                      <div className="grid sm:grid-cols-2 gap-3 flex-1">
+                        <div className="rounded-xl bg-[#FFF8F0] border border-[#F0E3D2] p-3">
+                          <h4 className="text-[10.5px] font-extrabold uppercase tracking-[0.15em] text-[#C80808] mb-1.5">What we do</h4>
+                          <ul className="space-y-1.5 text-[12px] leading-snug text-[#17191C]">{s.activities.map((a) => (<li key={a} className="flex gap-1.5"><Check className="w-3.5 h-3.5 mt-0.5 shrink-0 text-[#C80808]" />{a}</li>))}</ul>
+                        </div>
+                        <div className="rounded-xl bg-white border border-[#F0E3D2] p-3">
+                          <h4 className="text-[10.5px] font-extrabold uppercase tracking-[0.15em] text-[#B07A0A] mb-1.5">What you gain</h4>
+                          <ul className="space-y-1.5 text-[12px] leading-snug text-[#17191C]">{s.benefits.map((b) => (<li key={b} className="flex gap-1.5"><Star className="w-3.5 h-3.5 mt-0.5 shrink-0 text-[#D4950F]" />{b}</li>))}</ul>
+                        </div>
+                      </div>
+                      <Link href={`/request-a-quote?service=${encodeURIComponent(s.title)}`} className="mt-3 inline-flex items-center gap-1.5 text-[12.5px] font-extrabold text-[#C80808] group-hover:gap-3 transition-all">Enquire about this service <ArrowRight className="w-4 h-4" /></Link>
+                    </div>
+                  </article>
+                </Reveal>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* 2. SERVICES LIST */}
-      <section className="py-12 bg-white border-b border-[#D8DDE2]">
-        <div className="max-w-[1400px] mx-auto px-6">
-          {services.map((s) => (
-            <article
-              key={s.id}
-              id={s.id}
-              className={`prod ${s.reverse ? "prod-reverse" : ""} scroll-mt-28 relative`}
-            >
-              {/* Secondary anchor for long-slug matching */}
-              <span id={
-                s.id === "oil-gas-sourcing" ? "oil-and-gas-equipment-sourcing" :
-                s.id === "project-procurement" ? "project-procurement-support" :
-                s.id === "inspection-qa" ? "inspection-and-quality-assurance" :
-                s.id === "vendor-rep" ? "vendor-and-manufacturer-representation" :
-                s.id === "logistics-export" ? "logistics-and-export-handling" :
-                "technical-consultation-and-engineering-support"
-              } className="absolute -top-28" />
-              <div className="prod-media">
-                <Image
-                  src={s.img}
-                  alt={s.title}
-                  width={1024}
-                  height={582}
-                  className="w-full h-auto object-cover"
-                />
-              </div>
-
-              <div className="prod-copy">
-                <span className="font-['Plus_Jakarta_Sans'] text-xs font-extrabold uppercase tracking-widest text-[#FF4B32] mb-1 block">
-                  SERVICE {s.num}
-                </span>
-                <h2 className="font-['Plus_Jakarta_Sans'] text-2xl sm:text-3xl font-extrabold text-[#17191C] mb-3">
-                  {s.title}
-                </h2>
-                <p className="text-[#5F6871] text-base leading-relaxed mb-6">
-                  {s.desc}
-                </p>
-
-                <div className="mb-6">
-                  <h4 className="font-['Plus_Jakarta_Sans'] text-xs font-bold uppercase tracking-wider text-[#17191C] mb-3">
-                    Key Activities:
-                  </h4>
-                  <ul className="space-y-1.5 text-sm text-[#5F6871]">
-                    {s.activities.map((act, i) => (
-                      <li key={i} className="flex items-start">
-                        <Check className="w-4 h-4 text-[#FF4B32] mr-2 shrink-0 mt-0.5" />
-                        <span>{act}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="btn-group mt-6">
-                  <Link
-                    href={`/request-a-quote?service=${encodeURIComponent(s.title)}`}
-                    className="btn btn-primary"
-                  >
-                    Enquire about {s.title.toLowerCase()}
-                  </Link>
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      {/* 3. FOUR STEPS */}
-      <section className="py-20 lg:py-24 bg-[#F5F6F7] border-b border-[#D8DDE2]">
-        <div className="max-w-[1400px] mx-auto px-6">
-          <div className="max-w-[760px] mx-auto text-center mb-14">
-            <span className="eyebrow">OUR PROCESS</span>
-            <h2 className="text-[#17191C] text-2xl sm:text-4xl font-extrabold tracking-tight">
-              Four steps from enquiry to delivery
-            </h2>
-            <p className="text-[#5F6871] text-base sm:text-lg mt-3">
-              Transparent milestone expediting and zero-compromise documentation control.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {steps.map((st) => (
-              <div key={st.num} className="step-card">
-                <div className="step-num">{st.num}</div>
-                <h3 className="font-['Plus_Jakarta_Sans'] text-lg font-bold text-[#17191C] mb-2.5">
-                  {st.title}
-                </h3>
-                <p className="text-[#5F6871] text-sm leading-relaxed">
-                  {st.desc}
-                </p>
-              </div>
-            ))}
+      {/* HOW WE WORK */}
+      <section className="relative py-12 bg-[#17191C]/90 overflow-hidden">
+        <div className="absolute -top-24 -left-24 w-[420px] h-[420px] rounded-full bg-[#C80808]/25 blur-[110px]" />
+        <div className="absolute -bottom-24 -right-24 w-[420px] h-[420px] rounded-full bg-[#E0A21A]/20 blur-[110px]" />
+        <div className="relative max-w-[1240px] mx-auto px-5 sm:px-8">
+          <Reveal className="text-center max-w-[640px] mx-auto mb-10">
+            <span className="inline-flex items-center gap-3 text-[11px] font-extrabold uppercase tracking-[0.2em] text-[#F2B93B] mb-2"><span className="h-[3px] w-9 rounded bg-[#F2B93B]" />How we work</span>
+            <h2 className="text-[1.4rem] sm:text-[1.8rem] font-black leading-[1.15] text-white mb-1.5">Four steps from enquiry to delivery</h2>
+            <p className="text-[14px] text-white/70">A predictable process, so you always know where your order stands.</p>
+          </Reveal>
+          <div className="relative grid sm:grid-cols-2 lg:grid-cols-4 gap-x-5 gap-y-11">
+            <span aria-hidden="true" className="hidden lg:block absolute top-0 left-[12%] right-[12%] h-[2px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#C80808] opacity-60" />
+            {steps.map((st, k) => {
+              const Icon = stepIcons[k];
+              return (
+                <Reveal key={st.num} delay={k * 110}>
+                  <div className="group relative h-full rounded-2xl bg-white/[0.06] border border-white/10 hover:bg-white/10 hover:border-[#E0A21A] p-5 pt-9 text-center transition-all duration-300">
+                    <span className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[62px] h-[62px] rounded-full bg-[#C80808] group-hover:bg-[#E0A21A] text-white flex items-center justify-center ring-4 ring-[#17191C] shadow-xl transition-colors"><Icon className="w-6 h-6" /></span>
+                    <span className="text-[11px] font-extrabold tracking-[0.2em] text-[#F2B93B]">STEP {st.num}</span>
+                    <h3 className="text-[15px] font-extrabold text-white mt-1 mb-1.5">{st.title}</h3>
+                    <p className="text-[12.5px] leading-relaxed text-white/70">{st.desc}</p>
+                  </div>
+                </Reveal>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* 4. CTA BAND */}
-      <section className="relative bg-[#17191C] overflow-hidden py-20 text-white">
-        <div
-          className="absolute inset-0 bg-cover bg-center opacity-15"
-          style={{ backgroundImage: "url('/assets/img/service-technical-consultation.jpg')" }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#17191C]/95 to-[#17191C]/80" />
-
-        <div className="relative z-10 max-w-[1400px] mx-auto px-6">
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
-            <div className="max-w-[620px]">
-              <span className="eyebrow eyebrow-gold">PROCUREMENT SUPPORT</span>
-              <h2 className="text-white text-3xl sm:text-4xl font-extrabold tracking-tight mt-2 mb-3">
-                Let's talk about your project
-              </h2>
-              <p className="text-white/75 text-base sm:text-lg leading-relaxed">
-                Contact our sourcing engineers for MTO evaluations, vendor alignments, or technical queries.
-              </p>
-            </div>
-            <div className="flex flex-wrap gap-4 shrink-0">
-              <Link href="/request-a-quote" className="btn btn-primary">
-                Submit Project RFQ
-              </Link>
-              <Link href="/contact" className="btn btn-outline">
-                Speak with Technical Team
-              </Link>
-            </div>
+      {/* CTA */}
+      <section className="py-8 bg-gradient-to-r from-[#8A0A0A] via-[#C80808] to-[#8A0A0A]">
+        <Reveal className="max-w-[1240px] mx-auto px-5 sm:px-8 flex flex-col lg:flex-row lg:items-center justify-between gap-5">
+          <div className="max-w-[620px]">
+            <h2 className="text-white text-[1.35rem] sm:text-[1.8rem] font-black leading-[1.15] mb-1">Let&apos;s talk about your project</h2>
+            <p className="text-white/85 text-[13.5px]">Contact our sourcing engineers for MTO evaluations, vendor alignments, or technical queries.</p>
           </div>
-        </div>
+          <div className="flex flex-wrap gap-3">
+            <Link href="/request-a-quote" className="inline-flex items-center gap-2 rounded-xl bg-white text-[#C80808] font-extrabold text-[13px] px-5 py-3 hover:-translate-y-1 hover:shadow-xl transition-all"><FileCheck className="w-5 h-5" />Submit Project RFQ</Link>
+            <Link href="/contact" className="inline-flex items-center gap-2 rounded-xl bg-[#17191C] text-white font-extrabold text-[13px] px-5 py-3 hover:-translate-y-1 hover:shadow-xl transition-all"><Phone className="w-5 h-5 text-[#F2B93B]" />Speak with Technical Team</Link>
+          </div>
+        </Reveal>
       </section>
     </div>
   );

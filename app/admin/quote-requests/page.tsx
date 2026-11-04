@@ -179,7 +179,7 @@ export default function AdminQuoteRequestsPage() {
             placeholder="Search by company, product name, contact name, or industry..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 rounded-lg border border-[#D8DDE2] text-xs sm:text-sm focus:border-[#FF4B32] outline-none"
+            className="w-full pl-10 pr-4 py-2 rounded-lg border border-[#D8DDE2] text-xs sm:text-sm focus:border-[#C80808] outline-none"
           />
         </div>
 
@@ -227,7 +227,7 @@ export default function AdminQuoteRequestsPage() {
               {loading ? (
                 <tr>
                   <td colSpan={6} className="py-12 text-center text-[#5F6871]">
-                    <div className="w-6 h-6 border-2 border-[#FF4B32] border-t-transparent rounded-full animate-spin mx-auto mb-2" />
+                    <div className="w-6 h-6 border-2 border-[#C80808] border-t-transparent rounded-full animate-spin mx-auto mb-2" />
                     <span>Loading quotation requests...</span>
                   </td>
                 </tr>
@@ -286,9 +286,9 @@ export default function AdminQuoteRequestsPage() {
                       <span
                         className={`inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${
                           rfq.status === "new"
-                            ? "bg-[#FF4B32] text-white"
+                            ? "bg-[#C80808] text-white"
                             : rfq.status === "resubmitted"
-                            ? "bg-[#17191C] text-[#FF4B32] border border-[#FF4B32]/30"
+                            ? "bg-[#17191C] text-[#C80808] border border-[#C80808]/30"
                             : rfq.status === "under_review"
                             ? "bg-amber-100 text-amber-800"
                             : rfq.status === "awaiting_info"
@@ -337,7 +337,7 @@ export default function AdminQuoteRequestsPage() {
           <div className="bg-white rounded-2xl max-w-3xl w-full border border-[#D8DDE2] shadow-2xl my-8 overflow-hidden animate-in fade-in zoom-in-95">
             <div className="p-6 border-b border-[#D8DDE2] flex items-center justify-between bg-[#F5F6F7]/50">
               <div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#FF4B32]">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#C80808]">
                   Quotation Specification Docket
                 </span>
                 <h3 className="text-lg font-bold text-[#17191C]">
@@ -367,7 +367,7 @@ export default function AdminQuoteRequestsPage() {
                   <span className="text-[#929DA7] block text-[10px] uppercase font-bold">Email:</span>
                   <a
                     href={`mailto:${selectedRfq.email}?subject=Petro Engineering Quotation - ${selectedRfq.product_name}`}
-                    className="font-bold text-[#FF4B32] hover:underline flex items-center gap-1"
+                    className="font-bold text-[#C80808] hover:underline flex items-center gap-1"
                   >
                     <span>{selectedRfq.email}</span>
                     <ExternalLink className="w-3 h-3" />
@@ -423,7 +423,7 @@ export default function AdminQuoteRequestsPage() {
               )}
 
               {/* Workflow Status & Quoted Amount */}
-              <div className="p-4 rounded-xl bg-white border-2 border-[#FF4B32]/30 space-y-4">
+              <div className="p-4 rounded-xl bg-white border-2 border-[#C80808]/30 space-y-4">
                 <div className="flex items-center justify-between">
                   <h4 className="text-xs font-bold uppercase text-[#17191C] tracking-wider">
                     Procurement Desk Processing
@@ -444,7 +444,7 @@ export default function AdminQuoteRequestsPage() {
                     <button
                       type="button"
                       onClick={() => setStatusInput("resubmitted")}
-                      className="px-3 py-1.5 rounded-lg bg-[#FF4B32] hover:bg-[#E03820] text-white text-xs font-bold whitespace-nowrap self-start sm:self-auto transition-colors flex items-center gap-1.5"
+                      className="px-3 py-1.5 rounded-lg bg-[#C80808] hover:bg-[#8A0A0A] text-white text-xs font-bold whitespace-nowrap self-start sm:self-auto transition-colors flex items-center gap-1.5"
                     >
                       <RefreshCw className="w-3.5 h-3.5" />
                       <span>Resubmit RFQ</span>
@@ -460,7 +460,7 @@ export default function AdminQuoteRequestsPage() {
                     <select
                       value={statusInput}
                       onChange={(e) => setStatusInput(e.target.value)}
-                      className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs font-bold outline-none focus:border-[#FF4B32]"
+                      className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs font-bold outline-none focus:border-[#C80808]"
                     >
                       {availableRfqStatuses.map((step) => (
                         <option key={step.value} value={step.value}>
@@ -480,7 +480,7 @@ export default function AdminQuoteRequestsPage() {
                       placeholder="e.g. 18500"
                       value={quoteAmountInput}
                       onChange={(e) => setQuoteAmountInput(e.target.value)}
-                      className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs font-semibold outline-none focus:border-[#FF4B32]"
+                      className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs font-semibold outline-none focus:border-[#C80808]"
                     />
                   </div>
                 </div>
@@ -494,7 +494,7 @@ export default function AdminQuoteRequestsPage() {
                     value={notesInput}
                     onChange={(e) => setNotesInput(e.target.value)}
                     placeholder="Factory lead times, MTC requirements, margin calculations..."
-                    className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs outline-none focus:border-[#FF4B32]"
+                    className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs outline-none focus:border-[#C80808]"
                   />
                 </div>
               </div>
@@ -544,7 +544,7 @@ export default function AdminQuoteRequestsPage() {
                   <button
                     onClick={handleUpdate}
                     disabled={updating}
-                    className="px-5 py-2 rounded-lg bg-[#FF4B32] hover:bg-[#E03820] text-white text-xs font-bold shadow-sm disabled:opacity-50"
+                    className="px-5 py-2 rounded-lg bg-[#C80808] hover:bg-[#8A0A0A] text-white text-xs font-bold shadow-sm disabled:opacity-50"
                   >
                     {updating ? "Saving..." : "Update RFQ Status"}
                   </button>

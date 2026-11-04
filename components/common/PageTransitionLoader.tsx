@@ -12,7 +12,7 @@ export default function PageTransitionLoader() {
   const startTimeRef = useRef<number>(0);
 
   // 1 second display time
-  const minDurationMs = 1000;
+  const minDurationMs = 500;
 
   const startLoading = () => {
     startTimeRef.current = Date.now();
@@ -113,7 +113,7 @@ export default function PageTransitionLoader() {
   return (
     <FlameLoader
       theme={isAdmin ? "light" : "light"}
-      message="Switching page..."
+      message="Opening page"
       fullScreen={true}
       className={`transition-opacity duration-200 ${
         isFading ? "opacity-0 pointer-events-none" : "opacity-100"

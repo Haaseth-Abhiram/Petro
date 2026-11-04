@@ -153,7 +153,7 @@ export default function AdminCategoriesPage() {
 
         <button
           onClick={handleOpenAdd}
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-[#FF4B32] hover:bg-[#E03820] text-white text-xs font-bold transition-all shadow-[0_4px_12px_rgba(255,75,50,0.3)] shrink-0 self-start sm:self-auto"
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-[#C80808] hover:bg-[#8A0A0A] text-white text-xs font-bold transition-all shadow-[0_4px_12px_rgba(200,8,8,0.3)] shrink-0 self-start sm:self-auto"
         >
           <Plus className="w-4 h-4" />
           <span>Add New Category</span>
@@ -185,7 +185,7 @@ export default function AdminCategoriesPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {loading ? (
           <div className="col-span-full py-16 text-center text-[#5F6871]">
-            <div className="w-7 h-7 border-3 border-[#FF4B32] border-t-transparent rounded-full animate-spin mx-auto mb-2" />
+            <div className="w-7 h-7 border-3 border-[#C80808] border-t-transparent rounded-full animate-spin mx-auto mb-2" />
             <p className="text-xs font-semibold">Loading categories from Supabase...</p>
           </div>
         ) : categories.length === 0 ? (
@@ -196,7 +196,7 @@ export default function AdminCategoriesPage() {
           categories.map((c) => (
             <div
               key={c.id}
-              className="bg-white rounded-xl border border-[#D8DDE2] shadow-sm overflow-hidden flex flex-col justify-between hover:border-[#FF4B32] transition-colors group"
+              className="bg-white rounded-xl border border-[#D8DDE2] shadow-sm overflow-hidden flex flex-col justify-between hover:border-[#C80808] transition-colors group"
             >
               <div>
                 {/* Header Image banner */}
@@ -320,7 +320,7 @@ export default function AdminCategoriesPage() {
                   required
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs focus:border-[#FF4B32] outline-none"
+                  className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs focus:border-[#C80808] outline-none"
                   placeholder="e.g. Tube Fittings (Double Ferrule)"
                 />
               </div>
@@ -334,7 +334,7 @@ export default function AdminCategoriesPage() {
                     type="text"
                     value={formData.slug}
                     onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
-                    className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs focus:border-[#FF4B32] outline-none font-mono"
+                    className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs focus:border-[#C80808] outline-none font-mono"
                     placeholder="tube-fittings"
                   />
                 </div>
@@ -346,7 +346,7 @@ export default function AdminCategoriesPage() {
                   <select
                     value={formData.division}
                     onChange={(e) => setFormData({ ...formData, division: e.target.value })}
-                    className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs focus:border-[#FF4B32] outline-none"
+                    className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs focus:border-[#C80808] outline-none"
                   >
                     <option value="instrumentation">Instrumentation & Valves</option>
                     <option value="chemicals">Chemicals & Water Treatment</option>
@@ -362,7 +362,7 @@ export default function AdminCategoriesPage() {
                   type="text"
                   value={formData.image}
                   onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                  className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs focus:border-[#FF4B32] outline-none"
+                  className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs focus:border-[#C80808] outline-none"
                   placeholder="https://..."
                 />
               </div>
@@ -375,7 +375,7 @@ export default function AdminCategoriesPage() {
                   rows={2}
                   value={formData.short_description}
                   onChange={(e) => setFormData({ ...formData, short_description: e.target.value })}
-                  className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs focus:border-[#FF4B32] outline-none"
+                  className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs focus:border-[#C80808] outline-none"
                   placeholder="Summary for navigation and category cards..."
                 />
               </div>
@@ -388,7 +388,7 @@ export default function AdminCategoriesPage() {
                   rows={3}
                   value={formData.detailed_description}
                   onChange={(e) => setFormData({ ...formData, detailed_description: e.target.value })}
-                  className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs focus:border-[#FF4B32] outline-none"
+                  className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs focus:border-[#C80808] outline-none"
                   placeholder="Engineering overview displayed on category page..."
                 />
               </div>
@@ -399,7 +399,7 @@ export default function AdminCategoriesPage() {
                   id="catPub"
                   checked={formData.is_published}
                   onChange={(e) => setFormData({ ...formData, is_published: e.target.checked })}
-                  className="w-4 h-4 rounded text-[#FF4B32] focus:ring-[#FF4B32]"
+                  className="w-4 h-4 rounded text-[#C80808] focus:ring-[#C80808]"
                 />
                 <label htmlFor="catPub" className="text-xs font-semibold text-[#17191C] cursor-pointer">
                   Category is Active / Published on Website
@@ -417,7 +417,7 @@ export default function AdminCategoriesPage() {
                 <button
                   type="submit"
                   disabled={saving}
-                  className="px-5 py-2 rounded-lg bg-[#FF4B32] hover:bg-[#E03820] text-white text-xs font-bold shadow-sm disabled:opacity-50"
+                  className="px-5 py-2 rounded-lg bg-[#C80808] hover:bg-[#8A0A0A] text-white text-xs font-bold shadow-sm disabled:opacity-50"
                 >
                   {saving ? "Saving..." : editingCategory ? "Save Changes" : "Create Category"}
                 </button>

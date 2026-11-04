@@ -18,10 +18,25 @@ import {
   DollarSign,
   Users,
   Play,
+  FlaskConical,
+  Cog,
+  Mail,
+  Target,
+  Eye,
+  Droplets,
+  Boxes,
+  ClipboardList,
 } from "lucide-react";
 import { COMPANY_INFO } from "@/data/company";
+import SolutionLink from "@/components/common/SolutionLink";
+import Reveal from "@/components/common/Reveal";
+import CountUp from "@/components/common/CountUp";
+import HeroSlider from "@/components/common/HeroSlider";
+import SectionDots from "@/components/common/SectionDots";
+import ServiceRoute from "@/components/common/ServiceRoute";
 
 export default function HomePage() {
+  const chemCounts = [10, 7, 5, 10, 8, 6, 11, 6]; // line items per group on petroeng.in
   const chemicalGroups = [
     {
       num: "01",
@@ -124,7 +139,7 @@ export default function HomePage() {
     {
       num: "08",
       title: "Laboratory Equipment",
-      img: "/assets/img/chem-08-lab-equipment.jpg",
+      img: "/assets/img/chem-08-laboratory-equipment.jpg",
       slug: "laboratory-equipment",
       items: [
         "Spectrophotometers & colorimeters",
@@ -248,469 +263,339 @@ export default function HomePage() {
     },
   ];
 
+  const stats = [
+    { n: 8, l: "Chemical groups" },
+    { n: 63, l: "Chemical line items" },
+    { n: 5, l: "Compliance standards" },
+    { n: 1, l: "Point of contact" },
+  ];
+  const slides = [
+    { img: "/assets/img/reverse-osmosis.jpg", label: "Chemical & water treatment", line1: "Treatment chemicals and", line2: "water plants.", text: "RO, cooling, boiler and ETP chemistry, complete treatment and sewage plants, filtration media, and the laboratory instruments to verify performance.", primary: { href: "/chemicals", label: "Explore Chemicals" }, secondary: { href: "/request-a-quote", label: "Request a Quote" }, points: ["8 chemical groups", "63 line items", "Specified to your water analysis"] },
+    { img: "/assets/img/tube-fittings.jpg", label: "Instrumentation & valves", line1: "Precision fittings, valves and", line2: "tubing.", text: "Instrumentation-grade components in SS316, carbon steel, brass and specialist alloys — sized 1/8\" to 1\" and rated to 10,000 psi.", primary: { href: "/instrumentation", label: "View Instrumentation" }, secondary: { href: "/request-a-quote", label: "Request a Quote" }, points: ["EN 10204 3.1 traceability", "NACE MR0175 compliant", "Up to 10,000 PSI"] },
+    { img: "/assets/img/analyser-systems.jpg", label: "Analyser & sampling systems", line1: "Complete analyser and", line2: "sampling packages.", text: "Sample conditioning systems, heated probes, shelters and continuous gas analysers for process monitoring and environmental compliance.", primary: { href: "/instrumentation#analyser-systems", label: "Analyser Systems" }, secondary: { href: "/contact", label: "Talk to Engineers" }, points: ["Sample conditioning", "CEMS & GC", "Calibration support"] },
+    { img: "/assets/img/hero-visual.png", label: "Procurement & sourcing", line1: "One accountable partner for", line2: "complete supply.", text: "From single-item replacement orders to full tender-package consolidation — we manage compliance, expediting and third-party inspection.", primary: { href: "/services", label: "Our Services" }, secondary: { href: "/request-a-quote", label: "Request a Quote" }, points: ["Single point of contact", "Documentation control", "Export-grade delivery"] },
+  ];
+  const engage = [
+    { t: "Single items", d: "Replacement and one-off orders supplied against your specification, with certification and documentation.", pts: ["Chemicals, fittings, valves, tubing", "Specification reviewed before quote", "Material test certificates on request"], icon: Boxes },
+    { t: "Complete packages", d: "Chemistry with the dosing pumps, plants and instruments that go with it — supplied as one package.", pts: ["Dosing chemistry plus accessories", "Plants, vessels and filtration media", "Test kits to verify performance"], icon: Layers },
+    { t: "Project procurement", d: "End-to-end procurement support for EPC and turnkey projects across multiple vendors.", pts: ["RFQ and vendor evaluation", "Technical & commercial alignment", "Expediting and consolidated shipments"], icon: ClipboardList },
+  ];
+
+  const Head = ({ eyebrow, title, text, link }: { eyebrow: string; title: string; text?: string; link?: { href: string; label: string } }) => (
+    <Reveal className="flex flex-col md:flex-row md:items-end justify-between gap-5 mb-10 sm:mb-14">
+      <div className="max-w-[740px]">
+        <span className="inline-flex items-center gap-3 text-[12px] font-extrabold uppercase tracking-[0.2em] text-[#C80808] mb-3"><span className="h-[3px] w-9 bg-[#C80808] rounded" />{eyebrow}</span>
+        <h2 className="text-[1.7rem] sm:text-4xl lg:text-[2.8rem] font-black tracking-tight leading-[1.1] text-[#17191C]">{title}</h2>
+        {text && <p className="mt-4 text-[15px] sm:text-lg leading-relaxed text-[#566472]">{text}</p>}
+      </div>
+      {link && <Link href={link.href} className="group inline-flex items-center gap-2 text-sm font-extrabold text-[#C80808] hover:text-[#C80808] shrink-0 transition-colors">{link.label} <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" /></Link>}
+    </Reveal>
+  );
+
   return (
-    <div className="w-full bg-[#FFFFFF]">
-      {/* 1. HERO SECTION (Recreated to match Screenshot 2) */}
-      <section className="relative hero-target-bg overflow-hidden pt-12 sm:pt-16 lg:pt-20 pb-16 lg:pb-24 border-b border-[#D8DDE2]">
-        {/* Coral Orange Ambient Glow at Bottom */}
-        <div className="hero-coral-glow" />
+    <div className="w-full bg-white overflow-x-clip text-[#566472]">
+      <SectionDots items={[{ id: "top", label: "Home" }, { id: "about", label: "About" }, { id: "what-we-do", label: "What we do" }, { id: "chemicals", label: "Chemicals" }, { id: "instrumentation", label: "Instrumentation" }, { id: "why", label: "Why Petro" }, { id: "process", label: "Process" }, { id: "engage", label: "How we supply" }, { id: "services", label: "Services" }, { id: "contact", label: "Contact" }]} />
 
-        <div className="relative z-10 max-w-[1400px] mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
-            {/* Left Content Column (approx 48%) */}
-            <div className="lg:col-span-6 xl:col-span-5 max-w-[580px]">
-              {/* Eyebrow */}
-              <div className="inline-flex items-center gap-2 mb-4">
-                <span className="w-2 h-2 rounded-full bg-[#FF4B32]" />
-                <span className="font-['Plus_Jakarta_Sans'] text-xs sm:text-[13px] font-extrabold uppercase tracking-[0.18em] text-[#17191C]/80">
-                  Precision Engineering &amp; Chemical Solutions
-                </span>
-              </div>
+      {/* ===== HERO SLIDER ===== */}
+      <HeroSlider slides={slides} />
 
-              {/* Headline matching screenshot 2 typography */}
-              <h1 className="text-4xl sm:text-6xl lg:text-[64px] font-black text-[#17191C] leading-[1.04] tracking-tight mb-6">
-                Precision in Every <br />
-                <span className="text-[#FF4B32]">Industrial Solution.</span>
-              </h1>
-
-              {/* Description */}
-              <p className="text-[#5F6871] text-base sm:text-lg leading-[1.65] mb-8 max-w-[500px]">
-                High-integrity fluid control instrumentation, reverse osmosis treatment chemistry, and turnkey process systems for global oil, gas, energy and industrial projects.
-              </p>
-
-              {/* CTA Action Buttons matching screenshot 2 */}
-              <div className="flex flex-wrap items-center gap-4 mb-10">
-                <Link
-                  href="/chemicals"
-                  className="btn-pill-dark group"
-                >
-                  <span>Explore Products</span>
-                  <ArrowRight className="w-4 h-4 text-white group-hover:translate-x-1 transition-transform" />
-                </Link>
-
-                <Link
-                  href="/request-a-quote"
-                  className="btn-pill-light group"
-                >
-                  <span className="w-6 h-6 rounded-full bg-[#17191C] text-white flex items-center justify-center mr-1">
-                    <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
-                  </span>
-                  <span>Request a Quote</span>
-                </Link>
-              </div>
-
-              {/* Trust & Spec Badges */}
-              <div className="pt-6 border-t border-[#D8DDE2] flex flex-wrap items-center gap-x-8 gap-y-3">
-                <div className="flex items-center gap-2">
-                  <ShieldCheck className="w-4 h-4 text-[#FF4B32]" />
-                  <span className="text-xs font-bold text-[#17191C] tracking-wide">
-                    ISO 9001:2015 Certified
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <FileCheck className="w-4 h-4 text-[#FF4B32]" />
-                  <span className="text-xs font-bold text-[#17191C] tracking-wide">
-                    EN 10204 3.1 Traceability
-                  </span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Award className="w-4 h-4 text-[#FF4B32]" />
-                  <span className="text-xs font-bold text-[#17191C] tracking-wide">
-                    NACE MR0175 Compliant
-                  </span>
+      {/* ===== STATS (floating) ===== */}
+      <div className="relative z-30 -mt-10 sm:-mt-12 px-5 sm:px-8">
+        <div className="max-w-[1100px] mx-auto grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+          {[
+            { n: stats[0].n, l: "Chemical groups", icon: Layers, c: "bg-[#C80808]" },
+            { n: stats[1].n, l: "Line items", icon: Boxes, c: "bg-[#17191C]" },
+            { n: stats[2].n, l: "Standards", icon: ShieldCheck, c: "bg-[#C80808]" },
+            { n: stats[3].n, l: "Point of contact", icon: Users, c: "bg-[#17191C]" },
+          ].map((s, k) => (
+            <Reveal key={s.l} delay={k * 80} variant="zoom">
+              <div className="group flex items-center gap-3 sm:gap-4 rounded-2xl bg-white border border-[#E7E9EE] shadow-[0_14px_34px_rgba(23,58,82,0.14)] px-4 sm:px-5 py-3.5 sm:py-4 hover:-translate-y-1.5 hover:shadow-2xl transition-all duration-500">
+                <span className={`w-11 h-11 sm:w-12 sm:h-12 shrink-0 rounded-xl text-white flex items-center justify-center group-hover:rotate-6 group-hover:scale-110 transition-transform ${s.c}`}><s.icon className="w-5 h-5 sm:w-6 sm:h-6" /></span>
+                <div className="min-w-0">
+                  <div className="font-['Plus_Jakarta_Sans'] text-2xl sm:text-3xl font-black leading-none text-[#17191C]"><CountUp end={s.n} /></div>
+                  <div className="mt-1 text-[11px] sm:text-xs font-bold uppercase tracking-wider text-[#566472] leading-tight">{s.l}</div>
                 </div>
               </div>
-            </div>
-
-            {/* Right Hero Visual Column (approx 52%) */}
-            <div className="lg:col-span-6 xl:col-span-7 flex justify-center lg:justify-end relative">
-              <div className="relative w-full max-w-[620px] aspect-[4/3] sm:aspect-[16/11] rounded-2xl overflow-hidden shadow-[0_24px_50px_rgba(23,25,28,0.18)] border border-[#D8DDE2]/80 bg-[#17191C]">
-                <Image
-                  src="/assets/img/hero-visual.png"
-                  alt="Petro Engineering Precision Industrial Valve & Fluid Flow System"
-                  fill
-                  priority
-                  sizes="(max-width: 1024px) 100vw, 55vw"
-                  className="object-cover object-center transform hover:scale-102 transition-transform duration-700"
-                />
-                {/* Visual Glass Tag */}
-                <div className="absolute bottom-4 left-4 right-4 sm:right-auto sm:max-w-xs bg-[#17191C]/85 backdrop-blur-md p-3.5 rounded-xl border border-white/10 text-white z-10 shadow-lg">
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="w-2 h-2 rounded-full bg-[#FF4B32] animate-pulse" />
-                    <span className="text-[11px] font-extrabold uppercase tracking-widest text-[#FF4B32]">
-                      Fluid Control &amp; Chemistry
-                    </span>
-                  </div>
-                  <p className="text-xs text-white/80 font-medium leading-snug">
-                    Rated up to 10,000 PSI with precision alloy metallurgy and certified chemical dosing.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 2. COMPLIANCE & STANDARDS STRIP */}
-      <div className="bg-[#17191C] border-b border-[#2A2E34] py-5 text-center">
-        <div className="max-w-[1400px] mx-auto px-6 flex flex-wrap items-center justify-center gap-x-8 lg:gap-x-12 gap-y-2.5">
-          <span className="font-['Plus_Jakarta_Sans'] text-xs font-extrabold uppercase tracking-widest text-[#929DA7]">
-            Standards &amp; Compliance
-          </span>
-          {COMPANY_INFO.compliance.map((item, idx) => (
-            <span
-              key={idx}
-              className="font-['Plus_Jakarta_Sans'] text-xs sm:text-sm font-bold tracking-wider text-white/90 hover:text-[#FF4B32] transition-colors"
-            >
-              {item}
-            </span>
+            </Reveal>
           ))}
         </div>
       </div>
 
-      {/* 3. TWO CORE DIVISIONS */}
-      <section className="py-20 lg:py-24 bg-[#F5F6F7] border-b border-[#D8DDE2]">
-        <div className="max-w-[1400px] mx-auto px-6">
-          <div className="max-w-[760px] mx-auto text-center mb-14">
-            <span className="eyebrow">OUR CORE DIVISIONS</span>
-            <h2 className="text-[#17191C] text-2xl sm:text-4xl font-extrabold tracking-tight">
-              Two divisions, one point of contact
-            </h2>
-            <p className="text-[#5F6871] text-base sm:text-lg mt-3">
-              A single sourcing partner for process chemicals and fluid control hardware — reducing vendor count, simplifying expediting and ensuring single-point accountability.
-            </p>
+      {/* ===== ABOUT ===== */}
+      <section id="about" className="grid lg:grid-cols-2 bg-[#FFF8F0]">
+        <Reveal variant="left" className="p-8 sm:p-10 lg:py-14 lg:pr-14 lg:pl-[max(3.5rem,calc((100vw/var(--z)-1240px)/2+2rem))] flex flex-col justify-center">
+          <span className="inline-flex items-center gap-3 text-[11px] font-extrabold uppercase tracking-[0.2em] text-[#C80808] mb-2"><span className="h-[3px] w-9 bg-[#C80808] rounded" />About Petro Engineering</span>
+          <h2 className="text-[1.5rem] sm:text-3xl font-black tracking-tight text-[#17191C] leading-[1.15] mb-3">A specialised sourcing and supply partner for critical industrial systems</h2>
+          <p className="text-[14px] sm:text-[15px] leading-relaxed text-[#566472] mb-4">We bridge global manufacturer specifications with strict end-user compliance across refineries, petrochemical complexes, thermal power stations and EPC infrastructure.</p>
+          <div className="flex flex-wrap gap-2 mb-5">
+            {["Mission-led", "Compliant", "Single point of contact"].map((x) => (<span key={x} className="rounded-full bg-white border border-[#E7E9EE] px-3 py-1 text-[12px] font-bold text-[#17191C]">{x}</span>))}
           </div>
+          <div><Link href="/about" className="inline-flex items-center gap-2 rounded-lg bg-[#C80808] hover:bg-[#8A0A0A] text-white text-sm font-bold px-5 py-2.5 transition-colors">Learn More <ArrowRight className="w-4 h-4" /></Link></div>
+        </Reveal>
+        <Reveal variant="right" className="relative min-h-[300px] lg:[clip-path:polygon(14%_0,100%_0,100%_100%,0_100%)] overflow-hidden group">
+          <Image src="/assets/img/service-technical-consultation.jpg" alt="Engineers providing technical consultation on equipment selection" fill sizes="(max-width:1024px) 100vw, 50vw" className="object-cover group-hover:scale-105 transition-transform duration-[1400ms]" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#C80808]/35 to-transparent" />
+        </Reveal>
+      </section>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Division 1 */}
-            <article className="division-card">
-              <div className="relative h-[280px] w-full bg-[#EBECEE]">
-                <Image
-                  src="/assets/img/chem-05-water-treatment-plants.jpg"
-                  alt="Chemical & Water Treatment"
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover"
-                />
-              </div>
-              <div className="p-8 flex flex-col justify-between flex-1">
-                <div>
-                  <span className="eyebrow">DIVISION 01</span>
-                  <h3 className="text-xl sm:text-2xl font-extrabold text-[#17191C] mb-3">
-                    Chemical &amp; Water Treatment
-                  </h3>
-                  <p className="text-[#5F6871] text-[15px] leading-relaxed mb-5">
-                    From RO membrane preservation and cooling tower passivation to turnkey DM plants, effluent recycling and zero liquid discharge (ZLD) chemistry.
-                  </p>
-                  <ul className="space-y-2 mb-6 text-[14px] text-[#17191C]">
-                    {[
-                      "RO Antiscalants, Biocides & Cleaners",
-                      "Cooling Water & Boiler Chemicals",
-                      "Wastewater & ETP Coagulants (PAC)",
-                      "Packaged Water Treatment Plants & Filtration",
-                    ].map((it, i) => (
-                      <li key={i} className="flex items-center">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#FF4B32] mr-2.5 shrink-0" />
-                        <span>{it}</span>
-                      </li>
-                    ))}
+      {/* ===== WHAT WE DO ===== */}
+      <section id="what-we-do" className="py-9 sm:py-11 bg-gradient-to-br from-[#17191C]/90 via-[#2a0c0c]/90 to-[#17191C]/90">
+        <div className="max-w-[1320px] mx-auto px-5 sm:px-8">
+          <Reveal className="text-center max-w-[560px] mx-auto mb-5 sm:mb-6">
+            <span className="inline-flex items-center gap-3 text-[11px] font-extrabold uppercase tracking-[0.2em] text-[#F2B93B] mb-2"><span className="h-[3px] w-9 bg-[#F2B93B] rounded" />What we do</span>
+            <h2 className="text-[1.2rem] sm:text-[1.6rem] font-black tracking-tight leading-[1.15] text-white">Two divisions, one point of contact</h2>
+            <p className="mt-1.5 text-[13px] sm:text-[14px] leading-relaxed text-white/70">Water chemistry and the plants that run it, alongside the instrumentation that measures and controls it.</p>
+          </Reveal>
+          <div className="grid md:grid-cols-2 gap-3 sm:gap-4 max-w-[820px] mx-auto">
+            {[
+              { icon: FlaskConical, t: "Chemical & Water Treatment", d: "RO, cooling, boiler and ETP chemistry, complete treatment and sewage plants, filtration media, and the laboratory instruments to verify performance.", pills: ["Chemicals", "Treatment plants", "Filtration", "Lab instruments"], href: "/chemicals", cta: "View all chemicals", ic: "bg-[#C80808]", btn: "bg-[#C80808] hover:bg-[#8A0A0A]" },
+              { icon: Cog, t: "Instrumentation & Valves", d: "Precision tube and pipe fittings, needle, ball, manifold and check valves, seamless tubing and analyser systems in SS316 and specialist alloys.", pills: ["Fittings", "Valves", "Tubing", "Analyser systems"], href: "/instrumentation", cta: "View instrumentation", ic: "bg-[#17191C]", btn: "bg-[#D4950F] hover:bg-[#8A0A0A]" },
+            ].map((c, k) => (
+              <Reveal key={c.t} delay={k * 120} variant={k ? "right" : "left"}>
+                <article className="group h-full rounded-2xl bg-white/[0.07] border border-white/15 backdrop-blur p-4 sm:p-5 hover:bg-white/[0.12] hover:-translate-y-1.5 transition-all duration-500 flex flex-col">
+                  <span className={`w-9 h-9 rounded-lg text-white flex items-center justify-center mb-2.5 group-hover:rotate-6 group-hover:scale-110 transition-transform duration-500 ${c.ic}`}><c.icon className="w-4 h-4" /></span>
+                  <h3 className="text-base sm:text-lg font-black text-white mb-1.5">{c.t}</h3>
+                  <p className="text-[12.5px] sm:text-[13px] leading-relaxed text-white/70 mb-3">{c.d}</p>
+                  <ul className="flex flex-wrap gap-1.5 mb-3.5">
+                    {c.pills.map((x) => (<li key={x} className="rounded-full px-2.5 py-0.5 text-[10.5px] font-bold border bg-white/10 border-white/25 text-white">{x}</li>))}
                   </ul>
-                </div>
-                <div>
-                  <Link href="/chemicals" className="btn btn-primary">
-                    Explore Chemicals
-                  </Link>
-                </div>
-              </div>
-            </article>
-
-            {/* Division 2 */}
-            <article className="division-card">
-              <div className="relative h-[280px] w-full bg-[#EBECEE]">
-                <Image
-                  src="/assets/img/tube-fittings.jpg"
-                  alt="Instrumentation & Valves"
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover"
-                />
-              </div>
-              <div className="p-8 flex flex-col justify-between flex-1">
-                <div>
-                  <span className="eyebrow">DIVISION 02</span>
-                  <h3 className="text-xl sm:text-2xl font-extrabold text-[#17191C] mb-3">
-                    Instrumentation &amp; Valves
-                  </h3>
-                  <p className="text-[#5F6871] text-[15px] leading-relaxed mb-5">
-                    High-integrity fluid control hardware in SS316, Monel, Inconel and Hastelloy — rated to 10,000 PSI with full EN 10204 Type 3.1 &amp; 3.2 traceability.
-                  </p>
-                  <ul className="space-y-2 mb-6 text-[14px] text-[#17191C]">
-                    {[
-                      "Twin-Ferrule Tube Fittings (1/8\"–1\")",
-                      "Needle, Ball & Manifold Valves (Up to 10k PSI)",
-                      "Continuous Seamless Tubing Coils (ASTM A269)",
-                      "Process Analysers, CEMS & Sample Shelters",
-                    ].map((it, i) => (
-                      <li key={i} className="flex items-center">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#FF4B32] mr-2.5 shrink-0" />
-                        <span>{it}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div>
-                  <Link href="/instrumentation" className="btn btn-secondary">
-                    Explore Instrumentation
-                  </Link>
-                </div>
-              </div>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      {/* 4. EIGHT CHEMICAL GROUPS */}
-      <section className="py-20 lg:py-24 bg-[#FFFFFF] border-b border-[#D8DDE2]">
-        <div className="max-w-[1400px] mx-auto px-6">
-          <div className="max-w-[760px] mb-12">
-            <span className="eyebrow">WATER &amp; PROCESS CHEMISTRY</span>
-            <h2 className="text-[#17191C] text-2xl sm:text-4xl font-extrabold tracking-tight">
-              Eight solution groups, sixty-three line items
-            </h2>
-            <p className="text-[#5F6871] text-base sm:text-lg mt-2">
-              Dosing chemistry, plant and vessel manufacturing, filtration media and testing instruments — supplied as single items or as a complete package.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {chemicalGroups.map((group) => (
-              <article key={group.num} className="chem-card">
-                <div className="chem-media">
-                  <Image
-                    src={group.img}
-                    alt={group.title}
-                    width={292}
-                    height={136}
-                    className="w-full h-auto object-cover"
-                  />
-                </div>
-                <div className="chem-body p-5 flex flex-col justify-between flex-1">
-                  <div>
-                    <span className="chem-num">{group.num}</span>
-                    <h3 className="font-['Plus_Jakarta_Sans'] text-[15px] font-bold text-[#17191C] mt-1 mb-3 pb-3 border-b border-[#D8DDE2]">
-                      {group.title}
-                    </h3>
-                    <ul className="space-y-1.5 text-[13px] text-[#5F6871]">
-                      {group.items.map((it, idx) => (
-                        <li key={idx} className="flex items-start">
-                          <span className="w-1.5 h-1.5 rounded-full bg-[#FF4B32] mr-2 mt-1.5 shrink-0" />
-                          <span>{it}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className="mt-4 pt-2">
-                    <Link
-                      href={`/chemicals/${group.slug}`}
-                      className="font-['Plus_Jakarta_Sans'] text-xs font-bold text-[#FF4B32] hover:text-[#E03820]"
-                    >
-                      {group.more}
-                    </Link>
-                  </div>
-                </div>
-              </article>
+                  <Link href={c.href} className={`mt-auto self-start inline-flex items-center gap-2 rounded-lg text-white text-[13px] font-bold px-4 py-2 transition-colors ${c.btn}`}>{c.cta} <ArrowRight className="w-4 h-4" /></Link>
+                </article>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* 5. SOURCING PARTNER QUOTE BANNER */}
-      <section className="py-20 bg-[#17191C] text-white text-center">
-        <div className="max-w-[860px] mx-auto px-6">
-          <span className="eyebrow">ENGINEERING INTEGRITY</span>
-          <h2 className="text-white text-2xl sm:text-4xl font-extrabold tracking-tight mt-2 mb-5">
-            A specialised sourcing and supply partner for critical industrial systems
-          </h2>
-          <p className="text-white/75 text-base sm:text-lg leading-relaxed mb-8">
-            We bridge global manufacturer specifications with strict end-user compliance across refineries, petrochemical complexes, thermal power stations and EPC infrastructure.
-          </p>
-          <Link href="/request-a-quote" className="btn btn-primary">
-            Request a Quotation
-          </Link>
-        </div>
-      </section>
+      {/* ===== CHEMICALS (photo bands) ===== */}
+      <section id="chemicals" className="py-12 sm:py-16 bg-white">
+        <div className="max-w-[1240px] mx-auto px-5 sm:px-8">
+          <Reveal className="text-center max-w-[660px] mx-auto mb-8">
+            <span className="inline-flex items-center gap-3 text-[11px] font-extrabold uppercase tracking-[0.2em] text-[#C80808] mb-2"><span className="h-[3px] w-9 bg-[#C80808] rounded" />Chemical &amp; water treatment</span>
+            <h2 className="text-[1.4rem] sm:text-[1.9rem] font-black tracking-tight leading-[1.15] text-[#17191C] mb-2">Eight solution groups, sixty-three line items</h2>
+            <p className="text-[14px] text-[#566472]">Dosing chemistry, plant and vessel manufacturing, filtration media and testing instruments — supplied as single items or as a complete package.</p>
+          </Reveal>
 
-      {/* 6. INSTRUMENTATION PRODUCTS */}
-      <section className="py-20 lg:py-24 bg-[#F5F6F7] border-b border-[#D8DDE2]">
-        <div className="max-w-[1400px] mx-auto px-6">
-          <div className="max-w-[760px] mb-12">
-            <span className="eyebrow">FLUID CONTROL HARDWARE</span>
-            <h2 className="text-[#17191C] text-2xl sm:text-4xl font-extrabold tracking-tight">
-              Precision fittings, valves and analytical systems
-            </h2>
-            <p className="text-[#5F6871] text-base sm:text-lg mt-2">
-              Instrumentation-grade components in SS316, carbon steel, brass and specialist alloys — sized 1/8" to 1" and rated to 10,000 psi.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {instrumentationProducts.map((p, idx) => (
-              <article key={idx} className="petro-card">
-                <div className="relative h-56 w-full bg-[#EBECEE] overflow-hidden">
-                  <span className="absolute top-3.5 left-3.5 z-10 bg-[#17191C]/90 text-white text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-[4px]">
-                    {p.tag}
-                  </span>
-                  <Image
-                    src={p.img}
-                    alt={p.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                    className="object-cover hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-                <div className="p-6 flex flex-col justify-between flex-1">
-                  <div>
-                    <h3 className="font-['Plus_Jakarta_Sans'] text-lg font-bold text-[#17191C] mb-2">
-                      {p.title}
-                    </h3>
-                    <p className="text-[#5F6871] text-sm leading-relaxed mb-4">
-                      {p.desc}
-                    </p>
+          {/* desktop: bands that open on hover */}
+          <div className="hidden md:block space-y-2">
+            {chemicalGroups.map((g, k) => (
+              <Reveal key={g.num} delay={(k % 4) * 60}>
+                <SolutionLink title={g.title} items={g.items} img={g.img} className="w-full text-left group relative block h-[84px] hover:h-[210px] focus-visible:h-[210px] transition-[height] duration-700 ease-out rounded-2xl overflow-hidden">
+                  <Image src={g.img} alt={g.title} fill sizes="1200px" className="object-cover object-center" />
+                  <div className={`absolute inset-0 bg-gradient-to-r ${k % 2 ? "from-[#5a3a00]/95 via-[#17191C]/80" : "from-[#5a0606]/95 via-[#17191C]/80"} to-[#17191C]/30`} />
+                  <div className="absolute inset-0 px-7 flex items-center gap-6 text-white">
+                    <span className="font-black text-4xl text-transparent [-webkit-text-stroke:1.5px_#E0A21A] w-16">{g.num}</span>
+                    <div className="flex-1">
+                      <h3 className="text-xl font-black text-white">{g.title}</h3>
+                      <p className="text-[13px] text-white/80 max-h-0 opacity-0 group-hover:max-h-24 group-hover:opacity-100 group-focus-visible:max-h-24 group-focus-visible:opacity-100 group-hover:mt-2 overflow-hidden transition-all duration-500">{g.items.join(" · ")}</p>
+                    </div>
+                    <span className="text-sm font-bold text-white/90 hidden lg:block">{chemCounts[k]} items</span>
+                    <span className="w-10 h-10 rounded-full bg-white/15 border border-white/30 flex items-center justify-center group-hover:bg-[#C80808] group-hover:border-[#C80808] transition-colors"><ArrowRight className="w-5 h-5" /></span>
                   </div>
-                  <div>
-                    <Link
-                      href={`/instrumentation/${p.slug}`}
-                      className="font-['Plus_Jakarta_Sans'] text-xs font-bold text-[#FF4B32] hover:text-[#E03820] inline-flex items-center"
-                    >
-                      <span>View specifications</span>
-                      <ArrowRight className="w-3.5 h-3.5 ml-1" />
-                    </Link>
-                  </div>
-                </div>
-              </article>
+                </SolutionLink>
+              </Reveal>
             ))}
           </div>
-        </div>
-      </section>
 
-      {/* 7. WHY PARTNER WITH PETRO ENGINEERING */}
-      <section className="py-20 lg:py-24 bg-[#FFFFFF] border-b border-[#D8DDE2]">
-        <div className="max-w-[1400px] mx-auto px-6">
-          <div className="max-w-[760px] mx-auto text-center mb-14">
-            <span className="eyebrow">WHY PETRO ENGINEERING</span>
-            <h2 className="text-[#17191C] text-2xl sm:text-4xl font-extrabold tracking-tight">
-              Why leading industrial companies partner with Petro Engineering
-            </h2>
-            <p className="text-[#5F6871] text-base sm:text-lg mt-3">
-              We eliminate single-source vulnerability, reduce commercial overhead, and maintain zero-defect documentation dossiers.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {whyPartner.map((w, idx) => {
-              const IconComp = w.icon;
-              return (
-                <div
-                  key={idx}
-                  className="p-7 bg-[#F5F6F7] border border-[#D8DDE2] rounded-[8px] hover:border-[#929DA7] transition-all"
-                >
-                  <div className="w-12 h-12 rounded-[6px] bg-[#FF4B32]/10 text-[#FF4B32] flex items-center justify-center mb-5 font-bold">
-                    <IconComp className="w-6 h-6" />
-                  </div>
-                  <h3 className="font-['Plus_Jakarta_Sans'] text-base font-bold text-[#17191C] mb-2">
-                    {w.title}
-                  </h3>
-                  <p className="text-[#5F6871] text-sm leading-relaxed">
-                    {w.desc}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* 8. SERVICES OVERVIEW */}
-      <section className="py-20 lg:py-24 bg-[#F5F6F7] border-b border-[#D8DDE2]">
-        <div className="max-w-[1400px] mx-auto px-6">
-          <div className="max-w-[760px] mb-12">
-            <span className="eyebrow">PROCUREMENT &amp; SOURCING SERVICES</span>
-            <h2 className="text-[#17191C] text-2xl sm:text-4xl font-extrabold tracking-tight">
-              End-to-end support, from enquiry to site delivery
-            </h2>
-            <p className="text-[#5F6871] text-base sm:text-lg mt-2">
-              From single-item replacement orders to complete tender package consolidation — we manage compliance, expediting and third-party inspection.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {services.map((s, idx) => (
-              <div
-                key={idx}
-                className="bg-[#FFFFFF] p-7 border border-[#D8DDE2] rounded-[8px] flex flex-col justify-between hover:shadow-md transition-shadow"
-              >
-                <div>
-                  <span className="font-['Plus_Jakarta_Sans'] text-xs font-extrabold uppercase tracking-wider text-[#FF4B32] mb-2 block">
-                    SERVICE 0{idx + 1}
-                  </span>
-                  <h3 className="font-['Plus_Jakarta_Sans'] text-lg font-bold text-[#17191C] mb-2.5">
-                    {s.title}
-                  </h3>
-                  <p className="text-[#5F6871] text-sm leading-relaxed mb-5">
-                    {s.desc}
-                  </p>
-                </div>
-                <div>
-                  <Link
-                    href={`/services#${s.slug}`}
-                    className="font-['Plus_Jakarta_Sans'] text-xs font-bold text-[#FF4B32] hover:text-[#E03820] inline-flex items-center"
-                  >
-                    <span>Full service scope</span>
-                    <ArrowRight className="w-3.5 h-3.5 ml-1" />
-                  </Link>
-                </div>
-              </div>
+          {/* phones / tablets: compact bands with the products visible */}
+          <div className="md:hidden space-y-2.5">
+            {chemicalGroups.map((g, k) => (
+              <SolutionLink key={g.num} title={g.title} items={g.items} img={g.img} className="w-full text-left relative block rounded-xl overflow-hidden min-h-[96px]">
+                <Image src={g.img} alt={g.title} fill sizes="600px" className="object-cover" />
+                <span className={`absolute inset-0 bg-gradient-to-r ${k % 2 ? "from-[#5a3a00]/95" : "from-[#5a0606]/95"} via-[#17191C]/85 to-[#17191C]/60`} />
+                <span className="relative block p-3.5 text-white"><span className="text-[11px] font-black text-[#F2B93B]">{g.num} · {chemCounts[k]} items</span><span className="block text-[15px] font-extrabold text-white leading-tight">{g.title}</span><span className="block text-[11.5px] text-white/80 mt-1 line-clamp-2">{g.items.join(" · ")}</span></span>
+              </SolutionLink>
             ))}
           </div>
+
+          <div className="text-center mt-7"><Link href="/chemicals" className="inline-flex items-center gap-2 rounded-lg bg-[#C80808] hover:bg-[#8A0A0A] text-white text-sm font-bold px-5 py-2.5 transition-colors">View the full chemical portfolio <ArrowRight className="w-4 h-4" /></Link></div>
         </div>
       </section>
 
-      {/* 9. FINAL CTA BAND */}
-      <section className="relative bg-[#17191C] overflow-hidden py-20 lg:py-24 text-white">
-        <div
-          className="absolute inset-0 bg-cover bg-center opacity-15"
-          style={{ backgroundImage: "url('/assets/img/chem-05-water-treatment-plants.jpg')" }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#17191C]/95 to-[#17191C]/80" />
-
-        <div className="relative z-10 max-w-[1400px] mx-auto px-6">
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
-            <div className="max-w-[620px]">
-              <span className="eyebrow">GET IN TOUCH</span>
-              <h2 className="text-white text-3xl sm:text-4xl font-extrabold tracking-tight mt-2 mb-3">
-                We're here to source. Call us today.
-              </h2>
-              <p className="text-white/75 text-base sm:text-lg leading-relaxed">
-                Speak directly with our technical sales desk for quotation assistance, material test reports, or dosage projections.
-              </p>
+      {/* ===== DELIVERY ===== */}
+      <section className="py-16 sm:py-24 bg-white">
+        <div className="max-w-[1320px] mx-auto px-5 sm:px-8 grid lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+          <Reveal variant="left" className="lg:col-span-6">
+            <span className="inline-flex items-center gap-3 text-[12px] font-extrabold uppercase tracking-[0.2em] text-[#C80808] mb-3"><span className="h-[3px] w-9 bg-[#C80808] rounded" />Supply across India &amp; export</span>
+            <h2 className="text-[1.7rem] sm:text-4xl font-black tracking-tight leading-[1.1] text-[#17191C] mb-5">Based in Mumbai, delivering to plants worldwide</h2>
+            <p className="text-[15px] sm:text-lg leading-relaxed mb-5">Petro Engineering supplies water treatment chemistry and process instrumentation from a base in Mumbai — to plants across India, and on export. Two divisions, one accountable point of contact.</p>
+            <p className="text-[15px] leading-relaxed mb-7">We support refineries, petrochemical plants, EPC contractors and system integrators with certified equipment, dosing chemistry, treatment plants and precision fittings from manufacturers we have already qualified.</p>
+            <Link href="/request-a-quote" className="inline-flex items-center gap-2 rounded-lg bg-[#C80808] hover:bg-[#8A0A0A] text-white font-bold px-7 py-4 transition-colors">Start your enquiry <ArrowRight className="w-4 h-4" /></Link>
+          </Reveal>
+          <Reveal variant="right" className="lg:col-span-6">
+            <div className="grid gap-4">
+              {[
+                { t: "Global supplier network", d: "Direct access to approved manufacturers and OEMs across Europe, North America, Japan and Asia-Pacific.", icon: Globe },
+                { t: "Documented, export-grade delivery", d: "Sea-worthy ISPM-15 export packing and comprehensive dossiers ready for client handover.", icon: Truck },
+                { t: "Compliance you can trace", d: "EN 10204 3.1 / 3.2 certification, NACE MR0175, ASME, ASTM and API standards.", icon: ShieldCheck },
+              ].map((f, k) => (
+                <div key={f.t} className="group flex gap-4 rounded-2xl border border-[#E7E9EE] bg-white p-5 shadow-sm hover:shadow-xl hover:border-[#D4950F] hover:translate-x-2 transition-all duration-500">
+                  <span className={`w-12 h-12 shrink-0 rounded-xl flex items-center justify-center text-white ${["bg-[#C80808]", "bg-[#D4950F]", "bg-[#C80808]"][k]}`}><f.icon className="w-6 h-6" /></span>
+                  <div><h3 className="text-base font-extrabold text-[#17191C] mb-1">{f.t}</h3><p className="text-[14px] leading-relaxed">{f.d}</p></div>
+                </div>
+              ))}
             </div>
-            <div className="flex flex-wrap gap-4 shrink-0">
-              <a
-                href={`tel:${COMPANY_INFO.contact.phoneRaw}`}
-                className="btn btn-primary"
-              >
-                <Phone className="w-4 h-4 mr-1.5" />
-                <span>{COMPANY_INFO.contact.phone}</span>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ===== INSTRUMENTATION ===== */}
+      <section id="instrumentation" className="py-16 sm:py-24 bg-[#FFF8F0]">
+        <div className="max-w-[1320px] mx-auto px-5 sm:px-8">
+          <Head eyebrow="Instrumentation & valves" title="Precision fittings, valves and analytical systems" text='Instrumentation-grade components in SS316, carbon steel, brass and specialist alloys — sized 1/8" to 1" and rated to 10,000 psi.' link={{ href: "/instrumentation", label: "View full range" }} />
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+            {instrumentationProducts.map((p, k) => (
+              <Reveal key={p.slug} delay={(k % 3) * 90}>
+                <Link href={`/instrumentation#${p.slug}`} className="group flex flex-col h-full rounded-2xl overflow-hidden bg-white border border-[#E7E9EE] hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
+                  <div className="relative aspect-[16/10] overflow-hidden bg-[#EBECEE]">
+                    <Image src={p.img} alt={p.title} fill sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 33vw" className="object-cover group-hover:scale-110 transition-transform duration-[1100ms]" />
+                    <span className="absolute top-4 right-4 rounded-full bg-[#17191C] text-white px-3.5 py-1 text-xs font-extrabold">{p.tag}</span>
+                  </div>
+                  <div className="p-6 flex flex-col flex-1">
+                    <h3 className="text-xl font-extrabold text-[#17191C] mb-2">{p.title}</h3>
+                    <p className="text-[14px] leading-relaxed mb-5 flex-1">{p.desc}</p>
+                    <span className="inline-flex items-center gap-2 text-[13px] font-extrabold text-[#C80808] group-hover:text-[#C80808] transition-colors">Learn More <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" /></span>
+                  </div>
+                </Link>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== WHY (numbered) ===== */}
+      <section id="why" className="py-16 sm:py-24 bg-white">
+        <div className="max-w-[1320px] mx-auto px-5 sm:px-8">
+          <Head eyebrow="Why choose Petro Engineering" title="Why leading industrial companies partner with us" text="We eliminate single-source vulnerability, reduce commercial overhead, and maintain zero-defect documentation dossiers." />
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {whyPartner.map((w, k) => (
+              <Reveal key={w.title} delay={(k % 3) * 90}>
+                <div className="group relative h-full rounded-2xl border border-[#E7E9EE] bg-white p-7 overflow-hidden hover:shadow-2xl hover:-translate-y-2 transition-all duration-500">
+                  <span className="absolute -top-2 right-4 font-['Plus_Jakarta_Sans'] text-7xl font-black text-[#C80808]/[0.07] group-hover:text-[#E0A21A]/25 transition-colors">0{k + 1}</span>
+                  <div className="relative w-14 h-14 rounded-2xl bg-[#FDECEC] text-[#C80808] group-hover:bg-[#C80808] group-hover:text-white flex items-center justify-center mb-5 transition-colors"><w.icon className="w-7 h-7" /></div>
+                  <h3 className="relative text-lg font-extrabold text-[#17191C] mb-2">{w.title}</h3>
+                  <p className="relative text-[14px] leading-relaxed">{w.desc}</p>
+                  <span className="absolute left-0 bottom-0 h-1 w-0 bg-[#C80808] group-hover:w-full transition-all duration-500" />
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== IMAGE BANNER ===== */}
+      <section className="relative h-[300px] sm:h-[380px] overflow-hidden bg-[#17191C]/90">
+        <Image src="/assets/img/cta-source.jpg" alt="" fill sizes="100vw" className="object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#17191C]/95 via-[#17191C]/70 to-[#C80808]/50" />
+        <div className="relative h-full max-w-[1320px] mx-auto px-5 sm:px-8 flex items-center">
+          <Reveal className="max-w-[700px]">
+            <h2 className="text-white text-[1.6rem] sm:text-4xl font-black tracking-tight leading-[1.15] mb-4">Right equipment. Fully compliant. <span className="text-[#E0A21A]">Delivered on time.</span></h2>
+            <Link href="/request-a-quote" className="inline-flex items-center gap-2 rounded-lg bg-[#C80808] hover:bg-[#8A0A0A] text-white font-bold px-7 py-3.5 transition-colors">Request a Quotation <ArrowRight className="w-4 h-4" /></Link>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* ===== PROCESS ===== */}
+      <section id="process" className="py-16 sm:py-24 bg-white">
+        <div className="max-w-[1320px] mx-auto px-5 sm:px-8">
+          <Head eyebrow="How we work" title="Four steps from enquiry to delivery" text="A predictable process, so you always know where your order stands." />
+          <div className="relative grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <span aria-hidden="true" className="hidden lg:block absolute top-[34px] left-[12%] right-[12%] h-[2px] bg-gradient-to-r from-[#C80808] via-[#D4950F] to-[#C80808] opacity-50" />
+            {[
+              { t: "Enquiry & review", d: "You send the line list, datasheet or RFQ. We review the specification and flag anything that needs clarifying before we quote.", icon: Search },
+              { t: "Sourcing & proposal", d: "We approach approved manufacturers, compare technically and commercially, and return a costed proposal with lead times.", icon: FileCheck },
+              { t: "Inspection & documentation", d: "Orders are expedited, inspected where required, and MTCs and test certificates are verified before release.", icon: ShieldCheck },
+              { t: "Packing & delivery", d: "Goods are export-packed, documented and shipped, with tracking and delivery confirmation through to site.", icon: Truck },
+            ].map((st, k) => (
+              <Reveal key={st.t} delay={k * 110}>
+                <div className="group relative text-center sm:text-left h-full">
+                  <span className="relative z-10 mx-auto sm:mx-0 mb-5 w-[68px] h-[68px] rounded-full bg-white border-[3px] border-[#C80808] text-[#C80808] group-hover:bg-[#C80808] group-hover:text-white flex items-center justify-center shadow-lg transition-colors"><st.icon className="w-7 h-7" /></span>
+                  <span className="text-xs font-extrabold tracking-[0.2em] text-[#C80808]">STEP 0{k + 1}</span>
+                  <h3 className="text-lg font-extrabold text-[#17191C] mt-1 mb-2">{st.t}</h3>
+                  <p className="text-[14px] leading-relaxed">{st.d}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== HOW WE SUPPLY ===== */}
+      <section id="engage" className="py-12 sm:py-14 bg-[#17191C]/90 relative overflow-hidden">
+        <div className="absolute -top-32 -right-32 w-[420px] h-[420px] rounded-full bg-[#D4950F]/25 blur-[110px]" />
+        <div className="absolute -bottom-32 -left-32 w-[420px] h-[420px] rounded-full bg-[#C80808]/20 blur-[110px]" />
+        <div className="relative max-w-[1240px] mx-auto px-5 sm:px-8">
+          <Reveal className="max-w-[640px] mx-auto text-center mb-8">
+            <span className="inline-flex items-center gap-3 text-[11px] font-extrabold uppercase tracking-[0.2em] text-[#F2B93B] mb-2"><span className="h-[3px] w-9 bg-[#F2B93B] rounded" />How we supply</span>
+            <h2 className="text-[1.4rem] sm:text-[1.9rem] font-black leading-[1.15] text-white mb-1.5">Order the way that suits your project</h2>
+            <p className="text-white/70 text-[14px]">From a single item to a multi-vendor package — one accountable contact throughout.</p>
+          </Reveal>
+          <div className="grid md:grid-cols-3 gap-5">
+            {engage.map((e, k) => (
+              <Reveal key={e.t} delay={k * 100}>
+                <div tabIndex={0} className="group h-[290px] [perspective:1000px] outline-none">
+                  <div className="relative h-full w-full transition-transform duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)] group-focus:[transform:rotateY(180deg)]">
+                    <div className="absolute inset-0 rounded-2xl overflow-hidden [backface-visibility:hidden]">
+                      <Image src={["/assets/img/pipe-fittings.jpg","/assets/img/chem-05-water-treatment-plants.jpg","/assets/img/service-inspection-qa.jpg"][k]} alt="" fill sizes="450px" className="object-cover" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#17191C]/95 via-[#17191C]/55 to-[#17191C]/20" />
+                      <span className="absolute top-4 right-4 font-black text-3xl text-transparent [-webkit-text-stroke:1.5px_#F2B93B]">0{k + 1}</span>
+                      <div className="absolute bottom-0 p-5 text-white">
+                        <e.icon className="w-7 h-7 text-[#F2B93B] mb-2" />
+                        <h3 className="text-xl font-black text-white">{e.t}</h3>
+                        <span className="text-[11px] font-bold tracking-widest text-[#F2B93B]">HOVER / TAP FOR DETAILS</span>
+                      </div>
+                    </div>
+                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#C80808] to-[#8A0A0A] text-white p-5 [backface-visibility:hidden] [transform:rotateY(180deg)] flex flex-col justify-center">
+                      <h3 className="text-lg font-black text-white mb-1">{e.t}</h3>
+                      <p className="text-[13px] text-white/85 mb-3">{e.d}</p>
+                      <ul className="space-y-1.5 text-[13px] text-white">
+                        {e.pts.map((pt) => (<li key={pt} className="flex items-start gap-2"><CheckCircle2 className="w-4 h-4 mt-0.5 shrink-0 text-[#F2B93B]" />{pt}</li>))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ===== SERVICES ===== */}
+      <section id="services" className="relative py-10 sm:py-12 bg-gradient-to-b from-white via-[#FFF8F0] to-white overflow-hidden">
+        <div className="absolute -top-24 -left-24 w-[420px] h-[420px] rounded-full bg-[#C80808]/[0.07] blur-[90px]" />
+        <div className="absolute -bottom-24 -right-24 w-[420px] h-[420px] rounded-full bg-[#E0A21A]/[0.14] blur-[90px]" />
+        <div className="absolute inset-0 [background-image:radial-gradient(rgba(23,25,28,.09)_1.2px,transparent_1.2px)] [background-size:24px_24px] [mask-image:radial-gradient(ellipse_at_center,black,transparent_80%)]" />
+        <div className="relative max-w-[1320px] mx-auto px-5 sm:px-8">
+          <div className="text-center max-w-[680px] mx-auto mb-6">
+            <span className="inline-flex items-center gap-3 text-[11px] font-extrabold uppercase tracking-[0.2em] text-[#C80808] mb-2"><span className="h-[3px] w-9 rounded bg-[#C80808]" />Procurement &amp; sourcing services</span>
+            <h2 className="text-[1.35rem] sm:text-[1.75rem] font-black leading-[1.15] text-[#17191C] mb-2">End-to-end support, from enquiry to site delivery</h2>
+            <p className="text-[14px]">From single-item replacement orders to complete tender package consolidation — we manage compliance, expediting and third-party inspection.</p>
+          </div>
+          <ServiceRoute services={services.map((s, k) => ({ ...s, img: ["/assets/img/pipe-fittings.jpg","/assets/img/gas-analytics.jpg","/assets/img/service-inspection-qa.jpg","/assets/img/tube-fittings.jpg","/assets/img/tubing-coils.jpg","/assets/img/service-technical-consultation.jpg"][k] }))} />
+          <div className="text-center mt-5"><Link href="/services" className="inline-flex items-center gap-2 rounded-lg bg-[#C80808] hover:bg-[#8A0A0A] text-white text-sm font-bold px-5 py-2.5 transition-colors">View all services <ArrowRight className="w-4 h-4" /></Link></div>
+        </div>
+      </section>
+
+      {/* ===== GET IN TOUCH ===== */}
+      <section id="contact" className="py-9 bg-gradient-to-r from-[#17191C]/90 via-[#2a0c0c]/90 to-[#17191C]/90">
+        <Reveal className="max-w-[1240px] mx-auto px-5 sm:px-8 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+          <div className="max-w-[560px]">
+            <h2 className="text-white text-[1.4rem] sm:text-3xl font-black leading-[1.15] mb-1">We're here to source. Call us today.</h2>
+            <p className="text-white/70 text-[13.5px]">Speak directly with our technical sales desk for quotation assistance, material test reports, or dosage projections.</p>
+          </div>
+          <div className="flex flex-wrap gap-3">
+            {[
+              { icon: Phone, t: "Call", v: COMPANY_INFO.contact.phone, href: `tel:${COMPANY_INFO.contact.phoneRaw}`, c: "bg-[#C80808] hover:bg-[#A80808]" },
+              { icon: Mail, t: "Email", v: COMPANY_INFO.contact.email, href: `mailto:${COMPANY_INFO.contact.email}`, c: "bg-[#D4950F] hover:bg-[#B07A0A]" },
+              { icon: FileCheck, t: "RFQ", v: "Request a quote", href: "/request-a-quote", c: "bg-white/15 border border-white/30 hover:bg-white/25" },
+            ].map((c) => (
+              <a key={c.t} href={c.href} className={`flex items-center gap-2.5 rounded-xl px-4 py-3 text-white hover:-translate-y-1 hover:shadow-xl transition-all ${c.c}`}>
+                <c.icon className="w-5 h-5" />
+                <span><span className="block text-[10px] font-bold uppercase opacity-80">{c.t}</span><span className="block text-[13px] font-extrabold">{c.v}</span></span>
               </a>
-              <Link
-                href="/request-a-quote"
-                className="btn btn-outline"
-              >
-                Request a Quote
-              </Link>
-            </div>
+            ))}
           </div>
-        </div>
+        </Reveal>
       </section>
     </div>
   );

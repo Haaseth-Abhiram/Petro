@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  distDir: process.env.NEXT_DIST || ".next",
+  compress: true,
   images: {
     unoptimized: true,
     remotePatterns: [

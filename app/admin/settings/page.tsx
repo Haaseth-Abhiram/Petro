@@ -57,7 +57,7 @@ export default function AdminSettingsPage() {
       {/* Database Connection Diagnostic Card */}
       <div className="bg-white rounded-xl border border-[#D8DDE2] shadow-sm p-6 space-y-4">
         <div className="flex items-center gap-2 pb-3 border-b border-[#D8DDE2]">
-          <div className="w-8 h-8 rounded-lg bg-[#17191C] text-[#FF4B32] flex items-center justify-center">
+          <div className="w-8 h-8 rounded-lg bg-[#17191C] text-[#C80808] flex items-center justify-center">
             <Database className="w-4 h-4" />
           </div>
           <div>
@@ -181,7 +181,7 @@ export default function AdminSettingsPage() {
         <div className="flex items-center justify-end">
           <button
             type="submit"
-            className="px-6 py-2.5 rounded-lg bg-[#FF4B32] hover:bg-[#E03820] text-white text-xs font-bold shadow-[0_4px_12px_rgba(255,75,50,0.3)] transition-all"
+            className="px-6 py-2.5 rounded-lg bg-[#C80808] hover:bg-[#8A0A0A] text-white text-xs font-bold shadow-[0_4px_12px_rgba(200,8,8,0.3)] transition-all"
           >
             Save Settings
           </button>

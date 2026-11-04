@@ -201,7 +201,7 @@ export default function AdminProductsPage() {
 
         <button
           onClick={handleOpenAdd}
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-[#FF4B32] hover:bg-[#E03820] text-white text-xs font-bold transition-all shadow-[0_4px_12px_rgba(255,75,50,0.3)] shrink-0 self-start sm:self-auto"
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-[#C80808] hover:bg-[#8A0A0A] text-white text-xs font-bold transition-all shadow-[0_4px_12px_rgba(200,8,8,0.3)] shrink-0 self-start sm:self-auto"
         >
           <Plus className="w-4 h-4" />
           <span>Add New Product</span>
@@ -217,7 +217,7 @@ export default function AdminProductsPage() {
             placeholder="Search by product name, slug, material, or keyword..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 rounded-lg border border-[#D8DDE2] text-xs sm:text-sm focus:border-[#FF4B32] focus:ring-1 focus:ring-[#FF4B32] outline-none"
+            className="w-full pl-10 pr-4 py-2 rounded-lg border border-[#D8DDE2] text-xs sm:text-sm focus:border-[#C80808] focus:ring-1 focus:ring-[#C80808] outline-none"
           />
         </div>
 
@@ -272,7 +272,7 @@ export default function AdminProductsPage() {
               {loading ? (
                 <tr>
                   <td colSpan={5} className="py-12 text-center text-[#5F6871]">
-                    <div className="w-6 h-6 border-2 border-[#FF4B32] border-t-transparent rounded-full animate-spin mx-auto mb-2" />
+                    <div className="w-6 h-6 border-2 border-[#C80808] border-t-transparent rounded-full animate-spin mx-auto mb-2" />
                     <span>Loading products from database...</span>
                   </td>
                 </tr>
@@ -430,7 +430,7 @@ export default function AdminProductsPage() {
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs focus:border-[#FF4B32] outline-none"
+                    className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs focus:border-[#C80808] outline-none"
                     placeholder="e.g. Double Ferrule Male Connector (SS316)"
                   />
                 </div>
@@ -443,7 +443,7 @@ export default function AdminProductsPage() {
                     type="text"
                     value={formData.slug}
                     onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
-                    className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs focus:border-[#FF4B32] outline-none font-mono"
+                    className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs focus:border-[#C80808] outline-none font-mono"
                     placeholder="auto-generated from name if left blank"
                   />
                 </div>
@@ -457,7 +457,7 @@ export default function AdminProductsPage() {
                   <select
                     value={formData.division}
                     onChange={(e) => setFormData({ ...formData, division: e.target.value })}
-                    className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs focus:border-[#FF4B32] outline-none"
+                    className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs focus:border-[#C80808] outline-none"
                   >
                     <option value="instrumentation">Instrumentation & Valves</option>
                     <option value="chemicals">Chemicals & Water Treatment</option>
@@ -471,7 +471,7 @@ export default function AdminProductsPage() {
                   <select
                     value={formData.category_slug}
                     onChange={(e) => setFormData({ ...formData, category_slug: e.target.value })}
-                    className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs focus:border-[#FF4B32] outline-none"
+                    className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs focus:border-[#C80808] outline-none"
                   >
                     {categories.map((c) => (
                       <option key={c.slug} value={c.slug}>
@@ -490,7 +490,7 @@ export default function AdminProductsPage() {
                   type="text"
                   value={formData.image}
                   onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                  className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs focus:border-[#FF4B32] outline-none"
+                  className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs focus:border-[#C80808] outline-none"
                   placeholder="https://..."
                 />
               </div>
@@ -503,7 +503,7 @@ export default function AdminProductsPage() {
                   rows={2}
                   value={formData.short_description}
                   onChange={(e) => setFormData({ ...formData, short_description: e.target.value })}
-                  className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs focus:border-[#FF4B32] outline-none"
+                  className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs focus:border-[#C80808] outline-none"
                   placeholder="Summary for product cards and catalogues..."
                 />
               </div>
@@ -516,7 +516,7 @@ export default function AdminProductsPage() {
                   rows={3}
                   value={formData.overview}
                   onChange={(e) => setFormData({ ...formData, overview: e.target.value })}
-                  className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs focus:border-[#FF4B32] outline-none"
+                  className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs focus:border-[#C80808] outline-none"
                   placeholder="Detailed engineering overview..."
                 />
               </div>
@@ -588,7 +588,7 @@ export default function AdminProductsPage() {
                   id="pubCheck"
                   checked={formData.is_published}
                   onChange={(e) => setFormData({ ...formData, is_published: e.target.checked })}
-                  className="w-4 h-4 rounded text-[#FF4B32] focus:ring-[#FF4B32]"
+                  className="w-4 h-4 rounded text-[#C80808] focus:ring-[#C80808]"
                 />
                 <label htmlFor="pubCheck" className="text-xs font-semibold text-[#17191C] cursor-pointer">
                   Publish product immediately to public website
@@ -607,7 +607,7 @@ export default function AdminProductsPage() {
                 <button
                   type="submit"
                   disabled={saving}
-                  className="px-5 py-2 rounded-lg bg-[#FF4B32] hover:bg-[#E03820] text-white text-xs font-bold shadow-sm disabled:opacity-50"
+                  className="px-5 py-2 rounded-lg bg-[#C80808] hover:bg-[#8A0A0A] text-white text-xs font-bold shadow-sm disabled:opacity-50"
                 >
                   {saving ? "Saving to Supabase..." : editingProduct ? "Save Changes" : "Create Product"}
                 </button>

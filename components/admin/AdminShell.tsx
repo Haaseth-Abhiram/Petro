@@ -69,7 +69,7 @@ export default function AdminShell({ children }: AdminShellProps) {
     return (
       <div className="min-h-screen bg-[#17191C] flex items-center justify-center text-white">
         <div className="flex flex-col items-center gap-3">
-          <div className="w-10 h-10 border-4 border-[#FF4B32] border-t-transparent rounded-full animate-spin" />
+          <div className="w-10 h-10 border-4 border-[#C80808] border-t-transparent rounded-full animate-spin" />
           <p className="text-xs font-semibold text-[#929DA7] tracking-wider uppercase">
             Loading Admin Workspace...
           </p>
