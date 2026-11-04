@@ -14,15 +14,9 @@ import {
   Clock,
   UserCheck,
   XCircle,
-  FileSpreadsheet,
   TrendingUp,
   AlertCircle,
 } from "lucide-react";
-
-interface StatusCount {
-  status: string;
-  count: number;
-}
 
 interface PositionCount {
   role: string;
@@ -48,6 +42,16 @@ interface ReportsData {
   timeline: TimelineItem[];
 }
 
+const defaultStats = {
+  totalApplications: 0,
+  new: 0,
+  underReview: 0,
+  shortlisted: 0,
+  interview: 0,
+  selected: 0,
+  rejected: 0,
+};
+
 export default function RecruitmentReportsPage() {
   const [data, setData] = useState<ReportsData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -66,7 +70,11 @@ export default function RecruitmentReportsPage() {
       const res = await fetch(`/api/admin/careers/reports?${params.toString()}`);
       const d = await res.json();
       if (d.success) {
-        setData(d);
+        setData({
+          stats: d.stats || defaultStats,
+          byPosition: d.byPosition || d.byJob || [],
+          timeline: d.timeline || d.trends || [],
+        });
       } else {
         showToast("error", d.message || "Failed to load reports");
       }
@@ -92,7 +100,7 @@ export default function RecruitmentReportsPage() {
     if (startDate) params.set("startDate", startDate);
     if (endDate) params.set("endDate", endDate);
 
-    // Trigger direct download
+    // Direct download trigger
     window.location.href = `/api/admin/careers/reports?${params.toString()}`;
     setTimeout(() => setExporting(false), 2000);
   };
@@ -115,14 +123,17 @@ export default function RecruitmentReportsPage() {
     fetchReports("", "");
   };
 
-  const total = data?.stats.totalApplications || 0;
+  const stats = data?.stats || defaultStats;
+  const total = stats.totalApplications || 0;
+  const byPosition = data?.byPosition || [];
+  const timeline = data?.timeline || [];
 
   return (
     <div className="space-y-6">
-      {/* Toast */}
+      {/* Toast Notification */}
       {toast && (
         <div
-          className={`fixed bottom-6 right-6 z-50 flex items-center gap-2.5 px-4 py-3 rounded-xl shadow-2xl border text-sm font-semibold ${
+          className={`fixed bottom-6 right-6 z-50 flex items-center gap-2.5 px-4 py-3 rounded-xl shadow-2xl border text-sm font-semibold transition-all animate-[fadeIn_.3s_ease] ${
             toast.type === "success"
               ? "bg-[#17191C] border-[#FF4B32] text-white"
               : "bg-red-500 border-red-600 text-white"
@@ -239,17 +250,17 @@ export default function RecruitmentReportsPage() {
           <RefreshCw className="w-8 h-8 text-[#FF4B32] animate-spin mx-auto mb-3" />
           <p className="text-sm font-bold text-[#17191C]">Calculating recruitment metrics...</p>
         </div>
-      ) : data ? (
+      ) : (
         <>
           {/* Funnel Metrics Grid */}
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5">
             {[
-              { label: "Total Applications", value: data.stats.totalApplications, color: "text-[#17191C]", bg: "bg-[#17191C]/5", border: "border-[#17191C]/15" },
-              { label: "New (Unreviewed)", value: data.stats.new, color: "text-blue-600", bg: "bg-blue-50", border: "border-blue-200" },
-              { label: "Under Review", value: data.stats.underReview, color: "text-amber-600", bg: "bg-amber-50", border: "border-amber-200" },
-              { label: "Shortlisted", value: data.stats.shortlisted, color: "text-purple-600", bg: "bg-purple-50", border: "border-purple-200" },
-              { label: "Interviews", value: data.stats.interview, color: "text-[#FFA028]", bg: "bg-[#FFA028]/10", border: "border-[#FFA028]/30" },
-              { label: "Selected", value: data.stats.selected, color: "text-emerald-600", bg: "bg-emerald-50", border: "border-emerald-200" },
+              { label: "Total Applications", value: stats.totalApplications, color: "text-[#17191C]", border: "border-[#17191C]/15" },
+              { label: "New (Unreviewed)", value: stats.new, color: "text-blue-600", border: "border-blue-200" },
+              { label: "Under Review", value: stats.underReview, color: "text-amber-600", border: "border-amber-200" },
+              { label: "Shortlisted", value: stats.shortlisted, color: "text-purple-600", border: "border-purple-200" },
+              { label: "Interviews", value: stats.interview, color: "text-[#FFA028]", border: "border-[#FFA028]/30" },
+              { label: "Selected", value: stats.selected, color: "text-emerald-600", border: "border-emerald-200" },
             ].map((m) => (
               <div key={m.label} className={`p-4 rounded-2xl bg-white border ${m.border} shadow-sm flex flex-col justify-between`}>
                 <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#5F6871]">{m.label}</span>
@@ -278,29 +289,29 @@ export default function RecruitmentReportsPage() {
 
               <div className="space-y-4">
                 {[
-                  { label: "Total Received", val: data.stats.totalApplications, pct: 100, color: "bg-[#17191C]" },
+                  { label: "Total Received", val: stats.totalApplications, pct: 100, color: "bg-[#17191C]" },
                   {
                     label: "Under Review / Screened",
-                    val: data.stats.underReview + data.stats.shortlisted + data.stats.interview + data.stats.selected,
-                    pct: total > 0 ? Math.round(((data.stats.underReview + data.stats.shortlisted + data.stats.interview + data.stats.selected) / total) * 100) : 0,
+                    val: stats.underReview + stats.shortlisted + stats.interview + stats.selected,
+                    pct: total > 0 ? Math.round(((stats.underReview + stats.shortlisted + stats.interview + stats.selected) / total) * 100) : 0,
                     color: "bg-blue-500",
                   },
                   {
                     label: "Shortlisted",
-                    val: data.stats.shortlisted + data.stats.interview + data.stats.selected,
-                    pct: total > 0 ? Math.round(((data.stats.shortlisted + data.stats.interview + data.stats.selected) / total) * 100) : 0,
+                    val: stats.shortlisted + stats.interview + stats.selected,
+                    pct: total > 0 ? Math.round(((stats.shortlisted + stats.interview + stats.selected) / total) * 100) : 0,
                     color: "bg-purple-500",
                   },
                   {
                     label: "Interviews Scheduled",
-                    val: data.stats.interview + data.stats.selected,
-                    pct: total > 0 ? Math.round(((data.stats.interview + data.stats.selected) / total) * 100) : 0,
+                    val: stats.interview + stats.selected,
+                    pct: total > 0 ? Math.round(((stats.interview + stats.selected) / total) * 100) : 0,
                     color: "bg-[#FFA028]",
                   },
                   {
                     label: "Selected / Hired",
-                    val: data.stats.selected,
-                    pct: total > 0 ? Math.round((data.stats.selected / total) * 100) : 0,
+                    val: stats.selected,
+                    pct: total > 0 ? Math.round((stats.selected / total) * 100) : 0,
                     color: "bg-emerald-500",
                   },
                 ].map((stage) => (
@@ -325,7 +336,7 @@ export default function RecruitmentReportsPage() {
                 <span>Rejected Candidates:</span>
                 <span className="font-bold text-red-600 flex items-center gap-1">
                   <XCircle className="w-3.5 h-3.5" />
-                  {data.stats.rejected} ({total > 0 ? Math.round((data.stats.rejected / total) * 100) : 0}%)
+                  {stats.rejected} ({total > 0 ? Math.round((stats.rejected / total) * 100) : 0}%)
                 </span>
               </div>
             </div>
@@ -339,7 +350,7 @@ export default function RecruitmentReportsPage() {
                     Applications by Job Position
                   </h3>
                   <p className="text-xs text-[#5F6871] mt-0.5">
-                    Distribution of candidate interest across active job vacancies.
+                    Distribution of candidate interest across active vacancies.
                   </p>
                 </div>
                 <Link
@@ -350,13 +361,13 @@ export default function RecruitmentReportsPage() {
                 </Link>
               </div>
 
-              {data.byPosition.length === 0 ? (
+              {byPosition.length === 0 ? (
                 <div className="py-12 text-center text-xs text-[#5F6871]">
                   No candidate submissions recorded in this date range.
                 </div>
               ) : (
                 <div className="space-y-3.5">
-                  {data.byPosition.map((pos) => {
+                  {byPosition.map((pos) => {
                     const pct = total > 0 ? Math.round((pos.count / total) * 100) : 0;
                     return (
                       <div key={pos.role} className="p-3 rounded-xl bg-[#F5F6F7]/75 border border-[#D8DDE2]">
@@ -397,13 +408,13 @@ export default function RecruitmentReportsPage() {
               </div>
             </div>
 
-            {data.timeline.length === 0 ? (
+            {timeline.length === 0 ? (
               <div className="py-10 text-center text-xs text-[#5F6871]">
                 No applications received in this period.
               </div>
             ) : (
               <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-2.5">
-                {data.timeline.slice(-14).map((t) => (
+                {timeline.slice(-14).map((t) => (
                   <div
                     key={t.date}
                     className="p-3 rounded-xl bg-[#F5F6F7] border border-[#D8DDE2] text-center"
@@ -419,7 +430,7 @@ export default function RecruitmentReportsPage() {
             )}
           </div>
         </>
-      ) : null}
+      )}
     </div>
   );
 }

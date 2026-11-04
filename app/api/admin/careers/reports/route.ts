@@ -59,15 +59,15 @@ export async function GET(req: Request) {
       ];
 
       const rows = exportRes.rows.map((r) => [
-        `"${r.application_reference}"`,
+        `"${r.application_reference || ""}"`,
         `"${(r.full_name || "").replace(/"/g, '""')}"`,
-        `"${r.email}"`,
-        `"${r.phone}"`,
+        `"${r.email || ""}"`,
+        `"${r.phone || ""}"`,
         `"${(r.role_of_interest || "").replace(/"/g, '""')}"`,
-        `"${r.experience}"`,
-        `"${r.status}"`,
+        `"${r.experience || ""}"`,
+        `"${r.status || ""}"`,
         `"${(r.linkedin_url || "").replace(/"/g, '""')}"`,
-        `"${new Date(r.submitted_at).toISOString().split("T")[0]}"`,
+        `"${r.submitted_at ? new Date(r.submitted_at).toISOString().split("T")[0] : ""}"`,
       ]);
 
       const csvContent = [headers.join(","), ...rows.map((e) => e.join(","))].join("\n");
@@ -83,7 +83,7 @@ export async function GET(req: Request) {
     // 1. Applications by Job
     const byJobRes = await query(`
       SELECT 
-        role_of_interest as role,
+        COALESCE(role_of_interest, 'General Application') as role,
         COUNT(*) as count
       FROM applications a
       WHERE 1=1 ${dateFilter}
@@ -105,7 +105,7 @@ export async function GET(req: Request) {
     // 3. Applications by Experience
     const byExpRes = await query(`
       SELECT 
-        experience,
+        COALESCE(experience, 'Not specified') as experience,
         COUNT(*) as count
       FROM applications a
       WHERE 1=1 ${dateFilter}
@@ -113,17 +113,17 @@ export async function GET(req: Request) {
       ORDER BY count DESC;
     `, params);
 
-    // 4. Monthly Submissions Trend (last 6 months)
+    // 4. Monthly Submissions Trend (last 12 months)
     const trendRes = await query(`
       SELECT 
-        TO_CHAR(submitted_at, 'Mon YYYY') as period,
-        DATE_TRUNC('month', submitted_at) as sort_date,
+        TO_CHAR(submitted_at, 'YYYY-MM-DD') as period,
+        DATE_TRUNC('day', submitted_at) as sort_date,
         COUNT(*) as count
       FROM applications a
       WHERE 1=1 ${dateFilter}
       GROUP BY period, sort_date
       ORDER BY sort_date ASC
-      LIMIT 12;
+      LIMIT 30;
     `, params);
 
     // 5. Job Status Summary
@@ -136,24 +136,50 @@ export async function GET(req: Request) {
     `);
 
     // 6. Overall Funnel Stats
-    const totalApps = byStatusRes.rows.reduce((acc, cur) => acc + parseInt(cur.count, 10), 0);
-    const selectedCount = byStatusRes.rows.find((r) => r.status === "Selected")?.count || 0;
-    const interviewCount = byStatusRes.rows.find((r) => r.status === "Interview")?.count || 0;
-    const shortlistedCount = byStatusRes.rows.find((r) => r.status === "Shortlisted")?.count || 0;
+    const statusMap: Record<string, number> = {};
+    let totalApps = 0;
+    byStatusRes.rows.forEach((r) => {
+      const cnt = parseInt(r.count, 10) || 0;
+      statusMap[r.status] = cnt;
+      totalApps += cnt;
+    });
+
+    const stats = {
+      totalApplications: totalApps,
+      new: statusMap["New"] || 0,
+      underReview: statusMap["Under Review"] || 0,
+      shortlisted: statusMap["Shortlisted"] || 0,
+      interview: (statusMap["Interview Scheduled"] || 0) + (statusMap["Interview"] || 0),
+      selected: statusMap["Selected"] || 0,
+      rejected: statusMap["Rejected"] || 0,
+    };
+
+    const byPosition = byJobRes.rows.map((r) => ({
+      role: r.role || "General Application",
+      count: parseInt(r.count, 10) || 0,
+    }));
+
+    const timeline = trendRes.rows.map((r) => ({
+      date: r.period,
+      count: parseInt(r.count, 10) || 0,
+    }));
 
     return NextResponse.json({
       success: true,
-      byJob: byJobRes.rows.map((r) => ({ role: r.role, count: parseInt(r.count, 10) })),
-      byStatus: byStatusRes.rows.map((r) => ({ status: r.status, count: parseInt(r.count, 10) })),
-      byExperience: byExpRes.rows.map((r) => ({ experience: r.experience, count: parseInt(r.count, 10) })),
-      trends: trendRes.rows.map((r) => ({ period: r.period, count: parseInt(r.count, 10) })),
-      jobStatuses: jobStatusRes.rows.map((r) => ({ status: r.status, count: parseInt(r.count, 10) })),
+      stats,
+      byPosition,
+      byJob: byPosition,
+      byStatus: byStatusRes.rows.map((r) => ({ status: r.status, count: parseInt(r.count, 10) || 0 })),
+      byExperience: byExpRes.rows.map((r) => ({ experience: r.experience, count: parseInt(r.count, 10) || 0 })),
+      timeline,
+      trends: timeline,
+      jobStatuses: jobStatusRes.rows.map((r) => ({ status: r.status, count: parseInt(r.count, 10) || 0 })),
       funnel: {
         total: totalApps,
-        shortlisted: parseInt(shortlistedCount, 10),
-        interview: parseInt(interviewCount, 10),
-        selected: parseInt(selectedCount, 10),
-        conversionRate: totalApps > 0 ? ((parseInt(selectedCount, 10) / totalApps) * 100).toFixed(1) : "0.0",
+        shortlisted: stats.shortlisted,
+        interview: stats.interview,
+        selected: stats.selected,
+        conversionRate: totalApps > 0 ? ((stats.selected / totalApps) * 100).toFixed(1) : "0.0",
       },
     });
   } catch (err: any) {
