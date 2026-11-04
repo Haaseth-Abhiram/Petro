@@ -62,6 +62,21 @@ interface CareersStatsData {
   }>;
 }
 
+function formatDateSafe(val: any): string {
+  if (!val) return "—";
+  try {
+    const d = new Date(val);
+    if (isNaN(d.getTime())) return "—";
+    return d.toLocaleDateString("en-IN", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
+  } catch {
+    return "—";
+  }
+}
+
 export default function CareersDashboardPage() {
   const [data, setData] = useState<CareersStatsData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -327,7 +342,7 @@ export default function CareersDashboardPage() {
                       <span>•</span>
                       <span>{app.phone}</span>
                       <span>•</span>
-                      <span>{new Date(app.submitted_at).toLocaleDateString()}</span>
+                      <span>{formatDateSafe(app.submitted_at)}</span>
                     </div>
                   </div>
 
@@ -415,12 +430,12 @@ export default function CareersDashboardPage() {
                 <span className="text-[10px] text-[#929DA7]">Manage departments</span>
               </Link>
               <Link
-                href="/admin/careers/reports"
+                href="/admin/careers/applications"
                 className="flex flex-col p-3 rounded-xl border border-[#929DA7]/20 hover:border-[#FF4B32] hover:bg-[#F5F6F7]/50 transition-all text-left"
               >
                 <BarChart3 className="w-4 h-4 text-emerald-600 mb-1.5" />
-                <span className="text-xs font-bold text-[#17191C]">Reports &amp; Export</span>
-                <span className="text-[10px] text-[#929DA7]">Download CSV data</span>
+                <span className="text-xs font-bold text-[#17191C]">Applications &amp; Export</span>
+                <span className="text-[10px] text-[#929DA7]">Excel, PDF &amp; Resumes</span>
               </Link>
             </div>
 

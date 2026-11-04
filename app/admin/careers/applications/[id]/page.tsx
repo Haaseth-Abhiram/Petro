@@ -71,6 +71,21 @@ const STATUS_OPTIONS = [
   "Rejected",
 ];
 
+function formatDateSafe(val: any): string {
+  if (!val) return "—";
+  try {
+    const d = new Date(val);
+    if (isNaN(d.getTime())) return "—";
+    return d.toLocaleDateString("en-IN", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
+  } catch {
+    return "—";
+  }
+}
+
 export default function CandidateDetailPage() {
   const params = useParams();
   const router = useRouter();
@@ -266,7 +281,7 @@ export default function CandidateDetailPage() {
                 </span>
                 <span className="flex items-center gap-1">
                   <Calendar className="w-3.5 h-3.5" />
-                  <span>Submitted {new Date(application.submitted_at).toLocaleDateString()}</span>
+                  <span>Submitted {formatDateSafe(application.submitted_at)}</span>
                 </span>
               </div>
             </div>
@@ -435,7 +450,7 @@ export default function CandidateDetailPage() {
                   <div key={n.id} className="p-3 rounded-xl bg-[#F5F6F7] text-xs space-y-1">
                     <div className="flex items-center justify-between text-[10px] text-[#929DA7]">
                       <span className="font-bold text-[#17191C]">{n.admin_name || n.admin_email}</span>
-                      <span>{new Date(n.created_at).toLocaleString()}</span>
+                      <span>{formatDateSafe(n.created_at)}</span>
                     </div>
                     <p className="text-[#17191C] leading-relaxed whitespace-pre-wrap">{n.note}</p>
                   </div>
@@ -468,7 +483,7 @@ export default function CandidateDetailPage() {
                       <p className="text-[#929DA7] text-[11px] mt-0.5 leading-snug">{h.note}</p>
                     )}
                     <span className="text-[10px] text-[#929DA7] block mt-1">
-                      By {h.changed_by} • {new Date(h.created_at).toLocaleString()}
+                      By {h.changed_by} • {formatDateSafe(h.created_at)}
                     </span>
                   </div>
                 ))}

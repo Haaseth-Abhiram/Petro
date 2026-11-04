@@ -66,10 +66,14 @@ export async function GET(
       const originalName = app.resume_original_name || `resume-${app.id}${ext}`;
       const safeDownloadName = originalName.replace(/[^a-zA-Z0-9._-]/g, "_");
 
+      const { searchParams } = new URL(req.url);
+      const isPreview = searchParams.get("preview") === "true";
+      const disposition = isPreview ? "inline" : `attachment; filename="${safeDownloadName}"`;
+
       return new NextResponse(fileBuffer, {
         headers: {
           "Content-Type": contentType,
-          "Content-Disposition": `attachment; filename="${safeDownloadName}"`,
+          "Content-Disposition": disposition,
           "Content-Length": String(fileBuffer.length),
         },
       });

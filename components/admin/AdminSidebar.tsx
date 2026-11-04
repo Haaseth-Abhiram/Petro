@@ -134,11 +134,6 @@ export default function AdminSidebar({
       icon: Layers,
     },
     {
-      label: "Recruitment Reports",
-      href: "/admin/careers/reports",
-      icon: BarChart3,
-    },
-    {
       label: "Recruitment Settings",
       href: "/admin/careers/settings",
       icon: Settings,
