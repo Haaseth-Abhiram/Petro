@@ -268,9 +268,9 @@ export default function AdminUsersPage() {
                   onChange={(e) => setFormData({ ...formData, role: e.target.value })}
                   className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs outline-none"
                 >
-                  <option value="Admin">Admin (Catalogue, RFQ & Content)</option>
-                  <option value="Super Admin">Super Admin (Full System & User Control)</option>
+                  <option value="Admin">Admin (Full System, Catalogue & User Control)</option>
                   <option value="Editor">Editor (Content & Brochures only)</option>
+                  <option value="Viewer">Viewer (Read-only access)</option>
                 </select>
               </div>
 

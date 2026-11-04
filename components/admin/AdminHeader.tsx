@@ -104,7 +104,7 @@ export default function AdminHeader({
               {user?.name || "Administrator"}
             </p>
             <p className="text-[10px] text-[#5F6871] leading-none mt-1">
-              {user?.role || "Super Admin"}
+              {user?.role || "Admin"}
             </p>
           </div>
         </div>

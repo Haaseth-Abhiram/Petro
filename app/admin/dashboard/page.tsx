@@ -351,35 +351,102 @@ export default function AdminDashboardPage() {
         </div>
       </div>
 
-      {/* Role-Specific Bottom Section */}
-      {currentUser?.role === "Super Admin" ? (
-        /* Security & Audit Logs Section (Super Admin Only) */
-        <div className="bg-white rounded-xl border border-[#D8DDE2] shadow-sm overflow-hidden">
-          <div className="p-5 border-b border-[#D8DDE2] flex items-center justify-between">
-            <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-[#17191C] text-white flex items-center justify-center">
-                <Clock className="w-4 h-4" />
-              </div>
-              <div>
-                <h3 className="text-sm font-bold text-[#17191C]">
-                  Security Audit Log (Super Admin)
-                </h3>
-                <p className="text-[11px] text-[#5F6871]">
-                  Live chronological record of administrative operations
-                </p>
-              </div>
-            </div>
-            <Link
-              href="/admin/audit-logs"
-              className="text-xs font-bold text-[#FF4B32] hover:text-[#E03820] flex items-center gap-1"
-            >
-              <span>View Full Log</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
-          </div>
+      {/* Operations Quick Actions */}
+      <div className="bg-white rounded-xl border border-[#D8DDE2] shadow-sm p-6">
+        <h3 className="text-sm font-bold text-[#17191C] mb-1">
+          Operations Quick Actions
+        </h3>
+        <p className="text-xs text-[#5F6871] mb-5">
+          Quick links for managing your daily product catalogue, client requests, and content.
+        </p>
 
-          <div className="divide-y divide-[#D8DDE2]">
-            {recentLogs.map((log: any) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <Link
+            href="/admin/products"
+            className="p-4 rounded-xl bg-[#F5F6F7] hover:bg-[#17191C] text-[#17191C] hover:text-white transition-all group border border-[#D8DDE2]"
+          >
+            <div className="w-8 h-8 rounded-lg bg-[#FF4B32] text-white flex items-center justify-center mb-3">
+              <Plus className="w-4 h-4" />
+            </div>
+            <p className="text-xs font-bold">Add Product</p>
+            <p className="text-[11px] text-[#5F6871] group-hover:text-white/70 mt-0.5">
+              Create new chemical or valve spec
+            </p>
+          </Link>
+
+          <Link
+            href="/admin/quote-requests"
+            className="p-4 rounded-xl bg-[#F5F6F7] hover:bg-[#17191C] text-[#17191C] hover:text-white transition-all group border border-[#D8DDE2]"
+          >
+            <div className="w-8 h-8 rounded-lg bg-[#FF4B32] text-white flex items-center justify-center mb-3">
+              <FileSpreadsheet className="w-4 h-4" />
+            </div>
+            <p className="text-xs font-bold">Process RFQs</p>
+            <p className="text-[11px] text-[#5F6871] group-hover:text-white/70 mt-0.5">
+              Review line requests & quotes
+            </p>
+          </Link>
+
+          <Link
+            href="/admin/enquiries"
+            className="p-4 rounded-xl bg-[#F5F6F7] hover:bg-[#17191C] text-[#17191C] hover:text-white transition-all group border border-[#D8DDE2]"
+          >
+            <div className="w-8 h-8 rounded-lg bg-[#FF4B32] text-white flex items-center justify-center mb-3">
+              <Mail className="w-4 h-4" />
+            </div>
+            <p className="text-xs font-bold">View Inquiries</p>
+            <p className="text-[11px] text-[#5F6871] group-hover:text-white/70 mt-0.5">
+              Respond to customer queries
+            </p>
+          </Link>
+
+          <Link
+            href="/admin/content"
+            className="p-4 rounded-xl bg-[#F5F6F7] hover:bg-[#17191C] text-[#17191C] hover:text-white transition-all group border border-[#D8DDE2]"
+          >
+            <div className="w-8 h-8 rounded-lg bg-[#FF4B32] text-white flex items-center justify-center mb-3">
+              <FileEdit className="w-4 h-4" />
+            </div>
+            <p className="text-xs font-bold">Edit Website Content</p>
+            <p className="text-[11px] text-[#5F6871] group-hover:text-white/70 mt-0.5">
+              Update headlines & phone/email
+            </p>
+          </Link>
+        </div>
+      </div>
+
+      {/* Security Audit Log Section */}
+      <div className="bg-white rounded-xl border border-[#D8DDE2] shadow-sm overflow-hidden">
+        <div className="p-5 border-b border-[#D8DDE2] flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-lg bg-[#17191C] text-white flex items-center justify-center">
+              <Clock className="w-4 h-4" />
+            </div>
+            <div>
+              <h3 className="text-sm font-bold text-[#17191C]">
+                Security Audit Log
+              </h3>
+              <p className="text-[11px] text-[#5F6871]">
+                Live chronological record of administrative operations
+              </p>
+            </div>
+          </div>
+          <Link
+            href="/admin/audit-logs"
+            className="text-xs font-bold text-[#FF4B32] hover:text-[#E03820] flex items-center gap-1"
+          >
+            <span>View Full Log</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </Link>
+        </div>
+
+        <div className="divide-y divide-[#D8DDE2]">
+          {recentLogs.length === 0 ? (
+            <div className="p-8 text-center text-xs text-[#5F6871]">
+              No audit logs recorded yet.
+            </div>
+          ) : (
+            recentLogs.map((log: any) => (
               <div
                 key={log.id}
                 className="p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs"
@@ -399,74 +466,10 @@ export default function AdminDashboardPage() {
                   {new Date(log.created_at).toLocaleString()}
                 </span>
               </div>
-            ))}
-          </div>
+            ))
+          )}
         </div>
-      ) : (
-        /* Operations Quick Access (Admin Role) */
-        <div className="bg-white rounded-xl border border-[#D8DDE2] shadow-sm p-6">
-          <h3 className="text-sm font-bold text-[#17191C] mb-1">
-            Operations Quick Actions
-          </h3>
-          <p className="text-xs text-[#5F6871] mb-5">
-            Quick links for managing your daily product catalogue, client requests, and content.
-          </p>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <Link
-              href="/admin/products"
-              className="p-4 rounded-xl bg-[#F5F6F7] hover:bg-[#17191C] text-[#17191C] hover:text-white transition-all group border border-[#D8DDE2]"
-            >
-              <div className="w-8 h-8 rounded-lg bg-[#FF4B32] text-white flex items-center justify-center mb-3">
-                <Plus className="w-4 h-4" />
-              </div>
-              <p className="text-xs font-bold">Add Product</p>
-              <p className="text-[11px] text-[#5F6871] group-hover:text-white/70 mt-0.5">
-                Create new chemical or valve spec
-              </p>
-            </Link>
-
-            <Link
-              href="/admin/quote-requests"
-              className="p-4 rounded-xl bg-[#F5F6F7] hover:bg-[#17191C] text-[#17191C] hover:text-white transition-all group border border-[#D8DDE2]"
-            >
-              <div className="w-8 h-8 rounded-lg bg-[#FF4B32] text-white flex items-center justify-center mb-3">
-                <FileSpreadsheet className="w-4 h-4" />
-              </div>
-              <p className="text-xs font-bold">Process RFQs</p>
-              <p className="text-[11px] text-[#5F6871] group-hover:text-white/70 mt-0.5">
-                Review line requests & quotes
-              </p>
-            </Link>
-
-            <Link
-              href="/admin/enquiries"
-              className="p-4 rounded-xl bg-[#F5F6F7] hover:bg-[#17191C] text-[#17191C] hover:text-white transition-all group border border-[#D8DDE2]"
-            >
-              <div className="w-8 h-8 rounded-lg bg-[#FF4B32] text-white flex items-center justify-center mb-3">
-                <Mail className="w-4 h-4" />
-              </div>
-              <p className="text-xs font-bold">View Inquiries</p>
-              <p className="text-[11px] text-[#5F6871] group-hover:text-white/70 mt-0.5">
-                Respond to customer queries
-              </p>
-            </Link>
-
-            <Link
-              href="/admin/content"
-              className="p-4 rounded-xl bg-[#F5F6F7] hover:bg-[#17191C] text-[#17191C] hover:text-white transition-all group border border-[#D8DDE2]"
-            >
-              <div className="w-8 h-8 rounded-lg bg-[#FF4B32] text-white flex items-center justify-center mb-3">
-                <FileEdit className="w-4 h-4" />
-              </div>
-              <p className="text-xs font-bold">Edit Website Content</p>
-              <p className="text-[11px] text-[#5F6871] group-hover:text-white/70 mt-0.5">
-                Update headlines & phone/email
-              </p>
-            </Link>
-          </div>
-        </div>
-      )}
+      </div>
     </div>
   );
 }

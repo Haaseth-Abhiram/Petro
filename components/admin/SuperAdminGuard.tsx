@@ -33,17 +33,20 @@ export default function SuperAdminGuard({ children }: SuperAdminGuardProps) {
     );
   }
 
-  if (role !== "Super Admin") {
+  const normalizedRole = (role || "").toLowerCase();
+  const isAuthorized = normalizedRole === "admin" || normalizedRole === "super admin";
+
+  if (!isAuthorized) {
     return (
       <div className="max-w-xl mx-auto my-12 bg-white rounded-2xl p-8 border border-[#D8DDE2] shadow-sm text-center">
         <div className="w-14 h-14 rounded-2xl bg-[#FF4B32]/10 text-[#FF4B32] flex items-center justify-center mx-auto mb-4">
           <ShieldAlert className="w-7 h-7" />
         </div>
         <h2 className="text-xl font-extrabold text-[#17191C] mb-2">
-          Super Administrator Access Required
+          Administrator Access Required
         </h2>
         <p className="text-xs sm:text-sm text-[#5F6871] leading-relaxed mb-6">
-          Your current account role (<strong>{role || "Admin"}</strong>) has operational permissions for product and content management, but does not have permission to modify system security, administrative users, or audit logs.
+          Your current account role (<strong>{role || "Guest"}</strong>) does not have administrative permissions to modify system security, administrative users, or audit logs.
         </p>
         <Link
           href="/admin/dashboard"

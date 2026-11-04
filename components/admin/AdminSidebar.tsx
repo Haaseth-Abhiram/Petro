@@ -53,9 +53,7 @@ export default function AdminSidebar({
     window.location.href = "/login";
   };
 
-  const isSuperAdmin = user?.role === "Super Admin";
-
-  // Standard operational items visible to both Admin and Super Admin
+  // Operational items
   const operationalNavItems = [
     {
       label: "Dashboard",
@@ -106,8 +104,8 @@ export default function AdminSidebar({
     },
   ];
 
-  // System & Security controls strictly for Super Admin
-  const superAdminNavItems = [
+  // Administrative & Security controls
+  const adminNavItems = [
     {
       label: "Admin Users",
       href: "/admin/users",
@@ -172,7 +170,7 @@ export default function AdminSidebar({
               <div className="flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                 <p className="text-xs font-bold text-white truncate">
-                  {user?.name || (isSuperAdmin ? "Super Admin" : "Operations Admin")}
+                  {user?.name || "Administrator"}
                 </p>
               </div>
               <p className="text-[11px] text-[#929DA7] truncate">
@@ -182,13 +180,7 @@ export default function AdminSidebar({
           </div>
           <div className="mt-2.5 pt-2 border-t border-white/10 flex items-center justify-between text-[10px]">
             <span className="text-[#929DA7]">Role:</span>
-            <span
-              className={`font-semibold px-2 py-0.5 rounded ${
-                isSuperAdmin
-                  ? "bg-[#FF4B32]/20 text-[#FF4B32]"
-                  : "bg-white/10 text-white"
-              }`}
-            >
+            <span className="font-semibold px-2 py-0.5 rounded bg-[#FF4B32]/20 text-[#FF4B32]">
               {user?.role || "Admin"}
             </span>
           </div>
@@ -200,7 +192,7 @@ export default function AdminSidebar({
             Operational CMS
           </p>
 
-          {/* Operational links (Admin & Super Admin) */}
+          {/* Operational links */}
           {operationalNavItems.map((item) => {
             const Icon = item.icon;
             const isActive =
@@ -243,56 +235,53 @@ export default function AdminSidebar({
             );
           })}
 
-          {/* Super Admin ONLY section */}
-          {isSuperAdmin && (
-            <div className="pt-3 mt-3 border-t border-[#2A2E34]">
-              <div className="flex items-center gap-1.5 px-3 pb-1.5">
-                <Shield className="w-3 h-3 text-[#FF4B32]" />
-                <p className="text-[10px] font-bold uppercase tracking-wider text-[#FF4B32]">
-                  Super Admin Controls
-                </p>
-              </div>
-
-              {superAdminNavItems.map((item) => {
-                const Icon = item.icon;
-                const isActive =
-                  pathname === item.href || pathname.startsWith(item.href);
-
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    onClick={() => {
-                      if (window.innerWidth < 1024) onClose();
-                    }}
-                    className={`group flex items-center justify-between px-3.5 py-2.5 rounded-lg text-xs font-semibold transition-all ${
-                      isActive
-                        ? "bg-[#FF4B32] text-white shadow-sm"
-                        : "text-[#929DA7] hover:bg-white/5 hover:text-white"
-                    }`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <Icon
-                        className={`w-4 h-4 shrink-0 transition-colors ${
-                          isActive
-                            ? "text-white"
-                            : "text-[#929DA7] group-hover:text-white"
-                        }`}
-                      />
-                      <span>{item.label}</span>
-                    </div>
-                  </Link>
-                );
-              })}
+          {/* Admin Management & Security section */}
+          <div className="pt-3 mt-3 border-t border-[#2A2E34]">
+            <div className="flex items-center gap-1.5 px-3 pb-1.5">
+              <Shield className="w-3 h-3 text-[#FF4B32]" />
+              <p className="text-[10px] font-bold uppercase tracking-wider text-[#FF4B32]">
+                Admin Controls
+              </p>
             </div>
-          )}
+
+            {adminNavItems.map((item) => {
+              const Icon = item.icon;
+              const isActive =
+                pathname === item.href || pathname.startsWith(item.href);
+
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => {
+                    if (window.innerWidth < 1024) onClose();
+                  }}
+                  className={`group flex items-center justify-between px-3.5 py-2.5 rounded-lg text-xs font-semibold transition-all ${
+                    isActive
+                      ? "bg-[#FF4B32] text-white shadow-sm"
+                      : "text-[#929DA7] hover:bg-white/5 hover:text-white"
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <Icon
+                      className={`w-4 h-4 shrink-0 transition-colors ${
+                        isActive
+                          ? "text-white"
+                          : "text-[#929DA7] group-hover:text-white"
+                      }`}
+                    />
+                    <span>{item.label}</span>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
         </nav>
 
         {/* Footer Actions */}
         <div className="p-3 border-t border-[#2A2E34] space-y-1 shrink-0 bg-[#121416]">
           <Link
             href="/"
-            target="_blank"
             className="flex items-center justify-between px-3.5 py-2 rounded-lg text-xs font-medium text-[#929DA7] hover:text-white hover:bg-white/5 transition-colors"
           >
             <div className="flex items-center gap-2.5">
