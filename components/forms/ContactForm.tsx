@@ -192,6 +192,7 @@ export default function ContactForm({ bare = false }: { bare?: boolean } = {}) {
               <option value="Water Treatment Plants (RO/DM/STP)">Water Treatment Plants (RO / DM / STP)</option>
               <option value="Project Procurement & Sourcing">Comprehensive Project Sourcing</option>
               <option value="General Technical Inquiry">General Technical Inquiry</option>
+              <option value="Website Feedback & Suggestions">Website Feedback &amp; Suggestions</option>
             </select>
           </div>
 

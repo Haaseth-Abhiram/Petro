@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { X, CheckCircle2, Send, AlertCircle, Lightbulb } from "lucide-react";
+import { X, CheckCircle2, Send, AlertCircle, Lightbulb, FileSpreadsheet } from "lucide-react";
 
 interface SolutionLinkProps {
   title?: string;
@@ -14,7 +14,7 @@ interface SolutionLinkProps {
   category?: string;
 }
 
-/** Opens a pop-up with suggested solutions for a product group and a short enquiry form, instead of navigating away. */
+/** Opens a pop-up for technical quotation & specification enquiry that directly logs into RFQ in the Admin Portal. */
 export default function SolutionLink({
   title,
   item,
@@ -22,12 +22,12 @@ export default function SolutionLink({
   img,
   className,
   children,
-  category,
+  category = "Instrumentation & Valves",
 }: SolutionLinkProps) {
-  const displayTitle = title || item || "Solution Enquiry";
+  const displayTitle = title || item || "Instrumentation Specification";
   const [open, setOpen] = useState(false);
   const [picked, setPicked] = useState<string[]>([]);
-  const [f, setF] = useState({ name: "", email: "", phone: "", note: "" });
+  const [f, setF] = useState({ name: "", email: "", phone: "", company: "", note: "" });
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState<{ ok: boolean; t: string } | null>(null);
 
@@ -41,31 +41,39 @@ export default function SolutionLink({
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (f.name.trim().length < 2 || !/^\S+@\S+\.\S+$/.test(f.email)) {
-      setMsg({ ok: false, t: "Please enter your name and a valid email." });
+      setMsg({ ok: false, t: "Please enter your name and a valid business email." });
       return;
     }
     setBusy(true);
     setMsg(null);
     try {
-      const res = await fetch("/api/contact", {
+      // Submits directly to RFQ API so it immediately displays in Quote Requests (RFQ) in the Admin Portal!
+      const res = await fetch("/api/rfq", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          fullName: f.name,
-          companyName: "",
-          email: f.email,
-          phone: f.phone,
-          division: category || displayTitle,
-          subject: `Solution enquiry - ${displayTitle}`,
-          message: `Group: ${displayTitle}\nInterested in: ${
-            picked.length ? picked.join(", ") : "general enquiry"
-          }\n\n${f.note || "No additional notes."}`,
+          fullName: f.name.trim(),
+          companyName: f.company.trim() || "Direct Client / Individual",
+          email: f.email.trim(),
+          phone: f.phone.trim(),
+          industry: "Instrumentation & Process Control",
+          productCategory: category || "Instrumentation & Valves",
+          productName: displayTitle,
+          quantity: "1",
+          unitOfMeasurement: "Set / Lot",
+          technicalSpecifications: `Product: ${displayTitle}\nSelected Items / Configurations: ${
+            picked.length ? picked.join(", ") : "General Product Range"
+          }\n\nClient Technical Notes:\n${f.note || "No specific custom notes provided."}`,
+          additionalComments: f.note || "",
         }),
       });
       const out = await res.json();
-      if (!res.ok || !out.success) throw new Error(out.message || "Could not send");
-      setMsg({ ok: true, t: "Thank you — our engineers will reply within one business day." });
-      setF({ name: "", email: "", phone: "", note: "" });
+      if (!res.ok || !out.success) throw new Error(out.message || "Could not submit quotation request.");
+      setMsg({
+        ok: true,
+        t: "Thank you — your quotation request (RFQ) has been logged in our engineering desk. We will revert with pricing and datasheets within 24 hours.",
+      });
+      setF({ name: "", email: "", phone: "", company: "", note: "" });
       setPicked([]);
     } catch (err: any) {
       setMsg({ ok: false, t: err.message || "Something went wrong. Please try again." });
@@ -82,7 +90,7 @@ export default function SolutionLink({
       <button type="button" onClick={() => setOpen(true)} className={className}>
         {children || (
           <span className="inline-flex items-center gap-1">
-            Get suggestions &amp; quote &rarr;
+            Request Quote &amp; Specification &rarr;
           </span>
         )}
       </button>
@@ -104,8 +112,8 @@ export default function SolutionLink({
               <div className="absolute inset-0 bg-gradient-to-t from-[#17191C]/90 to-[#FF4B32]/40" />
               <div className="absolute left-6 bottom-4 right-14 text-white">
                 <span className="inline-flex items-center gap-1.5 text-[10.5px] font-extrabold tracking-[0.2em] text-[#FFA028]">
-                  <Lightbulb className="w-3.5 h-3.5" />
-                  SUGGESTED SOLUTIONS
+                  <FileSpreadsheet className="w-3.5 h-3.5" />
+                  TECHNICAL QUOTE ENQUIRY (RFQ)
                 </span>
                 <h3 className="text-[1.3rem] font-black leading-tight !text-white">{displayTitle}</h3>
               </div>
@@ -122,7 +130,7 @@ export default function SolutionLink({
               {items.length > 0 && (
                 <>
                   <p className="text-[12.5px] font-bold text-[#17191C] mb-2">
-                    Select what you need (optional):
+                    Select required configurations (optional):
                   </p>
                   <div className="flex flex-wrap gap-2 mb-5">
                     {items.map((i) => (
@@ -148,8 +156,8 @@ export default function SolutionLink({
               )}
               {msg?.ok ? (
                 <div className="rounded-xl bg-green-50 border border-green-200 text-green-900 p-4 text-[13.5px] flex gap-2">
-                  <CheckCircle2 className="w-5 h-5 shrink-0" />
-                  {msg.t}
+                  <CheckCircle2 className="w-5 h-5 shrink-0 text-emerald-600" />
+                  <span>{msg.t}</span>
                 </div>
               ) : (
                 <form onSubmit={submit} className="space-y-3">
@@ -170,15 +178,23 @@ export default function SolutionLink({
                       className={inp}
                     />
                   </div>
-                  <input
-                    placeholder="Phone number"
-                    value={f.phone}
-                    onChange={(e) => setF({ ...f, phone: e.target.value })}
-                    className={inp}
-                  />
+                  <div className="grid sm:grid-cols-2 gap-3">
+                    <input
+                      placeholder="Company / Organization"
+                      value={f.company}
+                      onChange={(e) => setF({ ...f, company: e.target.value })}
+                      className={inp}
+                    />
+                    <input
+                      placeholder="Phone number"
+                      value={f.phone}
+                      onChange={(e) => setF({ ...f, phone: e.target.value })}
+                      className={inp}
+                    />
+                  </div>
                   <textarea
                     rows={2}
-                    placeholder="Specific requirements, capacity, or specifications..."
+                    placeholder="Sizes, ratings, pressure, or delivery requirements..."
                     value={f.note}
                     onChange={(e) => setF({ ...f, note: e.target.value })}
                     className={inp}
@@ -192,10 +208,10 @@ export default function SolutionLink({
                   <button
                     type="submit"
                     disabled={busy}
-                    className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-[#FF4B32] hover:bg-[#17191C] text-white text-sm font-extrabold py-3 transition-colors disabled:opacity-50"
+                    className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-[#FF4B32] hover:bg-[#17191C] text-white text-sm font-extrabold py-3 transition-colors disabled:opacity-50 shadow-md shadow-[#FF4B32]/20"
                   >
                     <Send className="w-4 h-4" />
-                    {busy ? "Submitting…" : "Request Solution Guidance & Quote"}
+                    {busy ? "Submitting RFQ…" : "Submit Quotation Request (RFQ)"}
                   </button>
                 </form>
               )}
