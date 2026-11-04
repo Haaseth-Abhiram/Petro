@@ -14,14 +14,11 @@ import {
   FileText,
   Flame,
   Building2,
-  Users,
   Settings,
-  Clock,
   ExternalLink,
   LogOut,
   X,
   ChevronRight,
-  Shield,
   Briefcase,
   UserCheck,
   BarChart3,
@@ -137,25 +134,6 @@ export default function AdminSidebar({
       label: "Recruitment Settings",
       href: "/admin/careers/settings",
       icon: Settings,
-    },
-  ];
-
-  // Administrative & Security controls
-  const adminNavItems = [
-    {
-      label: "Admin Users",
-      href: "/admin/users",
-      icon: Users,
-    },
-    {
-      label: "Company Settings",
-      href: "/admin/settings",
-      icon: Settings,
-    },
-    {
-      label: "Audit Logs",
-      href: "/admin/audit-logs",
-      icon: Clock,
     },
   ];
 
@@ -328,48 +306,6 @@ export default function AdminSidebar({
                       {item.badge}
                     </span>
                   )}
-                </Link>
-              );
-            })}
-          </div>
-
-          {/* Admin Management & Security section */}
-          <div className="pt-3 mt-3 border-t border-[#2A2E34]">
-            <div className="flex items-center gap-1.5 px-3 pb-1.5">
-              <Shield className="w-3 h-3 text-[#FFA028]" />
-              <p className="text-[10px] font-bold uppercase tracking-wider text-[#FFA028]">
-                Admin Controls
-              </p>
-            </div>
-
-            {adminNavItems.map((item) => {
-              const Icon = item.icon;
-              const isActive =
-                pathname === item.href || pathname.startsWith(item.href);
-
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => {
-                    if (window.innerWidth < 1024) onClose();
-                  }}
-                  className={`group flex items-center justify-between px-3.5 py-2.5 rounded-lg text-xs font-semibold transition-all ${
-                    isActive
-                      ? "bg-[#FF4B32] text-white shadow-sm"
-                      : "text-[#929DA7] hover:bg-white/5 hover:text-white"
-                  }`}
-                >
-                  <div className="flex items-center gap-3">
-                    <Icon
-                      className={`w-4 h-4 shrink-0 transition-colors ${
-                        isActive
-                          ? "text-white"
-                          : "text-[#929DA7] group-hover:text-white"
-                      }`}
-                    />
-                    <span>{item.label}</span>
-                  </div>
                 </Link>
               );
             })}
