@@ -21,6 +21,7 @@ import {
   XCircle,
   Calendar,
   FolderOpen,
+  Settings,
 } from "lucide-react";
 
 interface CareersStatsData {
@@ -431,12 +432,12 @@ export default function CareersDashboardPage() {
                 <span className="text-[10px] text-[#929DA7]">Manage departments</span>
               </Link>
               <Link
-                href="/admin/careers/applications?tab=resumes"
-                className="flex flex-col p-3 rounded-xl border border-[#929DA7]/20 hover:border-[#FFA028] hover:bg-[#F5F6F7]/50 transition-all text-left"
+                href="/admin/careers/settings"
+                className="flex flex-col p-3 rounded-xl border border-[#929DA7]/20 hover:border-[#FF4B32] hover:bg-[#F5F6F7]/50 transition-all text-left"
               >
-                <FolderOpen className="w-4 h-4 text-[#FFA028] mb-1.5" />
-                <span className="text-xs font-bold text-[#17191C]">Resume Folder</span>
-                <span className="text-[10px] text-[#929DA7]">Preview &amp; download CVs</span>
+                <Settings className="w-4 h-4 text-[#FFA028] mb-1.5" />
+                <span className="text-xs font-bold text-[#17191C]">Recruitment Settings</span>
+                <span className="text-[10px] text-[#929DA7]">Configure application flows</span>
               </Link>
             </div>
 
