@@ -3,6 +3,11 @@
 import WorkspaceLoader from "@/components/admin/WorkspaceLoader";
 import PetroLogo from "@/components/common/PetroLogo";
 import Dropdown from "@/components/admin/Dropdown";
+import {
+  buildRfqEmailContent,
+  getMailtoLink,
+  getGmailComposeLink,
+} from "@/lib/email-compose";
 
 import React, { useState, useEffect } from "react";
 import {
@@ -28,6 +33,7 @@ import {
   CalendarDays,
   Package,
   Factory,
+  ExternalLink,
 } from "lucide-react";
 
 const RFQ_STATUS_STEPS = [
@@ -330,7 +336,20 @@ export default function AdminQuoteRequestsPage() {
                       <span className="inline-flex items-center gap-1 text-[12px] text-[#A1A1AA]" title={dateSafe(rfq.created_at)}><Clock className="h-3.5 w-3.5" />{ago(rfq.created_at)}</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <a href={`mailto:${rfq.email}?subject=Petro Engineering Quotation - ${rfq.product_name}`} onClick={(e) => e.stopPropagation()} className="inline-flex items-center gap-1.5 rounded-xl border border-[#E4E4E7] bg-white px-3 py-2 text-[12px] font-bold text-[#17191C] transition-colors hover:border-[#C80808]/40 hover:text-[#C80808]"><Reply className="h-3.5 w-3.5" />Reply</a>
+                      {(() => {
+                        const { to, subject: emailSub, body } = buildRfqEmailContent(rfq);
+                        const mailto = getMailtoLink(to, emailSub, body);
+                        return (
+                          <a
+                            href={mailto}
+                            onClick={(e) => e.stopPropagation()}
+                            title="Compose quotation reply email"
+                            className="inline-flex items-center gap-1.5 rounded-xl border border-[#E4E4E7] bg-white px-3 py-2 text-[12px] font-bold text-[#17191C] transition-colors hover:border-[#C80808]/40 hover:text-[#C80808]"
+                          >
+                            <Reply className="h-3.5 w-3.5" />Reply
+                          </a>
+                        );
+                      })()}
                       <span className="inline-flex items-center gap-1 rounded-xl bg-[#17191C] px-3 py-2 text-[12px] font-bold text-white transition-colors group-hover:bg-[#C80808]">Open<ChevronRight className="h-3.5 w-3.5" /></span>
                     </div>
                   </div>
@@ -343,7 +362,9 @@ export default function AdminQuoteRequestsPage() {
 
       {/* Detail modal */}
       {selectedRfq && (() => {
-        const mailto = `mailto:${selectedRfq.email}?subject=Petro Engineering Quotation - ${selectedRfq.product_name}`;
+        const { to, subject: emailSub, body: emailBody } = buildRfqEmailContent(selectedRfq);
+        const mailto = getMailtoLink(to, emailSub, emailBody);
+        const gmailLink = getGmailComposeLink(to, emailSub, emailBody);
         return (
           <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-[#14161A]/70 p-3 backdrop-blur-sm sm:items-center sm:p-5" onClick={() => setSelectedRfq(null)}>
             <div role="dialog" aria-modal="true" onClick={(e) => e.stopPropagation()} className="relative my-4 flex max-h-[94vh] w-full max-w-5xl flex-col overflow-hidden rounded-[26px] bg-white shadow-[0_40px_120px_rgba(0,0,0,0.5)] animate-[routepop2_.35s_cubic-bezier(.2,.9,.25,1.1)_both]">
@@ -369,10 +390,13 @@ export default function AdminQuoteRequestsPage() {
                       <div className="rounded-2xl border border-[#E4E4E7] bg-white p-4">
                         <div className="flex items-start justify-between gap-3">
                           <div className="min-w-0"><p className="break-words text-[15px] font-extrabold leading-snug text-[#17191C]">{selectedRfq.company_name}</p><p className="mt-0.5 flex items-center gap-1.5 text-[12.5px] text-[#71717A]"><Building2 className="h-3.5 w-3.5" />{selectedRfq.full_name} · {selectedRfq.industry || "General"}</p></div>
-                          <a href={mailto} className="inline-flex shrink-0 items-center gap-1.5 rounded-xl bg-[#17191C] px-3.5 py-2 text-[12.5px] font-bold text-white transition-colors hover:bg-[#C80808]"><Reply className="h-4 w-4" />Reply</a>
+                          <div className="flex items-center gap-2">
+                            <a href={mailto} className="inline-flex shrink-0 items-center gap-1.5 rounded-xl bg-[#17191C] px-3.5 py-2 text-[12.5px] font-bold text-white transition-colors hover:bg-[#C80808]" title="Compose quotation in default email app"><Reply className="h-4 w-4" />Reply</a>
+                            <a href={gmailLink} target="_blank" rel="noopener noreferrer" className="inline-flex shrink-0 items-center gap-1.5 rounded-xl border border-[#E4E4E7] bg-white px-3 py-2 text-[12px] font-bold text-[#17191C] transition-colors hover:border-[#C80808] hover:text-[#C80808]" title="Compose quotation in Gmail web app"><ExternalLink className="h-3.5 w-3.5" />Gmail</a>
+                          </div>
                         </div>
                         <div className="mt-3 grid gap-2 sm:grid-cols-2">
-                          <a href={mailto} className="flex min-w-0 items-center gap-2.5 rounded-xl bg-[#F7F7F8] px-3 py-2 hover:bg-[#F0F0F2]"><span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#C80808] text-white"><Mail className="h-4 w-4" /></span><span className="min-w-0"><span className="block text-[10px] font-bold uppercase tracking-wider text-[#A1A1AA]">Email</span><span className="block truncate text-[12.5px] font-semibold text-[#17191C]" title={selectedRfq.email}>{selectedRfq.email}</span></span></a>
+                          <a href={mailto} title="Click to compose quotation email" className="flex min-w-0 items-center gap-2.5 rounded-xl bg-[#F7F7F8] px-3 py-2 hover:bg-[#F0F0F2]"><span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#C80808] text-white"><Mail className="h-4 w-4" /></span><span className="min-w-0"><span className="block text-[10px] font-bold uppercase tracking-wider text-[#A1A1AA]">Email (Click to Compose)</span><span className="block truncate text-[12.5px] font-semibold text-[#17191C]" title={selectedRfq.email}>{selectedRfq.email}</span></span></a>
                           {selectedRfq.phone ? <a href={`tel:${selectedRfq.phone}`} className="flex min-w-0 items-center gap-2.5 rounded-xl bg-[#F7F7F8] px-3 py-2 hover:bg-[#F0F0F2]"><span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#E0A21A] text-[#17191C]"><Phone className="h-4 w-4" /></span><span className="min-w-0"><span className="block text-[10px] font-bold uppercase tracking-wider text-[#A1A1AA]">Phone</span><span className="block truncate text-[12.5px] font-semibold text-[#17191C]">{selectedRfq.phone}</span></span></a> : <div className="flex items-center gap-2.5 rounded-xl bg-[#F7F7F8] px-3 py-2 text-[12.5px] text-[#A1A1AA]"><span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#E4E4E7]"><Phone className="h-4 w-4" /></span>No phone provided</div>}
                         </div>
                       </div>

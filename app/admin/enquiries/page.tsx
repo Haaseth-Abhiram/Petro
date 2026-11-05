@@ -2,6 +2,11 @@
 
 import WorkspaceLoader from "@/components/admin/WorkspaceLoader";
 import PetroLogo from "@/components/common/PetroLogo";
+import {
+  buildEnquiryEmailContent,
+  getMailtoLink,
+  getGmailComposeLink,
+} from "@/lib/email-compose";
 
 import React, { useState, useEffect } from "react";
 import {
@@ -301,7 +306,20 @@ export default function AdminEnquiriesPage() {
                       <span className="inline-flex items-center gap-1 text-[12px] text-[#A1A1AA]" title={formatDateSafe(enq.created_at)}><Clock className="h-3.5 w-3.5" />{ago(enq.created_at)}</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <a href={`mailto:${enq.email}?subject=RE: ${enq.subject}`} onClick={(e) => e.stopPropagation()} className="inline-flex items-center gap-1.5 rounded-xl border border-[#E4E4E7] bg-white px-3 py-2 text-[12px] font-bold text-[#17191C] transition-colors hover:border-[#C80808]/40 hover:text-[#C80808]"><Reply className="h-3.5 w-3.5" />Reply</a>
+                      {(() => {
+                        const { to, subject: emailSub, body } = buildEnquiryEmailContent(enq);
+                        const mailto = getMailtoLink(to, emailSub, body);
+                        return (
+                          <a
+                            href={mailto}
+                            onClick={(e) => e.stopPropagation()}
+                            title="Compose reply email"
+                            className="inline-flex items-center gap-1.5 rounded-xl border border-[#E4E4E7] bg-white px-3 py-2 text-[12px] font-bold text-[#17191C] transition-colors hover:border-[#C80808]/40 hover:text-[#C80808]"
+                          >
+                            <Reply className="h-3.5 w-3.5" />Reply
+                          </a>
+                        );
+                      })()}
                       <span className="inline-flex items-center gap-1 rounded-xl bg-[#17191C] px-3 py-2 text-[12px] font-bold text-white transition-colors group-hover:bg-[#C80808]">Open<ChevronRight className="h-3.5 w-3.5" /></span>
                     </div>
                   </div>
@@ -315,7 +333,9 @@ export default function AdminEnquiriesPage() {
       {/* Detail modal */}
       {selectedEnquiry && (() => {
         const sug = isSuggestionItem(selectedEnquiry);
-        const mailto = `mailto:${selectedEnquiry.email}?subject=RE: ${selectedEnquiry.subject}`;
+        const { to, subject: emailSub, body: emailBody } = buildEnquiryEmailContent(selectedEnquiry);
+        const mailto = getMailtoLink(to, emailSub, emailBody);
+        const gmailLink = getGmailComposeLink(to, emailSub, emailBody);
         const curIdx = ENQUIRY_STATUS_STEPS.findIndex((x) => x.value === statusInput);
         const savedIdx = ENQUIRY_STATUS_STEPS.findIndex((x) => x.value === selectedEnquiry.status);
         return (
@@ -345,10 +365,13 @@ export default function AdminEnquiriesPage() {
                       <div className="rounded-2xl border border-[#E4E4E7] bg-white p-4">
                         <div className="flex items-start justify-between gap-3">
                           <div className="min-w-0"><p className="break-words text-[15px] font-extrabold leading-snug text-[#17191C]">{selectedEnquiry.full_name}</p><p className="mt-0.5 flex items-center gap-1.5 text-[12.5px] text-[#71717A]"><Building2 className="h-3.5 w-3.5" />{selectedEnquiry.company_name || "Direct website submission"}</p></div>
-                          <a href={mailto} className="inline-flex shrink-0 items-center gap-1.5 rounded-xl bg-[#17191C] px-3.5 py-2 text-[12.5px] font-bold text-white transition-colors hover:bg-[#C80808]"><Reply className="h-4 w-4" />Reply</a>
+                          <div className="flex items-center gap-2">
+                            <a href={mailto} className="inline-flex shrink-0 items-center gap-1.5 rounded-xl bg-[#17191C] px-3.5 py-2 text-[12.5px] font-bold text-white transition-colors hover:bg-[#C80808]" title="Compose reply in your default email client"><Reply className="h-4 w-4" />Reply</a>
+                            <a href={gmailLink} target="_blank" rel="noopener noreferrer" className="inline-flex shrink-0 items-center gap-1.5 rounded-xl border border-[#E4E4E7] bg-white px-3 py-2 text-[12px] font-bold text-[#17191C] transition-colors hover:border-[#C80808] hover:text-[#C80808]" title="Compose reply in Gmail web app"><ExternalLink className="h-3.5 w-3.5" />Gmail</a>
+                          </div>
                         </div>
                         <div className="mt-3 grid gap-2 sm:grid-cols-2">
-                          <a href={mailto} className="flex min-w-0 items-center gap-2.5 rounded-xl bg-[#F7F7F8] px-3 py-2 transition-colors hover:bg-[#F0F0F2]"><span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#C80808] text-white"><Mail className="h-4 w-4" /></span><span className="min-w-0"><span className="block text-[10px] font-bold uppercase tracking-wider text-[#A1A1AA]">Email</span><span className="block truncate text-[12.5px] font-semibold text-[#17191C]" title={selectedEnquiry.email}>{selectedEnquiry.email}</span></span></a>
+                          <a href={mailto} title="Click to compose email" className="flex min-w-0 items-center gap-2.5 rounded-xl bg-[#F7F7F8] px-3 py-2 transition-colors hover:bg-[#F0F0F2]"><span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#C80808] text-white"><Mail className="h-4 w-4" /></span><span className="min-w-0"><span className="block text-[10px] font-bold uppercase tracking-wider text-[#A1A1AA]">Email (Click to Compose)</span><span className="block truncate text-[12.5px] font-semibold text-[#17191C]" title={selectedEnquiry.email}>{selectedEnquiry.email}</span></span></a>
                           {selectedEnquiry.phone ? (
                             <a href={`tel:${selectedEnquiry.phone}`} className="flex min-w-0 items-center gap-2.5 rounded-xl bg-[#F7F7F8] px-3 py-2 transition-colors hover:bg-[#F0F0F2]"><span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#E0A21A] text-[#17191C]"><Phone className="h-4 w-4" /></span><span className="min-w-0"><span className="block text-[10px] font-bold uppercase tracking-wider text-[#A1A1AA]">Phone</span><span className="block truncate text-[12.5px] font-semibold text-[#17191C]">{selectedEnquiry.phone}</span></span></a>
                           ) : (
