@@ -2,8 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
   Package,
@@ -18,36 +17,25 @@ import {
   ExternalLink,
   LogOut,
   X,
-  ChevronRight,
   Briefcase,
   UserCheck,
-  BarChart3,
+  type LucideIcon,
 } from "lucide-react";
+import PetroLogo from "@/components/common/PetroLogo";
 
 interface AdminSidebarProps {
   isOpen: boolean;
   onClose: () => void;
-  user?: {
-    email: string;
-    name?: string;
-    role?: string;
-  } | null;
+  user?: { email: string; name?: string; role?: string } | null;
   enquiriesBadge?: number;
   rfqBadge?: number;
   applicationsBadge?: number;
 }
 
-export default function AdminSidebar({
-  isOpen,
-  onClose,
-  user,
-  enquiriesBadge = 0,
-  rfqBadge = 0,
-  applicationsBadge = 0,
-}: AdminSidebarProps) {
-  const rawPathname = usePathname();
-  const pathname = rawPathname || "";
-  const router = useRouter();
+type Item = { label: string; href: string; icon: LucideIcon; badge?: number; exact?: boolean };
+
+export default function AdminSidebar({ isOpen, onClose, user, enquiriesBadge = 0, rfqBadge = 0, applicationsBadge = 0 }: AdminSidebarProps) {
+  const pathname = usePathname() || "";
 
   const handleLogout = async () => {
     try {
@@ -56,282 +44,97 @@ export default function AdminSidebar({
     window.location.href = "/login";
   };
 
-  // Operational items
-  const operationalNavItems = [
+  const groups: { title: string; items: Item[] }[] = [
+    { title: "Overview", items: [{ label: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard, exact: true }] },
     {
-      label: "Dashboard",
-      href: "/admin/dashboard",
-      icon: LayoutDashboard,
+      title: "Catalogue",
+      items: [
+        { label: "Products", href: "/admin/products", icon: Package },
+        { label: "Categories", href: "/admin/categories", icon: Layers },
+      ],
     },
     {
-      label: "Products",
-      href: "/admin/products",
-      icon: Package,
+      title: "Inbox",
+      items: [
+        { label: "Enquiries", href: "/admin/enquiries", icon: Mail, badge: enquiriesBadge },
+        { label: "Quote Requests", href: "/admin/quote-requests", icon: FileSpreadsheet, badge: rfqBadge },
+      ],
     },
     {
-      label: "Categories",
-      href: "/admin/categories",
-      icon: Layers,
-    },
-    {
-      label: "Enquiries",
-      href: "/admin/enquiries",
-      icon: Mail,
-      badge: enquiriesBadge > 0 ? enquiriesBadge : undefined,
-    },
-    {
-      label: "Quote Requests (RFQ)",
-      href: "/admin/quote-requests",
-      icon: FileSpreadsheet,
-      badge: rfqBadge > 0 ? rfqBadge : undefined,
-    },
-    {
-      label: "Website Content",
-      href: "/admin/content",
-      icon: FileEdit,
-    },
-    {
-      label: "Documents & Brochures",
-      href: "/admin/documents",
-      icon: FileText,
-    },
-    {
-      label: "Services",
-      href: "/admin/services",
-      icon: Flame,
-    },
-    {
-      label: "Industries",
-      href: "/admin/industries",
-      icon: Building2,
+      title: "Hiring",
+      items: [
+        { label: "Careers", href: "/admin/careers", icon: Briefcase, exact: true },
+        { label: "Jobs", href: "/admin/careers/jobs", icon: Briefcase },
+        { label: "Job Applications", href: "/admin/careers/applications", icon: UserCheck, badge: applicationsBadge },
+        { label: "Job Categories", href: "/admin/careers/categories", icon: Layers },
+        { label: "Settings", href: "/admin/careers/settings", icon: Settings },
+      ],
     },
   ];
 
-  // Careers & Recruitment items
-  const careersNavItems = [
-    {
-      label: "Careers Dashboard",
-      href: "/admin/careers",
-      icon: LayoutDashboard,
-    },
-    {
-      label: "Job Management",
-      href: "/admin/careers/jobs",
-      icon: Briefcase,
-    },
-    {
-      label: "Candidate Applications",
-      href: "/admin/careers/applications",
-      icon: UserCheck,
-      badge: applicationsBadge > 0 ? applicationsBadge : undefined,
-    },
-    {
-      label: "Job Categories",
-      href: "/admin/careers/categories",
-      icon: Layers,
-    },
-    {
-      label: "Recruitment Settings",
-      href: "/admin/careers/settings",
-      icon: Settings,
-    },
-  ];
+  const initial = (user?.name || user?.email || "A").charAt(0).toUpperCase();
 
   return (
     <>
-      {/* Mobile Backdrop */}
-      {isOpen && (
-        <div
-          className="fixed inset-0 bg-black/60 z-40 lg:hidden backdrop-blur-sm"
-          onClick={onClose}
-        />
-      )}
+      {isOpen && <div className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm lg:hidden" onClick={onClose} />}
 
-      {/* Sidebar Container */}
-      <aside
-        className={`fixed top-0 bottom-0 left-0 z-50 w-72 bg-[#17191C] text-white flex flex-col border-r border-[#2A2E34] transition-transform duration-200 ease-in-out lg:translate-x-0 ${
-          isOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
-      >
-        {/* Brand Header */}
-        <div className="h-16 px-6 flex items-center justify-between border-b border-[#2A2E34] shrink-0">
-          <Link href="/admin/dashboard" className="flex items-center gap-2">
-            <Image
-              src="/assets/img/logo.png"
-              alt="Petro Engineering Logo"
-              width={160}
-              height={32}
-              className="h-7 w-auto object-contain brightness-0 invert"
-              priority
-            />
-          </Link>
-          <button
-            onClick={onClose}
-            className="lg:hidden p-1.5 text-[#929DA7] hover:text-white rounded-md"
-            aria-label="Close sidebar"
-          >
-            <X className="w-5 h-5" />
-          </button>
+      <aside className={`fixed bottom-0 left-0 top-0 z-50 flex w-[17.5rem] flex-col bg-gradient-to-b from-[#1E1013] via-[#15171B] to-[#0E1013] text-white transition-transform duration-200 ease-in-out lg:translate-x-0 ${isOpen ? "translate-x-0" : "-translate-x-full"}`}>
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-64 bg-[radial-gradient(ellipse_at_top_left,rgba(200,8,8,0.35),transparent_70%)]" />
+        <div className="pointer-events-none absolute -bottom-24 -right-24 h-72 w-72 rounded-full bg-[#E0A21A]/10 blur-3xl" />
+
+        {/* Brand — large, clearly visible logo */}
+        <div className="relative shrink-0 px-4 pb-3 pt-5">
+          <div className="flex items-start justify-between">
+            <Link href="/admin/dashboard" className="block w-[228px] max-w-full drop-shadow-[0_6px_18px_rgba(200,8,8,0.35)]" aria-label="Petro Engineering admin">
+              <PetroLogo variant="dark" width="100%" />
+            </Link>
+            <button onClick={onClose} className="rounded-md p-1.5 text-white/60 hover:text-white lg:hidden" aria-label="Close sidebar"><X className="h-5 w-5" /></button>
+          </div>
+          <div className="mt-3 flex items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.24em] text-[#F2B93B]"><span className="h-px w-6 bg-gradient-to-r from-[#F2B93B] to-transparent" />Admin console</div>
         </div>
 
-        {/* User Card */}
-        <div className="p-4 mx-3 my-3 rounded-xl bg-white/5 border border-white/10 shrink-0">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-[#FF4B32] text-white font-black text-sm flex items-center justify-center shrink-0">
-              {user?.name ? user.name.charAt(0).toUpperCase() : "A"}
-            </div>
-            <div className="min-w-0 flex-1">
-              <div className="flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                <p className="text-xs font-bold text-white truncate">
-                  {user?.name || "Administrator"}
-                </p>
-              </div>
-              <p className="text-[11px] text-[#929DA7] truncate">
-                {user?.email || "admin@petroeng.in"}
-              </p>
-            </div>
-          </div>
-          <div className="mt-2.5 pt-2 border-t border-white/10 flex items-center justify-between text-[10px]">
-            <span className="text-[#929DA7]">Role:</span>
-            <span className="font-semibold px-2 py-0.5 rounded bg-[#FF4B32]/20 text-[#FF4B32]">
-              {user?.role || "Admin"}
-            </span>
-          </div>
-        </div>
-
-        {/* Navigation List */}
-        <nav className="flex-1 overflow-y-auto px-3 py-2 space-y-1 custom-scrollbar">
-          <p className="px-3 pb-1 text-[11px] font-bold uppercase tracking-wider text-[#929DA7]">
-            Operational CMS
-          </p>
-
-          {/* Operational links */}
-          {operationalNavItems.map((item) => {
-            const Icon = item.icon;
-            const isActive =
-              pathname === item.href ||
-              (item.href !== "/admin/dashboard" && pathname.startsWith(item.href));
-
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={() => {
-                  if (window.innerWidth < 1024) onClose();
-                }}
-                className={`group flex items-center justify-between px-3.5 py-2.5 rounded-lg text-xs font-semibold transition-all ${
-                  isActive
-                    ? "bg-[#FF4B32] text-white shadow-sm"
-                    : "text-[#929DA7] hover:bg-white/5 hover:text-white"
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  <Icon
-                    className={`w-4 h-4 shrink-0 transition-colors ${
-                      isActive ? "text-white" : "text-[#929DA7] group-hover:text-white"
-                    }`}
-                  />
-                  <span>{item.label}</span>
-                </div>
-                {item.badge !== undefined && (
-                  <span
-                    className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
-                      isActive
-                        ? "bg-white text-[#FF4B32]"
-                        : "bg-[#FF4B32] text-white"
-                    }`}
-                  >
-                    {item.badge}
-                  </span>
-                )}
-              </Link>
-            );
-          })}
-
-          {/* Careers & Recruitment section */}
-          <div className="pt-3 mt-3 border-t border-[#2A2E34]">
-            <div className="flex items-center justify-between px-3 pb-1.5">
-              <div className="flex items-center gap-1.5">
-                <Briefcase className="w-3.5 h-3.5 text-[#FF4B32]" />
-                <p className="text-[10px] font-bold uppercase tracking-wider text-[#FF4B32]">
-                  Careers &amp; Recruitment
-                </p>
-              </div>
-              {applicationsBadge > 0 && (
-                <span className="px-1.5 py-0.2 rounded-full text-[9px] font-extrabold bg-[#FF4B32] text-white">
-                  {applicationsBadge} NEW
-                </span>
-              )}
-            </div>
-
-            {careersNavItems.map((item) => {
-              const Icon = item.icon;
-              const isActive =
-                item.href === "/admin/careers"
-                  ? pathname === "/admin/careers"
-                  : pathname.startsWith(item.href);
-
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => {
-                    if (window.innerWidth < 1024) onClose();
-                  }}
-                  className={`group flex items-center justify-between px-3.5 py-2 rounded-lg text-xs font-semibold transition-all ${
-                    isActive
-                      ? "bg-[#FF4B32] text-white shadow-sm"
-                      : "text-[#929DA7] hover:bg-white/5 hover:text-white"
-                  }`}
-                >
-                  <div className="flex items-center gap-3">
-                    <Icon
-                      className={`w-4 h-4 shrink-0 transition-colors ${
-                        isActive
-                          ? "text-white"
-                          : "text-[#929DA7] group-hover:text-white"
-                      }`}
-                    />
-                    <span>{item.label}</span>
-                  </div>
-                  {item.badge !== undefined && (
-                    <span
-                      className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
-                        isActive
-                          ? "bg-white text-[#FF4B32]"
-                          : "bg-[#FF4B32] text-white"
-                      }`}
+        {/* Nav */}
+        <nav className="custom-scrollbar relative flex-1 space-y-3 overflow-y-auto px-3 pb-3 pt-1">
+          {groups.map((g) => (
+            <div key={g.title}>
+              <p className="mb-1 px-3 text-[10px] font-bold uppercase tracking-[0.18em] text-white/35">{g.title}</p>
+              <div className="space-y-0.5">
+                {g.items.map((item) => {
+                  const Icon = item.icon;
+                  const active = item.exact ? pathname === item.href : pathname === item.href || pathname.startsWith(item.href + "/");
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={() => { if (window.innerWidth < 1024) onClose(); }}
+                      className={`group flex items-center justify-between rounded-xl px-3.5 py-2.5 text-[13px] font-semibold transition-all ${active ? "bg-gradient-to-r from-[#D40E0E] to-[#E0A21A] text-white shadow-[0_10px_28px_-6px_rgba(224,100,20,0.65)]" : "text-white/65 hover:bg-white/[0.07] hover:text-white"}`}
                     >
-                      {item.badge}
-                    </span>
-                  )}
-                </Link>
-              );
-            })}
-          </div>
+                      <span className="flex items-center gap-3">
+                        <Icon className={`h-[17px] w-[17px] shrink-0 transition-colors ${active ? "text-white" : "text-white/50 group-hover:text-[#F2B93B]"}`} />
+                        {item.label}
+                      </span>
+                      {!!item.badge && item.badge > 0 && (
+                        <span className={`min-w-[20px] rounded-full px-1.5 py-0.5 text-center text-[10px] font-extrabold ${active ? "bg-white text-[#C80808]" : "bg-[#C80808] text-white"}`}>{item.badge}</span>
+                      )}
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
         </nav>
 
-        {/* Footer Actions */}
-        <div className="p-3 border-t border-[#2A2E34] space-y-1 shrink-0 bg-[#121416]">
-          <Link
-            href="/"
-            className="flex items-center justify-between px-3.5 py-2 rounded-lg text-xs font-medium text-[#929DA7] hover:text-white hover:bg-white/5 transition-colors"
-          >
-            <div className="flex items-center gap-2.5">
-              <ExternalLink className="w-4 h-4 text-[#929DA7]" />
-              <span>View Public Website</span>
+        {/* Profile */}
+        <div className="relative shrink-0 border-t border-white/10 px-4 py-4">
+          <div className="flex items-center gap-3">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#E0A21A] to-[#C80808] text-[15px] font-black text-white">{initial}</span>
+            <div className="min-w-0 flex-1">
+              <p className="truncate text-[13px] font-bold text-white">{user?.name || "Admin"}</p>
+              <p className="truncate text-[11px] text-white/45">{user?.email || "admin@petroeng.in"}</p>
             </div>
-            <ChevronRight className="w-3.5 h-3.5 text-[#929DA7]" />
-          </Link>
-
-          <button
-            onClick={handleLogout}
-            className="w-full flex items-center gap-2.5 px-3.5 py-2 rounded-lg text-xs font-medium text-[#FF4B32] hover:bg-[#FF4B32]/10 transition-colors text-left"
-          >
-            <LogOut className="w-4 h-4" />
-            <span>Sign Out</span>
-          </button>
+            <Link href="/" title="View public website" aria-label="View public website" className="rounded-lg p-2 text-white/50 transition-colors hover:bg-white/[0.08] hover:text-white"><ExternalLink className="h-[18px] w-[18px]" /></Link>
+            <button onClick={handleLogout} title="Sign out" aria-label="Sign out" className="rounded-lg p-2 text-white/50 transition-colors hover:bg-[#C80808]/25 hover:text-[#FF6A4D]"><LogOut className="h-[18px] w-[18px]" /></button>
+          </div>
         </div>
       </aside>
     </>

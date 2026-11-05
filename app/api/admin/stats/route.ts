@@ -39,6 +39,58 @@ export async function GET() {
       query("SELECT COUNT(*) AS total, COUNT(*) FILTER (WHERE status = 'New') AS new FROM applications;"),
     ]);
 
+    // Extra insight data for the dashboard. Failures here must never break the core stats.
+    let activity: any[] = [];
+    let topCategories: any[] = [];
+    let recentApplications: any[] = [];
+    let rfqStatus: any[] = [];
+    let enquiryStatus: any[] = [];
+    let insights: any = {};
+    try {
+      const [actRes, topRes, appsRes, rfqStRes, enqStRes, jobsRes, emptyCatRes, oldEnqRes, oldRfqRes, todayRes] = await Promise.all([
+        query(`
+          SELECT to_char(d::date, 'YYYY-MM-DD') AS day,
+            (SELECT COUNT(*) FROM rfq_submissions r WHERE r.created_at::date = d::date) AS rfqs,
+            (SELECT COUNT(*) FROM contact_messages m WHERE m.created_at::date = d::date) AS enquiries,
+            (SELECT COUNT(*) FROM applications a WHERE a.submitted_at::date = d::date) AS applications
+          FROM generate_series(CURRENT_DATE - INTERVAL '13 days', CURRENT_DATE, INTERVAL '1 day') d
+          ORDER BY d;`),
+        query(`SELECT c.name, c.division, COUNT(p.id) AS products FROM product_categories c LEFT JOIN products p ON p.category_slug = c.slug GROUP BY c.name, c.division ORDER BY products DESC, c.name LIMIT 6;`),
+        query("SELECT id, full_name, job_title, status, submitted_at AS created_at FROM applications ORDER BY submitted_at DESC LIMIT 5;"),
+        query("SELECT status, COUNT(*) AS total FROM rfq_submissions GROUP BY status;"),
+        query("SELECT status, COUNT(*) AS total FROM contact_messages GROUP BY status;"),
+        query("SELECT COUNT(*) AS total, COUNT(*) FILTER (WHERE status = 'draft') AS draft FROM jobs WHERE status IN ('published','draft');"),
+        query("SELECT COUNT(*) AS total FROM product_categories c WHERE NOT EXISTS (SELECT 1 FROM products p WHERE p.category_slug = c.slug);"),
+        query("SELECT MIN(created_at) AS oldest FROM contact_messages WHERE status = 'new';"),
+        query("SELECT MIN(created_at) AS oldest FROM rfq_submissions WHERE status = 'new';"),
+        query(`SELECT
+          (SELECT COUNT(*) FROM contact_messages WHERE created_at::date = CURRENT_DATE) AS enquiries_today,
+          (SELECT COUNT(*) FROM rfq_submissions WHERE created_at::date = CURRENT_DATE) AS rfqs_today,
+          (SELECT COUNT(*) FROM applications WHERE submitted_at::date = CURRENT_DATE) AS applications_today,
+          (SELECT COUNT(*) FROM applications WHERE status IN ('Selected','Hired')) AS hired,
+          (SELECT COUNT(*) FROM jobs) AS jobs_total;`),
+      ]);
+      insights = {
+        openJobs: +(jobsRes.rows[0]?.total || 0) - +(jobsRes.rows[0]?.draft || 0),
+        draftJobs: +(jobsRes.rows[0]?.draft || 0),
+        emptyCategories: +(emptyCatRes.rows[0]?.total || 0),
+        oldestNewEnquiry: oldEnqRes.rows[0]?.oldest || null,
+        oldestNewRfq: oldRfqRes.rows[0]?.oldest || null,
+        enquiriesToday: +(todayRes.rows[0]?.enquiries_today || 0),
+        rfqsToday: +(todayRes.rows[0]?.rfqs_today || 0),
+        applicationsToday: +(todayRes.rows[0]?.applications_today || 0),
+        hired: +(todayRes.rows[0]?.hired || 0),
+        jobsTotal: +(todayRes.rows[0]?.jobs_total || 0),
+      };
+      activity = actRes.rows.map((r: any) => ({ day: r.day, rfqs: +r.rfqs, enquiries: +r.enquiries, applications: +r.applications }));
+      topCategories = topRes.rows.map((r: any) => ({ name: r.name, division: r.division, products: +r.products }));
+      recentApplications = appsRes.rows;
+      rfqStatus = rfqStRes.rows.map((r: any) => ({ status: r.status, total: +r.total }));
+      enquiryStatus = enqStRes.rows.map((r: any) => ({ status: r.status, total: +r.total }));
+    } catch (e: any) {
+      console.warn("Dashboard extra insights unavailable:", e.message);
+    }
+
     return NextResponse.json({
       success: true,
       stats: {
@@ -70,6 +122,12 @@ export async function GET() {
       recentEnquiries: recentEnquiriesRes.rows,
       recentRfqs: recentRfqsRes.rows,
       recentLogs: recentLogsRes.rows,
+      activity,
+      topCategories,
+      recentApplications,
+      rfqStatus,
+      enquiryStatus,
+      insights,
     });
   } catch (err: any) {
     console.error("Dashboard stats error:", err);

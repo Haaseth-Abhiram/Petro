@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Search, Lock, Phone, Mail, Menu, X, ArrowRight, Briefcase } from "lucide-react";
+import { Search, Lock, Phone, Mail, Menu, X, ArrowRight, Briefcase, ShieldCheck, LogOut } from "lucide-react";
 import PetroLogo from "@/components/common/PetroLogo";
 import LanguageSwitcher from "@/components/layout/LanguageSwitcher";
 import { COMPANY_INFO } from "@/data/company";
@@ -46,6 +46,23 @@ export default function HeaderCompact() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [menu, setMenu] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const [admin, setAdmin] = useState<{ email: string; name?: string } | null>(null);
+
+  // Show the admin session in the public header (Admin button, email, Logout)
+  useEffect(() => {
+    let live = true;
+    fetch("/api/auth/me", { cache: "no-store" })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => { if (live && d?.authenticated) setAdmin(d.user); })
+      .catch(() => {});
+    return () => { live = false; };
+  }, []);
+
+  const logout = async () => {
+    try { await fetch("/api/auth/logout", { method: "POST" }); } catch (e) {}
+    setAdmin(null);
+    window.location.href = "/";
+  };
 
   useEffect(() => {
     if (searchOpen) setTimeout(() => inputRef.current?.focus(), 50);
@@ -70,7 +87,17 @@ export default function HeaderCompact() {
           <div className="flex items-center gap-6">
             <span className="[&_button]:text-white/85 [&_button:hover]:text-[#F2B93B]"><LanguageSwitcher /></span>
             <Link href="/careers" className="inline-flex items-center gap-2 font-semibold text-white/85 hover:text-[#F2B93B] transition-colors"><Briefcase className="w-3.5 h-3.5 text-[#F2B93B]" />Careers</Link>
-            <Link href="/login" className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-[#C80808] to-[#E0A21A] text-white font-extrabold pl-1 pr-4 py-[3px] shadow-[0_4px_14px_rgba(200,8,8,0.45)] hover:-translate-y-0.5 transition-all duration-300"><span className="w-6 h-6 rounded-full bg-white text-[#C80808] flex items-center justify-center"><Lock className="w-3 h-3" /></span>Login<span className="absolute inset-y-0 -left-10 w-8 bg-white/40 skew-x-[-20deg] group-hover:left-[120%] transition-all duration-700" /></Link>
+            {admin ? (
+              <div className="flex items-center gap-4">
+                <Link href="/admin/dashboard" className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-[#C80808] to-[#E0A21A] text-white font-extrabold pl-1 pr-4 py-[3px] shadow-[0_4px_14px_rgba(200,8,8,0.45)] hover:-translate-y-0.5 transition-all duration-300" title="Open the admin console"><span className="w-6 h-6 rounded-full bg-white text-[#C80808] flex items-center justify-center"><ShieldCheck className="w-3.5 h-3.5" /></span>Admin<span className="absolute inset-y-0 -left-10 w-8 bg-white/40 skew-x-[-20deg] group-hover:left-[120%] transition-all duration-700" /></Link>
+                <span className="h-5 w-px bg-white/20" />
+                <span className="inline-flex items-center gap-2 text-white/90"><span className="w-6 h-6 rounded-full bg-gradient-to-br from-[#E0A21A] to-[#C80808] text-white text-[11px] font-black flex items-center justify-center">{String(admin?.name || admin?.email || "A").trim().charAt(0).toUpperCase()}</span><span className="max-w-[190px] truncate font-semibold">{admin.email}</span></span>
+                <span className="h-5 w-px bg-white/20" />
+                <button type="button" onClick={logout} className="inline-flex items-center gap-1.5 rounded-full border border-white/25 bg-white/10 px-3.5 py-[3px] font-bold text-white hover:bg-white hover:text-[#C80808] transition-colors"><LogOut className="w-3.5 h-3.5" />Logout</button>
+              </div>
+            ) : (
+              <Link href="/login" className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-[#C80808] to-[#E0A21A] text-white font-extrabold pl-1 pr-4 py-[3px] shadow-[0_4px_14px_rgba(200,8,8,0.45)] hover:-translate-y-0.5 transition-all duration-300"><span className="w-6 h-6 rounded-full bg-white text-[#C80808] flex items-center justify-center"><Lock className="w-3 h-3" /></span>Login<span className="absolute inset-y-0 -left-10 w-8 bg-white/40 skew-x-[-20deg] group-hover:left-[120%] transition-all duration-700" /></Link>
+            )}
           </div>
         </div>
       </div>
@@ -95,9 +122,10 @@ export default function HeaderCompact() {
       {/* mobile menu */}
       {menu && (
         <div className="lg:hidden border-t border-[#E7E9EE] bg-white px-5 py-3 space-y-1">
-          {[...nav, { label: "Careers", href: "/careers" }, { label: "Login", href: "/login" }].map((n) => (
+          {[...nav, { label: "Careers", href: "/careers" }, ...(admin ? [{ label: "Admin console", href: "/admin/dashboard" }] : [{ label: "Login", href: "/login" }])].map((n) => (
             <Link key={n.href} href={n.href} onClick={() => setMenu(false)} className="flex items-center justify-between py-2.5 text-[15px] font-semibold text-[#17191C] border-b border-[#F3EEE6]">{n.label}<ArrowRight className="w-4 h-4 text-[#C80808]" /></Link>
           ))}
+          {admin && <button type="button" onClick={logout} className="flex w-full items-center justify-between py-2.5 text-[15px] font-semibold text-[#C80808] border-b border-[#F3EEE6]">Logout ({admin.email})<LogOut className="w-4 h-4" /></button>}
           <div className="pt-2"><LanguageSwitcher variant="drawer" /></div>
         </div>
       )}

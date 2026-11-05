@@ -72,7 +72,9 @@ export default function PageTransitionLoader() {
         const targetUrl = new URL(anchor.href, window.location.href);
         const currentUrl = new URL(window.location.href);
 
-        if (targetUrl.origin === currentUrl.origin) {
+        // The admin console has its own data-area loader, so never show the full-screen website loader there.
+        const inAdmin = currentUrl.pathname.startsWith("/admin") || targetUrl.pathname.startsWith("/admin");
+        if (targetUrl.origin === currentUrl.origin && !inAdmin) {
           // If going to a different route/query, trigger the flame loader
           if (
             targetUrl.pathname !== currentUrl.pathname ||
@@ -106,9 +108,8 @@ export default function PageTransitionLoader() {
     }
   }, [loading]);
 
-  if (!loading) return null;
-
   const isAdmin = pathname.startsWith("/admin");
+  if (!loading || isAdmin) return null;
 
   return (
     <FlameLoader

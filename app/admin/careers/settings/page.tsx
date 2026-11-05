@@ -1,5 +1,7 @@
 "use client";
 
+import WorkspaceLoader from "@/components/admin/WorkspaceLoader";
+
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import {
@@ -107,7 +109,7 @@ export default function RecruitmentSettingsPage() {
         <div
           className={`fixed bottom-6 right-6 z-50 flex items-center gap-2.5 px-4 py-3 rounded-xl shadow-2xl border text-sm font-semibold ${
             toast.type === "success"
-              ? "bg-[#17191C] border-[#FF4B32] text-white"
+              ? "bg-[#17191C] border-[#C80808] text-white"
               : "bg-red-500 border-red-600 text-white"
           }`}
         >
@@ -124,10 +126,10 @@ export default function RecruitmentSettingsPage() {
               Careers
             </Link>
             <span>/</span>
-            <span className="text-[#FF4B32]">Settings</span>
+            <span className="text-[#C80808]">Settings</span>
           </div>
           <h1 className="text-2xl font-black text-[#17191C] tracking-tight flex items-center gap-2.5">
-            <Sliders className="w-6 h-6 text-[#FF4B32]" />
+            <Sliders className="w-6 h-6 text-[#C80808]" />
             Recruitment Settings
           </h1>
           <p className="text-sm text-[#5F6871] mt-0.5">
@@ -141,21 +143,18 @@ export default function RecruitmentSettingsPage() {
           className="p-2.5 rounded-xl border border-[#D8DDE2] bg-white text-[#17191C] hover:bg-[#F5F6F7] transition disabled:opacity-50 self-start sm:self-auto"
           title="Reload settings"
         >
-          <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin text-[#FF4B32]" : ""}`} />
+          <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin text-[#C80808]" : ""}`} />
         </button>
       </div>
 
       {loading ? (
-        <div className="py-24 text-center bg-white rounded-2xl border border-[#D8DDE2]">
-          <RefreshCw className="w-8 h-8 text-[#FF4B32] animate-spin mx-auto mb-3" />
-          <p className="text-sm font-bold text-[#17191C]">Loading recruitment settings...</p>
-        </div>
+        <WorkspaceLoader compact />
       ) : (
         <form onSubmit={handleSave} className="space-y-6">
           {/* Section 1: Notifications & Emails */}
           <div className="bg-white p-6 rounded-2xl border border-[#D8DDE2] shadow-sm space-y-4">
             <div className="flex items-center gap-2 pb-3 border-b border-[#D8DDE2]">
-              <Bell className="w-5 h-5 text-[#FF4B32]" />
+              <Bell className="w-5 h-5 text-[#C80808]" />
               <h2 className="text-base font-extrabold text-[#17191C]">Notifications & Candidate Communication</h2>
             </div>
 
@@ -169,7 +168,7 @@ export default function RecruitmentSettingsPage() {
                 value={settings.notification_email}
                 onChange={(e) => setSettings({ ...settings, notification_email: e.target.value })}
                 placeholder="hr@petroeng.in, admin@petroeng.in"
-                className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-[#D8DDE2] bg-[#F5F6F7] text-[#17191C] focus:bg-white focus:outline-none focus:border-[#FF4B32]"
+                className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-[#D8DDE2] bg-[#F5F6F7] text-[#17191C] focus:bg-white focus:outline-none focus:border-[#C80808]"
               />
               <p className="text-[11px] text-[#5F6871] mt-1">
                 These email addresses receive instant notification whenever a candidate submits an application.
@@ -182,7 +181,7 @@ export default function RecruitmentSettingsPage() {
                   type="checkbox"
                   checked={settings.auto_acknowledge}
                   onChange={(e) => setSettings({ ...settings, auto_acknowledge: e.target.checked })}
-                  className="w-4 h-4 mt-0.5 rounded text-[#FF4B32] focus:ring-[#FF4B32] border-[#D8DDE2]"
+                  className="w-4 h-4 mt-0.5 rounded text-[#C80808] focus:ring-[#C80808] border-[#D8DDE2]"
                 />
                 <div>
                   <span className="text-sm font-bold text-[#17191C] block">
@@ -205,7 +204,7 @@ export default function RecruitmentSettingsPage() {
                   value={settings.acknowledgement_subject}
                   onChange={(e) => setSettings({ ...settings, acknowledgement_subject: e.target.value })}
                   placeholder="Thank you for applying to Petro Engineering"
-                  className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-[#D8DDE2] bg-[#F5F6F7] text-[#17191C] focus:bg-white focus:outline-none focus:border-[#FF4B32]"
+                  className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-[#D8DDE2] bg-[#F5F6F7] text-[#17191C] focus:bg-white focus:outline-none focus:border-[#C80808]"
                 />
               </div>
             )}
@@ -229,7 +228,7 @@ export default function RecruitmentSettingsPage() {
                   max={25}
                   value={settings.cv_max_size_mb}
                   onChange={(e) => setSettings({ ...settings, cv_max_size_mb: parseInt(e.target.value) || 5 })}
-                  className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-[#D8DDE2] bg-[#F5F6F7] text-[#17191C] focus:bg-white focus:outline-none focus:border-[#FF4B32]"
+                  className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-[#D8DDE2] bg-[#F5F6F7] text-[#17191C] focus:bg-white focus:outline-none focus:border-[#C80808]"
                 />
                 <p className="text-[11px] text-[#5F6871] mt-1">Recommended: 5 MB limit per candidate.</p>
               </div>
@@ -244,7 +243,7 @@ export default function RecruitmentSettingsPage() {
                   max={60}
                   value={settings.retention_period_months}
                   onChange={(e) => setSettings({ ...settings, retention_period_months: parseInt(e.target.value) || 24 })}
-                  className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-[#D8DDE2] bg-[#F5F6F7] text-[#17191C] focus:bg-white focus:outline-none focus:border-[#FF4B32]"
+                  className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-[#D8DDE2] bg-[#F5F6F7] text-[#17191C] focus:bg-white focus:outline-none focus:border-[#C80808]"
                 />
                 <p className="text-[11px] text-[#5F6871] mt-1">How long talent resumes are maintained on file.</p>
               </div>
@@ -256,7 +255,7 @@ export default function RecruitmentSettingsPage() {
                   type="checkbox"
                   checked={settings.allow_general_applications}
                   onChange={(e) => setSettings({ ...settings, allow_general_applications: e.target.checked })}
-                  className="w-4 h-4 mt-0.5 rounded text-[#FF4B32] focus:ring-[#FF4B32] border-[#D8DDE2]"
+                  className="w-4 h-4 mt-0.5 rounded text-[#C80808] focus:ring-[#C80808] border-[#D8DDE2]"
                 />
                 <div>
                   <span className="text-sm font-bold text-[#17191C] block">
@@ -273,7 +272,7 @@ export default function RecruitmentSettingsPage() {
           {/* Section 3: Recruitment Contact Info */}
           <div className="bg-white p-6 rounded-2xl border border-[#D8DDE2] shadow-sm space-y-4">
             <div className="flex items-center gap-2 pb-3 border-b border-[#D8DDE2]">
-              <Phone className="w-5 h-5 text-[#FF4B32]" />
+              <Phone className="w-5 h-5 text-[#C80808]" />
               <h2 className="text-base font-extrabold text-[#17191C]">Public Careers Contact Details</h2>
             </div>
 
@@ -286,7 +285,7 @@ export default function RecruitmentSettingsPage() {
                   type="email"
                   value={settings.recruitment_contact_email}
                   onChange={(e) => setSettings({ ...settings, recruitment_contact_email: e.target.value })}
-                  className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-[#D8DDE2] bg-[#F5F6F7] text-[#17191C] focus:bg-white focus:outline-none focus:border-[#FF4B32]"
+                  className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-[#D8DDE2] bg-[#F5F6F7] text-[#17191C] focus:bg-white focus:outline-none focus:border-[#C80808]"
                 />
               </div>
 
@@ -298,7 +297,7 @@ export default function RecruitmentSettingsPage() {
                   type="text"
                   value={settings.recruitment_contact_phone}
                   onChange={(e) => setSettings({ ...settings, recruitment_contact_phone: e.target.value })}
-                  className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-[#D8DDE2] bg-[#F5F6F7] text-[#17191C] focus:bg-white focus:outline-none focus:border-[#FF4B32]"
+                  className="w-full px-3.5 py-2.5 text-sm rounded-xl border border-[#D8DDE2] bg-[#F5F6F7] text-[#17191C] focus:bg-white focus:outline-none focus:border-[#C80808]"
                 />
               </div>
             </div>
@@ -309,7 +308,7 @@ export default function RecruitmentSettingsPage() {
             <button
               type="submit"
               disabled={saving}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#FF4B32] to-[#FFA028] text-white text-sm font-extrabold shadow-md shadow-[#FF4B32]/25 hover:opacity-95 transition disabled:opacity-50"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#C80808] to-[#FFA028] text-white text-sm font-extrabold shadow-md shadow-[#C80808]/25 hover:opacity-95 transition disabled:opacity-50"
             >
               <Save className="w-4 h-4" />
               {saving ? "Saving Changes..." : "Save Settings"}

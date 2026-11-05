@@ -1,10 +1,14 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import FlameLoader from "@/components/common/FlameLoader";
 
 /** Full-screen loader shown on every first load / refresh. It is part of the server HTML, so it is visible before the page hydrates, and fades out once everything has loaded. */
 export default function InitialLoader() {
+  const pathname = usePathname() || "";
+  // Inside the admin portal the loader is scoped to the workspace area, not full-screen.
+  const scoped = pathname.startsWith("/admin") && pathname !== "/admin/login";
   const [phase, setPhase] = useState<"show" | "fade" | "gone">("show");
 
   useEffect(() => {
@@ -26,11 +30,11 @@ export default function InitialLoader() {
   }, []);
 
   useEffect(() => {
-    document.documentElement.style.overflow = phase === "show" ? "hidden" : "";
+    document.documentElement.style.overflow = phase === "show" && !scoped ? "hidden" : "";
     return () => { document.documentElement.style.overflow = ""; };
-  }, [phase]);
+  }, [phase, scoped]);
 
-  if (phase === "gone") return null;
+  if (scoped || phase === "gone") return null;
   return (
     <FlameLoader message="Loading" exiting={phase === "fade"} />
   );

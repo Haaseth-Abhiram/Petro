@@ -1,5 +1,9 @@
 "use client";
 
+import WorkspaceLoader from "@/components/admin/WorkspaceLoader";
+
+import { ModalFrame } from "@/components/admin/Modal";
+
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
@@ -204,10 +208,7 @@ export default function CandidateDetailPage() {
 
   if (loading) {
     return (
-      <div className="py-28 text-center">
-        <div className="w-10 h-10 border-4 border-[#FF4B32] border-t-transparent rounded-full animate-spin mx-auto mb-3" />
-        <p className="text-xs font-semibold text-[#929DA7]">Loading Candidate Dossier…</p>
-      </div>
+      <WorkspaceLoader />
     );
   }
 
@@ -219,7 +220,7 @@ export default function CandidateDetailPage() {
         <p className="text-xs text-[#929DA7]">{error || "Could not find this candidate record."}</p>
         <Link
           href="/admin/careers/applications"
-          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#FF4B32] text-white text-xs font-bold"
+          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#C80808] text-white text-xs font-bold"
         >
           <ChevronLeft className="w-4 h-4" />
           <span>Back to Applications</span>
@@ -234,14 +235,14 @@ export default function CandidateDetailPage() {
       <div className="flex items-center justify-between">
         <Link
           href="/admin/careers/applications"
-          className="inline-flex items-center gap-1.5 text-xs font-bold text-[#929DA7] hover:text-[#FF4B32] transition-colors"
+          className="inline-flex items-center gap-1.5 text-xs font-bold text-[#929DA7] hover:text-[#C80808] transition-colors"
         >
           <ChevronLeft className="w-4 h-4" />
           <span>Back to Candidate Applications</span>
         </Link>
 
         <span className="text-xs font-mono font-bold text-[#929DA7]">
-          Reference: <strong className="text-[#FF4B32]">{application.application_reference}</strong>
+          Reference: <strong className="text-[#C80808]">{application.application_reference}</strong>
         </span>
       </div>
 
@@ -263,7 +264,7 @@ export default function CandidateDetailPage() {
                   {application.status}
                 </span>
               </div>
-              <p className="text-xs font-bold text-[#FF4B32] mt-0.5">
+              <p className="text-xs font-bold text-[#C80808] mt-0.5">
                 Applied for {application.role_of_interest} • {application.experience} experience
               </p>
               <div className="flex flex-wrap items-center gap-4 text-xs text-[#929DA7] mt-2">
@@ -303,7 +304,7 @@ export default function CandidateDetailPage() {
               href={`/api/admin/careers/applications/${application.id}/cv`}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#FF4B32] hover:bg-[#FFA028] text-white text-xs font-bold shadow-md shadow-[#FF4B32]/25 transition-all"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#C80808] hover:bg-[#FFA028] text-white text-xs font-bold shadow-md shadow-[#C80808]/25 transition-all"
             >
               <Download className="w-4 h-4" />
               <span>Download CV</span>
@@ -358,7 +359,7 @@ export default function CandidateDetailPage() {
                   href={application.linkedin_url}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#FF4B32] hover:underline"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#C80808] hover:underline"
                 >
                   <span>{application.linkedin_url}</span>
                   <ExternalLink className="w-3.5 h-3.5" />
@@ -372,7 +373,7 @@ export default function CandidateDetailPage() {
               </span>
               <div className="flex items-center justify-between p-3.5 rounded-xl bg-[#F5F6F7] border border-[#929DA7]/15">
                 <div className="flex items-center gap-3 min-w-0">
-                  <div className="w-9 h-9 rounded-lg bg-[#FF4B32] text-white flex items-center justify-center shrink-0">
+                  <div className="w-9 h-9 rounded-lg bg-[#C80808] text-white flex items-center justify-center shrink-0">
                     <FileText className="w-5 h-5" />
                   </div>
                   <div className="min-w-0">
@@ -391,7 +392,7 @@ export default function CandidateDetailPage() {
                   href={`/api/admin/careers/applications/${application.id}/cv`}
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-[#929DA7]/20 text-xs font-bold text-[#17191C] hover:border-[#FF4B32] hover:text-[#FF4B32] transition-colors"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-[#929DA7]/20 text-xs font-bold text-[#17191C] hover:border-[#C80808] hover:text-[#C80808] transition-colors"
                 >
                   <Download className="w-3.5 h-3.5" />
                   <span>Download</span>
@@ -416,7 +417,7 @@ export default function CandidateDetailPage() {
           {/* Add Recruiter Note */}
           <div className="bg-white rounded-2xl border border-[#929DA7]/20 p-6 shadow-sm space-y-4">
             <h2 className="text-base font-extrabold text-[#17191C] flex items-center gap-2">
-              <MessageSquare className="w-4 h-4 text-[#FF4B32]" />
+              <MessageSquare className="w-4 h-4 text-[#C80808]" />
               <span>Internal Recruiter Notes</span>
             </h2>
 
@@ -427,7 +428,7 @@ export default function CandidateDetailPage() {
                 placeholder="Add confidential feedback, interview scheduling notes, or salary expectations..."
                 value={newNote}
                 onChange={(e) => setNewNote(e.target.value)}
-                className="w-full rounded-xl border border-[#929DA7]/30 p-3 text-xs text-[#17191C] focus:outline-none focus:border-[#FF4B32]"
+                className="w-full rounded-xl border border-[#929DA7]/30 p-3 text-xs text-[#17191C] focus:outline-none focus:border-[#C80808]"
               />
               <button
                 type="submit"
@@ -472,7 +473,7 @@ export default function CandidateDetailPage() {
               <div className="relative border-l-2 border-[#F5F6F7] ml-3 space-y-4 py-1">
                 {history.map((h) => (
                   <div key={h.id} className="relative pl-5 text-xs">
-                    <span className="absolute -left-[5px] top-1 w-2 h-2 rounded-full bg-[#FF4B32]" />
+                    <span className="absolute -left-[5px] top-1 w-2 h-2 rounded-full bg-[#C80808]" />
                     <div className="flex items-center gap-2 flex-wrap">
                       <span className="font-extrabold text-[#17191C]">{h.new_status}</span>
                       {h.previous_status && (
@@ -495,29 +496,15 @@ export default function CandidateDetailPage() {
 
       {/* Status Update Modal */}
       {statusModalOpen && (
-        <div className="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div
-            className="bg-white rounded-3xl p-6 max-w-md w-full border border-[#929DA7]/20 shadow-2xl space-y-4 animate-in fade-in zoom-in-95"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div>
-              <span className="text-[10.5px] font-extrabold uppercase tracking-[0.2em] text-[#FF4B32] block">
-                Recruitment Workflow
-              </span>
-              <h3 className="text-base font-black text-[#17191C]">Change Candidate Status</h3>
-              <p className="text-xs text-[#929DA7] mt-0.5">
-                Current status: <strong>{application.status}</strong>
-              </p>
-            </div>
-
-            <form onSubmit={handleUpdateStatus} className="space-y-4">
+        <ModalFrame onClose={() => setStatusModalOpen(false)} eyebrow="Recruitment workflow" title="Change candidate status" subtitle={<>Current status: <b>{application.status}</b></>} size="md">
+        <form onSubmit={handleUpdateStatus} className="space-y-4">
               <div>
                 <label className="block text-xs font-bold text-[#17191C] mb-1">New Status *</label>
                 <select
                   required
                   value={selectedStatus}
                   onChange={(e) => setSelectedStatus(e.target.value)}
-                  className="w-full rounded-xl border border-[#929DA7]/30 p-2.5 text-xs text-[#17191C] bg-white font-semibold focus:outline-none focus:border-[#FF4B32]"
+                  className="w-full rounded-xl border border-[#929DA7]/30 p-2.5 text-xs text-[#17191C] bg-white font-semibold focus:outline-none focus:border-[#C80808]"
                 >
                   {STATUS_OPTIONS.map((opt) => (
                     <option key={opt} value={opt}>
@@ -536,7 +523,7 @@ export default function CandidateDetailPage() {
                   placeholder="e.g. Cleared technical round, scheduled round 2 interview..."
                   value={statusNote}
                   onChange={(e) => setStatusNote(e.target.value)}
-                  className="w-full rounded-xl border border-[#929DA7]/30 p-2.5 text-xs text-[#17191C] focus:outline-none focus:border-[#FF4B32]"
+                  className="w-full rounded-xl border border-[#929DA7]/30 p-2.5 text-xs text-[#17191C] focus:outline-none focus:border-[#C80808]"
                 />
               </div>
 
@@ -551,14 +538,13 @@ export default function CandidateDetailPage() {
                 <button
                   type="submit"
                   disabled={updatingStatus || selectedStatus === application.status}
-                  className="px-4 py-2 rounded-xl bg-[#FF4B32] hover:bg-[#FFA028] text-white text-xs font-bold disabled:opacity-50 transition-colors"
+                  className="px-4 py-2 rounded-xl bg-[#C80808] hover:bg-[#FFA028] text-white text-xs font-bold disabled:opacity-50 transition-colors"
                 >
                   {updatingStatus ? "Saving…" : "Confirm Status Change"}
                 </button>
               </div>
             </form>
-          </div>
-        </div>
+      </ModalFrame>
       )}
     </div>
   );

@@ -1,5 +1,9 @@
 "use client";
 
+import WorkspaceLoader from "@/components/admin/WorkspaceLoader";
+
+import { ModalFrame, ConfirmDialog } from "@/components/admin/Modal";
+
 import React, { useState, useEffect } from "react";
 import SuperAdminGuard from "@/components/admin/SuperAdminGuard";
 import {
@@ -133,8 +137,7 @@ export default function AdminUsersPage() {
               {loading ? (
                 <tr>
                   <td colSpan={5} className="py-12 text-center text-[#5F6871]">
-                    <div className="w-6 h-6 border-2 border-[#C80808] border-t-transparent rounded-full animate-spin mx-auto mb-2" />
-                    <span>Loading administrative users...</span>
+                    <WorkspaceLoader compact />
                   </td>
                 </tr>
               ) : (
@@ -210,12 +213,8 @@ export default function AdminUsersPage() {
       </div>
 
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-          <div className="bg-white rounded-2xl max-w-md w-full border border-[#D8DDE2] shadow-2xl p-6">
-            <h3 className="text-lg font-bold text-[#17191C] mb-4">
-              Add New Administrative User
-            </h3>
-            <form onSubmit={handleCreate} className="space-y-4">
+        <ModalFrame onClose={() => setShowModal(false)} eyebrow="Administration" title={"Add a new administrator"} size="md">
+        <form onSubmit={handleCreate} className="space-y-4">
               <div>
                 <label className="block text-xs font-bold uppercase text-[#17191C] mb-1">
                   Full Name *
@@ -291,8 +290,7 @@ export default function AdminUsersPage() {
                 </button>
               </div>
             </form>
-          </div>
-        </div>
+      </ModalFrame>
       )}
     </div>
     </SuperAdminGuard>

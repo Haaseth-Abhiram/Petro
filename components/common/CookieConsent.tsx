@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { Cookie, SlidersHorizontal, X } from "lucide-react";
 
 const KEY = "petro-cookie-consent";
@@ -17,6 +18,7 @@ function Toggle({ on, onChange, disabled = false, label }: { on: boolean; onChan
 
 /** Cookie consent: compact pill (Customize / Decline / Accept All) with a preferences panel. */
 export default function CookieConsent() {
+  const pathname = usePathname() || "";
   const [ready, setReady] = useState(false);
   const [visible, setVisible] = useState(false);
   const [panel, setPanel] = useState(false);
@@ -33,7 +35,7 @@ export default function CookieConsent() {
     setPanel(false);
   };
 
-  if (!ready || !visible) return null;
+  if (!ready || !visible || pathname.startsWith("/admin") || pathname.startsWith("/login")) return null;
   return (
     <div className="fixed inset-x-0 bottom-4 z-[90] px-3 flex justify-center pointer-events-none notranslate" translate="no">
       {!panel ? (

@@ -1,5 +1,9 @@
 "use client";
 
+import WorkspaceLoader from "@/components/admin/WorkspaceLoader";
+
+import { ModalFrame, ConfirmDialog } from "@/components/admin/Modal";
+
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import {
@@ -146,10 +150,7 @@ export default function AdminIndustriesPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {loading ? (
-          <div className="col-span-full py-16 text-center text-[#5F6871]">
-            <div className="w-7 h-7 border-3 border-[#C80808] border-t-transparent rounded-full animate-spin mx-auto mb-2" />
-            <p className="text-xs font-semibold">Loading sectors from database...</p>
-          </div>
+          <div className="col-span-full"><WorkspaceLoader compact /></div>
         ) : industries.map((ind) => (
           <div
             key={ind.id}
@@ -194,12 +195,8 @@ export default function AdminIndustriesPage() {
       </div>
 
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-          <div className="bg-white rounded-2xl max-w-lg w-full border border-[#D8DDE2] shadow-2xl p-6">
-            <h3 className="text-lg font-bold text-[#17191C] mb-4">
-              {editingInd ? "Edit Industry" : "Add Industry"}
-            </h3>
-            <form onSubmit={handleSave} className="space-y-4">
+        <ModalFrame onClose={() => setShowModal(false)} eyebrow="Industries" title={editingInd ? "Edit industry" : "Add an industry"} size="lg">
+        <form onSubmit={handleSave} className="space-y-4">
               <div>
                 <label className="block text-xs font-bold uppercase text-[#17191C] mb-1">Industry Name *</label>
                 <input
@@ -255,8 +252,7 @@ export default function AdminIndustriesPage() {
                 </button>
               </div>
             </form>
-          </div>
-        </div>
+      </ModalFrame>
       )}
     </div>
   );

@@ -1,5 +1,7 @@
 "use client";
 
+import WorkspaceLoader from "@/components/admin/WorkspaceLoader";
+
 import React, { useState, useEffect } from "react";
 import SuperAdminGuard from "@/components/admin/SuperAdminGuard";
 import {
@@ -91,8 +93,7 @@ export default function AdminAuditLogsPage() {
               {loading ? (
                 <tr>
                   <td colSpan={5} className="py-12 text-center text-[#5F6871]">
-                    <div className="w-6 h-6 border-2 border-[#C80808] border-t-transparent rounded-full animate-spin mx-auto mb-2" />
-                    <span>Loading audit records from Supabase...</span>
+                    <WorkspaceLoader compact />
                   </td>
                 </tr>
               ) : filteredLogs.length === 0 ? (

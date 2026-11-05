@@ -1,5 +1,9 @@
 "use client";
 
+import WorkspaceLoader from "@/components/admin/WorkspaceLoader";
+
+import { ModalFrame, ConfirmDialog } from "@/components/admin/Modal";
+
 import React, { useState, useEffect } from "react";
 import {
   FileText,
@@ -179,10 +183,7 @@ export default function AdminDocumentsPage() {
       {/* Documents Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {loading ? (
-          <div className="col-span-full py-16 text-center text-[#5F6871]">
-            <div className="w-7 h-7 border-3 border-[#C80808] border-t-transparent rounded-full animate-spin mx-auto mb-2" />
-            <p className="text-xs font-semibold">Loading documents from Supabase...</p>
-          </div>
+          <div className="col-span-full"><WorkspaceLoader compact /></div>
         ) : documents.length === 0 ? (
           <div className="col-span-full py-16 text-center text-[#5F6871]">
             No documents found in this section.
@@ -267,21 +268,8 @@ export default function AdminDocumentsPage() {
 
       {/* Modal */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm overflow-y-auto">
-          <div className="bg-white rounded-2xl max-w-lg w-full border border-[#D8DDE2] shadow-2xl my-8 overflow-hidden animate-in fade-in zoom-in-95">
-            <div className="p-6 border-b border-[#D8DDE2] flex items-center justify-between bg-[#F5F6F7]/50">
-              <h3 className="text-lg font-bold text-[#17191C]">
-                {editingDoc ? "Edit Document" : "Upload New Document"}
-              </h3>
-              <button
-                onClick={() => setShowModal(false)}
-                className="p-1.5 text-[#929DA7] hover:text-[#17191C] rounded"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <form onSubmit={handleSave} className="p-6 space-y-4">
+        <ModalFrame onClose={() => setShowModal(false)} eyebrow="Documents" title={editingDoc ? "Edit document" : "Upload a new document"} size="lg">
+        <form onSubmit={handleSave} className="p-6 space-y-4">
               <div>
                 <label className="block text-xs font-bold uppercase text-[#17191C] mb-1">
                   Document Title *
@@ -402,8 +390,7 @@ export default function AdminDocumentsPage() {
                 </button>
               </div>
             </form>
-          </div>
-        </div>
+      </ModalFrame>
       )}
     </div>
   );
