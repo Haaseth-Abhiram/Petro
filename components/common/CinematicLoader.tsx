@@ -36,13 +36,13 @@ export default function CinematicLoader({ message = "Loading", exiting = false, 
   return (
     <div role="status" aria-live="polite" className={`fixed inset-0 z-[9999] flex items-center justify-center bg-[#14161A] transition-opacity duration-500 ${exiting ? "opacity-0 pointer-events-none" : "opacity-100"} ${className}`}>
       <style>{CSS}</style>
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,75,50,.18),transparent_58%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(200,8,8,.16),transparent_58%)]" />
       <div className="relative flex flex-col items-center px-6">
         <div className="relative w-[270px] sm:w-[400px]">
-          <div className="ld-glow absolute -inset-8 rounded-full bg-[radial-gradient(circle,rgba(224,162,26,.3),rgba(255,75,50,.15)_55%,transparent_75%)] blur-xl" />
+          <div className="ld-glow absolute -inset-8 rounded-full bg-[radial-gradient(circle,rgba(224,162,26,.3),rgba(200,8,8,.15)_55%,transparent_75%)] blur-xl" />
           <svg viewBox="0 0 720 275" className="relative w-full h-auto" aria-label="Petro Engineering" role="img">
             <defs>
-              <linearGradient id="ldr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#FF4B32" /><stop offset="1" stopColor="#D43118" /></linearGradient>
+              <linearGradient id="ldr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#FF3B2F" /><stop offset="1" stopColor="#B80C0C" /></linearGradient>
               <linearGradient id="ldg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#F7CB5A" /><stop offset="1" stopColor="#B8780B" /></linearGradient>
             </defs>
             <g className="ld-fill">
@@ -51,7 +51,7 @@ export default function CinematicLoader({ message = "Loading", exiting = false, 
               <path d={RED_TEXT} fill="url(#ldr)" fillRule="evenodd" />
               <path d={GOLD_TEXT} fill="url(#ldg)" fillRule="evenodd" />
             </g>
-            {[RED_FLAME, RED_TEXT].map((d, i) => (<path key={"r" + i} d={d} pathLength={1} className="ld-stroke" stroke="#FF4B32" />))}
+            {[RED_FLAME, RED_TEXT].map((d, i) => (<path key={"r" + i} d={d} pathLength={1} className="ld-stroke" stroke="#FF6A4D" />))}
             {[GOLD_FLAME, GOLD_TEXT].map((d, i) => (<path key={"g" + i} d={d} pathLength={1} className="ld-stroke" stroke="#F2B93B" />))}
           </svg>
         </div>
@@ -63,7 +63,7 @@ export default function CinematicLoader({ message = "Loading", exiting = false, 
             </li>
           ))}
         </ul>
-        <div className="mt-7 h-[3px] w-[200px] sm:w-[280px] rounded-full bg-white/10 overflow-hidden"><div className="ld-line h-full w-full rounded-full bg-gradient-to-r from-[#FF4B32] via-[#E0A21A] to-[#F2B93B]" /></div>
+        <div className="mt-7 h-[3px] w-[200px] sm:w-[280px] rounded-full bg-white/10 overflow-hidden"><div className="ld-line h-full w-full rounded-full bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#F2B93B]" /></div>
         <div className="ld-up mt-4 text-[11px] font-bold uppercase tracking-[0.36em] text-white/60" style={{ animationDelay: ".2s" }}>{message}</div>
       </div>
     </div>

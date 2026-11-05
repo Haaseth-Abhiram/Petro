@@ -54,12 +54,12 @@ export default function ResourcesPage() {
   return (
     <div className="w-full">
       {/* 1. HERO */}
-      <section className="relative bg-[#17191C] text-white py-20 lg:py-24 overflow-hidden">
+      <section className="relative bg-[#17191C]/90 text-white py-20 lg:py-24 overflow-hidden">
         <div
-          className="absolute inset-0 bg-cover bg-center opacity-25 z-0"
+          className="absolute inset-0 bg-cover bg-center opacity-40 z-0"
           style={{ backgroundImage: "url('/assets/img/service-inspection-qa.jpg')" }}
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#17191C]/95 via-[#17191C]/90 to-[#17191C]/75 z-0" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#17191C]/85 via-[#17191C]/75 to-[#17191C]/55 z-0" />
 
         <div className="relative z-10 max-w-[1400px] mx-auto px-6">
           <div className="max-w-[820px]">
@@ -98,7 +98,7 @@ export default function ResourcesPage() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search literature by title, category, or engineering topic..."
-                className="w-full pl-10 pr-4 py-2.5 rounded-[4px] border border-[#D8DDE2] text-sm text-[#17191C] focus:outline-none focus:border-[#FF4B32]"
+                className="w-full pl-10 pr-4 py-2.5 rounded-[4px] border border-[#D8DDE2] text-sm text-[#17191C] focus:outline-none focus:border-[#C80808]"
               />
             </div>
 
@@ -107,7 +107,7 @@ export default function ResourcesPage() {
               <select
                 value={selectedType}
                 onChange={(e) => setSelectedType(e.target.value)}
-                className="px-3 py-2.5 rounded-[4px] border border-[#D8DDE2] text-xs sm:text-sm text-[#17191C] bg-white focus:outline-none focus:border-[#FF4B32]"
+                className="px-3 py-2.5 rounded-[4px] border border-[#D8DDE2] text-xs sm:text-sm text-[#17191C] bg-white focus:outline-none focus:border-[#C80808]"
               >
                 <option value="all">All Document Types</option>
                 {resourceTypes.map((t) => (
@@ -126,7 +126,7 @@ export default function ResourcesPage() {
               >
                 <div>
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-[#FF4B32]/10 text-[#FF4B32]">
+                    <span className="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-[#C80808]/10 text-[#C80808]">
                       {res.type}
                     </span>
                     <span className="text-xs text-[#5F6871] font-medium">
@@ -157,13 +157,13 @@ export default function ResourcesPage() {
                       <Lock className="w-3.5 h-3.5 mr-1.5 text-[#5F6871]" />
                       Pending OEM Release
                     </span>
-                    <span className="text-[10px] uppercase font-bold text-[#FF4B32]">
+                    <span className="text-[10px] uppercase font-bold text-[#C80808]">
                       Verified Spec
                     </span>
                   </div>
                   <Link
                     href={`/request-a-quote?product=${encodeURIComponent(res.title)}`}
-                    className="font-['Plus_Jakarta_Sans'] text-xs font-bold text-[#FF4B32] hover:text-[#E03820] inline-block"
+                    className="font-['Plus_Jakarta_Sans'] text-xs font-bold text-[#C80808] hover:text-[#8A0A0A] inline-block"
                   >
                     Request copy via RFQ &rarr;
                   </Link>
@@ -196,12 +196,12 @@ export default function ResourcesPage() {
                 <div>
                   <div className="text-xs text-[#5F6871] flex items-center space-x-3 mb-3">
                     <span className="flex items-center">
-                      <Calendar className="w-3.5 h-3.5 mr-1 text-[#FF4B32]" />
+                      <Calendar className="w-3.5 h-3.5 mr-1 text-[#C80808]" />
                       {art.publishDate}
                     </span>
                     <span>•</span>
                     <span className="flex items-center">
-                      <Clock className="w-3.5 h-3.5 mr-1 text-[#FF4B32]" />
+                      <Clock className="w-3.5 h-3.5 mr-1 text-[#C80808]" />
                       {art.readTime}
                     </span>
                   </div>
@@ -254,10 +254,10 @@ export default function ResourcesPage() {
                 <div key={faq.id} className="border-b border-[#D8DDE2]">
                   <button
                     onClick={() => toggleFaq(faq.id)}
-                    className="w-full py-5 text-left flex items-center justify-between gap-4 font-['Plus_Jakarta_Sans'] text-base font-bold text-[#17191C] hover:text-[#FF4B32] transition-colors"
+                    className="w-full py-5 text-left flex items-center justify-between gap-4 font-['Plus_Jakarta_Sans'] text-base font-bold text-[#17191C] hover:text-[#C80808] transition-colors"
                   >
                     <span>{faq.question}</span>
-                    <span className="shrink-0 text-[#FF4B32]">
+                    <span className="shrink-0 text-[#C80808]">
                       {isOpen ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
                     </span>
                   </button>
@@ -265,7 +265,7 @@ export default function ResourcesPage() {
                   {isOpen && (
                     <div className="pb-5 pt-1 text-sm text-[#5F6871] leading-relaxed">
                       <p>{faq.answer}</p>
-                      <span className="text-[11px] text-[#FF4B32] font-bold uppercase tracking-wider block mt-3">
+                      <span className="text-[11px] text-[#C80808] font-bold uppercase tracking-wider block mt-3">
                         Topic: {faq.category}
                       </span>
                     </div>

@@ -50,19 +50,19 @@ export default function HeroSlider({ slides }: { slides: Slide[] }) {
 
             <div className="relative h-full max-w-[1320px] mx-auto px-5 sm:px-8 flex items-center justify-center text-center">
               <div className={`max-w-[860px] flex flex-col items-center pt-14 pb-24 sm:pt-12 sm:pb-24 transition-all duration-700 ${k === i ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"}`}>
-                <span className="inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/25 backdrop-blur px-3.5 py-1 text-[10px] sm:text-[11px] font-extrabold uppercase tracking-[0.18em] text-[#FFA028] mb-4">
-                  <span className="w-2 h-2 rounded-full bg-[#FF4B32]" />{s.label}
+                <span className="inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/25 backdrop-blur px-3.5 py-1 text-[10px] sm:text-[11px] font-extrabold uppercase tracking-[0.18em] text-[#F2B93B] mb-4">
+                  <span className="w-2 h-2 rounded-full bg-[#E0A21A]" />{s.label}
                 </span>
                 <h1 className="text-[1.85rem] leading-[1.1] sm:text-4xl lg:text-[2.6rem] font-black tracking-tight text-white mb-3">
-                  {s.line1} <span className="text-[#FFA028]">{s.line2}</span>
+                  {s.line1} <span className="text-[#E0A21A]">{s.line2}</span>
                 </h1>
                 <p className="text-white/80 text-[14px] sm:text-base leading-relaxed mb-5 max-w-[600px]">{s.text}</p>
                 <div className="flex flex-col sm:flex-row justify-center gap-3 mb-5 w-full sm:w-auto">
-                  <Link href={s.primary.href} className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#FF4B32] hover:bg-[#E03820] text-white font-bold text-sm px-6 py-3 transition-colors shadow-lg shadow-[#FF4B32]/30">{s.primary.label} <ArrowRight className="w-4 h-4" /></Link>
+                  <Link href={s.primary.href} className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#C80808] hover:bg-[#8A0A0A] text-white font-bold text-sm px-6 py-3 transition-colors shadow-lg">{s.primary.label} <ArrowRight className="w-4 h-4" /></Link>
                   <Link href={s.secondary.href} className="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-white/60 hover:bg-white hover:text-[#17191C] text-white font-bold text-sm px-6 py-3 transition-colors">{s.secondary.label}</Link>
                 </div>
                 <ul className="flex flex-wrap justify-center gap-x-6 gap-y-1.5 text-[12px] font-bold text-white/90">
-                  {s.points.map((p) => (<li key={p} className="inline-flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-[#FFA028]" />{p}</li>))}
+                  {s.points.map((p) => (<li key={p} className="inline-flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-[#F2B93B]" />{p}</li>))}
                 </ul>
               </div>
             </div>
@@ -75,7 +75,7 @@ export default function HeroSlider({ slides }: { slides: Slide[] }) {
             <div className="flex items-center gap-2.5">
               {slides.map((s, k) => (
                 <button key={s.label} type="button" aria-label={`Show slide ${k + 1}: ${s.label}`} aria-current={k === i} onClick={() => go(k)} className="relative h-1.5 rounded-full bg-white/30 overflow-hidden transition-all" style={{ width: k === i ? 56 : 28 }}>
-                  {k === i && <span key={`${i}-${paused}`} className="absolute inset-y-0 left-0 bg-[#FF4B32]" style={{ width: "100%", animation: paused ? "none" : "slide-fill 6.5s linear" }} />}
+                  {k === i && <span key={`${i}-${paused}`} className="absolute inset-y-0 left-0 bg-[#E0A21A]" style={{ width: "100%", animation: paused ? "none" : "slide-fill 6.5s linear" }} />}
                 </button>
               ))}
               <span className="ml-3 text-xs font-bold text-white/70 tabular-nums">0{i + 1} / 0{slides.length}</span>

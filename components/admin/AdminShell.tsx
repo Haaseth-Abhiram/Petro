@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import AdminSidebar from "./AdminSidebar";
 import AdminHeader from "./AdminHeader";
+import WorkspaceLoader from "./WorkspaceLoader";
 
 interface AdminShellProps {
   children: React.ReactNode;
@@ -18,6 +19,12 @@ export default function AdminShell({ children }: AdminShellProps) {
   const [enquiriesBadge, setEnquiriesBadge] = useState(0);
   const [rfqBadge, setRfqBadge] = useState(0);
   const [applicationsBadge, setApplicationsBadge] = useState(0);
+
+  // The admin console should never get the large-screen zoom used on the public website
+  useEffect(() => {
+    document.documentElement.classList.add("admin-no-zoom");
+    return () => document.documentElement.classList.remove("admin-no-zoom");
+  }, []);
 
   // If on login route, bypass admin shell completely
   const isLoginPage = pathname === "/admin/login";
@@ -67,19 +74,9 @@ export default function AdminShell({ children }: AdminShellProps) {
     return <>{children}</>;
   }
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-[#17191C] flex items-center justify-center">
-        <div className="flex flex-col items-center gap-3">
-          <div className="w-10 h-10 border-3 border-[#FF4B32] border-t-transparent rounded-full animate-spin" />
-          <p className="text-sm font-semibold text-white/80">Securing Admin Session…</p>
-        </div>
-      </div>
-    );
-  }
 
   return (
-    <div className="min-h-screen bg-[#F5F6F7] flex">
+    <div className="min-h-screen bg-[#F4F4F5] flex">
       {/* Sidebar Navigation */}
       <AdminSidebar
         isOpen={sidebarOpen}
@@ -91,10 +88,10 @@ export default function AdminShell({ children }: AdminShellProps) {
       />
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-w-0 lg:pl-72 transition-all duration-200">
-        <AdminHeader onToggleSidebar={() => setSidebarOpen(true)} user={user} />
+      <div className="flex-1 flex flex-col min-w-0 lg:pl-[17.5rem] transition-all duration-200">
+        <AdminHeader onToggleSidebar={() => setSidebarOpen(true)} user={user} notifications={enquiriesBadge + rfqBadge + applicationsBadge} />
         <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto">
-          <div className="max-w-7xl mx-auto">{children}</div>
+          <div className="max-w-[1480px] mx-auto">{loading ? <WorkspaceLoader /> : children}</div>
         </main>
       </div>
     </div>

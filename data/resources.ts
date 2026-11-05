@@ -167,7 +167,7 @@ export const TECHNICAL_ARTICLES: ArticleItem[] = [
     title: "Double Ferrule Fitting Installation Best Practices: Preventing High Pressure Leaks",
     publishDate: "October 14, 2026",
     readTime: "6 min read",
-    author: "Petronex Engineering Technical Desk",
+    author: "Petro Engineering Engineering Technical Desk",
     summary:
       "A technical walkthrough of tube preparation, deburring, bottoming, finger-tightening, and the correct 1-1/4 turn nut rotation to ensure leak-tight joints up to 6,000 PSI.",
     content: [
@@ -185,7 +185,7 @@ export const TECHNICAL_ARTICLES: ArticleItem[] = [
     title: "Mitigating Reactive & Colloidal Silica Scaling in High-Recovery Reverse Osmosis",
     publishDate: "September 28, 2026",
     readTime: "8 min read",
-    author: "Petronex Water Chemistry Division",
+    author: "Petro Engineering Water Chemistry Division",
     summary:
       "How specialized polymeric dispersants and temperature-adjusted solubility models allow industrial RO plants to operate above standard 120 ppm silica saturation limits.",
     content: [

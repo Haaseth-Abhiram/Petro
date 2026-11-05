@@ -13,7 +13,7 @@ export const COMPANY_INFO = {
     city: "Mumbai",
     region: "Maharashtra",
     country: "India",
-    businessHours: "Monday – Saturday: 9:00 AM – 6:30 PM IST",
+    businessHours: "Monday – Saturday: 8:00 AM – 6:00 PM (Sunday closed)",
   },
   stats: [
     { num: "02", lbl: "Divisions under one roof" },

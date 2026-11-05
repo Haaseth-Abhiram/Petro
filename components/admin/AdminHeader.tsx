@@ -1,108 +1,149 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   Menu,
-  Database,
-  Globe,
-  ShieldCheck,
+  Search,
+  ExternalLink,
+  ChevronDown,
   Bell,
-  RefreshCw,
+  LayoutDashboard,
+  LogOut,
+  UserCog,
+  ScrollText,
+  Package,
+  Layers,
+  Mail,
+  FileSpreadsheet,
+  FileEdit,
+  FileText,
+  Flame,
+  Building2,
+  Briefcase,
+  UserCheck,
+  Settings,
+  type LucideIcon,
 } from "lucide-react";
 
 interface AdminHeaderProps {
   onToggleSidebar: () => void;
-  user?: {
-    email: string;
-    name?: string;
-    role?: string;
-  } | null;
+  user?: { email: string; name?: string; role?: string } | null;
   onRefresh?: () => void;
   isRefreshing?: boolean;
+  notifications?: number;
 }
 
-export default function AdminHeader({
-  onToggleSidebar,
-  user,
-  onRefresh,
-  isRefreshing = false,
-}: AdminHeaderProps) {
-  const rawPathname = usePathname();
-  const pathname = rawPathname || "";
+const ICONS: [string, LucideIcon][] = [
+  ["/admin/careers/applications", UserCheck],
+  ["/admin/careers/categories", Layers],
+  ["/admin/careers/settings", Settings],
+  ["/admin/careers", Briefcase],
+  ["/admin/products", Package],
+  ["/admin/categories", Layers],
+  ["/admin/enquiries", Mail],
+  ["/admin/quote-requests", FileSpreadsheet],
+  ["/admin/content", FileEdit],
+  ["/admin/documents", FileText],
+  ["/admin/services", Flame],
+  ["/admin/industries", Building2],
+  ["/admin/dashboard", LayoutDashboard],
+];
 
-  // Generate breadcrumb from pathname
-  const segments = pathname
-    .split("/")
-    .filter(Boolean)
-    .map((seg) => seg.charAt(0).toUpperCase() + seg.slice(1).replace(/-/g, " "));
+const SECTION: [string, string][] = [
+  ["/admin/careers", "Hiring"],
+  ["/admin/products", "Catalogue"],
+  ["/admin/categories", "Catalogue"],
+  ["/admin/enquiries", "Inbox"],
+  ["/admin/quote-requests", "Inbox"],
+  ["/admin/dashboard", "Overview"],
+];
 
-  const currentPageTitle = segments[segments.length - 1] || "Dashboard";
+const titleCase = (s: string) => s.charAt(0).toUpperCase() + s.slice(1).replace(/-/g, " ");
+
+export default function AdminHeader({ onToggleSidebar, user, notifications = 0 }: AdminHeaderProps) {
+  const pathname = usePathname() || "";
+  const segments = pathname.split("/").filter(Boolean).filter((s) => s !== "admin").map(titleCase);
+  const title = segments[segments.length - 1] || "Dashboard";
+  const Icon = (ICONS.find(([p]) => pathname.startsWith(p)) || ["", LayoutDashboard])[1] as LucideIcon;
+  const section = (SECTION.find(([p]) => pathname.startsWith(p)) || ["", "Content"])[1];
+  const initial = (user?.name || user?.email || "A").charAt(0).toUpperCase();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => { setMenuOpen(false); }, [pathname]);
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onDown = (e: MouseEvent) => { if (menuRef.current && !menuRef.current.contains(e.target as Node)) setMenuOpen(false); };
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setMenuOpen(false); };
+    document.addEventListener("mousedown", onDown);
+    document.addEventListener("keydown", onKey);
+    return () => { document.removeEventListener("mousedown", onDown); document.removeEventListener("keydown", onKey); };
+  }, [menuOpen]);
+
+  const signOut = async () => {
+    try { await fetch("/api/auth/logout", { method: "POST" }); } catch (e) {}
+    window.location.href = "/login";
+  };
 
   return (
-    <header className="h-16 bg-white border-b border-[#D8DDE2] px-4 sm:px-8 flex items-center justify-between sticky top-0 z-20">
-      {/* Left: Mobile Toggle & Breadcrumbs */}
-      <div className="flex items-center gap-4">
-        <button
-          onClick={onToggleSidebar}
-          className="lg:hidden p-2 rounded-lg text-[#5F6871] hover:text-[#17191C] hover:bg-[#F5F6F7] transition-colors"
-          aria-label="Toggle navigation drawer"
-        >
-          <Menu className="w-5 h-5" />
-        </button>
-
-        <div className="flex items-center gap-2 text-xs">
-          <span className="font-semibold text-[#5F6871] hidden sm:inline">Admin CMS</span>
-          <span className="text-[#929DA7] hidden sm:inline">/</span>
-          <h1 className="font-bold text-[#17191C] text-sm sm:text-base tracking-tight">
-            {currentPageTitle}
-          </h1>
+    <header className="sticky top-0 z-20 border-b border-transparent bg-white/90 backdrop-blur-xl">
+      <div className="flex h-[76px] items-center justify-between gap-3 px-4 sm:px-8">
+        <div className="flex min-w-0 items-center gap-3">
+          <button onClick={onToggleSidebar} className="rounded-xl p-2 text-[#5F6871] transition-colors hover:bg-[#F5F6F7] hover:text-[#17191C] lg:hidden" aria-label="Open navigation"><Menu className="h-5 w-5" /></button>
+          <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[#D40E0E] to-[#E0A21A] text-white shadow-[0_10px_22px_-8px_rgba(212,14,14,0.65)]"><Icon className="h-[22px] w-[22px]" /></span>
+          <div className="min-w-0">
+            <p className="hidden items-center gap-1.5 text-[13px] font-medium text-[#5F6871] sm:flex">Admin <span className="text-[#C3CAD1]">/</span> {section}</p>
+            <h1 className="truncate text-[20px] font-black leading-tight tracking-tight text-[#17191C] sm:text-[22px]">{title}</h1>
+          </div>
         </div>
-      </div>
 
-      {/* Right: Quick Actions & Profile */}
-      <div className="flex items-center gap-3">
-        {/* Refresh Action */}
-        {onRefresh && (
-          <button
-            onClick={onRefresh}
-            disabled={isRefreshing}
-            className="p-2 rounded-lg text-[#5F6871] hover:text-[#17191C] hover:bg-[#F5F6F7] transition-colors border border-transparent hover:border-[#D8DDE2] disabled:opacity-50"
-            title="Refresh Data"
-            aria-label="Refresh Data"
-          >
-            <RefreshCw
-              className={`w-4 h-4 ${isRefreshing ? "animate-spin text-[#FF4B32]" : ""}`}
-            />
+        <div className="hidden max-w-xl flex-1 md:block">
+          <label className="flex items-center gap-3 rounded-2xl border border-[#E4E7EC] bg-white px-4 py-3 text-[#929DA7] shadow-[0_1px_2px_rgba(23,25,28,0.03)] transition focus-within:border-[#C80808]/40 focus-within:bg-white focus-within:ring-4 focus-within:ring-[#C80808]/10">
+            <Search className="h-[18px] w-[18px] shrink-0" />
+            <input type="search" placeholder="Search products, enquiries, candidates…" className="w-full bg-transparent text-[14px] text-[#17191C] outline-none placeholder:text-[#929DA7]" />
+          </label>
+        </div>
+
+        <div className="flex items-center gap-2.5 sm:gap-3">
+          <button className="relative rounded-2xl border border-[#E4E7EC] bg-white p-3 text-[#17191C] shadow-[0_1px_2px_rgba(23,25,28,0.04)] transition-colors hover:border-[#C80808]/40 hover:bg-[#F4F4F5]" aria-label="Notifications">
+            <Bell className="h-[18px] w-[18px]" />
+            {notifications > 0 && <span className="absolute -right-1 -top-1 min-w-[19px] rounded-full bg-[#C80808] px-1 text-center text-[10px] font-extrabold leading-[19px] text-white ring-2 ring-white">{notifications > 99 ? "99+" : notifications}</span>}
           </button>
-        )}
-
-        {/* View Public Website (Opens in same tab/page) */}
-        <Link
-          href="/"
-          className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#D8DDE2] text-xs font-semibold text-[#17191C] hover:bg-[#F5F6F7] transition-colors"
-          title="Open Public Website"
-        >
-          <Globe className="w-3.5 h-3.5 text-[#5F6871]" />
-          <span>View Site</span>
-        </Link>
-
-        {/* Profile Avatar */}
-        <div className="flex items-center gap-2 pl-2 border-l border-[#D8DDE2]">
-          <div className="w-8 h-8 rounded-full bg-[#17191C] text-white flex items-center justify-center text-xs font-bold ring-2 ring-[#FF4B32]/30">
-            {user?.name ? user.name.charAt(0).toUpperCase() : "A"}
-          </div>
-          <div className="hidden xl:block text-left">
-            <p className="text-xs font-bold text-[#17191C] leading-none">
-              {user?.name || "Administrator"}
-            </p>
-            <p className="text-[10px] text-[#5F6871] leading-none mt-1">
-              {user?.role || "Admin"}
-            </p>
+          <Link href="/" className="hidden items-center gap-2 rounded-2xl border border-[#E4E7EC] bg-white px-4 py-3 text-[14px] font-semibold text-[#17191C] shadow-[0_1px_2px_rgba(23,25,28,0.04)] transition-colors hover:border-[#C80808]/40 hover:text-[#C80808] lg:inline-flex" title="Open public website"><ExternalLink className="h-4 w-4" />View site</Link>
+          <div ref={menuRef} className="relative">
+            <button type="button" onClick={() => setMenuOpen((o) => !o)} aria-haspopup="menu" aria-expanded={menuOpen} className={`flex items-center gap-3 rounded-2xl border bg-white py-1.5 pl-1.5 pr-3 shadow-[0_1px_2px_rgba(23,25,28,0.04)] transition-colors ${menuOpen ? "border-[#C80808]/40" : "border-[#E4E7EC] hover:border-[#C80808]/30"}`}>
+              <span className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#E0A21A] to-[#C80808] text-[15px] font-black text-white">
+                {initial}
+                <span className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full bg-emerald-500 ring-2 ring-white" />
+              </span>
+              <div className="hidden text-left xl:block">
+                <p className="text-[13.5px] font-bold leading-none text-[#17191C]">{user?.name || "Admin"}</p>
+                <p className="mt-1 text-[12px] leading-none text-[#5F6871]">{user?.email || "admin@petroeng.in"}</p>
+              </div>
+              <ChevronDown className={`hidden h-4 w-4 text-[#5F6871] transition-transform sm:block ${menuOpen ? "rotate-180" : ""}`} />
+            </button>
+            {menuOpen && (
+              <div role="menu" className="absolute right-0 top-[calc(100%+10px)] z-50 w-[270px] overflow-hidden rounded-2xl border border-[#E7E9EE] bg-white shadow-[0_24px_60px_-18px_rgba(23,25,28,0.35)] animate-[routefade_.18s_ease-out_both]">
+                <div className="flex items-center gap-3 border-b border-[#EEF0F3] bg-[#FAFAFB] p-4">
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#E0A21A] to-[#C80808] text-[16px] font-black text-white">{initial}</span>
+                  <div className="min-w-0"><p className="truncate text-[14px] font-bold text-[#17191C]">{user?.name || "Administrator"}</p><p className="truncate text-[12px] text-[#5F6871]">{user?.email || "admin@petroeng.in"}</p><span className="mt-1 inline-block rounded-full bg-[#FBE9EC] px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-[#C80808]">{user?.role || "Admin"}</span></div>
+                </div>
+                <div className="p-1.5">
+                  {[{ href: "/admin/dashboard", label: "Dashboard", Icon: LayoutDashboard }, { href: "/admin/users", label: "Admin users", Icon: UserCog }, { href: "/admin/settings", label: "Settings", Icon: Settings }, { href: "/admin/audit-logs", label: "Audit logs", Icon: ScrollText }, { href: "/", label: "View public site", Icon: ExternalLink }].map(({ href, label, Icon: I }) => (
+                    <Link key={href} href={href} role="menuitem" className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-[13.5px] font-semibold text-[#17191C] transition-colors hover:bg-[#F5F6F7]"><I className="h-[17px] w-[17px] text-[#5F6871]" />{label}</Link>
+                  ))}
+                </div>
+                <div className="border-t border-[#EEF0F3] p-1.5">
+                  <button type="button" role="menuitem" onClick={signOut} className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[13.5px] font-semibold text-[#C80808] transition-colors hover:bg-[#F4F4F5]"><LogOut className="h-[17px] w-[17px]" />Sign out</button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
+      <span className="block h-[2px] bg-gradient-to-r from-[#C80808]/0 via-[#E0A21A] to-[#C80808]/0 opacity-70" />
     </header>
   );
 }

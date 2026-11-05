@@ -1,5 +1,9 @@
 "use client";
 
+import WorkspaceLoader from "@/components/admin/WorkspaceLoader";
+
+import { ModalFrame, ConfirmDialog } from "@/components/admin/Modal";
+
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import {
@@ -177,7 +181,7 @@ export default function JobCategoriesPage() {
         <div
           className={`fixed bottom-6 right-6 z-50 flex items-center gap-2.5 px-4 py-3 rounded-xl shadow-2xl border text-sm font-semibold transition-all animate-[fadeIn_.3s_ease] ${
             toast.type === "success"
-              ? "bg-[#17191C] border-[#FF4B32] text-white"
+              ? "bg-[#17191C] border-[#C80808] text-white"
               : "bg-red-500 border-red-600 text-white"
           }`}
         >
@@ -194,10 +198,10 @@ export default function JobCategoriesPage() {
               Careers
             </Link>
             <span>/</span>
-            <span className="text-[#FF4B32]">Job Categories</span>
+            <span className="text-[#C80808]">Job Categories</span>
           </div>
           <h1 className="text-2xl font-black text-[#17191C] tracking-tight flex items-center gap-2.5">
-            <FolderTree className="w-6 h-6 text-[#FF4B32]" />
+            <FolderTree className="w-6 h-6 text-[#C80808]" />
             Job Categories
           </h1>
           <p className="text-sm text-[#5F6871] mt-0.5">
@@ -212,11 +216,11 @@ export default function JobCategoriesPage() {
             className="p-2.5 rounded-xl border border-[#D8DDE2] bg-white text-[#17191C] hover:bg-[#F5F6F7] hover:border-[#17191C] transition disabled:opacity-50"
             title="Refresh categories"
           >
-            <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin text-[#FF4B32]" : ""}`} />
+            <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin text-[#C80808]" : ""}`} />
           </button>
           <button
             onClick={openAddModal}
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#FF4B32] to-[#FFA028] text-white text-sm font-bold shadow-md shadow-[#FF4B32]/20 hover:opacity-95 transition"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#C80808] to-[#FFA028] text-white text-sm font-bold shadow-md shadow-[#C80808]/20 hover:opacity-95 transition"
           >
             <Plus className="w-4 h-4" />
             Add Category
@@ -233,13 +237,13 @@ export default function JobCategoriesPage() {
             placeholder="Search categories..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 text-sm bg-[#F5F6F7] border border-[#D8DDE2] rounded-xl text-[#17191C] placeholder:text-[#929DA7] focus:outline-none focus:border-[#FF4B32] focus:bg-white transition"
+            className="w-full pl-10 pr-4 py-2 text-sm bg-[#F5F6F7] border border-[#D8DDE2] rounded-xl text-[#17191C] placeholder:text-[#929DA7] focus:outline-none focus:border-[#C80808] focus:bg-white transition"
           />
         </div>
 
         <div className="flex items-center gap-4 text-xs font-bold text-[#5F6871] w-full sm:w-auto justify-end">
           <span className="flex items-center gap-1.5">
-            <Layers className="w-4 h-4 text-[#FF4B32]" />
+            <Layers className="w-4 h-4 text-[#C80808]" />
             {categories.length} Total Categories
           </span>
           <span className="h-3 w-[1px] bg-[#D8DDE2]" />
@@ -253,10 +257,7 @@ export default function JobCategoriesPage() {
       {/* Categories Table */}
       <div className="bg-white rounded-2xl border border-[#D8DDE2] shadow-sm overflow-hidden">
         {loading ? (
-          <div className="py-20 text-center">
-            <RefreshCw className="w-8 h-8 text-[#FF4B32] animate-spin mx-auto mb-3" />
-            <p className="text-sm font-bold text-[#17191C]">Loading job categories...</p>
-          </div>
+          <WorkspaceLoader compact />
         ) : filteredCategories.length === 0 ? (
           <div className="py-16 text-center px-4">
             <div className="w-14 h-14 rounded-2xl bg-[#F5F6F7] border border-[#D8DDE2] flex items-center justify-center mx-auto mb-3 text-[#929DA7]">
@@ -269,7 +270,7 @@ export default function JobCategoriesPage() {
             {!search && (
               <button
                 onClick={openAddModal}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#17191C] text-white text-xs font-bold hover:bg-[#FF4B32] transition"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#17191C] text-white text-xs font-bold hover:bg-[#C80808] transition"
               >
                 <Plus className="w-3.5 h-3.5" />
                 Add Category Now
@@ -307,7 +308,7 @@ export default function JobCategoriesPage() {
                     </td>
                     <td className="py-4 px-5 text-center">
                       <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#F5F6F7] border border-[#D8DDE2] text-xs font-bold text-[#17191C]">
-                        <Briefcase className="w-3 h-3 text-[#FF4B32]" />
+                        <Briefcase className="w-3 h-3 text-[#C80808]" />
                         {cat.job_count}
                       </span>
                     </td>
@@ -353,22 +354,8 @@ export default function JobCategoriesPage() {
 
       {/* Add / Edit Category Modal */}
       {modalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-[fadeIn_.2s_ease]">
-          <div className="bg-white rounded-2xl border border-[#D8DDE2] shadow-2xl w-full max-w-md overflow-hidden animate-[scaleUp_.25s_ease]">
-            <div className="flex items-center justify-between px-6 py-4 border-b border-[#D8DDE2] bg-[#F5F6F7]">
-              <h3 className="text-base font-extrabold text-[#17191C] flex items-center gap-2">
-                <FolderTree className="w-4 h-4 text-[#FF4B32]" />
-                {activeCategory ? "Edit Category" : "Add New Category"}
-              </h3>
-              <button
-                onClick={() => setModalOpen(false)}
-                className="p-1 rounded-lg text-[#5F6871] hover:text-[#17191C] hover:bg-[#D8DDE2]/50 transition"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-
-            <form onSubmit={handleSave} className="p-6 space-y-4">
+        <ModalFrame onClose={() => setModalOpen(false)} eyebrow="Job categories" title={activeCategory ? "Edit category" : "Add a new category"} size="md">
+        <form onSubmit={handleSave} className="p-6 space-y-4">
               <div>
                 <label className="block text-xs font-bold text-[#17191C] mb-1">
                   Category Name *
@@ -389,7 +376,7 @@ export default function JobCategoriesPage() {
                       );
                     }
                   }}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#D8DDE2] text-sm text-[#17191C] focus:outline-none focus:border-[#FF4B32]"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#D8DDE2] text-sm text-[#17191C] focus:outline-none focus:border-[#C80808]"
                 />
               </div>
 
@@ -402,7 +389,7 @@ export default function JobCategoriesPage() {
                   placeholder="sales-and-commercial"
                   value={formSlug}
                   onChange={(e) => setFormSlug(e.target.value)}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#D8DDE2] text-sm font-mono text-[#5F6871] focus:outline-none focus:border-[#FF4B32]"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-[#D8DDE2] text-sm font-mono text-[#5F6871] focus:outline-none focus:border-[#C80808]"
                 />
               </div>
 
@@ -415,7 +402,7 @@ export default function JobCategoriesPage() {
                   placeholder="Short note about roles under this department..."
                   value={formDesc}
                   onChange={(e) => setFormDesc(e.target.value)}
-                  className="w-full px-3.5 py-2 rounded-xl border border-[#D8DDE2] text-sm text-[#17191C] focus:outline-none focus:border-[#FF4B32]"
+                  className="w-full px-3.5 py-2 rounded-xl border border-[#D8DDE2] text-sm text-[#17191C] focus:outline-none focus:border-[#C80808]"
                 />
               </div>
 
@@ -428,7 +415,7 @@ export default function JobCategoriesPage() {
                     type="number"
                     value={formOrder}
                     onChange={(e) => setFormOrder(parseInt(e.target.value) || 0)}
-                    className="w-full px-3.5 py-2 rounded-xl border border-[#D8DDE2] text-sm text-[#17191C] focus:outline-none focus:border-[#FF4B32]"
+                    className="w-full px-3.5 py-2 rounded-xl border border-[#D8DDE2] text-sm text-[#17191C] focus:outline-none focus:border-[#C80808]"
                   />
                 </div>
                 <div className="flex items-center pt-5">
@@ -437,7 +424,7 @@ export default function JobCategoriesPage() {
                       type="checkbox"
                       checked={formActive}
                       onChange={(e) => setFormActive(e.target.checked)}
-                      className="w-4 h-4 rounded text-[#FF4B32] focus:ring-[#FF4B32] border-[#D8DDE2]"
+                      className="w-4 h-4 rounded text-[#C80808] focus:ring-[#C80808] border-[#D8DDE2]"
                     />
                     <span className="text-xs font-bold text-[#17191C]">Active Category</span>
                   </label>
@@ -455,51 +442,32 @@ export default function JobCategoriesPage() {
                 <button
                   type="submit"
                   disabled={busy}
-                  className="px-5 py-2 rounded-xl bg-gradient-to-r from-[#FF4B32] to-[#FFA028] text-white text-xs font-extrabold shadow-md shadow-[#FF4B32]/20 hover:opacity-95 transition disabled:opacity-50"
+                  className="px-5 py-2 rounded-xl bg-gradient-to-r from-[#C80808] to-[#FFA028] text-white text-xs font-extrabold shadow-md shadow-[#C80808]/20 hover:opacity-95 transition disabled:opacity-50"
                 >
                   {busy ? "Saving..." : activeCategory ? "Update Category" : "Create Category"}
                 </button>
               </div>
             </form>
-          </div>
-        </div>
+      </ModalFrame>
       )}
 
       {/* Delete Confirmation Modal */}
       {deleteModalOpen && activeCategory && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-[fadeIn_.2s_ease]">
-          <div className="bg-white rounded-2xl border border-[#D8DDE2] shadow-2xl w-full max-w-sm p-6 text-center animate-[scaleUp_.25s_ease]">
-            <div className="w-12 h-12 rounded-full bg-red-100 text-red-600 flex items-center justify-center mx-auto mb-3">
-              <Trash2 className="w-6 h-6" />
-            </div>
-            <h3 className="text-base font-extrabold text-[#17191C]">Delete Category?</h3>
-            <p className="text-xs text-[#5F6871] mt-1.5 mb-5">
-              Are you sure you want to delete <strong className="text-[#17191C]">{activeCategory.name}</strong>?
-              {Number(activeCategory.job_count) > 0 && (
-                <span className="block mt-2 font-bold text-red-600">
-                  Note: There are {activeCategory.job_count} jobs assigned to this category. You must reassign or remove them before deleting.
-                </span>
-              )}
-            </p>
-            <div className="flex items-center justify-center gap-2.5">
-              <button
-                type="button"
-                onClick={() => setDeleteModalOpen(false)}
-                className="px-4 py-2 rounded-xl border border-[#D8DDE2] text-xs font-bold text-[#5F6871] hover:bg-[#F5F6F7] transition"
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                disabled={busy}
-                onClick={handleDelete}
-                className="px-5 py-2 rounded-xl bg-red-600 text-white text-xs font-bold hover:bg-red-700 transition disabled:opacity-50"
-              >
-                {busy ? "Deleting..." : "Confirm Delete"}
-              </button>
-            </div>
-          </div>
-        </div>
+        <ConfirmDialog
+          title="Delete this category?"
+          busy={busy}
+          confirmLabel="Yes, delete"
+          onClose={() => setDeleteModalOpen(false)}
+          onConfirm={handleDelete}
+          message={<>
+            You are about to delete <b className="text-[#17191C]">{activeCategory.name}</b>. This cannot be undone.
+            {Number(activeCategory.job_count) > 0 && (
+              <span className="mt-3 block rounded-xl border border-[#C80808]/25 bg-[#FBE9EC] px-4 py-3 text-[13px] font-semibold text-[#8A0A0A]">
+                {activeCategory.job_count} job(s) are assigned to this category. Reassign or remove them before deleting.
+              </span>
+            )}
+          </>}
+        />
       )}
     </div>
   );

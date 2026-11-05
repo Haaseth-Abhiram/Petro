@@ -4,50 +4,38 @@ import React, { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import FlameLoader from "@/components/common/FlameLoader";
 
-/** Full-screen loader shown on first load / refresh for the public website. Fades out once loaded. */
+/** Full-screen loader shown on every first load / refresh. It is part of the server HTML, so it is visible before the page hydrates, and fades out once everything has loaded. */
 export default function InitialLoader() {
-  const pathname = usePathname();
+  const pathname = usePathname() || "";
+  // Inside the admin portal the loader is scoped to the workspace area, not full-screen.
+  const scoped = pathname.startsWith("/admin") && pathname !== "/admin/login";
   const [phase, setPhase] = useState<"show" | "fade" | "gone">("show");
 
-  // In admin CMS, skip full-screen initial loader to keep admin workspace responsive
-  const isAdmin = pathname.startsWith("/admin");
-
   useEffect(() => {
-    if (isAdmin) {
-      setPhase("gone");
-      return;
-    }
-
     const start = performance.now();
-    const MIN = 800;
+    const MIN = 900;
     let t1: ReturnType<typeof setTimeout>;
     let t2: ReturnType<typeof setTimeout>;
     const finish = () => {
       const wait = Math.max(0, MIN - (performance.now() - start));
       t1 = setTimeout(() => {
         setPhase("fade");
-        t2 = setTimeout(() => setPhase("gone"), 500);
+        t2 = setTimeout(() => setPhase("gone"), 600);
       }, wait);
     };
     if (document.readyState === "complete") finish();
     else window.addEventListener("load", finish, { once: true });
-    const safety = setTimeout(finish, 4000);
-    return () => {
-      window.removeEventListener("load", finish);
-      clearTimeout(t1);
-      clearTimeout(t2);
-      clearTimeout(safety);
-    };
-  }, [isAdmin]);
+    const safety = setTimeout(finish, 6000);
+    return () => { window.removeEventListener("load", finish); clearTimeout(t1); clearTimeout(t2); clearTimeout(safety); };
+  }, []);
 
   useEffect(() => {
-    if (isAdmin) return;
-    document.documentElement.style.overflow = phase === "show" ? "hidden" : "";
-    return () => {
-      document.documentElement.style.overflow = "";
-    };
-  }, [phase, isAdmin]);
+    document.documentElement.style.overflow = phase === "show" && !scoped ? "hidden" : "";
+    return () => { document.documentElement.style.overflow = ""; };
+  }, [phase, scoped]);
 
-  if (isAdmin || phase === "gone") return null;
-  return <FlameLoader message="Loading experience" exiting={phase === "fade"} />;
+  if (scoped || phase === "gone") return null;
+  return (
+    <FlameLoader message="Loading" exiting={phase === "fade"} />
+  );
 }

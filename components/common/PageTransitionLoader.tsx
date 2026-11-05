@@ -12,7 +12,7 @@ export default function PageTransitionLoader() {
   const startTimeRef = useRef<number>(0);
 
   // 1 second display time
-  const minDurationMs = 1000;
+  const minDurationMs = 500;
 
   const startLoading = () => {
     startTimeRef.current = Date.now();
@@ -72,7 +72,10 @@ export default function PageTransitionLoader() {
         const targetUrl = new URL(anchor.href, window.location.href);
         const currentUrl = new URL(window.location.href);
 
-        if (targetUrl.origin === currentUrl.origin) {
+        // The admin console has its own data-area loader, so never show the full-screen website loader there.
+        const inAdmin = currentUrl.pathname.startsWith("/admin") || targetUrl.pathname.startsWith("/admin");
+        if (targetUrl.origin === currentUrl.origin && !inAdmin) {
+          // If going to a different route/query, trigger the flame loader
           if (
             targetUrl.pathname !== currentUrl.pathname ||
             targetUrl.search !== currentUrl.search
@@ -105,36 +108,13 @@ export default function PageTransitionLoader() {
     }
   }, [loading]);
 
-  if (!loading) return null;
+  const isAdmin = pathname.startsWith("/admin");
+  if (!loading || isAdmin) return null;
 
-  // Check if we are inside the authenticated admin workspace (not admin login)
-  const isAdminWorkspace =
-    pathname.startsWith("/admin") &&
-    pathname !== "/admin/login" &&
-    pathname !== "/login";
-
-  // Inside the admin panel: only load the right-side data workspace (keep sidebar & header intact)
-  if (isAdminWorkspace) {
-    return (
-      <div
-        className={`fixed top-16 bottom-0 right-0 left-0 lg:left-72 z-30 flex items-center justify-center bg-[#F5F6F7]/90 backdrop-blur-sm transition-opacity duration-200 ${
-          isFading ? "opacity-0 pointer-events-none" : "opacity-100"
-        }`}
-      >
-        <FlameLoader
-          theme="light"
-          message="Loading workspace..."
-          fullScreen={false}
-        />
-      </div>
-    );
-  }
-
-  // Public site and login routes: clean full-screen transition
   return (
     <FlameLoader
-      theme="light"
-      message="Switching page..."
+      theme={isAdmin ? "light" : "light"}
+      message="Opening page"
       fullScreen={true}
       className={`transition-opacity duration-200 ${
         isFading ? "opacity-0 pointer-events-none" : "opacity-100"

@@ -1,5 +1,7 @@
 "use client";
 
+import WorkspaceLoader from "@/components/admin/WorkspaceLoader";
+
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import {
@@ -182,7 +184,7 @@ export default function CandidateApplicationsPage() {
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-[#929DA7]/20 shadow-sm">
         <div>
           <div className="flex items-center gap-2 text-xs font-semibold text-[#929DA7] mb-1">
-            <Link href="/admin/careers" className="hover:text-[#FF4B32]">
+            <Link href="/admin/careers" className="hover:text-[#C80808]">
               Careers
             </Link>
             <span>/</span>
@@ -214,7 +216,7 @@ export default function CandidateApplicationsPage() {
                   : "text-[#5F6871] hover:text-[#17191C]"
               }`}
             >
-              <LayoutList className="w-4 h-4 text-[#FF4B32]" />
+              <LayoutList className="w-4 h-4 text-[#C80808]" />
               <span>Applications List</span>
             </button>
             <button
@@ -234,7 +236,7 @@ export default function CandidateApplicationsPage() {
               <FolderOpen className="w-4 h-4 text-[#FFA028]" />
               <span>Resume Folder</span>
               {total > 0 && (
-                <span className="ml-1 px-1.5 py-0.5 rounded-full text-[10px] font-extrabold bg-[#FF4B32] text-white">
+                <span className="ml-1 px-1.5 py-0.5 rounded-full text-[10px] font-extrabold bg-[#C80808] text-white">
                   {total}
                 </span>
               )}
@@ -256,7 +258,7 @@ export default function CandidateApplicationsPage() {
           <button
             type="button"
             onClick={handleExportPdf}
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#FF4B32] to-[#FFA028] hover:opacity-95 text-white text-xs font-bold transition-colors shadow-md shadow-[#FF4B32]/20"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#C80808] to-[#FFA028] hover:opacity-95 text-white text-xs font-bold transition-colors shadow-md shadow-[#C80808]/20"
             title="Download printable PDF summary report"
           >
             <Download className="w-4 h-4 text-white" />
@@ -274,7 +276,7 @@ export default function CandidateApplicationsPage() {
             placeholder="Search by name, email, or reference code..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-9 pr-3.5 py-2 rounded-xl border border-[#929DA7]/20 text-xs text-[#17191C] placeholder:text-[#929DA7] focus:outline-none focus:border-[#FF4B32]"
+            className="w-full pl-9 pr-3.5 py-2 rounded-xl border border-[#929DA7]/20 text-xs text-[#17191C] placeholder:text-[#929DA7] focus:outline-none focus:border-[#C80808]"
           />
         </form>
 
@@ -288,7 +290,7 @@ export default function CandidateApplicationsPage() {
                 setStatusFilter(e.target.value);
                 setPage(1);
               }}
-              className="border border-[#929DA7]/20 rounded-xl px-2.5 py-1.5 text-xs text-[#17191C] bg-white focus:outline-none focus:border-[#FF4B32]"
+              className="border border-[#929DA7]/20 rounded-xl px-2.5 py-1.5 text-xs text-[#17191C] bg-white focus:outline-none focus:border-[#C80808]"
             >
               <option value="all">All Statuses</option>
               <option value="New">New</option>
@@ -308,7 +310,7 @@ export default function CandidateApplicationsPage() {
                 setRoleFilter(e.target.value);
                 setPage(1);
               }}
-              className="border border-[#929DA7]/20 rounded-xl px-2.5 py-1.5 text-xs text-[#17191C] bg-white focus:outline-none focus:border-[#FF4B32]"
+              className="border border-[#929DA7]/20 rounded-xl px-2.5 py-1.5 text-xs text-[#17191C] bg-white focus:outline-none focus:border-[#C80808]"
             >
               <option value="all">All Positions</option>
               {roles.map((r) => (
@@ -350,10 +352,7 @@ export default function CandidateApplicationsPage() {
           </div>
 
           {loading ? (
-            <div className="py-24 text-center bg-white rounded-2xl border border-[#929DA7]/20">
-              <div className="w-8 h-8 border-3 border-[#FF4B32] border-t-transparent rounded-full animate-spin mx-auto mb-2" />
-              <p className="text-xs text-[#929DA7]">Opening resume folder…</p>
-            </div>
+            <WorkspaceLoader compact />
           ) : applications.length === 0 ? (
             <div className="py-20 text-center bg-white rounded-2xl border border-[#929DA7]/20 space-y-3">
               <FolderOpen className="w-12 h-12 text-[#929DA7]/40 mx-auto" />
@@ -371,7 +370,7 @@ export default function CandidateApplicationsPage() {
                 return (
                   <div
                     key={app.id}
-                    className="bg-white rounded-2xl border border-[#D8DDE2] p-5 shadow-sm hover:shadow-md hover:border-[#FF4B32] transition-all flex flex-col justify-between group"
+                    className="bg-white rounded-2xl border border-[#D8DDE2] p-5 shadow-sm hover:shadow-md hover:border-[#C80808] transition-all flex flex-col justify-between group"
                   >
                     <div>
                       {/* Top Bar of Card */}
@@ -387,7 +386,7 @@ export default function CandidateApplicationsPage() {
                             {isPdf ? "PDF" : "DOC"}
                           </span>
                           <div>
-                            <span className="font-mono text-[10px] font-bold text-[#FF4B32] block">
+                            <span className="font-mono text-[10px] font-bold text-[#C80808] block">
                               {app.application_reference}
                             </span>
                             <span className="text-[11px] text-[#929DA7]">
@@ -406,7 +405,7 @@ export default function CandidateApplicationsPage() {
                       </div>
 
                       {/* Candidate Name & Role */}
-                      <h4 className="text-base font-extrabold text-[#17191C] group-hover:text-[#FF4B32] transition-colors leading-tight mb-1">
+                      <h4 className="text-base font-extrabold text-[#17191C] group-hover:text-[#C80808] transition-colors leading-tight mb-1">
                         {app.full_name}
                       </h4>
                       <p className="text-xs font-semibold text-[#5F6871] mb-2 flex items-center gap-1.5">
@@ -417,7 +416,7 @@ export default function CandidateApplicationsPage() {
                       {/* File Details Box */}
                       <div className="p-2.5 rounded-xl bg-[#F5F6F7] border border-[#E7E9EE] text-[11px] text-[#5F6871] space-y-1 mb-4">
                         <div className="flex items-center gap-1.5 truncate">
-                          <FileText className="w-3.5 h-3.5 text-[#FF4B32] shrink-0" />
+                          <FileText className="w-3.5 h-3.5 text-[#C80808] shrink-0" />
                           <span className="truncate font-semibold text-[#17191C]">
                             {app.resume_original_name || "Resume document"}
                           </span>
@@ -434,7 +433,7 @@ export default function CandidateApplicationsPage() {
                       <button
                         type="button"
                         onClick={() => setPreviewApp(app)}
-                        className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-[#17191C] hover:bg-[#FF4B32] text-white text-xs font-bold transition-colors shadow-sm"
+                        className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl bg-[#17191C] hover:bg-[#C80808] text-white text-xs font-bold transition-colors shadow-sm"
                       >
                         <Eye className="w-3.5 h-3.5" />
                         <span>Preview Resume</span>
@@ -444,9 +443,9 @@ export default function CandidateApplicationsPage() {
                         href={`/api/admin/careers/applications/${app.id}/cv`}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl border border-[#D8DDE2] hover:border-[#FF4B32] text-[#17191C] hover:text-[#FF4B32] text-xs font-bold hover:bg-[#F5F6F7] transition-colors"
+                        className="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-xl border border-[#D8DDE2] hover:border-[#C80808] text-[#17191C] hover:text-[#C80808] text-xs font-bold hover:bg-[#F5F6F7] transition-colors"
                       >
-                        <Download className="w-3.5 h-3.5 text-[#FF4B32]" />
+                        <Download className="w-3.5 h-3.5 text-[#C80808]" />
                         <span>Download CV</span>
                       </a>
                     </div>
@@ -460,10 +459,7 @@ export default function CandidateApplicationsPage() {
         /* VIEW MODE 2: TABLE VIEW */
         <div className="bg-white rounded-2xl border border-[#929DA7]/20 shadow-sm overflow-hidden">
           {loading ? (
-            <div className="py-20 text-center">
-              <div className="w-8 h-8 border-3 border-[#FF4B32] border-t-transparent rounded-full animate-spin mx-auto mb-2" />
-              <p className="text-xs text-[#929DA7]">Loading applicant records…</p>
-            </div>
+            <WorkspaceLoader compact />
           ) : applications.length === 0 ? (
             <div className="py-20 text-center space-y-3">
               <Users className="w-10 h-10 text-[#929DA7]/40 mx-auto" />
@@ -489,7 +485,7 @@ export default function CandidateApplicationsPage() {
                 <tbody className="divide-y divide-[#F5F6F7]">
                   {applications.map((app) => (
                     <tr key={app.id} className="hover:bg-[#F5F6F7]/40 transition-colors">
-                      <td className="py-3.5 px-4 font-mono font-bold text-[#FF4B32] text-xs">
+                      <td className="py-3.5 px-4 font-mono font-bold text-[#C80808] text-xs">
                         {app.application_reference}
                       </td>
                       <td className="py-3.5 px-4">
@@ -519,10 +515,10 @@ export default function CandidateApplicationsPage() {
                           <button
                             type="button"
                             onClick={() => setPreviewApp(app)}
-                            className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#F5F6F7] hover:bg-[#FF4B32] hover:text-white text-[#17191C] border border-[#D8DDE2] text-[11px] font-bold transition-colors"
+                            className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#F5F6F7] hover:bg-[#C80808] hover:text-white text-[#17191C] border border-[#D8DDE2] text-[11px] font-bold transition-colors"
                             title="Preview resume in browser"
                           >
-                            <Eye className="w-3.5 h-3.5 text-[#FF4B32]" />
+                            <Eye className="w-3.5 h-3.5 text-[#C80808]" />
                             <span>Preview</span>
                           </button>
                           <a
@@ -551,7 +547,7 @@ export default function CandidateApplicationsPage() {
                       <td className="py-3.5 px-4 text-right">
                         <Link
                           href={`/admin/careers/applications/${app.id}`}
-                          className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg border border-[#929DA7]/20 hover:border-[#FF4B32] text-xs font-bold text-[#17191C] hover:text-[#FF4B32] transition-colors"
+                          className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg border border-[#929DA7]/20 hover:border-[#C80808] text-xs font-bold text-[#17191C] hover:text-[#C80808] transition-colors"
                         >
                           <Eye className="w-3.5 h-3.5" />
                           <span>Review</span>
@@ -601,7 +597,7 @@ export default function CandidateApplicationsPage() {
             {/* Modal Header */}
             <div className="px-6 py-4 bg-[#17191C] text-white flex items-center justify-between shrink-0">
               <div className="flex items-center gap-3">
-                <span className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#FF4B32] to-[#FFA028] flex items-center justify-center text-white font-black text-sm">
+                <span className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#C80808] to-[#FFA028] flex items-center justify-center text-white font-black text-sm">
                   {previewApp.full_name ? previewApp.full_name.charAt(0).toUpperCase() : "C"}
                 </span>
                 <div>
@@ -679,7 +675,7 @@ export default function CandidateApplicationsPage() {
                     href={`/api/admin/careers/applications/${previewApp.id}/cv`}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#FF4B32] to-[#FFA028] text-white text-xs font-bold shadow-md shadow-[#FF4B32]/20 hover:opacity-95 transition"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#C80808] to-[#FFA028] text-white text-xs font-bold shadow-md shadow-[#C80808]/20 hover:opacity-95 transition"
                   >
                     <Download className="w-4 h-4" />
                     <span>Download {previewApp.resume_original_name || "Resume File"}</span>
@@ -698,7 +694,7 @@ export default function CandidateApplicationsPage() {
               <div className="flex items-center gap-2">
                 <Link
                   href={`/admin/careers/applications/${previewApp.id}`}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#17191C] text-white font-bold hover:bg-[#FF4B32] transition"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#17191C] text-white font-bold hover:bg-[#C80808] transition"
                 >
                   <span>Candidate Evaluation &amp; Notes</span>
                   <ArrowRight className="w-3.5 h-3.5" />

@@ -2,8 +2,8 @@
 
 import React from "react";
 import { usePathname } from "next/navigation";
-import HeaderCompact from "@/components/layout/HeaderCompact";
-import FooterCompact from "@/components/layout/FooterCompact";
+import Header from "@/components/layout/HeaderCompact";
+import Footer from "@/components/layout/FooterCompact";
 import ScrollToTop from "@/components/common/ScrollToTop";
 
 export default function SiteLayoutWrapper({
@@ -25,9 +25,9 @@ export default function SiteLayoutWrapper({
 
   return (
     <>
-      <HeaderCompact />
+      <Header />
       <main className="flex-1">{children}</main>
-      <FooterCompact />
+      <Footer />
       <ScrollToTop />
     </>
   );

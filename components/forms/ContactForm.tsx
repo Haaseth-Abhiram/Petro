@@ -4,20 +4,20 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { CheckCircle2, AlertCircle, Info, Send, ArrowRight } from "lucide-react";
+import { CheckCircle2, AlertCircle, Info, RefreshCw } from "lucide-react";
 
 const schema = z.object({
-  fullName: z.string().min(2, "Full name is required (min 2 characters)"),
-  companyName: z.string().min(2, "Company / Organization is required"),
-  email: z.string().email("Please enter a valid business email"),
-  phone: z.string().min(6, "Please enter a valid phone number"),
-  division: z.string().min(1, "Please select an area of interest"),
+  fullName: z.string().min(2, "Full name is required"),
+  companyName: z.string().min(2, "Company name is required"),
+  email: z.string().email("Valid corporate email required"),
+  phone: z.string().min(7, "Valid phone number required"),
+  division: z.string().min(1, "Please select an area of requirement"),
   message: z.string().min(10, "Please describe your requirement (min 10 characters)"),
 });
 
 type FormData = z.infer<typeof schema>;
 
-export default function ContactForm({ bare = false }: { bare?: boolean } = {}) {
+export default function ContactForm({ bare = false }: { bare?: boolean }) {
   const [submitted, setSubmitted] = useState<FormData | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -65,78 +65,71 @@ export default function ContactForm({ bare = false }: { bare?: boolean } = {}) {
       {submitted ? (
         <div className="space-y-5">
           <div className="p-4 rounded-[4px] bg-[#1f7a4d]/10 border-l-[3px] border-[#1f7a4d] text-[#1a5c3b]">
-            <div className="flex items-center space-x-2">
-              <CheckCircle2 className="w-5 h-5 text-[#1f7a4d] shrink-0" />
-              <h4 className="font-['Plus_Jakarta_Sans'] text-base font-bold">
-                Message Received Successfully
-              </h4>
-            </div>
-            <p className="mt-1 text-xs text-[#1a5c3b]/90">
-              Thank you, {submitted.fullName}. Our technical sales desk will review your inquiry and follow up within one business day.
+            <h4 className="font-['Plus_Jakarta_Sans'] font-bold text-base">
+              Enquiry Received & Registered
+            </h4>
+            <p className="text-sm mt-1">
+              Thank you for contacting Petro Engineering. Your message has been safely logged in our database and routed to our technical team.
             </p>
           </div>
 
-          <div className="bg-[#F5F6F7] p-5 rounded-[4px] border border-[#D8DDE2] text-xs space-y-1.5">
-            <p className="font-bold text-[#17191C]">Summary of Submission:</p>
-            <p className="text-[#5F6871]"><strong>Company:</strong> {submitted.companyName}</p>
-            <p className="text-[#5F6871]"><strong>Email:</strong> {submitted.email}</p>
-            <p className="text-[#5F6871]"><strong>Division:</strong> {submitted.division}</p>
+          <div className="bg-[#F5F6F7] p-4 rounded-[4px] border border-[#D8DDE2] text-xs text-[#5F6871] space-y-1.5">
+            <p><strong>Contact:</strong> {submitted.fullName} ({submitted.companyName})</p>
+            <p><strong>Email:</strong> {submitted.email} | <strong>Phone:</strong> {submitted.phone}</p>
+            <p><strong>Division:</strong> {submitted.division}</p>
             <p className="mt-2 text-[#5F6871]"><strong>Message:</strong> {submitted.message}</p>
           </div>
 
+          <div className="p-3 bg-[#C80808]/5 border border-[#C80808]/20 rounded-[4px] text-xs text-[#5F6871] flex items-start space-x-2">
+            <Info className="w-4 h-4 text-[#C80808] shrink-0 mt-0.5" />
+            <span>This is a frontend demonstration. No email has been sent and no database record was stored.</span>
+          </div>
+
           <button
-            type="button"
             onClick={() => {
-              reset();
               setSubmitted(null);
+              reset();
             }}
-            className="btn btn-primary text-xs"
+            className="btn btn-outline-dark w-full"
           >
-            <span>Send Another Inquiry</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            <RefreshCw className="w-4 h-4 mr-2" />
+            <span>Send another enquiry</span>
           </button>
         </div>
       ) : (
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-          {submitError && (
-            <div className="p-3.5 rounded-[4px] bg-[#FF4B32]/10 border-l-[3px] border-[#FF4B32] text-[#17191C] flex items-center space-x-2 text-xs">
-              <AlertCircle className="w-4 h-4 text-[#FF4B32] shrink-0" />
-              <span>{submitError}</span>
-            </div>
-          )}
-
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5" noValidate>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="font-['Plus_Jakarta_Sans'] text-xs font-bold text-[#17191C] block mb-2">
-                Full name <span className="text-[#FF4B32]">*</span>
+                Full name <span className="text-[#C80808]">*</span>
               </label>
               <input
                 type="text"
                 {...register("fullName")}
                 placeholder="Your full name"
-                className={`w-full px-4 py-3 rounded-[4px] border text-sm text-[#17191C] focus:outline-none focus:border-[#FF4B32] focus:ring-2 focus:ring-[#FF4B32]/10 transition-colors ${
-                  errors.fullName ? "border-[#FF4B32]" : "border-[#D8DDE2]"
+                className={`w-full px-4 py-3 rounded-[4px] border text-sm text-[#17191C] focus:outline-none focus:border-[#C80808] focus:ring-2 focus:ring-[#C80808]/10 transition-colors ${
+                  errors.fullName ? "border-[#C80808]" : "border-[#D8DDE2]"
                 }`}
               />
               {errors.fullName && (
-                <p className="text-xs text-[#FF4B32] mt-1">{errors.fullName.message}</p>
+                <p className="text-xs text-[#C80808] mt-1">{errors.fullName.message}</p>
               )}
             </div>
 
             <div>
               <label className="font-['Plus_Jakarta_Sans'] text-xs font-bold text-[#17191C] block mb-2">
-                Company <span className="text-[#FF4B32]">*</span>
+                Company <span className="text-[#C80808]">*</span>
               </label>
               <input
                 type="text"
                 {...register("companyName")}
                 placeholder="Company / Organization"
-                className={`w-full px-4 py-3 rounded-[4px] border text-sm text-[#17191C] focus:outline-none focus:border-[#FF4B32] focus:ring-2 focus:ring-[#FF4B32]/10 transition-colors ${
-                  errors.companyName ? "border-[#FF4B32]" : "border-[#D8DDE2]"
+                className={`w-full px-4 py-3 rounded-[4px] border text-sm text-[#17191C] focus:outline-none focus:border-[#C80808] focus:ring-2 focus:ring-[#C80808]/10 transition-colors ${
+                  errors.companyName ? "border-[#C80808]" : "border-[#D8DDE2]"
                 }`}
               />
               {errors.companyName && (
-                <p className="text-xs text-[#FF4B32] mt-1">{errors.companyName.message}</p>
+                <p className="text-xs text-[#C80808] mt-1">{errors.companyName.message}</p>
               )}
             </div>
           </div>
@@ -144,89 +137,83 @@ export default function ContactForm({ bare = false }: { bare?: boolean } = {}) {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="font-['Plus_Jakarta_Sans'] text-xs font-bold text-[#17191C] block mb-2">
-                Email address <span className="text-[#FF4B32]">*</span>
+                Email address <span className="text-[#C80808]">*</span>
               </label>
               <input
                 type="email"
                 {...register("email")}
-                placeholder="procurement@company.com"
-                className={`w-full px-4 py-3 rounded-[4px] border text-sm text-[#17191C] focus:outline-none focus:border-[#FF4B32] focus:ring-2 focus:ring-[#FF4B32]/10 transition-colors ${
-                  errors.email ? "border-[#FF4B32]" : "border-[#D8DDE2]"
+                placeholder="work@company.com"
+                className={`w-full px-4 py-3 rounded-[4px] border text-sm text-[#17191C] focus:outline-none focus:border-[#C80808] focus:ring-2 focus:ring-[#C80808]/10 transition-colors ${
+                  errors.email ? "border-[#C80808]" : "border-[#D8DDE2]"
                 }`}
               />
               {errors.email && (
-                <p className="text-xs text-[#FF4B32] mt-1">{errors.email.message}</p>
+                <p className="text-xs text-[#C80808] mt-1">{errors.email.message}</p>
               )}
             </div>
 
             <div>
               <label className="font-['Plus_Jakarta_Sans'] text-xs font-bold text-[#17191C] block mb-2">
-                Phone / Mobile <span className="text-[#FF4B32]">*</span>
+                Phone number <span className="text-[#C80808]">*</span>
               </label>
               <input
                 type="tel"
                 {...register("phone")}
-                placeholder="+91 (0) 00000 00000"
-                className={`w-full px-4 py-3 rounded-[4px] border text-sm text-[#17191C] focus:outline-none focus:border-[#FF4B32] focus:ring-2 focus:ring-[#FF4B32]/10 transition-colors ${
-                  errors.phone ? "border-[#FF4B32]" : "border-[#D8DDE2]"
+                placeholder="+91 98765 43210"
+                className={`w-full px-4 py-3 rounded-[4px] border text-sm text-[#17191C] focus:outline-none focus:border-[#C80808] focus:ring-2 focus:ring-[#C80808]/10 transition-colors ${
+                  errors.phone ? "border-[#C80808]" : "border-[#D8DDE2]"
                 }`}
               />
               {errors.phone && (
-                <p className="text-xs text-[#FF4B32] mt-1">{errors.phone.message}</p>
+                <p className="text-xs text-[#C80808] mt-1">{errors.phone.message}</p>
               )}
             </div>
           </div>
 
           <div>
             <label className="font-['Plus_Jakarta_Sans'] text-xs font-bold text-[#17191C] block mb-2">
-              Area of Interest <span className="text-[#FF4B32]">*</span>
+              Area of requirement <span className="text-[#C80808]">*</span>
             </label>
             <select
               {...register("division")}
-              className="w-full px-4 py-3 rounded-[4px] border border-[#D8DDE2] text-sm text-[#17191C] bg-white focus:outline-none focus:border-[#FF4B32] focus:ring-2 focus:ring-[#FF4B32]/10 transition-colors"
+              className="w-full px-4 py-3 rounded-[4px] border border-[#D8DDE2] text-sm text-[#17191C] bg-white focus:outline-none focus:border-[#C80808]"
             >
-              <option value="Instrumentation & Valves">Instrumentation & High-Pressure Valves</option>
-              <option value="Double Ferrule Fittings & Tubing">Double Ferrule Fittings & Tubing</option>
-              <option value="RO & Water Treatment Chemicals">RO & Water Treatment Chemicals</option>
-              <option value="Cooling & Boiler Chemistry">Cooling & Boiler Chemistry</option>
-              <option value="Water Treatment Plants (RO/DM/STP)">Water Treatment Plants (RO / DM / STP)</option>
-              <option value="Project Procurement & Sourcing">Comprehensive Project Sourcing</option>
-              <option value="General Technical Inquiry">General Technical Inquiry</option>
-              <option value="Website Feedback & Suggestions">Website Feedback &amp; Suggestions</option>
+              <option value="Instrumentation & Valves">Instrumentation &amp; Valves</option>
+              <option value="Chemical & Water Treatment">Chemical &amp; Water Treatment</option>
+              <option value="Both / Project Package">Both / Project Package</option>
+              <option value="Engineering / Procurement Support">Engineering / Procurement Support</option>
             </select>
           </div>
 
           <div>
             <label className="font-['Plus_Jakarta_Sans'] text-xs font-bold text-[#17191C] block mb-2">
-              Message / Inquiry Details <span className="text-[#FF4B32]">*</span>
+              Message / Specification details <span className="text-[#C80808]">*</span>
             </label>
             <textarea
               rows={4}
               {...register("message")}
-              placeholder="Please provide specifics: line items, operating pressure, chemical application, or specification standard..."
-              className={`w-full px-4 py-3 rounded-[4px] border text-sm text-[#17191C] focus:outline-none focus:border-[#FF4B32] focus:ring-2 focus:ring-[#FF4B32]/10 transition-colors ${
-                errors.message ? "border-[#FF4B32]" : "border-[#D8DDE2]"
+              placeholder="Tell us about the line items, quantities, pressure ratings or water parameters..."
+              className={`w-full px-4 py-3 rounded-[4px] border text-sm text-[#17191C] focus:outline-none focus:border-[#C80808] focus:ring-2 focus:ring-[#C80808]/10 transition-colors ${
+                errors.message ? "border-[#C80808]" : "border-[#D8DDE2]"
               }`}
             />
             {errors.message && (
-              <p className="text-xs text-[#FF4B32] mt-1">{errors.message.message}</p>
+              <p className="text-xs text-[#C80808] mt-1">{errors.message.message}</p>
             )}
           </div>
 
-          <button
-            type="submit"
-            disabled={isSubmitting}
-            className="w-full btn btn-primary py-3.5 flex items-center justify-center space-x-2 disabled:opacity-60"
-          >
-            {isSubmitting ? (
-              <span>Submitting Inquiry...</span>
-            ) : (
-              <>
-                <span>Submit Inquiry</span>
-                <Send className="w-4 h-4" />
-              </>
-            )}
-          </button>
+          <div className="pt-2">
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="btn btn-primary w-full text-center"
+            >
+              {isSubmitting ? "Validating..." : "Send enquiry"}
+            </button>
+            <p className="text-xs text-[#5F6871] text-center mt-3">
+              We respond to all technical enquiries within one business day.
+            </p>
+          </div>
         </form>
       )}
     </div>

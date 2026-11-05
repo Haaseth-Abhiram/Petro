@@ -1,5 +1,9 @@
 "use client";
 
+import WorkspaceLoader from "@/components/admin/WorkspaceLoader";
+
+import { ModalFrame, ConfirmDialog } from "@/components/admin/Modal";
+
 import React, { useState, useEffect } from "react";
 import SuperAdminGuard from "@/components/admin/SuperAdminGuard";
 import {
@@ -110,7 +114,7 @@ export default function AdminUsersPage() {
 
         <button
           onClick={() => setShowModal(true)}
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-[#FF4B32] hover:bg-[#E03820] text-white text-xs font-bold transition-all shadow-[0_4px_12px_rgba(255,75,50,0.3)] shrink-0 self-start sm:self-auto"
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-[#C80808] hover:bg-[#8A0A0A] text-white text-xs font-bold transition-all shadow-[0_4px_12px_rgba(200,8,8,0.3)] shrink-0 self-start sm:self-auto"
         >
           <Plus className="w-4 h-4" />
           <span>Add Admin User</span>
@@ -133,8 +137,7 @@ export default function AdminUsersPage() {
               {loading ? (
                 <tr>
                   <td colSpan={5} className="py-12 text-center text-[#5F6871]">
-                    <div className="w-6 h-6 border-2 border-[#FF4B32] border-t-transparent rounded-full animate-spin mx-auto mb-2" />
-                    <span>Loading administrative users...</span>
+                    <WorkspaceLoader compact />
                   </td>
                 </tr>
               ) : (
@@ -153,7 +156,7 @@ export default function AdminUsersPage() {
                     </td>
 
                     <td className="py-3.5 px-4">
-                      <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#FF4B32]/10 text-[#FF4B32]">
+                      <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#C80808]/10 text-[#C80808]">
                         {u.role || "Admin"}
                       </span>
                     </td>
@@ -210,12 +213,8 @@ export default function AdminUsersPage() {
       </div>
 
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-          <div className="bg-white rounded-2xl max-w-md w-full border border-[#D8DDE2] shadow-2xl p-6">
-            <h3 className="text-lg font-bold text-[#17191C] mb-4">
-              Add New Administrative User
-            </h3>
-            <form onSubmit={handleCreate} className="space-y-4">
+        <ModalFrame onClose={() => setShowModal(false)} eyebrow="Administration" title={"Add a new administrator"} size="md">
+        <form onSubmit={handleCreate} className="space-y-4">
               <div>
                 <label className="block text-xs font-bold uppercase text-[#17191C] mb-1">
                   Full Name *
@@ -285,14 +284,13 @@ export default function AdminUsersPage() {
                 <button
                   type="submit"
                   disabled={saving}
-                  className="px-5 py-2 rounded-lg bg-[#FF4B32] text-white text-xs font-bold"
+                  className="px-5 py-2 rounded-lg bg-[#C80808] text-white text-xs font-bold"
                 >
                   {saving ? "Creating..." : "Create Admin User"}
                 </button>
               </div>
             </form>
-          </div>
-        </div>
+      </ModalFrame>
       )}
     </div>
     </SuperAdminGuard>

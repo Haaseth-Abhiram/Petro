@@ -1,5 +1,7 @@
 "use client";
 
+import WorkspaceLoader from "@/components/admin/WorkspaceLoader";
+
 import React, { useState, useEffect } from "react";
 import SuperAdminGuard from "@/components/admin/SuperAdminGuard";
 import {
@@ -70,7 +72,7 @@ export default function AdminAuditLogsPage() {
             placeholder="Search audit trail by admin email, action name, or entity type..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 rounded-lg border border-[#D8DDE2] text-xs sm:text-sm focus:border-[#FF4B32] outline-none"
+            className="w-full pl-10 pr-4 py-2 rounded-lg border border-[#D8DDE2] text-xs sm:text-sm focus:border-[#C80808] outline-none"
           />
         </div>
       </div>
@@ -91,8 +93,7 @@ export default function AdminAuditLogsPage() {
               {loading ? (
                 <tr>
                   <td colSpan={5} className="py-12 text-center text-[#5F6871]">
-                    <div className="w-6 h-6 border-2 border-[#FF4B32] border-t-transparent rounded-full animate-spin mx-auto mb-2" />
-                    <span>Loading audit records from Supabase...</span>
+                    <WorkspaceLoader compact />
                   </td>
                 </tr>
               ) : filteredLogs.length === 0 ? (

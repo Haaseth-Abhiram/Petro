@@ -23,9 +23,9 @@ export default function PetroLogo({
   const dark = variant === "dark";
   const flameOnly = part === "flame";
   const vb = flameOnly ? "0 0 178 275" : "0 0 720 275";
-  const redTop = dark ? "#FF624D" : "#FF4B32";
-  const redMid = dark ? "#FF4B32" : "#E03820";
-  const redBot = dark ? "#E03820" : "#C02814";
+  const redTop = dark ? "#FF3B2F" : "#E21212";
+  const redMid = dark ? "#E01616" : "#C80808";
+  const redBot = dark ? "#B80C0C" : "#8E0909";
   return (
     <svg role="img" aria-label={title} viewBox={vb} width={width} className={className} xmlns="http://www.w3.org/2000/svg" style={{ display: "block", height: "auto" }}>
       <defs>

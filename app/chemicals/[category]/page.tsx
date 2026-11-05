@@ -27,12 +27,12 @@ export default function ChemicalCategoryPage({ params }: PageProps) {
   return (
     <div className="w-full">
       {/* 1. HERO */}
-      <section className="relative bg-[#17191C] text-white py-20 lg:py-24 overflow-hidden">
+      <section className="relative bg-[#17191C]/90 text-white py-20 lg:py-24 overflow-hidden">
         <div
-          className="absolute inset-0 bg-cover bg-center opacity-25 z-0"
+          className="absolute inset-0 bg-cover bg-center opacity-40 z-0"
           style={{ backgroundImage: `url('/assets/img/reverse-osmosis.jpg')` }}
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#17191C]/95 via-[#17191C]/90 to-[#17191C]/75 z-0" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#17191C]/85 via-[#17191C]/75 to-[#17191C]/55 z-0" />
 
         <div className="relative z-10 max-w-[1400px] mx-auto px-6">
           <div className="max-w-[820px]">
@@ -80,7 +80,7 @@ export default function ChemicalCategoryPage({ params }: PageProps) {
                 <ul className="space-y-2.5 text-sm text-[#5F6871]">
                   {category.keyProducts.map((prod, idx) => (
                     <li key={idx} className="flex items-start">
-                      <span className="w-2 h-2 rounded-full bg-[#FF4B32] mr-3 mt-1.5 shrink-0" />
+                      <span className="w-2 h-2 rounded-full bg-[#C80808] mr-3 mt-1.5 shrink-0" />
                       <span>{prod}</span>
                     </li>
                   ))}
@@ -96,14 +96,14 @@ export default function ChemicalCategoryPage({ params }: PageProps) {
                 <ul className="space-y-2 text-xs text-[#5F6871]">
                   {category.applications.map((app, i) => (
                     <li key={i} className="flex items-start">
-                      <Check className="w-3.5 h-3.5 text-[#FF4B32] mr-2 shrink-0 mt-0.5" />
+                      <Check className="w-3.5 h-3.5 text-[#C80808] mr-2 shrink-0 mt-0.5" />
                       <span>{app}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
-              <div className="bg-[#17191C] text-white p-7 rounded-[8px]">
+              <div className="bg-[#17191C]/90 text-white p-7 rounded-[8px]">
                 <span className="eyebrow eyebrow-gold">TECHNICAL DOSAGE</span>
                 <h4 className="text-white text-base font-bold mt-1 mb-2">
                   Need a computerized dosage simulation?

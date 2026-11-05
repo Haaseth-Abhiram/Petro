@@ -1,5 +1,9 @@
 "use client";
 
+import WorkspaceLoader from "@/components/admin/WorkspaceLoader";
+
+import { ModalFrame, ConfirmDialog } from "@/components/admin/Modal";
+
 import React, { useState, useEffect } from "react";
 import {
   FileText,
@@ -147,7 +151,7 @@ export default function AdminDocumentsPage() {
 
         <button
           onClick={handleOpenAdd}
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-[#FF4B32] hover:bg-[#E03820] text-white text-xs font-bold transition-all shadow-[0_4px_12px_rgba(255,75,50,0.3)] shrink-0 self-start sm:self-auto"
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-[#C80808] hover:bg-[#8A0A0A] text-white text-xs font-bold transition-all shadow-[0_4px_12px_rgba(200,8,8,0.3)] shrink-0 self-start sm:self-auto"
         >
           <Plus className="w-4 h-4" />
           <span>Upload Document</span>
@@ -179,10 +183,7 @@ export default function AdminDocumentsPage() {
       {/* Documents Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {loading ? (
-          <div className="col-span-full py-16 text-center text-[#5F6871]">
-            <div className="w-7 h-7 border-3 border-[#FF4B32] border-t-transparent rounded-full animate-spin mx-auto mb-2" />
-            <p className="text-xs font-semibold">Loading documents from Supabase...</p>
-          </div>
+          <div className="col-span-full"><WorkspaceLoader compact /></div>
         ) : documents.length === 0 ? (
           <div className="col-span-full py-16 text-center text-[#5F6871]">
             No documents found in this section.
@@ -191,11 +192,11 @@ export default function AdminDocumentsPage() {
           documents.map((doc) => (
             <div
               key={doc.id}
-              className="bg-white rounded-xl border border-[#D8DDE2] shadow-sm p-5 flex flex-col justify-between hover:border-[#FF4B32] transition-colors"
+              className="bg-white rounded-xl border border-[#D8DDE2] shadow-sm p-5 flex flex-col justify-between hover:border-[#C80808] transition-colors"
             >
               <div>
                 <div className="flex items-center justify-between mb-3">
-                  <div className="w-10 h-10 rounded-lg bg-[#FF4B32]/10 text-[#FF4B32] flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-lg bg-[#C80808]/10 text-[#C80808] flex items-center justify-center">
                     <FileText className="w-5 h-5" />
                   </div>
                   <div className="flex items-center gap-2">
@@ -267,21 +268,8 @@ export default function AdminDocumentsPage() {
 
       {/* Modal */}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm overflow-y-auto">
-          <div className="bg-white rounded-2xl max-w-lg w-full border border-[#D8DDE2] shadow-2xl my-8 overflow-hidden animate-in fade-in zoom-in-95">
-            <div className="p-6 border-b border-[#D8DDE2] flex items-center justify-between bg-[#F5F6F7]/50">
-              <h3 className="text-lg font-bold text-[#17191C]">
-                {editingDoc ? "Edit Document" : "Upload New Document"}
-              </h3>
-              <button
-                onClick={() => setShowModal(false)}
-                className="p-1.5 text-[#929DA7] hover:text-[#17191C] rounded"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            <form onSubmit={handleSave} className="p-6 space-y-4">
+        <ModalFrame onClose={() => setShowModal(false)} eyebrow="Documents" title={editingDoc ? "Edit document" : "Upload a new document"} size="lg">
+        <form onSubmit={handleSave} className="p-6 space-y-4">
               <div>
                 <label className="block text-xs font-bold uppercase text-[#17191C] mb-1">
                   Document Title *
@@ -291,7 +279,7 @@ export default function AdminDocumentsPage() {
                   required
                   value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                  className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs focus:border-[#FF4B32] outline-none"
+                  className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs focus:border-[#C80808] outline-none"
                   placeholder="e.g. Master Instrumentation Valve Catalogue"
                 />
               </div>
@@ -378,7 +366,7 @@ export default function AdminDocumentsPage() {
                   id="docPub"
                   checked={formData.is_published}
                   onChange={(e) => setFormData({ ...formData, is_published: e.target.checked })}
-                  className="w-4 h-4 rounded text-[#FF4B32] focus:ring-[#FF4B32]"
+                  className="w-4 h-4 rounded text-[#C80808] focus:ring-[#C80808]"
                 />
                 <label htmlFor="docPub" className="text-xs font-semibold text-[#17191C] cursor-pointer">
                   Document Available for Public Download
@@ -396,14 +384,13 @@ export default function AdminDocumentsPage() {
                 <button
                   type="submit"
                   disabled={saving}
-                  className="px-5 py-2 rounded-lg bg-[#FF4B32] hover:bg-[#E03820] text-white text-xs font-bold shadow-sm disabled:opacity-50"
+                  className="px-5 py-2 rounded-lg bg-[#C80808] hover:bg-[#8A0A0A] text-white text-xs font-bold shadow-sm disabled:opacity-50"
                 >
                   {saving ? "Saving..." : editingDoc ? "Save Changes" : "Create Document"}
                 </button>
               </div>
             </form>
-          </div>
-        </div>
+      </ModalFrame>
       )}
     </div>
   );

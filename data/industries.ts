@@ -132,7 +132,7 @@ export const INDUSTRIES: IndustryItem[] = [
     shortOverview:
       "Strategic material take-off (MTO) consolidation, technical query (TQ) resolution, and on-time site deliveries for global engineering and construction contractors.",
     detailedOverview:
-      "Large-scale capital expenditure (CAPEX) infrastructure projects demand seamless collaboration across hundreds of equipment suppliers. Petronex acts as a single-point procurement partner for EPC contractors, managing material approval requests (MAR), third-party witness testing, and phased job-site deliveries.",
+      "Large-scale capital expenditure (CAPEX) infrastructure projects demand seamless collaboration across hundreds of equipment suppliers. Petro Engineering acts as a single-point procurement partner for EPC contractors, managing material approval requests (MAR), third-party witness testing, and phased job-site deliveries.",
     image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80",
     commonRequirements: [
       "Approved Vendor List (AVL) compliance with major international EPCs",
