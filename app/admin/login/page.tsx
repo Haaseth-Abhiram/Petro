@@ -111,11 +111,11 @@ export default function AdminLoginPage() {
   const fieldCls = (bad: boolean) =>
     `w-full pl-10 pr-3 py-2.5 rounded-xl border-2 text-[14px] text-[#17191C] placeholder:text-[#929DA7] bg-white transition-all outline-none ${
       bad
-        ? "border-[#FF4B32] bg-[#FFF1EF]/60"
-        : "border-[#E7E9EE] hover:border-[#D8C9B3] focus:border-[#FF4B32] focus:shadow-[0_0_0_4px_rgba(255,75,50,0.12)]"
+        ? "border-[#C80808] bg-[#FFF1EF]/60"
+        : "border-[#E7E9EE] hover:border-[#D8C9B3] focus:border-[#C80808] focus:shadow-[0_0_0_4px_rgba(255,75,50,0.12)]"
     }`;
   const lbl = "block text-[11px] font-extrabold uppercase tracking-wider text-[#17191C] mb-1";
-  const ico = "w-[17px] h-[17px] text-[#FF4B32] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none";
+  const ico = "w-[17px] h-[17px] text-[#C80808] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none";
 
   return (
     <div className="h-screen w-full overflow-hidden grid lg:grid-cols-[1fr_1fr] bg-[#FFF8F0]">
@@ -129,9 +129,9 @@ export default function AdminLoginPage() {
           priority
           className="object-cover opacity-35"
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-[#17191C]/92 via-[#2A1515]/80 to-[#FF4B32]/65" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#17191C]/92 via-[#2A1515]/80 to-[#C80808]/65" />
         <div className="absolute -top-24 -right-16 w-[440px] h-[440px] rounded-full bg-[#FFA028]/25 blur-[110px] animate-blob" />
-        <div className="absolute -bottom-32 -left-20 w-[420px] h-[420px] rounded-full bg-[#FF4B32]/30 blur-[110px] animate-blob" />
+        <div className="absolute -bottom-32 -left-20 w-[420px] h-[420px] rounded-full bg-[#C80808]/30 blur-[110px] animate-blob" />
         <div className="absolute inset-0 dot-grid opacity-20" />
 
         <div className="relative flex items-center justify-between">
@@ -168,7 +168,7 @@ export default function AdminLoginPage() {
                 key={x.t}
                 className="flex items-center gap-3 rounded-xl bg-white/[0.07] border border-white/15 backdrop-blur px-3.5 py-2.5 text-[14px] text-white/95 hover:bg-white/[0.13] hover:translate-x-1 transition-all"
               >
-                <span className="w-9 h-9 rounded-lg bg-gradient-to-br from-[#FF4B32] to-[#FFA028] flex items-center justify-center shrink-0">
+                <span className="w-9 h-9 rounded-lg bg-gradient-to-br from-[#C80808] to-[#FFA028] flex items-center justify-center shrink-0">
                   <x.i className="w-[18px] h-[18px] text-white" />
                 </span>
                 {x.t}
@@ -192,12 +192,12 @@ export default function AdminLoginPage() {
       {/* Form panel */}
       <main className="relative flex items-center justify-center px-5 sm:px-10 overflow-hidden">
         <div className="absolute -top-24 -right-20 w-[360px] h-[360px] rounded-full bg-[#FFA028]/[0.18] blur-[90px]" />
-        <div className="absolute -bottom-24 -left-20 w-[360px] h-[360px] rounded-full bg-[#FF4B32]/[0.08] blur-[90px]" />
+        <div className="absolute -bottom-24 -left-20 w-[360px] h-[360px] rounded-full bg-[#C80808]/[0.08] blur-[90px]" />
         <Link
           href="/"
           className="lg:hidden absolute top-4 left-4 inline-flex items-center gap-1.5 text-[12px] font-semibold text-[#4a5159]"
         >
-          <ArrowLeft className="w-4 h-4 text-[#FF4B32]" />
+          <ArrowLeft className="w-4 h-4 text-[#C80808]" />
           Home
         </Link>
 
@@ -207,11 +207,11 @@ export default function AdminLoginPage() {
               <PetroLogo width={130} />
             </Link>
           </div>
-          <div className="rounded-3xl bg-white border border-[#F0E3D2] shadow-[0_30px_80px_rgba(255,75,50,0.14)] overflow-hidden animate-[routefade_.7s_ease-out_both] relative before:absolute before:inset-x-0 before:top-0 before:h-[4px] before:bg-gradient-to-r before:from-[#FF4B32] via-[#FFA028] before:to-[#FFD580]">
+          <div className="rounded-3xl bg-white border border-[#F0E3D2] shadow-[0_30px_80px_rgba(255,75,50,0.14)] overflow-hidden animate-[routefade_.7s_ease-out_both] relative before:absolute before:inset-x-0 before:top-0 before:h-[4px] before:bg-gradient-to-r before:from-[#C80808] via-[#FFA028] before:to-[#FFD580]">
             {/* tabs */}
             <div className="relative grid grid-cols-2 bg-[#FFF8F0] p-1.5 m-4 mb-0 rounded-2xl" role="tablist">
               <span
-                className="absolute top-1.5 bottom-1.5 w-[calc(50%-6px)] rounded-xl bg-gradient-to-r from-[#FF4B32] to-[#FFA028] shadow-md transition-all duration-300"
+                className="absolute top-1.5 bottom-1.5 w-[calc(50%-6px)] rounded-xl bg-gradient-to-r from-[#C80808] to-[#FFA028] shadow-md transition-all duration-300"
                 style={{ left: mode === "login" ? 6 : "calc(50%)" }}
               />
               {(["login", "signup"] as const).map((m) => (
@@ -244,14 +244,14 @@ export default function AdminLoginPage() {
                       className={`mb-3 p-3 rounded-xl border text-[12.5px] ${
                         authStatus.success
                           ? "bg-green-50 border-green-200 text-green-900"
-                          : "bg-[#FFF1EF] border-[#FF4B32]/30 text-[#17191C]"
+                          : "bg-[#FFF1EF] border-[#C80808]/30 text-[#17191C]"
                       }`}
                     >
                       <div className="flex items-start gap-2">
                         {authStatus.success ? (
                           <CheckCircle2 className="w-4 h-4 text-green-600 shrink-0 mt-0.5" />
                         ) : (
-                          <AlertCircle className="w-4 h-4 text-[#FF4B32] shrink-0 mt-0.5" />
+                          <AlertCircle className="w-4 h-4 text-[#C80808] shrink-0 mt-0.5" />
                         )}
                         <div>
                           <strong className="font-bold block">{authStatus.message}</strong>
@@ -277,7 +277,7 @@ export default function AdminLoginPage() {
                         />
                       </div>
                       {errors.email && (
-                        <p className="text-[#FF4B32] text-xs mt-1 flex items-center gap-1 font-medium">
+                        <p className="text-[#C80808] text-xs mt-1 flex items-center gap-1 font-medium">
                           <AlertCircle className="w-3.5 h-3.5" />
                           {errors.email.message}
                         </p>
@@ -291,7 +291,7 @@ export default function AdminLoginPage() {
                         <button
                           type="button"
                           onClick={() => setShowForgotModal(true)}
-                          className="text-[11.5px] font-bold text-[#FF4B32] hover:underline"
+                          className="text-[11.5px] font-bold text-[#C80808] hover:underline"
                         >
                           Forgot password?
                         </button>
@@ -316,7 +316,7 @@ export default function AdminLoginPage() {
                         </button>
                       </div>
                       {errors.password && (
-                        <p className="text-[#FF4B32] text-xs mt-1 flex items-center gap-1 font-medium">
+                        <p className="text-[#C80808] text-xs mt-1 flex items-center gap-1 font-medium">
                           <AlertCircle className="w-3.5 h-3.5" />
                           {errors.password.message}
                         </p>
@@ -327,7 +327,7 @@ export default function AdminLoginPage() {
                         id="rememberMe"
                         type="checkbox"
                         {...register("rememberMe")}
-                        className="w-4 h-4 rounded border-[#D8DDE2] text-[#FF4B32] focus:ring-[#FF4B32] cursor-pointer"
+                        className="w-4 h-4 rounded border-[#D8DDE2] text-[#C80808] focus:ring-[#C80808] cursor-pointer"
                       />
                       <label htmlFor="rememberMe" className="ml-2.5 text-[12.5px] text-[#4a5159] font-medium cursor-pointer select-none">
                         Remember me for 30 days
@@ -336,7 +336,7 @@ export default function AdminLoginPage() {
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="group w-full inline-flex items-center justify-center gap-2 text-[14.5px] font-extrabold bg-gradient-to-r from-[#FF4B32] via-[#E03820] to-[#FFA028] bg-[length:200%_100%] hover:bg-right text-white py-3 rounded-xl shadow-[0_12px_28px_rgba(255,75,50,0.30)] hover:-translate-y-0.5 disabled:opacity-70 transition-all duration-500"
+                      className="group w-full inline-flex items-center justify-center gap-2 text-[14.5px] font-extrabold bg-gradient-to-r from-[#C80808] via-[#8A0A0A] to-[#FFA028] bg-[length:200%_100%] hover:bg-right text-white py-3 rounded-xl shadow-[0_12px_28px_rgba(255,75,50,0.30)] hover:-translate-y-0.5 disabled:opacity-70 transition-all duration-500"
                     >
                       {isSubmitting ? (
                         <>
@@ -356,7 +356,7 @@ export default function AdminLoginPage() {
                     <button
                       type="button"
                       onClick={() => setMode("signup")}
-                      className="font-extrabold text-[#FF4B32] hover:underline"
+                      className="font-extrabold text-[#C80808] hover:underline"
                     >
                       Create an account
                     </button>
@@ -369,13 +369,13 @@ export default function AdminLoginPage() {
                   {suMsg && (
                     <div
                       className={`mb-3 p-3 rounded-xl border text-[12.5px] flex gap-2 ${
-                        suMsg.ok ? "bg-green-50 border-green-200 text-green-900" : "bg-[#FFF1EF] border-[#FF4B32]/30 text-[#17191C]"
+                        suMsg.ok ? "bg-green-50 border-green-200 text-green-900" : "bg-[#FFF1EF] border-[#C80808]/30 text-[#17191C]"
                       }`}
                     >
                       {suMsg.ok ? (
                         <CheckCircle2 className="w-4 h-4 text-green-700 shrink-0 mt-0.5" />
                       ) : (
-                        <AlertCircle className="w-4 h-4 text-[#FF4B32] shrink-0 mt-0.5" />
+                        <AlertCircle className="w-4 h-4 text-[#C80808] shrink-0 mt-0.5" />
                       )}
                       <span>{suMsg.text}</span>
                     </div>
@@ -447,7 +447,7 @@ export default function AdminLoginPage() {
                     <button
                       type="submit"
                       disabled={suBusy}
-                      className="group w-full inline-flex items-center justify-center gap-2 text-[14.5px] font-extrabold bg-gradient-to-r from-[#FF4B32] via-[#E03820] to-[#FFA028] bg-[length:200%_100%] hover:bg-right text-white py-3 rounded-xl shadow-[0_12px_28px_rgba(255,75,50,0.30)] hover:-translate-y-0.5 disabled:opacity-70 transition-all duration-500"
+                      className="group w-full inline-flex items-center justify-center gap-2 text-[14.5px] font-extrabold bg-gradient-to-r from-[#C80808] via-[#8A0A0A] to-[#FFA028] bg-[length:200%_100%] hover:bg-right text-white py-3 rounded-xl shadow-[0_12px_28px_rgba(255,75,50,0.30)] hover:-translate-y-0.5 disabled:opacity-70 transition-all duration-500"
                     >
                       {suBusy ? (
                         <>
@@ -467,7 +467,7 @@ export default function AdminLoginPage() {
                     <button
                       type="button"
                       onClick={() => setMode("login")}
-                      className="font-extrabold text-[#FF4B32] hover:underline"
+                      className="font-extrabold text-[#C80808] hover:underline"
                     >
                       Login
                     </button>
@@ -478,11 +478,11 @@ export default function AdminLoginPage() {
           </div>
           <p className="text-center text-[11.5px] text-[#929DA7] mt-3">
             © {new Date().getFullYear()} Petro Engineering Private Limited ·{" "}
-            <Link href="/privacy" className="hover:text-[#FF4B32]">
+            <Link href="/privacy" className="hover:text-[#C80808]">
               Privacy
             </Link>{" "}
             ·{" "}
-            <Link href="/terms" className="hover:text-[#FF4B32]">
+            <Link href="/terms" className="hover:text-[#C80808]">
               Terms
             </Link>
           </p>
@@ -501,7 +501,7 @@ export default function AdminLoginPage() {
               <X className="w-5 h-5" />
             </button>
 
-            <div className="w-12 h-12 rounded-full bg-[#FF4B32]/10 text-[#FF4B32] flex items-center justify-center mb-4">
+            <div className="w-12 h-12 rounded-full bg-[#C80808]/10 text-[#C80808] flex items-center justify-center mb-4">
               <HelpCircle className="w-6 h-6" />
             </div>
 
