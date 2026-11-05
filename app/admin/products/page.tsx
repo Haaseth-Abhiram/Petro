@@ -3,6 +3,7 @@
 import WorkspaceLoader from "@/components/admin/WorkspaceLoader";
 import PetroLogo from "@/components/common/PetroLogo";
 import Dropdown from "@/components/admin/Dropdown";
+import ImageUploadField from "@/components/admin/ImageUploadField";
 
 import React, { useState, useEffect, useMemo } from "react";
 import {
@@ -344,11 +345,12 @@ export default function AdminProductsPage() {
                 </section>
 
                 <section>
-                  <h4 className="mb-3 text-[11px] font-extrabold uppercase tracking-[0.18em] text-[#C80808]">Image</h4>
-                  <div className="flex items-start gap-4">
-                    <Thumb src={formData.image} alt="Preview" className="h-24 w-24 shrink-0 overflow-hidden rounded-2xl border border-[#E7E9EE]" />
-                    <div className="flex-1"><label className={label}>Image URL</label><input type="text" value={formData.image} onChange={(e) => setFormData({ ...formData, image: e.target.value })} className={field} placeholder="https://… or /assets/img/…" /><p className="mt-1.5 text-[11.5px] text-[#929DA7]">Shown on product cards and the product page. A square or landscape photo works best.</p></div>
-                  </div>
+                  <ImageUploadField
+                    value={formData.image}
+                    onChange={(url) => setFormData({ ...formData, image: url })}
+                    label="Product Image"
+                    hint="Upload directly from your device or paste an image URL. Shown on product cards and technical detail pages."
+                  />
                 </section>
 
                 <section>

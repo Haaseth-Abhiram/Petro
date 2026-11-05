@@ -1,6 +1,7 @@
 "use client";
 
 import WorkspaceLoader from "@/components/admin/WorkspaceLoader";
+import ImageUploadField from "@/components/admin/ImageUploadField";
 
 import { ModalFrame, ConfirmDialog } from "@/components/admin/Modal";
 
@@ -216,12 +217,11 @@ export default function AdminServicesPage() {
                 />
               </div>
               <div>
-                <label className="block text-xs font-bold uppercase text-[#17191C] mb-1">Image URL</label>
-                <input
-                  type="text"
+                <ImageUploadField
                   value={formData.image}
-                  onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                  className="w-full px-3 py-2 rounded-lg border border-[#D8DDE2] text-xs outline-none"
+                  onChange={(url) => setFormData({ ...formData, image: url })}
+                  label="Service Image"
+                  hint="Upload from device or enter URL."
                 />
               </div>
               <div>
