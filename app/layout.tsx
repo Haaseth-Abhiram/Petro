@@ -10,6 +10,15 @@ export const metadata: Metadata = {
   title: "Petro Engineering | Industrial Solutions & Precision Sourcing",
   description:
     "Specialized sourcing partner for industrial chemicals, water treatment solutions, instrumentation, valves, tubing, and engineering services.",
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/icon.png", type: "image/png" },
+      { url: "/assets/img/flame-logo-clean.png", type: "image/png" },
+    ],
+    shortcut: "/icon.png",
+    apple: "/apple-icon.png",
+  },
 };
 
 export default function RootLayout({
