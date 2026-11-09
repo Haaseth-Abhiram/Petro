@@ -384,7 +384,7 @@ export default function AdminDocumentsPage() {
                 <button
                   type="submit"
                   disabled={saving}
-                  className="px-5 py-2 rounded-lg bg-[#C80808] hover:bg-[#A81010] text-white text-xs font-bold shadow-sm disabled:opacity-50"
+                  className="px-5 py-2 rounded-lg bg-[#C80808] hover:bg-[#A81010] text-white text-xs font-bold shadow-sm disabled:opacity-70"
                 >
                   {saving ? "Saving..." : editingDoc ? "Save Changes" : "Create Document"}
                 </button>

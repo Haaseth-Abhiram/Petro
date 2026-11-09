@@ -23,7 +23,7 @@ export default function ContactPage() {
       {/* HERO + FORM */}
       <section className="relative bg-[#17191C]/90 text-white overflow-hidden">
         <div className="absolute inset-0 bg-cover bg-center opacity-40" style={{ backgroundImage: "url('/assets/img/service-technical-consultation.jpg')" }} />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#17191C]/85 via-[#17191C]/75 to-[#17191C]/50" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#17191C]/85 via-[#17191C]/75 to-[#17191C]/70" />
         <div className="absolute -top-28 -right-20 w-[460px] h-[460px] rounded-full bg-[#E0A21A]/25 blur-[120px] animate-blob" />
         <div className="absolute -bottom-32 -left-24 w-[420px] h-[420px] rounded-full bg-[#C80808]/30 blur-[120px] animate-blob" />
         <div className="absolute inset-0 dot-grid opacity-25 [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]" />
@@ -89,7 +89,7 @@ export default function ContactPage() {
             <span className="inline-flex items-center gap-3 text-[11px] font-extrabold uppercase tracking-[0.2em] text-[#C80808] mb-2"><span className="h-[3px] w-9 rounded bg-[#C80808]" />What happens next</span>
             <h2 className="text-[1.3rem] sm:text-[1.6rem] font-black leading-[1.15] text-[#17191C] mb-5">From your message to a proposal</h2>
             <ol className="relative space-y-4">
-              <span aria-hidden="true" className="absolute left-[27px] top-6 bottom-6 w-[3px] rounded bg-gradient-to-b from-[#C80808]/50 to-[#E0A21A]/50" />
+              <span aria-hidden="true" className="absolute left-[27px] top-6 bottom-6 w-[3px] rounded bg-gradient-to-b from-[#C80808]/70 to-[#E0A21A]/70" />
               {next.map((n, k) => (
                 <Reveal key={n.t} delay={k * 110}>
                   <li className="relative flex gap-4 items-center">

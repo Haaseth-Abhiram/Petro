@@ -54,7 +54,7 @@ export default function FlameLoader({
       <div className="relative mb-6 flex items-center justify-center">
         {/* Soft Radial Ambient Glow */}
         <div
-          className="absolute -inset-6 rounded-full blur-2xl opacity-50 pointer-events-none"
+          className="absolute -inset-6 rounded-full blur-2xl opacity-70 pointer-events-none"
           style={{
             background:
               "radial-gradient(circle, rgba(200,8,8,0.4) 0%, rgba(245,158,11,0.2) 50%, transparent 75%)",

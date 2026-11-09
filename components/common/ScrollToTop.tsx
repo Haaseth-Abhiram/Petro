@@ -42,7 +42,7 @@ export default function ScrollToTop({ variant = DEFAULT_TOP_VARIANT, demo = fals
         type="button"
         aria-label="Scroll to top"
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-        className={`group ${pos} overflow-hidden rounded-2xl bg-gradient-to-br from-[#C80808]/50 to-[#E0241A]/50 text-white shadow-[0_8px_20px_rgba(200,8,8,0.18)] px-4 pt-3 pb-4 flex flex-col items-center gap-1 transition-all duration-500 hover:-translate-y-1.5 hover:from-[#E0A21A] hover:to-[#D4950F] ${vis}`}
+        className={`group ${pos} overflow-hidden rounded-2xl bg-gradient-to-br from-[#C80808]/70 to-[#E0241A]/70 text-white shadow-[0_8px_20px_rgba(200,8,8,0.18)] px-4 pt-3 pb-4 flex flex-col items-center gap-1 transition-all duration-500 hover:-translate-y-1.5 hover:from-[#E0A21A] hover:to-[#D4950F] ${vis}`}
       >
         <ArrowUp className="w-5 h-5 group-hover:-translate-y-1 transition-transform" />
         <span className="text-[10px] font-extrabold uppercase tracking-[0.18em]">Top</span>

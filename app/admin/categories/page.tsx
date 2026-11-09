@@ -218,7 +218,7 @@ export default function AdminCategoriesPage() {
         </div>
         <div className="flex items-center gap-2.5">
           <button onClick={fetchCategories} className="inline-flex items-center gap-2 rounded-xl border border-[#E4E7EC] bg-white px-4 py-2.5 text-[13px] font-bold text-[#17191C] transition-colors hover:border-[#C80808]/40 hover:text-[#C80808]"><RefreshCw className={`h-4 w-4 ${loading ? "animate-spin" : ""}`} />Refresh</button>
-          <button onClick={handleOpenAdd} className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#C80808]/50 to-[#E0A21A]/50 px-5 py-2.5 text-[13px] font-extrabold text-white shadow-[0_10px_24px_-8px_rgba(200,8,8,0.22)] transition-transform hover:-translate-y-0.5"><Plus className="h-4 w-4" />Add category</button>
+          <button onClick={handleOpenAdd} className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#C80808]/70 to-[#E0A21A]/70 px-5 py-2.5 text-[13px] font-extrabold text-white shadow-[0_10px_24px_-8px_rgba(200,8,8,0.22)] transition-transform hover:-translate-y-0.5"><Plus className="h-4 w-4" />Add category</button>
         </div>
       </div>
 
@@ -348,9 +348,9 @@ export default function AdminCategoriesPage() {
         <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-[#14161A]/70 p-4 backdrop-blur-sm sm:items-center" onClick={() => setShowModal(false)}>
           <div role="dialog" aria-modal="true" onClick={(e) => e.stopPropagation()} className="relative my-6 flex max-h-[92vh] w-full max-w-2xl flex-col overflow-hidden rounded-[28px] bg-white shadow-[0_40px_120px_rgba(0,0,0,0.5)] animate-[routepop2_.35s_cubic-bezier(.2,.9,.25,1.1)_both]">
             <div className="relative flex shrink-0 items-center justify-between gap-4 border-b border-[#EEF0F3] px-6 py-5 sm:px-8">
-              <span className="absolute inset-x-0 top-0 h-[2.5px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#F2B93B] opacity-50" />
+              <span className="absolute inset-x-0 top-0 h-[2.5px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#F2B93B] opacity-70" />
               <div className="flex items-center gap-3.5">
-                <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-[#D40E0E]/50 to-[#E0A21A]/50 text-white shadow-[0_8px_18px_-6px_rgba(200,8,8,0.20)]">{editingCategory ? <Pencil className="h-5 w-5" /> : <Plus className="h-5 w-5" />}</span>
+                <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-[#D40E0E]/70 to-[#E0A21A]/70 text-white shadow-[0_8px_18px_-6px_rgba(200,8,8,0.20)]">{editingCategory ? <Pencil className="h-5 w-5" /> : <Plus className="h-5 w-5" />}</span>
                 <div><h3 className="text-[18px] font-black text-[#17191C]">{editingCategory ? "Edit category" : "Add a new category"}</h3><p className="text-[12.5px] text-[#5F6871]">{editingCategory ? editingCategory.name : "Group related products so visitors can find them easily."}</p></div>
               </div>
               <button onClick={() => setShowModal(false)} className="rounded-xl p-2 text-[#5F6871] transition-colors hover:bg-[#F5F6F7] hover:text-[#17191C]" aria-label="Close"><X className="h-5 w-5" /></button>
@@ -395,7 +395,7 @@ export default function AdminCategoriesPage() {
 
               <div className="flex shrink-0 items-center justify-end gap-3 border-t border-[#EEF0F3] bg-white px-6 py-4 sm:px-8">
                 <button type="button" onClick={() => setShowModal(false)} className="rounded-xl border-2 border-[#E7E9EE] px-5 py-2.5 text-[13.5px] font-bold text-[#17191C] transition-colors hover:border-[#17191C]">Cancel</button>
-                <button type="submit" disabled={saving} className="rounded-xl bg-gradient-to-r from-[#C80808]/50 to-[#E0A21A]/50 px-6 py-2.5 text-[13.5px] font-extrabold text-white shadow-[0_10px_24px_-8px_rgba(200,8,8,0.22)] transition-transform hover:-translate-y-0.5 disabled:opacity-50">{saving ? "Saving…" : editingCategory ? "Save changes" : "Create category"}</button>
+                <button type="submit" disabled={saving} className="rounded-xl bg-gradient-to-r from-[#C80808]/70 to-[#E0A21A]/70 px-6 py-2.5 text-[13.5px] font-extrabold text-white shadow-[0_10px_24px_-8px_rgba(200,8,8,0.22)] transition-transform hover:-translate-y-0.5 disabled:opacity-70">{saving ? "Saving…" : editingCategory ? "Save changes" : "Create category"}</button>
               </div>
             </form>
           </div>

@@ -226,10 +226,10 @@ export default function AdminQuoteRequestsPage() {
   const pipeIdx = PIPE.indexOf(statusInput === "resubmitted" ? "new" : statusInput);
 
   const summary = [
-    { k: "new", l: "New", sub: "Waiting for review", v: open, Icon: Inbox, grad: "from-[#E21212]/50 to-[#A81010]/50", dark: false },
-    { k: "under_review", l: "In review", sub: "Review or info needed", v: inReview, Icon: SearchIcon, grad: "from-[#F2B93B]/50 to-[#D4950F]/50", dark: true },
+    { k: "new", l: "New", sub: "Waiting for review", v: open, Icon: Inbox, grad: "from-[#E21212]/70 to-[#A81010]/70", dark: false },
+    { k: "under_review", l: "In review", sub: "Review or info needed", v: inReview, Icon: SearchIcon, grad: "from-[#F2B93B]/70 to-[#D4950F]/70", dark: true },
     { k: "quoted", l: "Quoted", sub: "Quotation sent", v: statusCounts.quoted || 0, Icon: BadgeCheck, grad: "from-[#059669] to-[#047857]", dark: false },
-    { k: "completed", l: "Won", sub: "Completed orders", v: statusCounts.completed || 0, Icon: Trophy, grad: "from-[#2E3239]/50 to-[#14161A]/50", dark: false },
+    { k: "completed", l: "Won", sub: "Completed orders", v: statusCounts.completed || 0, Icon: Trophy, grad: "from-[#2E3239]/70 to-[#14161A]/70", dark: false },
   ] as const;
 
   return (
@@ -239,7 +239,7 @@ export default function AdminQuoteRequestsPage() {
         <div className="pointer-events-none absolute -right-10 -top-14 h-44 w-72 rounded-full bg-[#E0A21A]/15 blur-[60px]" />
         <div className="pointer-events-none absolute right-4 top-1/2 w-[170px] -translate-y-1/2 opacity-[0.08]"><PetroLogo part="flame" variant="dark" width="100%" /></div>
         <div className="pointer-events-none absolute inset-0 opacity-[0.05] [background-image:linear-gradient(#fff_1px,transparent_1px),linear-gradient(90deg,#fff_1px,transparent_1px)] [background-size:30px_30px]" />
-        <span className="absolute inset-x-0 bottom-0 h-[2.5px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#F2B93B] opacity-50" />
+        <span className="absolute inset-x-0 bottom-0 h-[2.5px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#F2B93B] opacity-70" />
         <div className="relative flex flex-col gap-4 px-5 py-4 xl:flex-row xl:items-center xl:justify-between">
           <div className="min-w-0">
             <p className="inline-flex items-center gap-1.5 text-[10.5px] font-extrabold uppercase tracking-[0.2em] text-[#F2B93B]"><Sparkles className="h-3 w-3" />Procurement</p>
@@ -305,7 +305,7 @@ export default function AdminQuoteRequestsPage() {
                 <span className={`absolute inset-y-0 left-0 w-1.5 ${STATUS_BAR[status] || "bg-[#A1A1AA]"}`} />
                 <div className="grid gap-4 p-5 pl-6 lg:grid-cols-[minmax(230px,300px)_1fr_auto] lg:items-center lg:gap-6">
                   <div className="flex min-w-0 items-center gap-3.5">
-                    <span className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[#2E3239]/50 to-[#14161A]/50 text-[20px] font-black text-white shadow-md">
+                    <span className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[#2E3239]/70 to-[#14161A]/70 text-[20px] font-black text-white shadow-md">
                       {String(rfq.company_name || rfq.full_name || "?").trim().charAt(0).toUpperCase()}
                       {isNew && <span className="absolute -right-1 -top-1 h-3.5 w-3.5 rounded-full bg-[#C80808] ring-2 ring-white" />}
                     </span>
@@ -370,7 +370,7 @@ export default function AdminQuoteRequestsPage() {
             <div role="dialog" aria-modal="true" onClick={(e) => e.stopPropagation()} className="relative my-4 flex max-h-[94vh] w-full max-w-5xl flex-col overflow-hidden rounded-[26px] bg-white shadow-[0_40px_120px_rgba(0,0,0,0.5)] animate-[routepop2_.35s_cubic-bezier(.2,.9,.25,1.1)_both]">
               <div className="relative shrink-0 overflow-hidden bg-gradient-to-r from-[#191B1F] via-[#1E191C] to-[#24191C] px-6 py-4 text-white sm:px-7">
                 <div className="pointer-events-none absolute -right-8 -top-10 h-32 w-48 rounded-full bg-[#E0A21A]/15 blur-3xl" />
-                <span className="absolute inset-x-0 bottom-0 h-[2.5px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#F2B93B] opacity-50" />
+                <span className="absolute inset-x-0 bottom-0 h-[2.5px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#F2B93B] opacity-70" />
                 <button onClick={() => setSelectedRfq(null)} className="absolute right-4 top-4 rounded-full bg-white/10 p-2 text-white transition-colors hover:bg-white/25" aria-label="Close"><X className="h-4 w-4" /></button>
                 <div className="flex items-center gap-4 pr-10">
                   <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-white/15 text-[18px] font-black text-white ring-1 ring-white/25">{String(selectedRfq.company_name || selectedRfq.full_name || "?").trim().charAt(0).toUpperCase()}</span>
@@ -409,7 +409,7 @@ export default function AdminQuoteRequestsPage() {
                           <div key={x.l} className="rounded-xl border border-[#E4E4E7] bg-white px-3 py-2.5"><p className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-wider text-[#A1A1AA]"><x.I className="h-3 w-3" />{x.l}</p><p className="mt-0.5 break-words text-[13px] font-extrabold text-[#17191C]">{x.v}</p></div>
                         ))}
                       </div>
-                      <div className="relative mt-3 whitespace-pre-wrap rounded-2xl border border-[#E4E4E7] bg-[#FAFAFA] p-4 pl-5 text-[13.5px] leading-relaxed text-[#17191C]"><span className="absolute inset-y-3 left-0 w-1 rounded-r-full bg-gradient-to-b from-[#C80808]/50 to-[#E0A21A]/50" /><p className="mb-1 text-[10px] font-bold uppercase tracking-wider text-[#A1A1AA]">Technical specifications · {selectedRfq.product_category || "General"}</p>{selectedRfq.technical_specifications || "No detailed technical specifications provided."}</div>
+                      <div className="relative mt-3 whitespace-pre-wrap rounded-2xl border border-[#E4E4E7] bg-[#FAFAFA] p-4 pl-5 text-[13.5px] leading-relaxed text-[#17191C]"><span className="absolute inset-y-3 left-0 w-1 rounded-r-full bg-gradient-to-b from-[#C80808]/70 to-[#E0A21A]/70" /><p className="mb-1 text-[10px] font-bold uppercase tracking-wider text-[#A1A1AA]">Technical specifications · {selectedRfq.product_category || "General"}</p>{selectedRfq.technical_specifications || "No detailed technical specifications provided."}</div>
                       {selectedRfq.additional_comments && <div className="mt-3 whitespace-pre-wrap rounded-2xl border border-dashed border-[#D4D4D8] bg-white p-4 text-[13px] leading-relaxed text-[#52525B]"><p className="mb-1 text-[10px] font-bold uppercase tracking-wider text-[#A1A1AA]">Additional comments</p>{selectedRfq.additional_comments}</div>}
                     </div>
                   </div>
@@ -461,7 +461,7 @@ export default function AdminQuoteRequestsPage() {
                 <div className="flex items-center gap-3">
                   {saveSuccess && <span className="flex items-center gap-1 text-[12.5px] font-bold text-emerald-600"><CheckCircle2 className="h-4 w-4" />Saved</span>}
                   <button onClick={() => setSelectedRfq(null)} className="rounded-xl border-2 border-[#E7E9EE] px-4 py-2 text-[13px] font-bold text-[#17191C] transition-colors hover:border-[#17191C]">Close</button>
-                  <button onClick={handleUpdate} disabled={updating} className="rounded-xl bg-gradient-to-r from-[#C80808]/50 to-[#E0A21A]/50 px-5 py-2 text-[13px] font-extrabold text-white shadow-[0_10px_24px_-8px_rgba(200,8,8,0.22)] transition-transform hover:-translate-y-0.5 disabled:opacity-50">{updating ? "Saving…" : "Save changes"}</button>
+                  <button onClick={handleUpdate} disabled={updating} className="rounded-xl bg-gradient-to-r from-[#C80808]/70 to-[#E0A21A]/70 px-5 py-2 text-[13px] font-extrabold text-white shadow-[0_10px_24px_-8px_rgba(200,8,8,0.22)] transition-transform hover:-translate-y-0.5 disabled:opacity-70">{updating ? "Saving…" : "Save changes"}</button>
                 </div>
               </div>
             </div>

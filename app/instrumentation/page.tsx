@@ -125,7 +125,7 @@ export default function InstrumentationPage() {
       {/* 1. HERO */}
       <section className="relative bg-[#17191C]/90 text-white overflow-hidden">
         <div className="absolute inset-0 bg-cover bg-center opacity-45" style={{ backgroundImage: "url('/assets/img/tube-fittings.jpg')" }} />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#17191C]/85 via-[#17191C]/75 to-[#17191C]/50" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#17191C]/85 via-[#17191C]/75 to-[#17191C]/70" />
         <div className="absolute -top-24 -right-24 w-[420px] h-[420px] rounded-full bg-[#E0A21A]/20 blur-[110px]" />
         <div className="absolute -bottom-24 -left-24 w-[380px] h-[380px] rounded-full bg-[#C80808]/20 blur-[100px]" />
         <div className="relative max-w-[1240px] mx-auto px-5 sm:px-8 pt-10 pb-12 grid lg:grid-cols-[1.3fr_1fr] gap-8 items-center">
@@ -188,7 +188,7 @@ export default function InstrumentationPage() {
                     <table className="w-full text-left text-[13px] min-w-[460px]">
                       <caption className="sr-only">Specification range</caption>
                       <thead>
-                        <tr className="bg-gradient-to-r from-[#C80808]/50 to-[#D4950F]/50 text-white">
+                        <tr className="bg-gradient-to-r from-[#C80808]/70 to-[#D4950F]/70 text-white">
                           {p.headers.map((h) => (<th key={h} scope="col" className="px-4 py-2.5 text-[11px] font-extrabold uppercase tracking-wider">{h}</th>))}
                         </tr>
                       </thead>
@@ -213,7 +213,7 @@ export default function InstrumentationPage() {
       </section>
 
       {/* 4. CTA STRIP */}
-      <section className="py-9 bg-gradient-to-r from-[#17191C]/50 via-[#221316]/50 to-[#17191C]/50">
+      <section className="py-9 bg-gradient-to-r from-[#17191C]/70 via-[#221316]/70 to-[#17191C]/70">
         <Reveal className="max-w-[1240px] mx-auto px-5 sm:px-8 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div className="max-w-[620px]">
             <span className="text-[11px] font-extrabold uppercase tracking-[0.2em] text-[#F2B93B]">Technical RFQ</span>

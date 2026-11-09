@@ -66,8 +66,8 @@ export default function CareersBoard({ jobs }: { jobs: Job[] }) {
           <div role="dialog" aria-modal="true" aria-label={active.title} style={{ maxHeight: "min(calc(92vh / var(--z)), calc(92dvh / var(--z)))" }} onClick={(e) => e.stopPropagation()} className="relative w-full max-w-[640px] m-auto flex flex-col overflow-hidden rounded-[28px] bg-white shadow-[0_40px_120px_rgba(0,0,0,0.55)] animate-[routepop2_.45s_cubic-bezier(.2,.9,.25,1.1)_both]">
             {/* photo header */}
             <div className="relative shrink-0 h-[150px] sm:h-[170px] overflow-hidden bg-[#17191C] text-white">
-              <Image src={active.img || "/assets/img/service-technical-consultation.jpg"} alt="" fill sizes="640px" className="object-cover opacity-50" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#17191C] via-[#17191C]/60 to-[#FF4B32]/50" />
+              <Image src={active.img || "/assets/img/service-technical-consultation.jpg"} alt="" fill sizes="640px" className="object-cover opacity-70" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#17191C] via-[#17191C]/60 to-[#FF4B32]/70" />
               <div className="absolute -top-16 -right-10 w-48 h-48 rounded-full bg-[#FFA028]/35 blur-[60px]" />
               <button type="button" aria-label="Close" onClick={close} className="absolute right-4 top-4 w-9 h-9 rounded-full bg-white/15 hover:bg-white/30 backdrop-blur text-white flex items-center justify-center transition-colors"><X className="w-[18px] h-[18px]" /></button>
               <div className="absolute left-6 right-16 bottom-4">

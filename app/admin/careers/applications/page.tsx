@@ -258,7 +258,7 @@ export default function CandidateApplicationsPage() {
           <button
             type="button"
             onClick={handleExportPdf}
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#C80808]/50 to-[#FFA028]/50 hover:opacity-95 text-white text-xs font-bold transition-colors shadow-md shadow-[#C80808]/20"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#C80808]/70 to-[#FFA028]/70 hover:opacity-95 text-white text-xs font-bold transition-colors shadow-md shadow-[#C80808]/20"
             title="Download printable PDF summary report"
           >
             <Download className="w-4 h-4 text-white" />
@@ -472,7 +472,7 @@ export default function CandidateApplicationsPage() {
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse text-xs">
                 <thead>
-                  <tr className="border-b border-[#F5F6F7] bg-[#F5F6F7]/50 text-[#929DA7] uppercase font-bold text-[10px] tracking-wider">
+                  <tr className="border-b border-[#F5F6F7] bg-[#F5F6F7]/70 text-[#929DA7] uppercase font-bold text-[10px] tracking-wider">
                     <th className="py-3 px-4">Reference</th>
                     <th className="py-3 px-4">Candidate</th>
                     <th className="py-3 px-4">Position &amp; Experience</th>
@@ -597,7 +597,7 @@ export default function CandidateApplicationsPage() {
             {/* Modal Header */}
             <div className="px-6 py-4 bg-[#17191C] text-white flex items-center justify-between shrink-0">
               <div className="flex items-center gap-3">
-                <span className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#C80808]/50 to-[#FFA028]/50 flex items-center justify-center text-white font-black text-sm">
+                <span className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#C80808]/70 to-[#FFA028]/70 flex items-center justify-center text-white font-black text-sm">
                   {previewApp.full_name ? previewApp.full_name.charAt(0).toUpperCase() : "C"}
                 </span>
                 <div>
@@ -675,7 +675,7 @@ export default function CandidateApplicationsPage() {
                     href={`/api/admin/careers/applications/${previewApp.id}/cv`}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#C80808]/50 to-[#FFA028]/50 text-white text-xs font-bold shadow-md shadow-[#C80808]/20 hover:opacity-95 transition"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#C80808]/70 to-[#FFA028]/70 text-white text-xs font-bold shadow-md shadow-[#C80808]/20 hover:opacity-95 transition"
                   >
                     <Download className="w-4 h-4" />
                     <span>Download {previewApp.resume_original_name || "Resume File"}</span>

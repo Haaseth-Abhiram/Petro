@@ -213,14 +213,14 @@ export default function JobCategoriesPage() {
           <button
             onClick={fetchCategories}
             disabled={loading}
-            className="p-2.5 rounded-xl border border-[#D8DDE2] bg-white text-[#17191C] hover:bg-[#F5F6F7] hover:border-[#17191C] transition disabled:opacity-50"
+            className="p-2.5 rounded-xl border border-[#D8DDE2] bg-white text-[#17191C] hover:bg-[#F5F6F7] hover:border-[#17191C] transition disabled:opacity-70"
             title="Refresh categories"
           >
             <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin text-[#C80808]" : ""}`} />
           </button>
           <button
             onClick={openAddModal}
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#C80808]/50 to-[#FFA028]/50 text-white text-sm font-bold shadow-md shadow-[#C80808]/20 hover:opacity-95 transition"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#C80808]/70 to-[#FFA028]/70 text-white text-sm font-bold shadow-md shadow-[#C80808]/20 hover:opacity-95 transition"
           >
             <Plus className="w-4 h-4" />
             Add Category
@@ -293,7 +293,7 @@ export default function JobCategoriesPage() {
               </thead>
               <tbody className="divide-y divide-[#D8DDE2] text-sm">
                 {filteredCategories.map((cat) => (
-                  <tr key={cat.id} className="hover:bg-[#F5F6F7]/50 transition-colors">
+                  <tr key={cat.id} className="hover:bg-[#F5F6F7]/70 transition-colors">
                     <td className="py-4 px-5 font-mono text-xs font-bold text-[#929DA7]">
                       #{cat.display_order}
                     </td>
@@ -442,7 +442,7 @@ export default function JobCategoriesPage() {
                 <button
                   type="submit"
                   disabled={busy}
-                  className="px-5 py-2 rounded-xl bg-gradient-to-r from-[#C80808]/50 to-[#FFA028]/50 text-white text-xs font-extrabold shadow-md shadow-[#C80808]/20 hover:opacity-95 transition disabled:opacity-50"
+                  className="px-5 py-2 rounded-xl bg-gradient-to-r from-[#C80808]/70 to-[#FFA028]/70 text-white text-xs font-extrabold shadow-md shadow-[#C80808]/20 hover:opacity-95 transition disabled:opacity-70"
                 >
                   {busy ? "Saving..." : activeCategory ? "Update Category" : "Create Category"}
                 </button>

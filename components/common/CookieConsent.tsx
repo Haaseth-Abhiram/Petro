@@ -10,7 +10,7 @@ type Prefs = { analytics: boolean; marketing: boolean };
 function Toggle({ on, onChange, disabled = false, label }: { on: boolean; onChange?: (v: boolean) => void; disabled?: boolean; label: string }) {
   return (
     <button type="button" role="switch" aria-checked={on} aria-label={label} disabled={disabled} onClick={() => onChange?.(!on)}
-      className={`relative w-11 h-6 rounded-full transition-colors shrink-0 ${on ? "bg-[#C80808]" : "bg-[#D8DDE2]"} ${disabled ? "opacity-50" : ""}`}>
+      className={`relative w-11 h-6 rounded-full transition-colors shrink-0 ${on ? "bg-[#C80808]" : "bg-[#D8DDE2]"} ${disabled ? "opacity-70" : ""}`}>
       <span className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow transition-transform ${on ? "translate-x-5" : ""}`} />
     </button>
   );
@@ -40,7 +40,7 @@ export default function CookieConsent() {
     <div className="fixed inset-x-0 bottom-4 z-[90] px-3 flex justify-center pointer-events-none notranslate" translate="no">
       {!panel ? (
         <div className="pointer-events-auto flex items-center gap-1.5 sm:gap-2.5 rounded-full bg-white border border-[#E7E9EE] shadow-[0_14px_40px_rgba(23,25,28,0.25)] p-1.5 pr-1.5 max-w-full animate-[routefade_.5s_ease-out_both]" role="dialog" aria-label="Cookie consent">
-          <span className="w-8 h-8 rounded-full bg-gradient-to-br from-[#C80808]/50 to-[#E0A21A]/50 text-white flex items-center justify-center shrink-0"><Cookie className="w-4 h-4" /></span>
+          <span className="w-8 h-8 rounded-full bg-gradient-to-br from-[#C80808]/70 to-[#E0A21A]/70 text-white flex items-center justify-center shrink-0"><Cookie className="w-4 h-4" /></span>
           <span className="hidden sm:inline text-[13.5px] font-bold text-[#17191C] whitespace-nowrap">We use cookies</span>
           <button type="button" onClick={() => setPanel(true)} className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1.5 text-[13px] font-semibold text-[#4a5159] hover:bg-[#FFF8F0] hover:text-[#17191C] whitespace-nowrap"><SlidersHorizontal className="w-4 h-4" />Customize</button>
           <button type="button" onClick={() => save({ analytics: false, marketing: false })} className="rounded-full border border-[#D8DDE2] px-3.5 py-1.5 text-[13px] font-bold text-[#17191C] hover:bg-[#F5F6F7]">Decline</button>

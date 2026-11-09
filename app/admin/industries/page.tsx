@@ -172,7 +172,7 @@ export default function AdminIndustriesPage() {
               </div>
             </div>
 
-            <div className="p-4 border-t border-[#D8DDE2] bg-[#F5F6F7]/50 flex items-center justify-between">
+            <div className="p-4 border-t border-[#D8DDE2] bg-[#F5F6F7]/70 flex items-center justify-between">
               <span className={`text-[10px] font-bold uppercase ${ind.is_published ? "text-emerald-700" : "text-gray-500"}`}>
                 {ind.is_published ? "Active" : "Hidden"}
               </span>

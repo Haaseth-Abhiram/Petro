@@ -339,7 +339,7 @@ export default function HomePage() {
       </section>
 
       {/* ===== WHAT WE DO ===== */}
-      <section id="what-we-do" className="py-9 sm:py-11 bg-gradient-to-br from-[#17191C]/50 via-[#221316]/50 to-[#17191C]/50">
+      <section id="what-we-do" className="py-9 sm:py-11 bg-gradient-to-br from-[#17191C]/70 via-[#221316]/70 to-[#17191C]/70">
         <div className="max-w-[1320px] mx-auto px-5 sm:px-8">
           <Reveal className="text-center max-w-[560px] mx-auto mb-5 sm:mb-6">
             <span className="inline-flex items-center gap-3 text-[11px] font-extrabold uppercase tracking-[0.2em] text-[#F2B93B] mb-2"><span className="h-[3px] w-9 bg-[#F2B93B] rounded" />What we do</span>
@@ -382,7 +382,7 @@ export default function HomePage() {
               <Reveal key={g.num} delay={(k % 4) * 60}>
                 <SolutionLink title={g.title} items={g.items} img={g.img} className="w-full text-left group relative block h-[84px] hover:h-[210px] focus-visible:h-[210px] transition-[height] duration-700 ease-out rounded-2xl overflow-hidden">
                   <Image src={g.img} alt={g.title} fill sizes="1200px" className="object-cover object-center" />
-                  <div className={`absolute inset-0 bg-gradient-to-r ${k % 2 ? "from-[#4a2e00]/50 via-[#17191C]/50" : "from-[#4a0808]/50 via-[#17191C]/50"} to-[#17191C]/30`} />
+                  <div className={`absolute inset-0 bg-gradient-to-r ${k % 2 ? "from-[#4a2e00]/70 via-[#17191C]/70" : "from-[#4a0808]/70 via-[#17191C]/70"} to-[#17191C]/30`} />
                   <div className="absolute inset-0 px-7 flex items-center gap-6 text-white">
                     <span className="font-black text-4xl text-transparent [-webkit-text-stroke:1.5px_#E0A21A] w-16">{g.num}</span>
                     <div className="flex-1">
@@ -500,7 +500,7 @@ export default function HomePage() {
         <div className="max-w-[1320px] mx-auto px-5 sm:px-8">
           <Head eyebrow="How we work" title="Four steps from enquiry to delivery" text="A predictable process, so you always know where your order stands." />
           <div className="relative grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <span aria-hidden="true" className="hidden lg:block absolute top-[34px] left-[12%] right-[12%] h-[2px] bg-gradient-to-r from-[#C80808] via-[#D4950F] to-[#C80808] opacity-50" />
+            <span aria-hidden="true" className="hidden lg:block absolute top-[34px] left-[12%] right-[12%] h-[2px] bg-gradient-to-r from-[#C80808] via-[#D4950F] to-[#C80808] opacity-70" />
             {[
               { t: "Enquiry & review", d: "You send the line list, datasheet or RFQ. We review the specification and flag anything that needs clarifying before we quote.", icon: Search },
               { t: "Sourcing & proposal", d: "We approach approved manufacturers, compare technically and commercially, and return a costed proposal with lead times.", icon: FileCheck },
@@ -545,7 +545,7 @@ export default function HomePage() {
                         <span className="text-[11px] font-bold tracking-widest text-[#F2B93B]">HOVER / TAP FOR DETAILS</span>
                       </div>
                     </div>
-                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#C80808]/50 to-[#E0241A]/50 text-white p-5 [backface-visibility:hidden] [transform:rotateY(180deg)] flex flex-col justify-center">
+                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#C80808]/70 to-[#E0241A]/70 text-white p-5 [backface-visibility:hidden] [transform:rotateY(180deg)] flex flex-col justify-center">
                       <h3 className="text-lg font-black text-white mb-1">{e.t}</h3>
                       <p className="text-[13px] text-white/85 mb-3">{e.d}</p>
                       <ul className="space-y-1.5 text-[13px] text-white">
@@ -577,7 +577,7 @@ export default function HomePage() {
       </section>
 
       {/* ===== GET IN TOUCH ===== */}
-      <section id="contact" className="py-9 bg-gradient-to-r from-[#17191C]/50 via-[#221316]/50 to-[#17191C]/50">
+      <section id="contact" className="py-9 bg-gradient-to-r from-[#17191C]/70 via-[#221316]/70 to-[#17191C]/70">
         <Reveal className="max-w-[1240px] mx-auto px-5 sm:px-8 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div className="max-w-[560px]">
             <h2 className="text-white text-[1.4rem] sm:text-3xl font-black leading-[1.15] mb-1">We're here to source. Call us today.</h2>

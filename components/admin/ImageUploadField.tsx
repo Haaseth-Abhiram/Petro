@@ -213,7 +213,7 @@ export default function ImageUploadField({
                 className={`cursor-pointer rounded-2xl border-2 border-dashed p-4 text-center transition-all ${
                   dragActive
                     ? "border-[#C80808] bg-[#FFF1EF]"
-                    : "border-[#D8DDE2] bg-white hover:border-[#17191C] hover:bg-[#F5F6F7]/50"
+                    : "border-[#D8DDE2] bg-white hover:border-[#17191C] hover:bg-[#F5F6F7]/70"
                 }`}
               >
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-2">

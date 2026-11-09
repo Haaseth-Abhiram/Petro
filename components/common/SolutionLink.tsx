@@ -43,7 +43,7 @@ export default function SolutionLink({ title, items, img, className, children }:
         <div className="fixed inset-0 z-[85] overflow-y-auto overscroll-contain flex p-4 bg-[#17191C]/70 backdrop-blur-sm" onClick={close}>
           <div role="dialog" aria-modal="true" aria-label={title} style={{ maxHeight: "calc(90dvh / var(--z))" }} onClick={(e) => e.stopPropagation()} className="relative w-full m-auto max-w-[600px] overflow-y-auto overscroll-contain rounded-3xl bg-white shadow-2xl text-left">
             <div className="relative h-[110px] overflow-hidden rounded-t-3xl bg-[#17191C]">
-              {img && <Image src={img} alt="" fill sizes="600px" className="object-cover opacity-50" />}
+              {img && <Image src={img} alt="" fill sizes="600px" className="object-cover opacity-70" />}
               <div className="absolute inset-0 bg-gradient-to-t from-[#17191C]/75 to-[#C80808]/20" />
               <div className="absolute left-6 bottom-4 right-14 text-white"><span className="inline-flex items-center gap-1.5 text-[10.5px] font-extrabold tracking-[0.2em] text-[#F2B93B]"><Lightbulb className="w-3.5 h-3.5" />SUGGESTED SOLUTIONS</span><h3 className="text-[1.3rem] font-black leading-tight !text-white">{title}</h3></div>
               <button type="button" aria-label="Close" onClick={close} className="absolute right-4 top-4 w-8 h-8 rounded-full bg-white/15 hover:bg-white/30 text-white flex items-center justify-center"><X className="w-4 h-4" /></button>
@@ -66,7 +66,7 @@ export default function SolutionLink({ title, items, img, className, children }:
                   <input aria-label="Email" type="email" className={inp} placeholder="Email *" value={f.email} onChange={(e) => setF({ ...f, email: e.target.value })} />
                   <textarea aria-label="Requirement" rows={2} className={inp} placeholder="Quantity, specification or water analysis (optional)" value={f.note} onChange={(e) => setF({ ...f, note: e.target.value })} />
                   {msg && !msg.ok && <div className="flex gap-2 rounded-lg bg-[#FBE9EC] border border-[#C80808]/30 text-[#C80808] text-[12.5px] p-2.5"><AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />{msg.t}</div>}
-                  <button type="submit" disabled={busy} className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#C80808]/50 to-[#E0A21A]/50 text-white text-[14px] font-extrabold py-3 disabled:opacity-50"><Send className="w-4 h-4" />{busy ? "Sending…" : "Send enquiry"}</button>
+                  <button type="submit" disabled={busy} className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#C80808]/70 to-[#E0A21A]/70 text-white text-[14px] font-extrabold py-3 disabled:opacity-70"><Send className="w-4 h-4" />{busy ? "Sending…" : "Send enquiry"}</button>
                 </form>
               )}
             </div>

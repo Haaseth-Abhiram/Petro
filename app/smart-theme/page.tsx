@@ -110,7 +110,7 @@ export default function SmartThemePage() {
           {stats.map((s, k) => (
             <Reveal key={s.l} delay={k * 90}>
               <div className="rounded-2xl bg-white/[0.08] backdrop-blur border border-white/15 p-5 sm:p-6 hover:bg-white/[0.14] hover:-translate-y-1 transition-all duration-300">
-                <span className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#C80808]/50 to-[#E0A21A]/50 text-white flex items-center justify-center mb-4"><s.icon className="w-5 h-5" /></span>
+                <span className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#C80808]/70 to-[#E0A21A]/70 text-white flex items-center justify-center mb-4"><s.icon className="w-5 h-5" /></span>
                 <div className="text-4xl sm:text-5xl font-black text-white leading-none"><CountUp end={s.n} />{s.suffix}</div>
                 <span className="block h-[2px] w-8 bg-[#F2B93B] my-3" />
                 <div className="text-[11px] sm:text-[12px] font-extrabold uppercase tracking-[0.16em] text-white/75">{s.l}</div>
@@ -130,7 +130,7 @@ export default function SmartThemePage() {
             </div>
             <span className="absolute -top-4 -left-3 w-12 h-12 rounded-2xl bg-[#C80808] text-white flex items-center justify-center shadow-xl"><Sparkles className="w-5 h-5" /></span>
             <div className="absolute -bottom-6 right-4 sm:right-8 rounded-2xl bg-white shadow-2xl border border-[#F0E3D2] px-5 py-3.5 flex items-center gap-3">
-              <span className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#C80808]/50 to-[#E0A21A]/50 text-white flex items-center justify-center"><Award className="w-5 h-5" /></span>
+              <span className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#C80808]/70 to-[#E0A21A]/70 text-white flex items-center justify-center"><Award className="w-5 h-5" /></span>
               <span><span className="block text-[18px] font-black text-[#17191C] leading-none">ISO 9001:2015</span><span className="block text-[11px] font-extrabold tracking-[0.16em] text-[#4a5159] mt-1">SERVING INDIA &amp; EXPORT</span></span>
             </div>
           </Reveal>
@@ -167,7 +167,7 @@ export default function SmartThemePage() {
               <Reveal key={v.t} delay={k * 120}>
                 <div className="relative h-full rounded-3xl bg-white/[0.07] backdrop-blur border border-white/15 p-7 sm:p-8 overflow-hidden hover:bg-white/[0.12] transition-colors">
                   <span className="absolute top-3 right-5 font-black text-6xl sm:text-7xl text-transparent [-webkit-text-stroke:1.5px_rgba(255,255,255,0.25)] select-none">{v.n}</span>
-                  <span className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#C80808]/50 to-[#E0A21A]/50 text-white flex items-center justify-center mb-5"><v.icon className="w-6 h-6" /></span>
+                  <span className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#C80808]/70 to-[#E0A21A]/70 text-white flex items-center justify-center mb-5"><v.icon className="w-6 h-6" /></span>
                   <h3 className="text-[1.6rem] font-black text-white">{v.t}</h3>
                   <span className="block h-[3px] w-10 bg-[#F2B93B] rounded my-3" />
                   <p className="text-[14.5px] leading-relaxed text-white/85">{v.d}</p>
@@ -226,7 +226,7 @@ export default function SmartThemePage() {
             {why.map((w, k) => (
               <Reveal key={w.t} delay={(k % 3) * 90}>
                 <div className="group h-full rounded-3xl bg-white/80 backdrop-blur border border-white shadow-lg p-6 hover:shadow-2xl hover:-translate-y-1.5 hover:border-[#C80808]/30 transition-all duration-300">
-                  <span className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#C80808]/50 to-[#E0A21A]/50 text-white flex items-center justify-center mb-4 group-hover:rotate-6 group-hover:scale-110 transition-transform"><w.icon className="w-6 h-6" /></span>
+                  <span className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#C80808]/70 to-[#E0A21A]/70 text-white flex items-center justify-center mb-4 group-hover:rotate-6 group-hover:scale-110 transition-transform"><w.icon className="w-6 h-6" /></span>
                   <h3 className="text-[16.5px] font-extrabold text-[#17191C] mb-1.5">{w.t}</h3>
                   <p className="text-[13.5px] leading-relaxed">{w.d}</p>
                 </div>
@@ -262,11 +262,11 @@ export default function SmartThemePage() {
             <p className="text-white/75 text-[15px] mt-4">A clear, accountable process that keeps your order on time, on budget and compliant.</p>
           </Reveal>
           <div className="relative grid sm:grid-cols-2 lg:grid-cols-4 gap-x-5 gap-y-12">
-            <span aria-hidden="true" className="hidden lg:block absolute top-0 left-[12%] right-[12%] h-[2px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#C80808] opacity-50" />
+            <span aria-hidden="true" className="hidden lg:block absolute top-0 left-[12%] right-[12%] h-[2px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#C80808] opacity-70" />
             {steps.map((s, k) => (
               <Reveal key={s.t} delay={k * 110}>
                 <div className="group relative h-full rounded-3xl bg-white/[0.07] backdrop-blur border border-white/15 hover:bg-white/[0.13] hover:border-[#E0A21A] p-6 pt-11 text-center transition-all duration-300">
-                  <span className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70px] h-[70px] rounded-full bg-gradient-to-br from-[#C80808]/50 to-[#E0A21A]/50 text-white flex items-center justify-center ring-4 ring-[#1d1114] shadow-xl"><s.icon className="w-7 h-7" /></span>
+                  <span className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70px] h-[70px] rounded-full bg-gradient-to-br from-[#C80808]/70 to-[#E0A21A]/70 text-white flex items-center justify-center ring-4 ring-[#1d1114] shadow-xl"><s.icon className="w-7 h-7" /></span>
                   <span className="text-[11px] font-extrabold tracking-[0.2em] text-[#F2B93B]">STEP 0{k + 1}</span>
                   <h3 className="text-[16.5px] font-extrabold text-white mt-1 mb-2">{s.t}</h3>
                   <p className="text-[13px] leading-relaxed text-white/70">{s.d}</p>

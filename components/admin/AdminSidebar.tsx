@@ -107,10 +107,10 @@ export default function AdminSidebar({ isOpen, onClose, user, enquiriesBadge = 0
                       key={item.href}
                       href={item.href}
                       onClick={() => { if (window.innerWidth < 1024) onClose(); }}
-                      className={`group flex items-center justify-between rounded-xl px-3.5 py-2.5 text-[13px] font-semibold transition-all ${active ? "bg-gradient-to-r from-[#D40E0E]/50 to-[#E0A21A]/50 text-white shadow-[0_6px_18px_-6px_rgba(224,100,20,0.18)]" : "text-white/65 hover:bg-white/[0.07] hover:text-white"}`}
+                      className={`group flex items-center justify-between rounded-xl px-3.5 py-2.5 text-[13px] font-semibold transition-all ${active ? "bg-gradient-to-r from-[#D40E0E]/70 to-[#E0A21A]/70 text-white shadow-[0_6px_18px_-6px_rgba(224,100,20,0.18)]" : "text-white/65 hover:bg-white/[0.07] hover:text-white"}`}
                     >
                       <span className="flex items-center gap-3">
-                        <Icon className={`h-[17px] w-[17px] shrink-0 transition-colors ${active ? "text-white" : "text-white/50 group-hover:text-[#F2B93B]"}`} />
+                        <Icon className={`h-[17px] w-[17px] shrink-0 transition-colors ${active ? "text-white" : "text-white/70 group-hover:text-[#F2B93B]"}`} />
                         {item.label}
                       </span>
                       {!!item.badge && item.badge > 0 && (
@@ -127,13 +127,13 @@ export default function AdminSidebar({ isOpen, onClose, user, enquiriesBadge = 0
         {/* Profile */}
         <div className="relative shrink-0 border-t border-white/10 px-4 py-4">
           <div className="flex items-center gap-3">
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#E0A21A]/50 to-[#C80808]/50 text-[15px] font-black text-white">{initial}</span>
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#E0A21A]/70 to-[#C80808]/70 text-[15px] font-black text-white">{initial}</span>
             <div className="min-w-0 flex-1">
               <p className="truncate text-[13px] font-bold text-white">{user?.name || "Admin"}</p>
               <p className="truncate text-[11px] text-white/45">{user?.email || "admin@petroeng.in"}</p>
             </div>
-            <Link href="/" title="View public website" aria-label="View public website" className="rounded-lg p-2 text-white/50 transition-colors hover:bg-white/[0.08] hover:text-white"><ExternalLink className="h-[18px] w-[18px]" /></Link>
-            <button onClick={handleLogout} title="Sign out" aria-label="Sign out" className="rounded-lg p-2 text-white/50 transition-colors hover:bg-[#C80808]/25 hover:text-[#FF6A4D]"><LogOut className="h-[18px] w-[18px]" /></button>
+            <Link href="/" title="View public website" aria-label="View public website" className="rounded-lg p-2 text-white/70 transition-colors hover:bg-white/[0.08] hover:text-white"><ExternalLink className="h-[18px] w-[18px]" /></Link>
+            <button onClick={handleLogout} title="Sign out" aria-label="Sign out" className="rounded-lg p-2 text-white/70 transition-colors hover:bg-[#C80808]/25 hover:text-[#FF6A4D]"><LogOut className="h-[18px] w-[18px]" /></button>
           </div>
         </div>
       </aside>

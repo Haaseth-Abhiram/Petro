@@ -47,7 +47,7 @@ export default function ServiceRoute({ services }: { services: RouteService[] })
       onBlur={() => setPaused(false)}
       className="relative mx-auto block"
     >
-      {active === k && <span className="absolute -inset-1.5 rounded-full border-2 border-[#C80808] animate-ping opacity-50" />}
+      {active === k && <span className="absolute -inset-1.5 rounded-full border-2 border-[#C80808] animate-ping opacity-70" />}
       <span className={`relative block w-[76px] h-[76px] rounded-full overflow-hidden border-4 transition-all duration-500 ${active === k ? "border-[#C80808] scale-110 shadow-xl" : "border-white shadow-md grayscale-[50%]"}`}>
         <Image src={x.img} alt="" fill sizes="90px" className="object-cover" />
         <span className="absolute inset-0 bg-[#17191C]/35" />
@@ -77,7 +77,7 @@ export default function ServiceRoute({ services }: { services: RouteService[] })
           <div className="absolute -inset-x-5 top-1/2 -translate-y-1/2 h-28 bg-gradient-to-r from-transparent via-[#F6E7D3]/70 to-transparent" />
           <div className="absolute left-[3%] right-[3%] top-1/2 h-3.5 -translate-y-1/2 rounded-full bg-[#17191C] shadow-[0_6px_18px_rgba(23,25,28,0.25)] overflow-hidden">
             <div className="absolute inset-x-3 top-1/2 h-[2px] -translate-y-1/2 [background-image:repeating-linear-gradient(90deg,rgba(255,255,255,.55)_0_14px,transparent_14px_28px)]" />
-            <div className="absolute left-0 top-0 h-full bg-gradient-to-r from-[#C80808]/50 to-[#E0A21A]/50 transition-all duration-1000 ease-in-out" style={{ width: `${(((active + 0.5) / services.length) * 100) / 0.94 - 3.2}%` }} />
+            <div className="absolute left-0 top-0 h-full bg-gradient-to-r from-[#C80808]/70 to-[#E0A21A]/70 transition-all duration-1000 ease-in-out" style={{ width: `${(((active + 0.5) / services.length) * 100) / 0.94 - 3.2}%` }} />
           </div>
           <span className="absolute left-0 top-1/2 -translate-y-1/2 flex flex-col items-center"><span className="w-8 h-8 rounded-full bg-[#17191C] text-[#F2B93B] flex items-center justify-center shadow-lg"><Flag className="w-4 h-4" /></span><span className="absolute top-full mt-1 text-[9px] font-extrabold tracking-wider text-[#17191C]">ENQUIRY</span></span>
           <span className="absolute right-0 top-1/2 -translate-y-1/2 flex flex-col items-center"><span className="w-8 h-8 rounded-full bg-[#C80808] text-white flex items-center justify-center shadow-lg"><MapPin className="w-4 h-4" /></span><span className="absolute top-full mt-1 text-[9px] font-extrabold tracking-wider text-[#C80808] whitespace-nowrap">SITE</span></span>
@@ -98,7 +98,7 @@ export default function ServiceRoute({ services }: { services: RouteService[] })
       {/* Mobile / tablet: compact stations, one detail panel */}
       <div className="lg:hidden">
         <div className="relative">
-          <span className="absolute left-[27px] top-5 bottom-5 w-[3px] rounded bg-gradient-to-b from-[#C80808]/50 to-[#E0A21A]/50/40" />
+          <span className="absolute left-[27px] top-5 bottom-5 w-[3px] rounded bg-gradient-to-b from-[#C80808]/70 to-[#E0A21A]/70/40" />
           {services.map((x, k) => (
             <button key={x.slug} type="button" onClick={() => pick(k)} className="relative flex w-full gap-3 items-center mb-2 last:mb-0 text-left">
               <span className={`relative shrink-0 w-14 h-14 rounded-full overflow-hidden border-4 transition-all ${active === k ? "border-[#C80808]" : "border-white shadow-md"}`}>

@@ -168,7 +168,7 @@ export default function AdminLoginPage() {
                 key={x.t}
                 className="flex items-center gap-3 rounded-xl bg-white/[0.07] border border-white/15 backdrop-blur px-3.5 py-2.5 text-[14px] text-white/95 hover:bg-white/[0.13] hover:translate-x-1 transition-all"
               >
-                <span className="w-9 h-9 rounded-lg bg-gradient-to-br from-[#C80808]/50 to-[#FFA028]/50 flex items-center justify-center shrink-0">
+                <span className="w-9 h-9 rounded-lg bg-gradient-to-br from-[#C80808]/70 to-[#FFA028]/70 flex items-center justify-center shrink-0">
                   <x.i className="w-[18px] h-[18px] text-white" />
                 </span>
                 {x.t}
@@ -211,7 +211,7 @@ export default function AdminLoginPage() {
             {/* tabs */}
             <div className="relative grid grid-cols-2 bg-[#FFF8F0] p-1.5 m-4 mb-0 rounded-2xl" role="tablist">
               <span
-                className="absolute top-1.5 bottom-1.5 w-[calc(50%-6px)] rounded-xl bg-gradient-to-r from-[#C80808]/50 to-[#FFA028]/50 shadow-md transition-all duration-300"
+                className="absolute top-1.5 bottom-1.5 w-[calc(50%-6px)] rounded-xl bg-gradient-to-r from-[#C80808]/70 to-[#FFA028]/70 shadow-md transition-all duration-300"
                 style={{ left: mode === "login" ? 6 : "calc(50%)" }}
               />
               {(["login", "signup"] as const).map((m) => (
@@ -336,7 +336,7 @@ export default function AdminLoginPage() {
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="group w-full inline-flex items-center justify-center gap-2 text-[14.5px] font-extrabold bg-gradient-to-r from-[#C80808]/50 to-[#FFA028]/50 bg-[length:200%_100%] hover:bg-right text-white py-3 rounded-xl shadow-[0_8px_22px_rgba(200,8,8,0.22)] hover:-translate-y-0.5 disabled:opacity-50 transition-all duration-500"
+                      className="group w-full inline-flex items-center justify-center gap-2 text-[14.5px] font-extrabold bg-gradient-to-r from-[#C80808]/70 to-[#FFA028]/70 bg-[length:200%_100%] hover:bg-right text-white py-3 rounded-xl shadow-[0_8px_22px_rgba(200,8,8,0.22)] hover:-translate-y-0.5 disabled:opacity-70 transition-all duration-500"
                     >
                       {isSubmitting ? (
                         <>
@@ -447,7 +447,7 @@ export default function AdminLoginPage() {
                     <button
                       type="submit"
                       disabled={suBusy}
-                      className="group w-full inline-flex items-center justify-center gap-2 text-[14.5px] font-extrabold bg-gradient-to-r from-[#C80808]/50 to-[#FFA028]/50 bg-[length:200%_100%] hover:bg-right text-white py-3 rounded-xl shadow-[0_8px_22px_rgba(200,8,8,0.22)] hover:-translate-y-0.5 disabled:opacity-50 transition-all duration-500"
+                      className="group w-full inline-flex items-center justify-center gap-2 text-[14.5px] font-extrabold bg-gradient-to-r from-[#C80808]/70 to-[#FFA028]/70 bg-[length:200%_100%] hover:bg-right text-white py-3 rounded-xl shadow-[0_8px_22px_rgba(200,8,8,0.22)] hover:-translate-y-0.5 disabled:opacity-70 transition-all duration-500"
                     >
                       {suBusy ? (
                         <>

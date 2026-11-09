@@ -199,7 +199,7 @@ export default function AdminEnquiriesPage() {
         <div className="pointer-events-none absolute -right-10 -top-14 h-44 w-72 rounded-full bg-[#E0A21A]/15 blur-[60px]" />
         <div className="pointer-events-none absolute right-4 top-1/2 w-[170px] -translate-y-1/2 opacity-[0.08]"><PetroLogo part="flame" variant="dark" width="100%" /></div>
         <div className="pointer-events-none absolute inset-0 opacity-[0.05] [background-image:linear-gradient(#fff_1px,transparent_1px),linear-gradient(90deg,#fff_1px,transparent_1px)] [background-size:30px_30px]" />
-        <span className="absolute inset-x-0 bottom-0 h-[2.5px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#F2B93B] opacity-50" />
+        <span className="absolute inset-x-0 bottom-0 h-[2.5px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#F2B93B] opacity-70" />
         <div className="relative flex flex-col gap-4 px-5 py-4 xl:flex-row xl:items-center xl:justify-between">
           <div className="min-w-0">
             <p className="inline-flex items-center gap-1.5 text-[10.5px] font-extrabold uppercase tracking-[0.2em] text-[#F2B93B]"><Sparkles className="h-3 w-3" />Inbox</p>
@@ -221,8 +221,8 @@ export default function AdminEnquiriesPage() {
       {/* Status summary */}
       <div className="grid grid-cols-2 gap-4 xl:grid-cols-4">
         {([
-          { k: "new", l: "New", sub: "Waiting for a reply", Icon: Inbox, grad: "from-[#E21212]/50 to-[#C80808]/50", dark: false },
-          { k: "in_progress", l: "In progress", sub: "Being handled", Icon: Hourglass, grad: "from-[#F2B93B]/50 to-[#D4950F]/50", dark: true },
+          { k: "new", l: "New", sub: "Waiting for a reply", Icon: Inbox, grad: "from-[#E21212]/70 to-[#C80808]/70", dark: false },
+          { k: "in_progress", l: "In progress", sub: "Being handled", Icon: Hourglass, grad: "from-[#F2B93B]/70 to-[#D4950F]/70", dark: true },
           { k: "responded", l: "Responded", sub: "Reply sent", Icon: CheckCheck, grad: "from-[#059669] to-[#047857]", dark: false },
           { k: "closed", l: "Closed", sub: "Finished", Icon: Archive, grad: "from-[#52525B] to-[#27272A]", dark: false },
         ] as const).map((c) => {
@@ -276,7 +276,7 @@ export default function AdminEnquiriesPage() {
                 <div className="grid gap-4 p-5 pl-6 lg:grid-cols-[minmax(230px,300px)_1fr_auto] lg:items-center lg:gap-6">
                   {/* sender */}
                   <div className="flex min-w-0 items-center gap-3.5">
-                    <span className={`relative flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl text-[20px] font-black shadow-md ${sug ? "bg-gradient-to-br from-[#F2B93B]/50 to-[#D4950F]/50 text-[#17191C]" : "bg-gradient-to-br from-[#2E3239]/50 to-[#14161A]/50 text-white"}`}>
+                    <span className={`relative flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl text-[20px] font-black shadow-md ${sug ? "bg-gradient-to-br from-[#F2B93B]/70 to-[#D4950F]/70 text-[#17191C]" : "bg-gradient-to-br from-[#2E3239]/70 to-[#14161A]/70 text-white"}`}>
                       {String(enq.full_name || "?").trim().charAt(0).toUpperCase()}
                       {isNew && <span className="absolute -right-1 -top-1 h-3.5 w-3.5 rounded-full bg-[#C80808] ring-2 ring-white" />}
                     </span>
@@ -344,10 +344,10 @@ export default function AdminEnquiriesPage() {
               {/* header */}
               <div className="relative shrink-0 overflow-hidden bg-gradient-to-r from-[#191B1F] via-[#1E191C] to-[#24191C] px-6 py-4 text-white sm:px-7">
                 <div className="pointer-events-none absolute -right-8 -top-10 h-32 w-48 rounded-full bg-[#E0A21A]/15 blur-3xl" />
-                <span className="absolute inset-x-0 bottom-0 h-[2.5px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#F2B93B] opacity-50" />
+                <span className="absolute inset-x-0 bottom-0 h-[2.5px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#F2B93B] opacity-70" />
                 <button onClick={() => setSelectedEnquiry(null)} className="absolute right-4 top-4 rounded-full bg-white/10 p-2 text-white transition-colors hover:bg-white/25" aria-label="Close"><X className="h-4 w-4" /></button>
                 <div className="flex items-center gap-4 pr-10">
-                  <span className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl text-[18px] font-black ${sug ? "bg-gradient-to-br from-[#F2B93B]/50 to-[#D4950F]/50 text-[#17191C]" : "bg-white/15 text-white ring-1 ring-white/25"}`}>{String(selectedEnquiry.full_name || "?").trim().charAt(0).toUpperCase()}</span>
+                  <span className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl text-[18px] font-black ${sug ? "bg-gradient-to-br from-[#F2B93B]/70 to-[#D4950F]/70 text-[#17191C]" : "bg-white/15 text-white ring-1 ring-white/25"}`}>{String(selectedEnquiry.full_name || "?").trim().charAt(0).toUpperCase()}</span>
                   <div className="min-w-0">
                     <p className="inline-flex items-center gap-1.5 text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#F2B93B]">{sug ? <Lightbulb className="h-3 w-3" /> : <Mail className="h-3 w-3" />}{sug ? "Website suggestion" : "Customer enquiry"}</p>
                     <h3 className="truncate text-[1.1rem] font-black leading-tight !text-white" title={selectedEnquiry.subject}>{selectedEnquiry.subject}</h3>
@@ -382,7 +382,7 @@ export default function AdminEnquiriesPage() {
                     </div>
                     <div>
                       <h4 className="mb-2 text-[10.5px] font-extrabold uppercase tracking-[0.18em] text-[#C80808]">{sug ? "Suggestion" : "Message"}</h4>
-                      <div className="relative whitespace-pre-wrap rounded-2xl border border-[#E4E4E7] bg-[#FAFAFA] p-4 pl-5 text-[14px] leading-relaxed text-[#17191C]"><span className="absolute inset-y-3 left-0 w-1 rounded-r-full bg-gradient-to-b from-[#C80808]/50 to-[#E0A21A]/50" />{selectedEnquiry.message}</div>
+                      <div className="relative whitespace-pre-wrap rounded-2xl border border-[#E4E4E7] bg-[#FAFAFA] p-4 pl-5 text-[14px] leading-relaxed text-[#17191C]"><span className="absolute inset-y-3 left-0 w-1 rounded-r-full bg-gradient-to-b from-[#C80808]/70 to-[#E0A21A]/70" />{selectedEnquiry.message}</div>
                     </div>
                   </div>
 
@@ -426,7 +426,7 @@ export default function AdminEnquiriesPage() {
                 <div className="flex items-center gap-3">
                   {saveSuccess && <span className="flex items-center gap-1 text-[12.5px] font-bold text-emerald-600"><CheckCircle2 className="h-4 w-4" />Saved</span>}
                   <button onClick={() => setSelectedEnquiry(null)} className="rounded-xl border-2 border-[#E7E9EE] px-4 py-2 text-[13px] font-bold text-[#17191C] transition-colors hover:border-[#17191C]">Close</button>
-                  <button onClick={handleUpdate} disabled={updating} className="rounded-xl bg-gradient-to-r from-[#C80808]/50 to-[#E0A21A]/50 px-5 py-2 text-[13px] font-extrabold text-white shadow-[0_10px_24px_-8px_rgba(200,8,8,0.22)] transition-transform hover:-translate-y-0.5 disabled:opacity-50">{updating ? "Saving…" : "Save status & notes"}</button>
+                  <button onClick={handleUpdate} disabled={updating} className="rounded-xl bg-gradient-to-r from-[#C80808]/70 to-[#E0A21A]/70 px-5 py-2 text-[13px] font-extrabold text-white shadow-[0_10px_24px_-8px_rgba(200,8,8,0.22)] transition-transform hover:-translate-y-0.5 disabled:opacity-70">{updating ? "Saving…" : "Save status & notes"}</button>
                 </div>
               </div>
             </div>

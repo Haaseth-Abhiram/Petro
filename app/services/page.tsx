@@ -201,7 +201,7 @@ export default function ServicesPage() {
                   <article id={s.id} className="group scroll-mt-28 h-full flex flex-col rounded-2xl overflow-hidden bg-white border border-[#E7E9EE] shadow-lg hover:shadow-2xl hover:border-[#C80808] hover:-translate-y-1.5 transition-all duration-500">
                     <div className="relative h-[140px] overflow-hidden text-white">
                       <Image src={s.img} alt={s.title} fill sizes="(min-width:1024px) 600px, 100vw" className="object-cover group-hover:scale-110 transition-transform duration-1000" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#17191C]/95 via-[#17191C]/50 to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#17191C]/95 via-[#17191C]/70 to-transparent" />
                       <span className="absolute top-3 left-3 w-10 h-10 rounded-xl bg-[#C80808] flex items-center justify-center shadow-lg"><Icon className="w-5 h-5" /></span>
                       <span className="absolute top-2 right-3 font-black text-4xl text-transparent [-webkit-text-stroke:1.5px_#F2B93B]">{s.num}</span>
                       <h3 className="absolute bottom-0 p-4 text-[16px] sm:text-[17px] font-black text-white leading-tight">{s.title}</h3>
@@ -239,7 +239,7 @@ export default function ServicesPage() {
             <p className="text-[14px] text-white/70">A predictable process, so you always know where your order stands.</p>
           </Reveal>
           <div className="relative grid sm:grid-cols-2 lg:grid-cols-4 gap-x-5 gap-y-11">
-            <span aria-hidden="true" className="hidden lg:block absolute top-0 left-[12%] right-[12%] h-[2px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#C80808] opacity-50" />
+            <span aria-hidden="true" className="hidden lg:block absolute top-0 left-[12%] right-[12%] h-[2px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#C80808] opacity-70" />
             {steps.map((st, k) => {
               const Icon = stepIcons[k];
               return (
@@ -258,7 +258,7 @@ export default function ServicesPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-8 bg-gradient-to-r from-[#A81010]/50 via-[#C80808]/50 to-[#A81010]/50">
+      <section className="py-8 bg-gradient-to-r from-[#A81010]/70 via-[#C80808]/70 to-[#A81010]/70">
         <Reveal className="max-w-[1240px] mx-auto px-5 sm:px-8 flex flex-col lg:flex-row lg:items-center justify-between gap-5">
           <div className="max-w-[620px]">
             <h2 className="text-white text-[1.35rem] sm:text-[1.8rem] font-black leading-[1.15] mb-1">Let&apos;s talk about your project</h2>

@@ -37,7 +37,7 @@ const Tile = ({ n, name, desc, children }: { n: number; name: string; desc: stri
       <div className="absolute inset-0 bg-gradient-to-br from-[#2a0c0c] via-[#14161A] to-[#2a2108]" />
       <div className="absolute -top-20 -left-16 w-56 h-56 rounded-full bg-[#C80808]/30 blur-[70px]" />
       <div className="absolute -bottom-20 -right-16 w-56 h-56 rounded-full bg-[#E0A21A]/25 blur-[70px]" />
-      <div className="absolute inset-0 opacity-50" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px)", backgroundSize: "28px 28px", maskImage: "radial-gradient(ellipse at center,#000,transparent 75%)", WebkitMaskImage: "radial-gradient(ellipse at center,#000,transparent 75%)" }} />
+      <div className="absolute inset-0 opacity-70" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px)", backgroundSize: "28px 28px", maskImage: "radial-gradient(ellipse at center,#000,transparent 75%)", WebkitMaskImage: "radial-gradient(ellipse at center,#000,transparent 75%)" }} />
       <div className="relative flex flex-col items-center">{children}</div>
     </div>
     <div className="px-4 py-3"><div className="flex items-center gap-2"><span className="rounded-full bg-[#C80808] text-white text-[11px] font-extrabold px-2.5 py-0.5">M{n}</span><span className="text-[13.5px] font-extrabold text-[#17191C]">{name}</span></div><p className="text-[12px] text-[#4a5159] mt-1">{desc}</p></div>

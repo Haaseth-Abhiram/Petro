@@ -76,7 +76,7 @@ export default function HeaderCompact() {
 
   return (
     <header className="sticky top-0 z-50 bg-white shadow-[0_1px_3px_rgba(23,25,28,0.08)]">
-      <div className="h-[2.5px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#F2B93B] opacity-50" />
+      <div className="h-[2.5px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#F2B93B] opacity-70" />
       {/* top bar */}
       <div className="bg-[#17191C] text-[12.5px] hidden md:block">
         <div className="max-w-[1240px] mx-auto px-5 sm:px-8 h-10 flex items-center justify-between">
@@ -89,14 +89,14 @@ export default function HeaderCompact() {
             <Link href="/careers" className="inline-flex items-center gap-2 font-semibold text-white/85 hover:text-[#F2B93B] transition-colors"><Briefcase className="w-3.5 h-3.5 text-[#F2B93B]" />Careers</Link>
             {admin ? (
               <div className="flex items-center gap-4">
-                <Link href="/admin/dashboard" className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-[#C80808]/50 to-[#E0A21A]/50 text-white font-extrabold pl-1 pr-4 py-[3px] shadow-[0_3px_10px_rgba(200,8,8,0.20)] hover:-translate-y-0.5 transition-all duration-300" title="Open the admin console"><span className="w-6 h-6 rounded-full bg-white text-[#C80808] flex items-center justify-center"><ShieldCheck className="w-3.5 h-3.5" /></span>Admin<span className="absolute inset-y-0 -left-10 w-8 bg-white/40 skew-x-[-20deg] group-hover:left-[120%] transition-all duration-700" /></Link>
+                <Link href="/admin/dashboard" className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-[#C80808]/70 to-[#E0A21A]/70 text-white font-extrabold pl-1 pr-4 py-[3px] shadow-[0_3px_10px_rgba(200,8,8,0.20)] hover:-translate-y-0.5 transition-all duration-300" title="Open the admin console"><span className="w-6 h-6 rounded-full bg-white text-[#C80808] flex items-center justify-center"><ShieldCheck className="w-3.5 h-3.5" /></span>Admin<span className="absolute inset-y-0 -left-10 w-8 bg-white/40 skew-x-[-20deg] group-hover:left-[120%] transition-all duration-700" /></Link>
                 <span className="h-5 w-px bg-white/20" />
-                <span className="inline-flex items-center gap-2 text-white/90"><span className="w-6 h-6 rounded-full bg-gradient-to-br from-[#E0A21A]/50 to-[#C80808]/50 text-white text-[11px] font-black flex items-center justify-center">{String(admin?.name || admin?.email || "A").trim().charAt(0).toUpperCase()}</span><span className="max-w-[190px] truncate font-semibold">{admin.email}</span></span>
+                <span className="inline-flex items-center gap-2 text-white/90"><span className="w-6 h-6 rounded-full bg-gradient-to-br from-[#E0A21A]/70 to-[#C80808]/70 text-white text-[11px] font-black flex items-center justify-center">{String(admin?.name || admin?.email || "A").trim().charAt(0).toUpperCase()}</span><span className="max-w-[190px] truncate font-semibold">{admin.email}</span></span>
                 <span className="h-5 w-px bg-white/20" />
                 <button type="button" onClick={logout} className="inline-flex items-center gap-1.5 rounded-full border border-white/25 bg-white/10 px-3.5 py-[3px] font-bold text-white hover:bg-white hover:text-[#C80808] transition-colors"><LogOut className="w-3.5 h-3.5" />Logout</button>
               </div>
             ) : (
-              <Link href="/login" className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-[#C80808]/50 to-[#E0A21A]/50 text-white font-extrabold pl-1 pr-4 py-[3px] shadow-[0_3px_10px_rgba(200,8,8,0.20)] hover:-translate-y-0.5 transition-all duration-300"><span className="w-6 h-6 rounded-full bg-white text-[#C80808] flex items-center justify-center"><Lock className="w-3 h-3" /></span>Login<span className="absolute inset-y-0 -left-10 w-8 bg-white/40 skew-x-[-20deg] group-hover:left-[120%] transition-all duration-700" /></Link>
+              <Link href="/login" className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-[#C80808]/70 to-[#E0A21A]/70 text-white font-extrabold pl-1 pr-4 py-[3px] shadow-[0_3px_10px_rgba(200,8,8,0.20)] hover:-translate-y-0.5 transition-all duration-300"><span className="w-6 h-6 rounded-full bg-white text-[#C80808] flex items-center justify-center"><Lock className="w-3 h-3" /></span>Login<span className="absolute inset-y-0 -left-10 w-8 bg-white/40 skew-x-[-20deg] group-hover:left-[120%] transition-all duration-700" /></Link>
             )}
           </div>
         </div>
@@ -114,7 +114,7 @@ export default function HeaderCompact() {
           })}
         </nav>
         <div className="flex items-center gap-2">
-          <button type="button" aria-label="Search the site" onClick={() => setSearchOpen(true)} className="group flex items-center gap-2.5 rounded-full border border-[#E7E9EE] bg-gradient-to-b from-white to-[#FFF8F0] shadow-sm hover:shadow-[0_6px_16px_rgba(200,8,8,0.12)] hover:border-[#C80808] pl-1.5 pr-3 sm:pr-3.5 py-1.5 transition-all duration-300"><span className="w-8 h-8 rounded-full bg-gradient-to-br from-[#C80808]/50 to-[#E0A21A]/50 text-white flex items-center justify-center group-hover:rotate-12 group-hover:scale-105 transition-transform"><Search className="w-4 h-4" /></span><span className="hidden sm:block text-[13px] font-semibold text-[#929DA7] group-hover:text-[#17191C] w-[104px] text-left">Search…</span></button>
+          <button type="button" aria-label="Search the site" onClick={() => setSearchOpen(true)} className="group flex items-center gap-2.5 rounded-full border border-[#E7E9EE] bg-gradient-to-b from-white to-[#FFF8F0] shadow-sm hover:shadow-[0_6px_16px_rgba(200,8,8,0.12)] hover:border-[#C80808] pl-1.5 pr-3 sm:pr-3.5 py-1.5 transition-all duration-300"><span className="w-8 h-8 rounded-full bg-gradient-to-br from-[#C80808]/70 to-[#E0A21A]/70 text-white flex items-center justify-center group-hover:rotate-12 group-hover:scale-105 transition-transform"><Search className="w-4 h-4" /></span><span className="hidden sm:block text-[13px] font-semibold text-[#929DA7] group-hover:text-[#17191C] w-[104px] text-left">Search…</span></button>
           <button type="button" aria-label="Menu" onClick={() => setMenu(!menu)} className="lg:hidden w-10 h-10 rounded-lg border border-[#E7E9EE] flex items-center justify-center">{menu ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}</button>
         </div>
       </div>

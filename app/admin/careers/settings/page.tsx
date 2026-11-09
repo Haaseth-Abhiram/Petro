@@ -140,7 +140,7 @@ export default function RecruitmentSettingsPage() {
         <button
           onClick={fetchSettings}
           disabled={loading}
-          className="p-2.5 rounded-xl border border-[#D8DDE2] bg-white text-[#17191C] hover:bg-[#F5F6F7] transition disabled:opacity-50 self-start sm:self-auto"
+          className="p-2.5 rounded-xl border border-[#D8DDE2] bg-white text-[#17191C] hover:bg-[#F5F6F7] transition disabled:opacity-70 self-start sm:self-auto"
           title="Reload settings"
         >
           <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin text-[#C80808]" : ""}`} />
@@ -308,7 +308,7 @@ export default function RecruitmentSettingsPage() {
             <button
               type="submit"
               disabled={saving}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#C80808]/50 to-[#FFA028]/50 text-white text-sm font-extrabold shadow-md shadow-[#C80808]/25 hover:opacity-95 transition disabled:opacity-50"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#C80808]/70 to-[#FFA028]/70 text-white text-sm font-extrabold shadow-md shadow-[#C80808]/25 hover:opacity-95 transition disabled:opacity-70"
             >
               <Save className="w-4 h-4" />
               {saving ? "Saving Changes..." : "Save Settings"}

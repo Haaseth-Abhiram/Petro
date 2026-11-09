@@ -433,7 +433,7 @@ export default function CandidateDetailPage() {
               <button
                 type="submit"
                 disabled={addingNote || !newNote.trim()}
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#17191C] hover:bg-[#2A2E34] text-white text-xs font-bold disabled:opacity-50 transition-colors"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#17191C] hover:bg-[#2A2E34] text-white text-xs font-bold disabled:opacity-70 transition-colors"
               >
                 <Plus className="w-3.5 h-3.5" />
                 <span>{addingNote ? "Saving…" : "Post Note"}</span>
@@ -538,7 +538,7 @@ export default function CandidateDetailPage() {
                 <button
                   type="submit"
                   disabled={updatingStatus || selectedStatus === application.status}
-                  className="px-4 py-2 rounded-xl bg-[#C80808] hover:bg-[#FFA028] text-white text-xs font-bold disabled:opacity-50 transition-colors"
+                  className="px-4 py-2 rounded-xl bg-[#C80808] hover:bg-[#FFA028] text-white text-xs font-bold disabled:opacity-70 transition-colors"
                 >
                   {updatingStatus ? "Saving…" : "Confirm Status Change"}
                 </button>

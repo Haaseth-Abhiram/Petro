@@ -115,7 +115,7 @@ export default async function CareersPage() {
       <section className="relative bg-[#17191C] text-white overflow-hidden">
         <div className="absolute inset-0 bg-cover bg-center opacity-40" style={{ backgroundImage: "url('/assets/img/service-technical-consultation.jpg')" }} />
         <div className="absolute inset-0 bg-gradient-to-r from-[#17191C]/85 via-[#17191C]/70 to-[#FF4B32]/15" />
-        <div className="absolute inset-x-0 bottom-0 h-[2.5px] bg-gradient-to-r from-[#FF4B32] via-[#FFA028] to-[#FFD580] opacity-50" />
+        <div className="absolute inset-x-0 bottom-0 h-[2.5px] bg-gradient-to-r from-[#FF4B32] via-[#FFA028] to-[#FFD580] opacity-70" />
         <div className="relative max-w-[1240px] mx-auto px-5 sm:px-8 pt-8 pb-14">
           <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-[12px] text-white/70 mb-6">
             <Link href="/" className="hover:text-white inline-flex items-center gap-1"><HomeIcon className="w-3.5 h-3.5" />Home</Link><ChevronRight className="w-3.5 h-3.5" /><span className="text-white font-semibold">Careers</span>
@@ -125,7 +125,7 @@ export default async function CareersPage() {
           <p className="text-white/85 text-[15px] sm:text-[16.5px] leading-relaxed max-w-[620px] mb-6">Join a team of engineers and sourcing specialists supplying water treatment chemistry and process instrumentation to plants across India and abroad. Find your role, view the details, and apply in minutes.</p>
           <div className="flex flex-wrap gap-3">
             <a href="#positions" className="inline-flex items-center gap-2 rounded-xl bg-[#FF4B32] hover:bg-[#E03820] text-white text-[14px] font-extrabold px-6 py-3 shadow-[0_6px_18px_rgba(255,75,50,0.18)] transition-colors">View Open Positions <ArrowRight className="w-4 h-4" /></a>
-            <a href="#apply" className="inline-flex items-center gap-2 rounded-xl border border-white/50 text-white text-[14px] font-extrabold px-6 py-3 hover:bg-white/10 transition-colors"><Mail className="w-4 h-4" />Apply Now</a>
+            <a href="#apply" className="inline-flex items-center gap-2 rounded-xl border border-white/70 text-white text-[14px] font-extrabold px-6 py-3 hover:bg-white/10 transition-colors"><Mail className="w-4 h-4" />Apply Now</a>
           </div>
         </div>
       </section>

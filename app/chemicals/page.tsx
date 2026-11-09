@@ -244,7 +244,7 @@ export default function ChemicalsPage() {
             <p className="text-[14px] text-white/70">The same antiscalant that protects one membrane will foul another. Four steps before anything is quoted.</p>
           </Reveal>
           <div className="relative grid sm:grid-cols-2 lg:grid-cols-4 gap-x-5 gap-y-12">
-            <span aria-hidden="true" className="hidden lg:block absolute top-0 left-[12%] right-[12%] h-[2px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#C80808] opacity-50" />
+            <span aria-hidden="true" className="hidden lg:block absolute top-0 left-[12%] right-[12%] h-[2px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#C80808] opacity-70" />
             {steps.map((st, k) => {
               const Icon = stepIcons[k];
               return (
@@ -263,7 +263,7 @@ export default function ChemicalsPage() {
       </section>
 
       {/* 5. CTA STRIP */}
-      <section className="py-9 bg-gradient-to-r from-[#A81010]/50 via-[#C80808]/50 to-[#A81010]/50">
+      <section className="py-9 bg-gradient-to-r from-[#A81010]/70 via-[#C80808]/70 to-[#A81010]/70">
         <Reveal className="max-w-[1240px] mx-auto px-5 sm:px-8 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div className="max-w-[620px]">
             <span className="text-[11px] font-extrabold uppercase tracking-[0.2em] text-[#F2B93B]">Technical support</span>

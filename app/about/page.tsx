@@ -81,7 +81,7 @@ export default function AboutPage() {
             </ul>
           </Reveal>
           <Reveal variant="right" className="grid grid-cols-2 gap-3">
-            {[{ v: "100%", l: "Traceability & MTRs", c: "from-[#C80808]/50 to-[#E0241A]/50" }, { v: "< 24h", l: "Technical response", c: "from-[#D4950F]/50 to-[#B07A0A]/50" }, { v: "2", l: "Divisions, one contact", c: "from-[#D4950F]/50 to-[#B07A0A]/50" }, { v: "8", l: "Guiding principles", c: "from-[#C80808]/50 to-[#E0241A]/50" }].map((s, k) => (
+            {[{ v: "100%", l: "Traceability & MTRs", c: "from-[#C80808]/70 to-[#E0241A]/70" }, { v: "< 24h", l: "Technical response", c: "from-[#D4950F]/70 to-[#B07A0A]/70" }, { v: "2", l: "Divisions, one contact", c: "from-[#D4950F]/70 to-[#B07A0A]/70" }, { v: "8", l: "Guiding principles", c: "from-[#C80808]/70 to-[#E0241A]/70" }].map((s, k) => (
               <div key={s.l} className={`rounded-2xl bg-gradient-to-br ${s.c} text-white p-5 shadow-xl hover:-translate-y-1.5 transition-transform duration-300 ${k % 2 ? "sm:translate-y-4" : ""}`}>
                 <div className="text-4xl font-black leading-none">{s.v}</div>
                 <div className="text-[11px] font-bold uppercase tracking-wider text-white/85 mt-2">{s.l}</div>
@@ -142,7 +142,7 @@ export default function AboutPage() {
       </section>
 
       {/* BANNER */}
-      <section className="relative py-10 bg-gradient-to-r from-[#A81010]/50 via-[#C80808]/50 to-[#A81010]/50 text-white overflow-hidden">
+      <section className="relative py-10 bg-gradient-to-r from-[#A81010]/70 via-[#C80808]/70 to-[#A81010]/70 text-white overflow-hidden">
         <div className="absolute inset-0 dot-grid opacity-25" />
         <Reveal className="relative max-w-[1240px] mx-auto px-5 sm:px-8 flex flex-col lg:flex-row lg:items-center justify-between gap-5">
           <div>

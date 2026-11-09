@@ -382,7 +382,7 @@ export default function AdminContentPage() {
           <button
             type="submit"
             disabled={saving}
-            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg bg-[#C80808] hover:bg-[#A81010] text-white text-xs font-bold shadow-[0_4px_12px_rgba(200,8,8,0.3)] transition-all disabled:opacity-50"
+            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg bg-[#C80808] hover:bg-[#A81010] text-white text-xs font-bold shadow-[0_4px_12px_rgba(200,8,8,0.3)] transition-all disabled:opacity-70"
           >
             <Save className="w-4 h-4" />
             <span>{saving ? "Publishing to Supabase..." : "Save & Publish All Content"}</span>

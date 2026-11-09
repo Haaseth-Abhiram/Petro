@@ -58,7 +58,7 @@ export default function CinematicLoader({ message = "Loading", exiting = false, 
         <ul className="mt-9 flex flex-wrap justify-center gap-x-3 gap-y-3 max-w-[330px] sm:max-w-[600px]">
           {PRODUCTS.map(({ I, t }, i) => (
             <li key={t} className="ld-pop flex flex-col items-center w-[84px] sm:w-[88px]" style={{ animationDelay: `${0.25 + i * 0.12}s` }}>
-              <span className="ld-bob flex w-11 h-11 sm:w-12 sm:h-12 items-center justify-center rounded-full border border-[#E0A21A]/50 bg-white/[0.06] text-[#F2B93B] shadow-[0_0_18px_rgba(224,162,26,.2)]" style={{ animationDelay: `${i * 0.25}s` }}><I className="w-5 h-5" /></span>
+              <span className="ld-bob flex w-11 h-11 sm:w-12 sm:h-12 items-center justify-center rounded-full border border-[#E0A21A]/70 bg-white/[0.06] text-[#F2B93B] shadow-[0_0_18px_rgba(224,162,26,.2)]" style={{ animationDelay: `${i * 0.25}s` }}><I className="w-5 h-5" /></span>
               <span className="mt-2 text-[9.5px] font-bold uppercase tracking-[0.14em] text-white/65 text-center leading-tight">{t}</span>
             </li>
           ))}
