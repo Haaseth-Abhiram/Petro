@@ -29,6 +29,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth">
+      <head>
+        <link rel="icon" href="/favicon.ico?v=4" sizes="any" />
+        <link rel="icon" href="/icon.svg?v=4" type="image/svg+xml" />
+        <link rel="icon" href="/icon.png?v=4" type="image/png" />
+        <link rel="apple-touch-icon" href="/apple-icon.png?v=4" />
+      </head>
       <body className="flex flex-col min-h-screen bg-white">
         <InitialLoader />
         <CookieConsent />

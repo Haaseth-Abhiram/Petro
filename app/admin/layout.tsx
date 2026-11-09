@@ -21,5 +21,14 @@ export default function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <AdminShell>{children}</AdminShell>;
+  return (
+    <>
+      <head>
+        <link rel="icon" href="/favicon.ico?v=4" sizes="any" />
+        <link rel="icon" href="/icon.svg?v=4" type="image/svg+xml" />
+        <link rel="icon" href="/icon.png?v=4" type="image/png" />
+      </head>
+      <AdminShell>{children}</AdminShell>
+    </>
+  );
 }
