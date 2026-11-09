@@ -154,10 +154,32 @@ export default function AdminDashboardPage() {
                 <ArrowUpRight className="h-3 w-3 self-center text-white/40 transition-colors group-hover:text-white" />
               </Link>
             ))}
-            <button onClick={d.load} disabled={d.refreshing} className="inline-flex items-center gap-1.5 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-[12px] font-bold backdrop-blur transition-colors hover:bg-white/20 disabled:opacity-70" title={`Last updated: ${d.updatedAt || "…"}`}><RefreshCw className={`h-3.5 w-3.5 ${d.refreshing ? "animate-spin" : ""}`} />Refresh</button>
+            <button onClick={() => d.load(true)} disabled={d.refreshing} className="inline-flex items-center gap-1.5 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-[12px] font-bold backdrop-blur transition-colors hover:bg-white/20 disabled:opacity-70" title={`Last updated: ${d.updatedAt || "…"}`}><RefreshCw className={`h-3.5 w-3.5 ${d.refreshing ? "animate-spin" : ""}`} />Refresh</button>
           </div>
         </div>
       </div>
+
+      {d.error && !d.data && (
+        <div className="flex items-center justify-between gap-4 rounded-2xl border border-[#C80808]/30 bg-[#FFF5F5] p-4 text-[#17191C]">
+          <div className="flex items-center gap-3">
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#C80808] text-white">
+              <AlertTriangle className="h-5 w-5" />
+            </span>
+            <div>
+              <p className="text-[13.5px] font-bold text-[#C80808]">Database Connection Delay</p>
+              <p className="text-[12px] text-[#52525B]">{d.error}</p>
+            </div>
+          </div>
+          <button
+            onClick={() => d.load(true)}
+            disabled={d.refreshing}
+            className="inline-flex items-center gap-1.5 rounded-xl bg-[#C80808] px-4 py-2 text-[12.5px] font-bold text-white transition-opacity hover:opacity-90 disabled:opacity-50"
+          >
+            <RefreshCw className={`h-3.5 w-3.5 ${d.refreshing ? "animate-spin" : ""}`} />
+            Retry
+          </button>
+        </div>
+      )}
 
       {d.loading ? (
         <WorkspaceLoader />

@@ -37,16 +37,21 @@ export async function GET(req: Request) {
 
     sql += ` ORDER BY created_at DESC;`;
 
-    const result = await query(sql, params);
-
-    // Get live counts for tabs
-    const countsRes = await query(`
-      SELECT 
-        COUNT(*) as total,
-        COUNT(*) FILTER (WHERE LOWER(subject) LIKE '%suggestion%' OR LOWER(subject) LIKE '%feedback%' OR LOWER(message) LIKE '%suggestion%') as suggestions_count,
-        COUNT(*) FILTER (WHERE NOT (LOWER(subject) LIKE '%suggestion%' OR LOWER(subject) LIKE '%feedback%')) as enquiries_count
-      FROM contact_messages;
-    `);
+    // Run list query and consolidated status + type counts simultaneously
+    const [result, countsRes] = await Promise.all([
+      query(sql, params),
+      query(`
+        SELECT 
+          COUNT(*) as total,
+          COUNT(*) FILTER (WHERE LOWER(subject) LIKE '%suggestion%' OR LOWER(subject) LIKE '%feedback%' OR LOWER(message) LIKE '%suggestion%') as suggestions_count,
+          COUNT(*) FILTER (WHERE NOT (LOWER(subject) LIKE '%suggestion%' OR LOWER(subject) LIKE '%feedback%')) as enquiries_count,
+          COUNT(*) FILTER (WHERE status = 'new') as status_new,
+          COUNT(*) FILTER (WHERE status = 'in_progress') as status_in_progress,
+          COUNT(*) FILTER (WHERE status = 'responded') as status_responded,
+          COUNT(*) FILTER (WHERE status = 'closed') as status_closed
+        FROM contact_messages;
+      `),
+    ]);
 
     const counts = countsRes.rows[0] || {};
 
@@ -57,6 +62,12 @@ export async function GET(req: Request) {
         total: parseInt(counts.total || "0", 10),
         suggestions: parseInt(counts.suggestions_count || "0", 10),
         enquiries: parseInt(counts.enquiries_count || "0", 10),
+      },
+      statusCounts: {
+        new: parseInt(counts.status_new || "0", 10),
+        in_progress: parseInt(counts.status_in_progress || "0", 10),
+        responded: parseInt(counts.status_responded || "0", 10),
+        closed: parseInt(counts.status_closed || "0", 10),
       },
     });
   } catch (err: any) {

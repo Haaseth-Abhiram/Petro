@@ -104,15 +104,6 @@ export default function AdminEnquiriesPage() {
       if (statusFilter !== "all") params.set("status", statusFilter);
       if (typeFilter !== "all") params.set("type", typeFilter);
 
-      // unfiltered request feeds the status summary cards
-      fetch("/api/admin/enquiries").then((r) => r.json()).then((all) => {
-        if (all.success) {
-          const c: Record<string, number> = { new: 0, in_progress: 0, responded: 0, closed: 0 };
-          (all.enquiries || []).forEach((e: any) => { c[e.status || "new"] = (c[e.status || "new"] || 0) + 1; });
-          setStatusCounts(c);
-        }
-      }).catch(() => {});
-
       const res = await fetch(`/api/admin/enquiries?${params.toString()}`);
       const json = await res.json();
       if (json.success) {
@@ -123,6 +114,9 @@ export default function AdminEnquiriesPage() {
             enquiries: json.counts.enquiries || 0,
             suggestions: json.counts.suggestions || 0,
           });
+        }
+        if (json.statusCounts) {
+          setStatusCounts(json.statusCounts);
         }
       }
     } catch (e) {

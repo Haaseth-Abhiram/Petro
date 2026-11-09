@@ -10,23 +10,44 @@ export function useDashboard() {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [updatedAt, setUpdatedAt] = useState("");
+  const [error, setError] = useState<string | null>(null);
 
-  const load = useCallback(async () => {
+  const load = useCallback(async (forceRefresh = false) => {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 12000);
+
     try {
       setRefreshing(true);
-      const [s, u] = await Promise.all([fetch("/api/admin/stats").then((r) => r.json()), fetch("/api/auth/me").then((r) => r.json())]);
+      setError(null);
+      const qs = forceRefresh ? "?refresh=true" : "";
+
+      const [sRes, uRes] = await Promise.all([
+        fetch(`/api/admin/stats${qs}`, { signal: controller.signal }),
+        fetch("/api/auth/me", { signal: controller.signal }),
+      ]);
+
+      const s = await sRes.json().catch(() => ({ success: false }));
+      const u = await uRes.json().catch(() => ({ authenticated: false }));
+
       if (s.success) {
         setData(s);
         setUpdatedAt(new Date().toLocaleString(undefined, { day: "numeric", month: "short", hour: "numeric", minute: "2-digit" }));
+      } else if (!data) {
+        setError(s.message || "Failed to load dashboard data");
       }
+
       if (u.authenticated) setUser(u.user);
-    } catch (e) {
-      console.error(e);
+    } catch (e: any) {
+      if (e.name !== "AbortError") {
+        console.error("Dashboard fetch error:", e);
+        if (!data) setError("Unable to connect to the backend database. Please check connection and try again.");
+      }
     } finally {
+      clearTimeout(timeoutId);
       setLoading(false);
       setRefreshing(false);
     }
-  }, []);
+  }, [data]);
 
   useEffect(() => {
     load();
@@ -46,7 +67,7 @@ export function useDashboard() {
   ].sort((x: any, y: any) => +new Date(y.at) - +new Date(x.at));
 
   return {
-    data, stats, user, loading, refreshing, updatedAt, load, activity, timeline, delta, sum, last7,
+    data, stats, user, loading, refreshing, updatedAt, error, load, activity, timeline, delta, sum, last7,
     ins: data?.insights || {},
     topCategories: data?.topCategories || [],
     rfqStatus: data?.rfqStatus || [],

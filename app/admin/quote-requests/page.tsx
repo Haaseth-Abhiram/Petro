@@ -115,19 +115,13 @@ export default function AdminQuoteRequestsPage() {
       if (search.trim()) params.set("search", search.trim());
       if (statusFilter !== "all") params.set("status", statusFilter);
 
-      // unfiltered request feeds the summary cards
-      fetch("/api/admin/quote-requests").then((r) => r.json()).then((all) => {
-        if (all.success) {
-          const c: Record<string, number> = {};
-          (all.quoteRequests || []).forEach((r: any) => { c[r.status || "new"] = (c[r.status || "new"] || 0) + 1; });
-          setStatusCounts(c);
-          setTotalAll((all.quoteRequests || []).length);
-        }
-      }).catch(() => {});
-
       const res = await fetch(`/api/admin/quote-requests?${params.toString()}`);
       const json = await res.json();
-      if (json.success) setRfqs(json.quoteRequests);
+      if (json.success) {
+        setRfqs(json.quoteRequests || []);
+        if (json.counts) setStatusCounts(json.counts);
+        if (typeof json.totalAll === "number") setTotalAll(json.totalAll);
+      }
     } catch (e) {
       console.error(e);
     } finally {

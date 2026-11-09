@@ -29,8 +29,29 @@ export async function GET(req: Request) {
 
     sql += ` ORDER BY created_at DESC;`;
 
-    const result = await query(sql, params);
-    return NextResponse.json({ success: true, quoteRequests: result.rows });
+    const [result, countsRes] = await Promise.all([
+      query(sql, params),
+      query(`
+        SELECT status, COUNT(*)::int AS count
+        FROM rfq_submissions
+        GROUP BY status;
+      `),
+    ]);
+
+    const statusCounts: Record<string, number> = {};
+    let totalAll = 0;
+    (countsRes.rows || []).forEach((r: any) => {
+      const s = r.status || "new";
+      statusCounts[s] = r.count;
+      totalAll += r.count;
+    });
+
+    return NextResponse.json({
+      success: true,
+      quoteRequests: result.rows,
+      counts: statusCounts,
+      totalAll,
+    });
   } catch (err: any) {
     return NextResponse.json({ success: false, error: err.message }, { status: 500 });
   }

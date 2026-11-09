@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import AdminSidebar from "./AdminSidebar";
 import AdminHeader from "./AdminHeader";
@@ -19,6 +19,7 @@ export default function AdminShell({ children }: AdminShellProps) {
   const [enquiriesBadge, setEnquiriesBadge] = useState(0);
   const [rfqBadge, setRfqBadge] = useState(0);
   const [applicationsBadge, setApplicationsBadge] = useState(0);
+  const checkedAuthRef = useRef(false);
 
   // The admin console should never get the large-screen zoom used on the public website
   useEffect(() => {
@@ -27,27 +28,46 @@ export default function AdminShell({ children }: AdminShellProps) {
   }, []);
 
   // If on login route, bypass admin shell completely
-  const isLoginPage = pathname === "/admin/login";
+  const isLoginPage = pathname === "/admin/login" || pathname === "/login";
 
+  // Initial auth verification on mount
   useEffect(() => {
     if (isLoginPage) {
       setLoading(false);
       return;
     }
 
-    // Verify session
-    fetch("/api/auth/me")
+    // If user is already authenticated in state, only refresh badge counts in background
+    if (checkedAuthRef.current && user) {
+      fetch("/api/admin/stats")
+        .then((r) => r.json())
+        .then((sData) => {
+          if (sData.success && sData.stats) {
+            setEnquiriesBadge(sData.stats.enquiries?.new || 0);
+            setRfqBadge(sData.stats.rfqs?.new || 0);
+            setApplicationsBadge(sData.stats.applications?.new || 0);
+          }
+        })
+        .catch(() => {});
+      return;
+    }
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 8000);
+
+    fetch("/api/auth/me", { signal: controller.signal })
       .then((res) => {
         if (!res.ok) {
-          router.replace("/login");
+          router.replace("/admin/login");
           return null;
         }
         return res.json();
       })
       .then((data) => {
         if (data && data.authenticated) {
+          checkedAuthRef.current = true;
           setUser(data.user);
-          // Fetch badge counts
+          // Fetch badge counts in background
           fetch("/api/admin/stats")
             .then((r) => r.json())
             .then((sData) => {
@@ -59,21 +79,28 @@ export default function AdminShell({ children }: AdminShellProps) {
             })
             .catch(() => {});
         } else if (!isLoginPage) {
-          router.replace("/login");
+          router.replace("/admin/login");
         }
       })
-      .catch(() => {
-        if (!isLoginPage) router.replace("/login");
+      .catch((err) => {
+        if (!isLoginPage && err.name !== "AbortError") {
+          router.replace("/admin/login");
+        }
       })
       .finally(() => {
+        clearTimeout(timeoutId);
         setLoading(false);
       });
-  }, [pathname, isLoginPage, router]);
+
+    return () => {
+      clearTimeout(timeoutId);
+      controller.abort();
+    };
+  }, [pathname, isLoginPage, router, user]);
 
   if (isLoginPage) {
     return <>{children}</>;
   }
-
 
   return (
     <div className="min-h-screen bg-[#F4F4F5] flex">
