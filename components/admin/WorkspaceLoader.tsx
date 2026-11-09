@@ -17,7 +17,7 @@ export default function WorkspaceLoader({ message = "Getting your data ready", t
       {/* soft colour washes + dotted texture */}
       <div className="pointer-events-none absolute -left-24 -top-24 h-[420px] w-[420px] rounded-full bg-[#E0A21A]/15 blur-[90px]" />
       <div className="pointer-events-none absolute -bottom-32 -right-24 h-[460px] w-[460px] rounded-full bg-[#C80808]/[0.07] blur-[100px]" />
-      <div className="pointer-events-none absolute inset-0 opacity-60 [background-image:radial-gradient(#D8DDE2_1px,transparent_1px)] [background-size:26px_26px] [mask-image:radial-gradient(ellipse_at_center,#000_10%,transparent_65%)]" />
+      <div className="pointer-events-none absolute inset-0 opacity-50 [background-image:radial-gradient(#D8DDE2_1px,transparent_1px)] [background-size:26px_26px] [mask-image:radial-gradient(ellipse_at_center,#000_10%,transparent_65%)]" />
 
       <div className="relative flex flex-col items-center px-6 text-center">
         <div className="relative flex h-[190px] w-[190px] items-center justify-center">

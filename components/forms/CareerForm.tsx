@@ -161,7 +161,7 @@ export default function CareerForm({ defaultRole = "General Application" }: { de
       </div>
       <div><label className={label} htmlFor="c-msg">About you / cover note *</label><textarea id="c-msg" rows={3} className={input} placeholder="Tell us why you would like to join Petro Engineering..." {...register("message")} />{errors.message && <p className={err}>{errors.message.message}</p>}</div>
       {error && <div className="flex gap-2 rounded-lg bg-[#FF4B32]/10 border border-[#FF4B32]/30 text-[#17191C] text-[12.5px] p-2.5"><AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-[#FF4B32]" />{error}</div>}
-      <button type="submit" disabled={busy} className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#FF4B32] to-[#FFA028] text-white text-[14px] font-extrabold py-3 disabled:opacity-60 hover:opacity-95 shadow-md shadow-[#FF4B32]/25"><Send className="w-4 h-4" />{busy ? "Submitting application…" : "Submit application"}</button>
+      <button type="submit" disabled={busy} className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#FF4B32] to-[#FFA028] text-white text-[14px] font-extrabold py-3 disabled:opacity-50 hover:opacity-95 shadow-md shadow-[#FF4B32]/25"><Send className="w-4 h-4" />{busy ? "Submitting application…" : "Submit application"}</button>
     </form>
   );
 }

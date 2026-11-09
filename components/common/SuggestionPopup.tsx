@@ -38,7 +38,7 @@ export default function SuggestionPopup({ className, children }: { className?: s
         <div className="fixed inset-0 z-[85] overflow-y-auto overscroll-contain flex p-4 bg-[#17191C]/70 backdrop-blur-sm" onClick={close}>
           <div role="dialog" aria-modal="true" aria-label="Suggestions" onClick={(e) => e.stopPropagation()} className="relative w-full m-auto max-w-[460px] rounded-3xl bg-white shadow-2xl p-6 border-t-4 border-[#C80808] text-left">
             <button type="button" aria-label="Close" onClick={close} className="absolute right-4 top-4 p-1 text-[#4a5159] hover:text-[#17191C]"><X className="w-5 h-5" /></button>
-            <span className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#C80808] to-[#E0A21A] text-white flex items-center justify-center mb-3"><Lightbulb className="w-5 h-5" /></span>
+            <span className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#C80808]/50 to-[#E0A21A]/50 text-white flex items-center justify-center mb-3"><Lightbulb className="w-5 h-5" /></span>
             <h3 className="text-[1.25rem] font-black text-[#17191C]">Share your suggestion</h3>
             <p className="text-[13px] text-[#4a5159] mb-4">Tell us how we can improve the website or our service.</p>
             {msg?.ok ? (
@@ -51,7 +51,7 @@ export default function SuggestionPopup({ className, children }: { className?: s
                   <input aria-label="Email" type="email" className={inp} placeholder="Email (optional)" value={f.email} onChange={(e) => setF({ ...f, email: e.target.value })} />
                 </div>
                 {msg && !msg.ok && <div className="flex gap-2 rounded-lg bg-[#FBE9EC] border border-[#C80808]/30 text-[#C80808] text-[12.5px] p-2.5"><AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />{msg.t}</div>}
-                <button type="submit" disabled={busy} className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#C80808] to-[#E0A21A] text-white text-[14px] font-extrabold py-3 disabled:opacity-60"><Send className="w-4 h-4" />{busy ? "Sending…" : "Submit suggestion"}</button>
+                <button type="submit" disabled={busy} className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#C80808]/50 to-[#E0A21A]/50 text-white text-[14px] font-extrabold py-3 disabled:opacity-50"><Send className="w-4 h-4" />{busy ? "Sending…" : "Submit suggestion"}</button>
               </form>
             )}
           </div>

@@ -131,20 +131,20 @@ export default function CareersDashboardPage() {
   const closed = s?.closedJobs ?? 0;
 
   const funnel = [
-    { l: "New", v: s?.newApplications ?? 0, Icon: Inbox, grad: "from-[#E21212]/85 to-[#C80808]/80", dark: false },
-    { l: "Under review", v: s?.underReviewApplications ?? 0, Icon: Search, grad: "from-[#F2B93B]/85 to-[#D4950F]/80", dark: true },
-    { l: "Shortlisted", v: s?.shortlistedApplications ?? 0, Icon: Star, grad: "from-[#2E3239] to-[#14161A]", dark: false },
-    { l: "Interview", v: s?.interviewApplications ?? 0, Icon: CalendarCheck, grad: "from-[#C80808]/85 to-[#E0A21A]/80", dark: false },
+    { l: "New", v: s?.newApplications ?? 0, Icon: Inbox, grad: "from-[#E21212]/50 to-[#C80808]/50", dark: false },
+    { l: "Under review", v: s?.underReviewApplications ?? 0, Icon: Search, grad: "from-[#F2B93B]/50 to-[#D4950F]/50", dark: true },
+    { l: "Shortlisted", v: s?.shortlistedApplications ?? 0, Icon: Star, grad: "from-[#2E3239]/50 to-[#14161A]/50", dark: false },
+    { l: "Interview", v: s?.interviewApplications ?? 0, Icon: CalendarCheck, grad: "from-[#C80808]/50 to-[#E0A21A]/50", dark: false },
     { l: "Selected", v: s?.selectedApplications ?? 0, Icon: Trophy, grad: "from-[#059669] to-[#047857]", dark: false },
     { l: "Rejected", v: s?.rejectedApplications ?? 0, Icon: XCircle, grad: "from-[#71717A] to-[#3F3F46]", dark: false },
   ];
 
   const quick = [
-    { href: "/admin/careers/jobs", l: "Post a job", sub: "Publish a new opening", Icon: Plus, tone: "bg-gradient-to-br from-[#E21212]/85 to-[#C80808]/80" },
-    { href: "/admin/careers/applications", l: "Applications", sub: "Review candidates", Icon: Users, tone: "bg-gradient-to-br from-[#F2B93B]/85 to-[#D4950F]/80" },
-    { href: "/admin/careers/categories", l: "Job categories", sub: "Organise departments", Icon: Layers, tone: "bg-gradient-to-br from-[#2E3239] to-[#14161A]" },
-    { href: "/admin/careers/applications?tab=resumes", l: "Resume folder", sub: "Browse all CVs", Icon: FolderOpen, tone: "bg-gradient-to-br from-[#C80808]/85 to-[#E0A21A]/80" },
-    { href: "/careers", l: "Careers page", sub: "View public site", Icon: ExternalLink, tone: "bg-gradient-to-br from-[#E21212]/85 to-[#C80808]/80" },
+    { href: "/admin/careers/jobs", l: "Post a job", sub: "Publish a new opening", Icon: Plus, tone: "bg-gradient-to-br from-[#E21212]/50 to-[#C80808]/50" },
+    { href: "/admin/careers/applications", l: "Applications", sub: "Review candidates", Icon: Users, tone: "bg-gradient-to-br from-[#F2B93B]/50 to-[#D4950F]/50" },
+    { href: "/admin/careers/categories", l: "Job categories", sub: "Organise departments", Icon: Layers, tone: "bg-gradient-to-br from-[#2E3239]/50 to-[#14161A]/50" },
+    { href: "/admin/careers/applications?tab=resumes", l: "Resume folder", sub: "Browse all CVs", Icon: FolderOpen, tone: "bg-gradient-to-br from-[#C80808]/50 to-[#E0A21A]/50" },
+    { href: "/careers", l: "Careers page", sub: "View public site", Icon: ExternalLink, tone: "bg-gradient-to-br from-[#E21212]/50 to-[#C80808]/50" },
   ];
 
   const maxPos = Math.max(...(data?.byPosition || []).map((x) => x.count), 1);
@@ -156,7 +156,7 @@ export default function CareersDashboardPage() {
         <div className="pointer-events-none absolute -right-10 -top-14 h-44 w-72 rounded-full bg-[#E0A21A]/15 blur-[60px]" />
         <div className="pointer-events-none absolute right-4 top-1/2 w-[170px] -translate-y-1/2 opacity-[0.08]"><PetroLogo part="flame" variant="dark" width="100%" /></div>
         <div className="pointer-events-none absolute inset-0 opacity-[0.05] [background-image:linear-gradient(#fff_1px,transparent_1px),linear-gradient(90deg,#fff_1px,transparent_1px)] [background-size:30px_30px]" />
-        <span className="absolute inset-x-0 bottom-0 h-[2.5px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#F2B93B] opacity-60" />
+        <span className="absolute inset-x-0 bottom-0 h-[2.5px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#F2B93B] opacity-50" />
         <div className="relative flex flex-col gap-4 px-5 py-4 xl:flex-row xl:items-center xl:justify-between">
           <div className="min-w-0">
             <p className="inline-flex items-center gap-1.5 text-[10.5px] font-extrabold uppercase tracking-[0.2em] text-[#F2B93B]"><Sparkles className="h-3 w-3" />Hiring</p>
@@ -171,8 +171,8 @@ export default function CareersDashboardPage() {
                 <ArrowUpRight className="h-3 w-3 self-center text-white/40 group-hover:text-white" />
               </Link>
             ))}
-            <button onClick={fetchDashboard} disabled={refreshing} className="inline-flex items-center gap-1.5 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-[12px] font-bold backdrop-blur transition-colors hover:bg-white/20 disabled:opacity-60"><RefreshCw className={`h-3.5 w-3.5 ${refreshing ? "animate-spin" : ""}`} />Refresh</button>
-            <Link href="/admin/careers/jobs" className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full bg-gradient-to-r from-[#D40E0E]/85 to-[#E0A21A]/80 px-4 py-2 text-[12px] font-extrabold shadow-[0_8px_20px_-8px_rgba(224,100,20,0.25)] transition-transform hover:-translate-y-0.5"><Plus className="h-3.5 w-3.5" />Post a job</Link>
+            <button onClick={fetchDashboard} disabled={refreshing} className="inline-flex items-center gap-1.5 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-[12px] font-bold backdrop-blur transition-colors hover:bg-white/20 disabled:opacity-50"><RefreshCw className={`h-3.5 w-3.5 ${refreshing ? "animate-spin" : ""}`} />Refresh</button>
+            <Link href="/admin/careers/jobs" className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full bg-gradient-to-r from-[#D40E0E]/50 to-[#E0A21A]/50 px-4 py-2 text-[12px] font-extrabold shadow-[0_8px_20px_-8px_rgba(224,100,20,0.25)] transition-transform hover:-translate-y-0.5"><Plus className="h-3.5 w-3.5" />Post a job</Link>
           </div>
         </div>
       </div>
@@ -228,7 +228,7 @@ export default function CareersDashboardPage() {
                   {data.recentApplications.map((app) => (
                     <li key={app.id}>
                       <Link href={`/admin/careers/applications/${app.id}`} className="group flex items-center gap-4 px-5 py-4 transition-colors hover:bg-[#FAFAFA]">
-                        <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[#2E3239] to-[#14161A] text-[17px] font-black text-white shadow-sm">{String(app.full_name || "?").trim().charAt(0).toUpperCase()}</span>
+                        <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[#2E3239]/50 to-[#14161A]/50 text-[17px] font-black text-white shadow-sm">{String(app.full_name || "?").trim().charAt(0).toUpperCase()}</span>
                         <div className="min-w-0 flex-1">
                           <div className="flex flex-wrap items-center gap-2"><p className="truncate text-[14px] font-extrabold text-[#18181B] group-hover:text-[#C80808]">{app.full_name}</p><span className="rounded-md bg-[#F4F4F5] px-1.5 py-0.5 font-mono text-[10.5px] text-[#71717A]">{app.application_reference}</span></div>
                           <p className="truncate text-[12.5px] text-[#52525B]">Applied for <b className="text-[#18181B]">{app.role_of_interest}</b> · {app.experience}</p>
@@ -274,7 +274,7 @@ export default function CareersDashboardPage() {
               <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
                 {data.recentJobs.map((job) => (
                   <Link key={job.id} href="/admin/careers/jobs" className="group flex items-start gap-3.5 rounded-xl border border-[#E4E4E7] bg-white p-3.5 transition-all hover:-translate-y-0.5 hover:border-[#C80808]/30 hover:shadow-md">
-                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#2E3239] to-[#14161A] text-[#F2B93B]"><Briefcase className="h-5 w-5" /></span>
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#2E3239]/50 to-[#14161A]/50 text-[#F2B93B]"><Briefcase className="h-5 w-5" /></span>
                     <div className="min-w-0 flex-1">
                       <p className="truncate text-[13.5px] font-extrabold text-[#18181B] group-hover:text-[#C80808]" title={job.title}>{job.title}</p>
                       <p className="truncate text-[12px] text-[#71717A]">{job.department} · {job.experience}</p>

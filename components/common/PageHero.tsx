@@ -49,7 +49,7 @@ export default function PageHero({ crumb, eyebrow, title, accent, text, actions,
   const centered = layout === "centered";
   return (
     <section className="relative bg-[#17191C] text-white overflow-hidden">
-      <div className={`absolute inset-0 bg-cover bg-center ${centered ? "opacity-70" : "opacity-40"}`} style={{ backgroundImage: `url('${bg}')` }} />
+      <div className={`absolute inset-0 bg-cover bg-center ${centered ? "opacity-50" : "opacity-40"}`} style={{ backgroundImage: `url('${bg}')` }} />
       <div className={`absolute inset-0 ${centered ? "bg-gradient-to-b from-[#17191C]/70 via-[#17191C]/55 to-[#17191C]/90" : "bg-gradient-to-r from-[#17191C]/85 via-[#17191C]/75 to-[#17191C]/45"}`} />
       <div className="absolute -top-28 -right-20 w-[460px] h-[460px] rounded-full bg-[#E0A21A]/25 blur-[120px] animate-blob" />
       <div className="absolute -bottom-32 -left-24 w-[420px] h-[420px] rounded-full bg-[#C80808]/30 blur-[120px] animate-blob" />

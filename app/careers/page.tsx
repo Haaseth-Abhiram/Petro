@@ -115,7 +115,7 @@ export default async function CareersPage() {
       <section className="relative bg-[#17191C] text-white overflow-hidden">
         <div className="absolute inset-0 bg-cover bg-center opacity-40" style={{ backgroundImage: "url('/assets/img/service-technical-consultation.jpg')" }} />
         <div className="absolute inset-0 bg-gradient-to-r from-[#17191C]/85 via-[#17191C]/70 to-[#FF4B32]/15" />
-        <div className="absolute inset-x-0 bottom-0 h-[2.5px] bg-gradient-to-r from-[#FF4B32] via-[#FFA028] to-[#FFD580] opacity-65" />
+        <div className="absolute inset-x-0 bottom-0 h-[2.5px] bg-gradient-to-r from-[#FF4B32] via-[#FFA028] to-[#FFD580] opacity-50" />
         <div className="relative max-w-[1240px] mx-auto px-5 sm:px-8 pt-8 pb-14">
           <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-[12px] text-white/70 mb-6">
             <Link href="/" className="hover:text-white inline-flex items-center gap-1"><HomeIcon className="w-3.5 h-3.5" />Home</Link><ChevronRight className="w-3.5 h-3.5" /><span className="text-white font-semibold">Careers</span>

@@ -56,7 +56,7 @@ function StatCard({ href, label, value, sub, today, Icon, grad, dark }: { href: 
         {today !== undefined ? (
           <span className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11.5px] font-extrabold ${dark ? "bg-black/15" : "bg-white/20"}`}><span className={`h-1.5 w-1.5 rounded-full ${dark ? "bg-[#17191C]" : "bg-white"}`} />{today} today</span>
         ) : (
-          <ArrowUpRight className="h-5 w-5 opacity-70 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+          <ArrowUpRight className="h-5 w-5 opacity-50 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
         )}
       </div>
       <p className="relative mt-auto pt-5 text-[2.5rem] font-black leading-none tracking-tight">{value}</p>
@@ -118,18 +118,18 @@ export default function AdminDashboardPage() {
   checks.sort((a, b) => Number(a.ok) - Number(b.ok));
 
   const cols = [
-    { t: "Quotations", Icon: FileSpreadsheet, total: stats.rfqs?.total ?? 0, n: rfqNew, href: "/admin/quote-requests", head: "bg-gradient-to-r from-[#E21212]/85 to-[#C80808]/80", dark: false, accent: "border-l-[#C80808]", avatar: "bg-[#C80808] text-white", empty: "No quotation requests yet", items: d.recentRfqs.map((r: any) => ({ id: "r" + r.id, a: r.product_name, b: `${r.company_name || r.full_name}${r.quantity ? " · " + r.quantity : ""}`, s: r.status, t: r.created_at })) },
-    { t: "Enquiries", Icon: Mail, total: stats.enquiries?.total ?? 0, n: enqNew, href: "/admin/enquiries", head: "bg-gradient-to-r from-[#F2B93B]/85 to-[#D4950F]/80", dark: true, accent: "border-l-[#E0A21A]", avatar: "bg-[#E0A21A] text-[#17191C]", empty: "No enquiries yet", items: d.recentEnquiries.map((r: any) => ({ id: "e" + r.id, a: r.subject, b: `${r.full_name}${r.company_name ? " · " + r.company_name : ""}`, s: r.status, t: r.created_at })) },
-    { t: "Applications", Icon: Users, total: stats.applications?.total ?? 0, n: appNew, href: "/admin/careers/applications", head: "bg-gradient-to-r from-[#2E3239]/85 to-[#14161A]/80", dark: false, accent: "border-l-[#17191C]", avatar: "bg-[#27272A] text-white", empty: "No applications yet", items: d.recentApplications.map((r: any) => ({ id: "a" + r.id, a: r.full_name, b: r.job_title || "General application", s: String(r.status || "new").toLowerCase().replace(" ", "_"), t: r.created_at })) },
+    { t: "Quotations", Icon: FileSpreadsheet, total: stats.rfqs?.total ?? 0, n: rfqNew, href: "/admin/quote-requests", head: "bg-gradient-to-r from-[#E21212]/50 to-[#C80808]/50", dark: false, accent: "border-l-[#C80808]", avatar: "bg-[#C80808] text-white", empty: "No quotation requests yet", items: d.recentRfqs.map((r: any) => ({ id: "r" + r.id, a: r.product_name, b: `${r.company_name || r.full_name}${r.quantity ? " · " + r.quantity : ""}`, s: r.status, t: r.created_at })) },
+    { t: "Enquiries", Icon: Mail, total: stats.enquiries?.total ?? 0, n: enqNew, href: "/admin/enquiries", head: "bg-gradient-to-r from-[#F2B93B]/50 to-[#D4950F]/50", dark: true, accent: "border-l-[#E0A21A]", avatar: "bg-[#E0A21A] text-[#17191C]", empty: "No enquiries yet", items: d.recentEnquiries.map((r: any) => ({ id: "e" + r.id, a: r.subject, b: `${r.full_name}${r.company_name ? " · " + r.company_name : ""}`, s: r.status, t: r.created_at })) },
+    { t: "Applications", Icon: Users, total: stats.applications?.total ?? 0, n: appNew, href: "/admin/careers/applications", head: "bg-gradient-to-r from-[#2E3239]/50 to-[#14161A]/50", dark: false, accent: "border-l-[#17191C]", avatar: "bg-[#27272A] text-white", empty: "No applications yet", items: d.recentApplications.map((r: any) => ({ id: "a" + r.id, a: r.full_name, b: r.job_title || "General application", s: String(r.status || "new").toLowerCase().replace(" ", "_"), t: r.created_at })) },
   ];
 
   const quick: { href: string; l: string; sub: string; Icon: LucideIcon; tone: string; count: number }[] = [
-    { href: "/admin/products", l: "Add product", sub: "New chemical or instrument", Icon: Plus, tone: "bg-gradient-to-br from-[#E21212]/85 to-[#C80808]/80", count: 0 },
-    { href: "/admin/quote-requests", l: "Process RFQs", sub: "Review and quote requests", Icon: FileSpreadsheet, tone: "bg-gradient-to-br from-[#F2B93B]/85 to-[#D4950F]/80", count: rfqNew },
-    { href: "/admin/enquiries", l: "Enquiries", sub: "Reply to contact messages", Icon: Mail, tone: "bg-gradient-to-br from-[#2E3239] to-[#14161A]", count: enqNew },
-    { href: "/admin/careers/jobs", l: "Post a job", sub: "Publish a new opening", Icon: Briefcase, tone: "bg-gradient-to-br from-[#C80808]/85 to-[#E0A21A]/80", count: 0 },
-    { href: "/admin/content", l: "Website content", sub: "Edit headlines and contacts", Icon: FileEdit, tone: "bg-gradient-to-br from-[#E21212]/85 to-[#C80808]/80", count: 0 },
-    { href: "/admin/documents", l: "Brochures", sub: "Manage downloadable files", Icon: FileText, tone: "bg-gradient-to-br from-[#F2B93B]/85 to-[#D4950F]/80", count: 0 },
+    { href: "/admin/products", l: "Add product", sub: "New chemical or instrument", Icon: Plus, tone: "bg-gradient-to-br from-[#E21212]/50 to-[#C80808]/50", count: 0 },
+    { href: "/admin/quote-requests", l: "Process RFQs", sub: "Review and quote requests", Icon: FileSpreadsheet, tone: "bg-gradient-to-br from-[#F2B93B]/50 to-[#D4950F]/50", count: rfqNew },
+    { href: "/admin/enquiries", l: "Enquiries", sub: "Reply to contact messages", Icon: Mail, tone: "bg-gradient-to-br from-[#2E3239]/50 to-[#14161A]/50", count: enqNew },
+    { href: "/admin/careers/jobs", l: "Post a job", sub: "Publish a new opening", Icon: Briefcase, tone: "bg-gradient-to-br from-[#C80808]/50 to-[#E0A21A]/50", count: 0 },
+    { href: "/admin/content", l: "Website content", sub: "Edit headlines and contacts", Icon: FileEdit, tone: "bg-gradient-to-br from-[#E21212]/50 to-[#C80808]/50", count: 0 },
+    { href: "/admin/documents", l: "Brochures", sub: "Manage downloadable files", Icon: FileText, tone: "bg-gradient-to-br from-[#F2B93B]/50 to-[#D4950F]/50", count: 0 },
   ];
 
   return (
@@ -139,7 +139,7 @@ export default function AdminDashboardPage() {
         <div className="pointer-events-none absolute -right-10 -top-14 h-44 w-72 rounded-full bg-[#E0A21A]/15 blur-[60px]" />
         <div className="pointer-events-none absolute right-4 top-1/2 w-[170px] -translate-y-1/2 opacity-[0.08]"><PetroLogo part="flame" variant="dark" width="100%" /></div>
         <div className="pointer-events-none absolute inset-0 opacity-[0.05] [background-image:linear-gradient(#fff_1px,transparent_1px),linear-gradient(90deg,#fff_1px,transparent_1px)] [background-size:30px_30px]" />
-        <span className="absolute inset-x-0 bottom-0 h-[2.5px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#F2B93B] opacity-60" />
+        <span className="absolute inset-x-0 bottom-0 h-[2.5px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#F2B93B] opacity-50" />
         <div className="relative flex flex-col gap-4 px-5 py-4 min-[1400px]:flex-row min-[1400px]:items-center min-[1400px]:justify-between">
           <div className="min-w-0">
             <p className="inline-flex items-center gap-1.5 text-[10.5px] font-extrabold uppercase tracking-[0.2em] text-[#F2B93B]"><Sparkles className="h-3 w-3" />{today}</p>
@@ -154,7 +154,7 @@ export default function AdminDashboardPage() {
                 <ArrowUpRight className="h-3 w-3 self-center text-white/40 transition-colors group-hover:text-white" />
               </Link>
             ))}
-            <button onClick={d.load} disabled={d.refreshing} className="inline-flex items-center gap-1.5 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-[12px] font-bold backdrop-blur transition-colors hover:bg-white/20 disabled:opacity-60" title={`Last updated: ${d.updatedAt || "…"}`}><RefreshCw className={`h-3.5 w-3.5 ${d.refreshing ? "animate-spin" : ""}`} />Refresh</button>
+            <button onClick={d.load} disabled={d.refreshing} className="inline-flex items-center gap-1.5 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-[12px] font-bold backdrop-blur transition-colors hover:bg-white/20 disabled:opacity-50" title={`Last updated: ${d.updatedAt || "…"}`}><RefreshCw className={`h-3.5 w-3.5 ${d.refreshing ? "animate-spin" : ""}`} />Refresh</button>
           </div>
         </div>
       </div>
@@ -237,7 +237,7 @@ export default function AdminDashboardPage() {
               </div>
               <div className="border-t border-[#F4F4F5] pt-4">
                 <div className="mb-1.5 flex items-center justify-between text-[12px] font-semibold text-[#52525B]"><span>Category split</span><span className="text-[#71717A]">{(stats.categories?.chemicals ?? 0)} chemicals · {(stats.categories?.instrumentation ?? 0)} instrumentation</span></div>
-                <div className="flex h-2.5 overflow-hidden rounded-full bg-[#E4E4E7]"><span className="bg-gradient-to-r from-[#C80808] to-[#E0A21A]" style={{ width: `${((stats.categories?.chemicals ?? 0) / Math.max(1, (stats.categories?.chemicals ?? 0) + (stats.categories?.instrumentation ?? 0))) * 100}%` }} /><span className="bg-[#27272A]" style={{ width: `${((stats.categories?.instrumentation ?? 0) / Math.max(1, (stats.categories?.chemicals ?? 0) + (stats.categories?.instrumentation ?? 0))) * 100}%` }} /></div>
+                <div className="flex h-2.5 overflow-hidden rounded-full bg-[#E4E4E7]"><span className="bg-gradient-to-r from-[#C80808]/50 to-[#E0A21A]/50" style={{ width: `${((stats.categories?.chemicals ?? 0) / Math.max(1, (stats.categories?.chemicals ?? 0) + (stats.categories?.instrumentation ?? 0))) * 100}%` }} /><span className="bg-[#27272A]" style={{ width: `${((stats.categories?.instrumentation ?? 0) / Math.max(1, (stats.categories?.chemicals ?? 0) + (stats.categories?.instrumentation ?? 0))) * 100}%` }} /></div>
               </div>
               <div className="grid grid-cols-3 gap-2.5">
                 {[{ l: "Documents", v: stats.documents ?? 0, h: "/admin/documents" }, { l: "Services", v: stats.services ?? 0, h: "/admin/services" }, { l: "Industries", v: stats.industries ?? 0, h: "/admin/industries" }].map((x) => (

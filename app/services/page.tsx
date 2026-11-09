@@ -239,7 +239,7 @@ export default function ServicesPage() {
             <p className="text-[14px] text-white/70">A predictable process, so you always know where your order stands.</p>
           </Reveal>
           <div className="relative grid sm:grid-cols-2 lg:grid-cols-4 gap-x-5 gap-y-11">
-            <span aria-hidden="true" className="hidden lg:block absolute top-0 left-[12%] right-[12%] h-[2px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#C80808] opacity-60" />
+            <span aria-hidden="true" className="hidden lg:block absolute top-0 left-[12%] right-[12%] h-[2px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#C80808] opacity-50" />
             {steps.map((st, k) => {
               const Icon = stepIcons[k];
               return (
@@ -258,7 +258,7 @@ export default function ServicesPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-8 bg-gradient-to-r from-[#A81010]/90 via-[#C80808]/85 to-[#A81010]/90">
+      <section className="py-8 bg-gradient-to-r from-[#A81010]/50 via-[#C80808]/50 to-[#A81010]/50">
         <Reveal className="max-w-[1240px] mx-auto px-5 sm:px-8 flex flex-col lg:flex-row lg:items-center justify-between gap-5">
           <div className="max-w-[620px]">
             <h2 className="text-white text-[1.35rem] sm:text-[1.8rem] font-black leading-[1.15] mb-1">Let&apos;s talk about your project</h2>

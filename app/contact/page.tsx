@@ -89,7 +89,7 @@ export default function ContactPage() {
             <span className="inline-flex items-center gap-3 text-[11px] font-extrabold uppercase tracking-[0.2em] text-[#C80808] mb-2"><span className="h-[3px] w-9 rounded bg-[#C80808]" />What happens next</span>
             <h2 className="text-[1.3rem] sm:text-[1.6rem] font-black leading-[1.15] text-[#17191C] mb-5">From your message to a proposal</h2>
             <ol className="relative space-y-4">
-              <span aria-hidden="true" className="absolute left-[27px] top-6 bottom-6 w-[3px] rounded bg-gradient-to-b from-[#C80808] to-[#E0A21A]" />
+              <span aria-hidden="true" className="absolute left-[27px] top-6 bottom-6 w-[3px] rounded bg-gradient-to-b from-[#C80808]/50 to-[#E0A21A]/50" />
               {next.map((n, k) => (
                 <Reveal key={n.t} delay={k * 110}>
                   <li className="relative flex gap-4 items-center">

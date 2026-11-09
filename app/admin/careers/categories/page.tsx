@@ -220,7 +220,7 @@ export default function JobCategoriesPage() {
           </button>
           <button
             onClick={openAddModal}
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#C80808] to-[#FFA028] text-white text-sm font-bold shadow-md shadow-[#C80808]/20 hover:opacity-95 transition"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#C80808]/50 to-[#FFA028]/50 text-white text-sm font-bold shadow-md shadow-[#C80808]/20 hover:opacity-95 transition"
           >
             <Plus className="w-4 h-4" />
             Add Category
@@ -442,7 +442,7 @@ export default function JobCategoriesPage() {
                 <button
                   type="submit"
                   disabled={busy}
-                  className="px-5 py-2 rounded-xl bg-gradient-to-r from-[#C80808] to-[#FFA028] text-white text-xs font-extrabold shadow-md shadow-[#C80808]/20 hover:opacity-95 transition disabled:opacity-50"
+                  className="px-5 py-2 rounded-xl bg-gradient-to-r from-[#C80808]/50 to-[#FFA028]/50 text-white text-xs font-extrabold shadow-md shadow-[#C80808]/20 hover:opacity-95 transition disabled:opacity-50"
                 >
                   {busy ? "Saving..." : activeCategory ? "Update Category" : "Create Category"}
                 </button>

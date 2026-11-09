@@ -74,7 +74,7 @@ const STATUS_LABEL: Record<string, string> = { published: "Live", draft: "Draft"
 
 function Cover({ src, alt, className = "" }: { src?: string; alt: string; className?: string }) {
   const [bad, setBad] = useState(false);
-  if (!src || bad) return <div className={`flex items-center justify-center bg-gradient-to-br from-[#2E3239] to-[#14161A] text-white/40 ${className}`}><ImageIcon className="h-7 w-7" /></div>;
+  if (!src || bad) return <div className={`flex items-center justify-center bg-gradient-to-br from-[#2E3239]/50 to-[#14161A]/50 text-white/40 ${className}`}><ImageIcon className="h-7 w-7" /></div>;
   // eslint-disable-next-line @next/next/no-img-element
   return <img src={src} alt={alt} onError={() => setBad(true)} className={`object-cover ${className}`} />;
 }
@@ -307,7 +307,7 @@ export default function JobManagementPage() {
         <div className="pointer-events-none absolute -right-10 -top-14 h-44 w-72 rounded-full bg-[#E0A21A]/15 blur-[60px]" />
         <div className="pointer-events-none absolute right-4 top-1/2 w-[170px] -translate-y-1/2 opacity-[0.08]"><PetroLogo part="flame" variant="dark" width="100%" /></div>
         <div className="pointer-events-none absolute inset-0 opacity-[0.05] [background-image:linear-gradient(#fff_1px,transparent_1px),linear-gradient(90deg,#fff_1px,transparent_1px)] [background-size:30px_30px]" />
-        <span className="absolute inset-x-0 bottom-0 h-[2.5px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#F2B93B] opacity-60" />
+        <span className="absolute inset-x-0 bottom-0 h-[2.5px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#F2B93B] opacity-50" />
         <div className="relative flex flex-col gap-4 px-5 py-4 xl:flex-row xl:items-center xl:justify-between">
           <div className="min-w-0">
             <p className="inline-flex items-center gap-1.5 text-[10.5px] font-extrabold uppercase tracking-[0.2em] text-[#F2B93B]"><Sparkles className="h-3 w-3" />Hiring</p>
@@ -322,7 +322,7 @@ export default function JobManagementPage() {
               </button>
             ))}
             <button onClick={fetchJobs} className="inline-flex items-center gap-1.5 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-[12px] font-bold backdrop-blur transition-colors hover:bg-white/20"><RefreshCw className={`h-3.5 w-3.5 ${loading ? "animate-spin" : ""}`} />Refresh</button>
-            <button onClick={openAddModal} className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full bg-gradient-to-r from-[#D40E0E] to-[#E0A21A] px-4 py-2 text-[12px] font-extrabold shadow-[0_8px_20px_-8px_rgba(224,100,20,0.25)] transition-transform hover:-translate-y-0.5"><Plus className="h-3.5 w-3.5" />Add job</button>
+            <button onClick={openAddModal} className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full bg-gradient-to-r from-[#D40E0E]/50 to-[#E0A21A]/50 px-4 py-2 text-[12px] font-extrabold shadow-[0_8px_20px_-8px_rgba(224,100,20,0.25)] transition-transform hover:-translate-y-0.5"><Plus className="h-3.5 w-3.5" />Add job</button>
           </div>
         </div>
       </div>
@@ -399,7 +399,7 @@ export default function JobManagementPage() {
           <div role="dialog" aria-modal="true" onClick={(e) => e.stopPropagation()} className="relative my-4 flex max-h-[94vh] w-full max-w-3xl flex-col overflow-hidden rounded-[26px] bg-white shadow-[0_40px_120px_rgba(0,0,0,0.5)] animate-[routepop2_.35s_cubic-bezier(.2,.9,.25,1.1)_both]">
             <div className="relative shrink-0 overflow-hidden bg-gradient-to-r from-[#191B1F] via-[#1E191C] to-[#24191C] px-6 py-4 text-white sm:px-7">
               <div className="pointer-events-none absolute -right-8 -top-10 h-32 w-48 rounded-full bg-[#E0A21A]/15 blur-3xl" />
-              <span className="absolute inset-x-0 bottom-0 h-[2.5px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#F2B93B] opacity-60" />
+              <span className="absolute inset-x-0 bottom-0 h-[2.5px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#F2B93B] opacity-50" />
               <button type="button" onClick={() => setModalOpen(false)} className="absolute right-4 top-4 rounded-full bg-white/10 p-2 text-white transition-colors hover:bg-white/25" aria-label="Close"><X className="h-4 w-4" /></button>
               <p className="text-[10.5px] font-extrabold uppercase tracking-[0.2em] text-[#F2B93B]">{editingJob ? "Edit job vacancy" : "Create new opening"}</p>
               <h3 className="mt-0.5 pr-10 text-[1.15rem] font-black !text-white">{editingJob ? editingJob.title : "Add a position to the Careers page"}</h3>
@@ -464,7 +464,7 @@ export default function JobManagementPage() {
 
               <div className="flex shrink-0 items-center justify-end gap-3 border-t border-[#EEF0F3] bg-white px-6 py-3.5 sm:px-7">
                 <button type="button" onClick={() => setModalOpen(false)} className="rounded-xl border-2 border-[#E7E9EE] px-4 py-2 text-[13px] font-bold text-[#17191C] transition-colors hover:border-[#17191C]">Cancel</button>
-                <button type="submit" disabled={saving} className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#C80808] to-[#E0A21A] px-5 py-2 text-[13px] font-extrabold text-white shadow-[0_10px_24px_-8px_rgba(200,8,8,0.22)] transition-transform hover:-translate-y-0.5 disabled:opacity-60"><Save className="h-4 w-4" />{saving ? "Saving…" : editingJob ? "Update job" : "Publish job"}</button>
+                <button type="submit" disabled={saving} className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#C80808]/50 to-[#E0A21A]/50 px-5 py-2 text-[13px] font-extrabold text-white shadow-[0_10px_24px_-8px_rgba(200,8,8,0.22)] transition-transform hover:-translate-y-0.5 disabled:opacity-50"><Save className="h-4 w-4" />{saving ? "Saving…" : editingJob ? "Update job" : "Publish job"}</button>
               </div>
             </form>
           </div>

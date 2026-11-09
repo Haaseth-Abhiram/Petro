@@ -308,7 +308,7 @@ export default function RecruitmentSettingsPage() {
             <button
               type="submit"
               disabled={saving}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#C80808] to-[#FFA028] text-white text-sm font-extrabold shadow-md shadow-[#C80808]/25 hover:opacity-95 transition disabled:opacity-50"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#C80808]/50 to-[#FFA028]/50 text-white text-sm font-extrabold shadow-md shadow-[#C80808]/25 hover:opacity-95 transition disabled:opacity-50"
             >
               <Save className="w-4 h-4" />
               {saving ? "Saving Changes..." : "Save Settings"}

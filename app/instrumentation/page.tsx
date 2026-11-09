@@ -188,7 +188,7 @@ export default function InstrumentationPage() {
                     <table className="w-full text-left text-[13px] min-w-[460px]">
                       <caption className="sr-only">Specification range</caption>
                       <thead>
-                        <tr className="bg-gradient-to-r from-[#C80808] to-[#D4950F] text-white">
+                        <tr className="bg-gradient-to-r from-[#C80808]/50 to-[#D4950F]/50 text-white">
                           {p.headers.map((h) => (<th key={h} scope="col" className="px-4 py-2.5 text-[11px] font-extrabold uppercase tracking-wider">{h}</th>))}
                         </tr>
                       </thead>
@@ -213,7 +213,7 @@ export default function InstrumentationPage() {
       </section>
 
       {/* 4. CTA STRIP */}
-      <section className="py-9 bg-gradient-to-r from-[#17191C]/85 via-[#221316]/70 to-[#17191C]/85">
+      <section className="py-9 bg-gradient-to-r from-[#17191C]/50 via-[#221316]/50 to-[#17191C]/50">
         <Reveal className="max-w-[1240px] mx-auto px-5 sm:px-8 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div className="max-w-[620px]">
             <span className="text-[11px] font-extrabold uppercase tracking-[0.2em] text-[#F2B93B]">Technical RFQ</span>
