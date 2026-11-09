@@ -169,7 +169,7 @@ export default function ChemicalsPage() {
       {/* 1. HERO */}
       <section className="relative bg-[#17191C]/90 text-white overflow-hidden">
         <div className="absolute inset-0 bg-cover bg-center opacity-35" style={{ backgroundImage: "url('/assets/img/reverse-osmosis.jpg')" }} />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#17191C] via-[#17191C]/90 to-[#8A0A0A]/60" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#17191C]/90 via-[#17191C]/80 to-[#C80808]/20" />
         <div className="absolute -top-24 -right-24 w-[420px] h-[420px] rounded-full bg-[#E0A21A]/20 blur-[110px]" />
         <div className="relative max-w-[1240px] mx-auto px-5 sm:px-8 pt-10 pb-14 grid lg:grid-cols-[1.25fr_1fr] gap-8 items-center">
           <div>
@@ -263,7 +263,7 @@ export default function ChemicalsPage() {
       </section>
 
       {/* 5. CTA STRIP */}
-      <section className="py-9 bg-gradient-to-r from-[#8A0A0A] via-[#C80808] to-[#8A0A0A]">
+      <section className="py-9 bg-gradient-to-r from-[#A81010]/90 via-[#C80808]/85 to-[#A81010]/90">
         <Reveal className="max-w-[1240px] mx-auto px-5 sm:px-8 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div className="max-w-[620px]">
             <span className="text-[11px] font-extrabold uppercase tracking-[0.2em] text-[#F2B93B]">Technical support</span>

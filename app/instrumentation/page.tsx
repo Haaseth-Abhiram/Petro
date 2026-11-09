@@ -203,7 +203,7 @@ export default function InstrumentationPage() {
                     </table>
                   </div>
                   <div className="mt-auto">
-                    <SolutionLink title={p.title} items={p.rows.map((r) => r[0])} img={p.img} className="inline-flex items-center gap-2 rounded-lg bg-[#C80808] hover:bg-[#8A0A0A] text-white text-[13px] font-bold px-5 py-2.5 transition-colors">Enquire about {p.title.toLowerCase()} <ArrowRight className="w-4 h-4" /></SolutionLink>
+                    <SolutionLink title={p.title} items={p.rows.map((r) => r[0])} img={p.img} className="inline-flex items-center gap-2 rounded-lg bg-[#C80808] hover:bg-[#A81010] text-white text-[13px] font-bold px-5 py-2.5 transition-colors">Enquire about {p.title.toLowerCase()} <ArrowRight className="w-4 h-4" /></SolutionLink>
                   </div>
                 </Reveal>
               </article>
@@ -213,7 +213,7 @@ export default function InstrumentationPage() {
       </section>
 
       {/* 4. CTA STRIP */}
-      <section className="py-9 bg-gradient-to-r from-[#17191C]/90 via-[#2a0c0c]/90 to-[#17191C]/90">
+      <section className="py-9 bg-gradient-to-r from-[#17191C]/85 via-[#221316]/70 to-[#17191C]/85">
         <Reveal className="max-w-[1240px] mx-auto px-5 sm:px-8 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
           <div className="max-w-[620px]">
             <span className="text-[11px] font-extrabold uppercase tracking-[0.2em] text-[#F2B93B]">Technical RFQ</span>

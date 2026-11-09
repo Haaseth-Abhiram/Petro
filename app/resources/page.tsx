@@ -163,7 +163,7 @@ export default function ResourcesPage() {
                   </div>
                   <Link
                     href={`/request-a-quote?product=${encodeURIComponent(res.title)}`}
-                    className="font-['Plus_Jakarta_Sans'] text-xs font-bold text-[#C80808] hover:text-[#8A0A0A] inline-block"
+                    className="font-['Plus_Jakarta_Sans'] text-xs font-bold text-[#C80808] hover:text-[#A81010] inline-block"
                   >
                     Request copy via RFQ &rarr;
                   </Link>

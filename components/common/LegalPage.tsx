@@ -8,8 +8,8 @@ export default function LegalPage({ crumb, title, intro, sections }: { crumb: st
   return (
     <div className="w-full">
       <section className="relative bg-[#17191C] text-white overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-[#17191C]/90 via-[#3a0d0d]/80 to-[#A81010]/50" />
-        <div className="absolute -top-20 -right-16 w-[360px] h-[360px] rounded-full bg-[#E0A21A]/25 blur-[100px]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#17191C]/85 via-[#221316]/65 to-[#C80808]/20" />
+        <div className="absolute -top-20 -right-16 w-[360px] h-[360px] rounded-full bg-[#E0A21A]/12 blur-[100px]" />
         <div className="relative max-w-[900px] mx-auto px-5 sm:px-8 py-9">
           <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-[12px] text-white/70 mb-3"><Link href="/" className="hover:text-white inline-flex items-center gap-1"><HomeIcon className="w-3.5 h-3.5" />Home</Link><ChevronRight className="w-3.5 h-3.5" /><span className="text-[#F2B93B] font-semibold">{crumb}</span></nav>
           <h1 className="text-[2rem] sm:text-[2.5rem] font-black tracking-tight leading-tight">{title}</h1>

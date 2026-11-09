@@ -109,13 +109,13 @@ h4 { font-size: 1.05rem; letter-spacing: -0.01em; }
   background: var(--color-coral-orange);
   color: #FFFFFF;
   border-color: var(--color-coral-orange);
-  box-shadow: 0 4px 14px rgba(200,8,8, 0.28);
+  box-shadow: 0 4px 14px rgba(200,8,8, 0.16);
 }
 .btn-primary:hover {
   background: #A81010;
   border-color: #A81010;
   color: #FFFFFF;
-  box-shadow: 0 6px 20px rgba(200,8,8, 0.38);
+  box-shadow: 0 6px 20px rgba(200,8,8, 0.20);
 }
 
 .btn-secondary {
@@ -366,7 +366,7 @@ h4 { font-size: 1.05rem; letter-spacing: -0.01em; }
   right: 10%;
   width: 580px;
   height: 280px;
-  background: radial-gradient(circle, rgba(200,8,8, 0.28) 0%, rgba(200,8,8, 0.08) 50%, transparent 75%);
+  background: radial-gradient(circle, rgba(200,8,8, 0.16) 0%, rgba(200,8,8, 0.08) 50%, transparent 75%);
   filter: blur(48px);
   pointer-events: none;
   z-index: 1;
@@ -391,7 +391,7 @@ h4 { font-size: 1.05rem; letter-spacing: -0.01em; }
   }
   50% {
     transform: scale(1.08) translateY(-3px);
-    filter: drop-shadow(0 0 22px rgba(200,8,8, 0.75)) drop-shadow(0 0 8px rgba(245, 158, 11, 0.5));
+    filter: drop-shadow(0 0 22px rgba(200,8,8, 0.35)) drop-shadow(0 0 8px rgba(245, 158, 11, 0.5));
   }
 }
 

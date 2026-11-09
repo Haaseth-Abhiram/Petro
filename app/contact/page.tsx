@@ -55,7 +55,7 @@ export default function ContactPage() {
           </div>
 
           {/* form card */}
-          <div className="relative rounded-3xl bg-white text-[#17191C] shadow-[0_30px_80px_rgba(0,0,0,0.45)] p-5 sm:p-7 border-t-4 border-[#C80808]">
+          <div className="relative rounded-3xl bg-white text-[#17191C] shadow-[0_16px_48px_rgba(23,25,28,0.14)] p-5 sm:p-7 border-t-4 border-[#C80808]">
             <span className="inline-flex items-center gap-3 text-[11px] font-extrabold uppercase tracking-[0.2em] text-[#C80808] mb-1"><span className="h-[3px] w-9 rounded bg-[#C80808]" />Enquiry form</span>
             <h2 className="text-[1.3rem] sm:text-[1.5rem] font-black leading-[1.15] text-[#17191C] mb-1">Tell us what you need</h2>
             <p className="text-[13px] mb-4">Fill in the technical details below. Our engineering desk replies within one business day.</p>
@@ -71,7 +71,7 @@ export default function ContactPage() {
             <div className="rounded-2xl bg-white border border-[#F0E3D2] shadow-md p-5">
               <h3 className="text-[15px] font-extrabold text-[#17191C] mb-1.5">Direct RFQ &amp; procurement packs</h3>
               <p className="text-[13px] leading-relaxed mb-3">For comprehensive tender packages with multiple line items, datasheets and delivery schedules, use our dedicated Request for Quotation portal.</p>
-              <Link href="/request-a-quote" className="inline-flex items-center gap-2 rounded-lg bg-[#C80808] hover:bg-[#8A0A0A] text-white text-[13px] font-bold px-5 py-2.5 transition-colors">Open dedicated RFQ portal <ArrowRight className="w-4 h-4" /></Link>
+              <Link href="/request-a-quote" className="inline-flex items-center gap-2 rounded-lg bg-[#C80808] hover:bg-[#A81010] text-white text-[13px] font-bold px-5 py-2.5 transition-colors">Open dedicated RFQ portal <ArrowRight className="w-4 h-4" /></Link>
             </div>
             <div className="relative rounded-2xl bg-[#17191C]/90 text-white p-5 overflow-hidden">
               <div className="absolute -top-14 -right-14 w-44 h-44 rounded-full bg-[#E0A21A]/25 blur-[60px]" />

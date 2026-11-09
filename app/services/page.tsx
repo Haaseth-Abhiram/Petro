@@ -258,7 +258,7 @@ export default function ServicesPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-8 bg-gradient-to-r from-[#8A0A0A] via-[#C80808] to-[#8A0A0A]">
+      <section className="py-8 bg-gradient-to-r from-[#A81010]/90 via-[#C80808]/85 to-[#A81010]/90">
         <Reveal className="max-w-[1240px] mx-auto px-5 sm:px-8 flex flex-col lg:flex-row lg:items-center justify-between gap-5">
           <div className="max-w-[620px]">
             <h2 className="text-white text-[1.35rem] sm:text-[1.8rem] font-black leading-[1.15] mb-1">Let&apos;s talk about your project</h2>

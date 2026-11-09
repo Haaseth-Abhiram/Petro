@@ -58,7 +58,7 @@ export default function FooterCompact() {
   const c = COMPANY_INFO.contact;
   return (
     <footer className="bg-gradient-to-b from-[#FFF8F0] to-[#FBEBD9] text-[#4a5159]">
-      <div className="bg-gradient-to-r from-[#A81010] via-[#C80808] to-[#A81010]">
+      <div className="bg-gradient-to-r from-[#A81010]/90 via-[#C80808]/85 to-[#A81010]/90">
         <div className="max-w-[1240px] mx-auto px-5 sm:px-8 py-3.5 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-white text-[15px] font-extrabold">Have a line list or datasheet? <span className="font-medium text-white/85">Our engineers reply within one business day.</span></p>
           <Link href="/request-a-quote" className="inline-flex items-center gap-2 rounded-full bg-white text-[#C80808] text-[13px] font-extrabold px-5 py-2 hover:-translate-y-0.5 hover:shadow-lg transition-all whitespace-nowrap">Request a Quote <ArrowRight className="w-4 h-4" /></Link>
@@ -72,7 +72,7 @@ export default function FooterCompact() {
             </Link>
             <p className="text-[12.5px] leading-relaxed max-w-[260px]">Sourcing and supply partner for oil &amp; gas, petrochemical, process utilities and analyser systems.</p>
             <div className="mt-3 flex gap-2">{[Linkedin, Facebook, Youtube, Twitter].map((I, k) => (<a key={k} href="#" aria-label="Social link" className="w-8 h-8 rounded-full bg-white border border-[#E7D5BD] text-[#C80808] hover:bg-[#C80808] hover:text-white hover:-translate-y-0.5 flex items-center justify-center transition-all"><I className="w-4 h-4" /></a>))}</div>
-            <form className="mt-3 max-w-[290px]" action="/contact" aria-label="Stay updated"><label className="block text-[10.5px] font-extrabold uppercase tracking-[0.18em] text-[#17191C] mb-1.5">Stay updated</label><div className="flex items-center rounded-full bg-white border border-[#E7D5BD] shadow-[0_6px_18px_rgba(200,8,8,0.08)] focus-within:border-[#C80808] focus-within:shadow-[0_8px_22px_rgba(200,8,8,0.2)] p-1 transition-all"><Mail className="w-4 h-4 text-[#C80808] ml-3 shrink-0" /><input name="email" type="email" placeholder="your@email.com" className="min-w-0 flex-1 bg-transparent px-2.5 py-1.5 text-[13px] focus:outline-none" /><button className="group inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-[#C80808] to-[#E0A21A] text-white text-[12.5px] font-extrabold px-4 py-2 hover:shadow-lg transition-all">Subscribe<ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" /></button></div></form>
+            <form className="mt-3 max-w-[290px]" action="/contact" aria-label="Stay updated"><label className="block text-[10.5px] font-extrabold uppercase tracking-[0.18em] text-[#17191C] mb-1.5">Stay updated</label><div className="flex items-center rounded-full bg-white border border-[#E7D5BD] shadow-[0_6px_18px_rgba(200,8,8,0.08)] focus-within:border-[#C80808] focus-within:shadow-[0_6px_16px_rgba(200,8,8,0.12)] p-1 transition-all"><Mail className="w-4 h-4 text-[#C80808] ml-3 shrink-0" /><input name="email" type="email" placeholder="your@email.com" className="min-w-0 flex-1 bg-transparent px-2.5 py-1.5 text-[13px] focus:outline-none" /><button className="group inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-[#C80808] to-[#E0A21A] text-white text-[12.5px] font-extrabold px-4 py-2 hover:shadow-lg transition-all">Subscribe<ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" /></button></div></form>
           </div>
           <Col title="Company" items={company} />
           <Col title="Chemicals" items={chem} />
@@ -99,7 +99,7 @@ export default function FooterCompact() {
           </div>
           <ul className="flex flex-wrap items-stretch justify-center gap-2.5">
             {certs.map(({ n, s: sub, I }) => (
-              <li key={n} className="group flex items-center gap-2.5 rounded-xl bg-white border border-[#E7D5BD] pl-2 pr-4 py-2 shadow-sm hover:shadow-[0_10px_24px_rgba(200,8,8,0.18)] hover:border-[#C80808] hover:-translate-y-1 transition-all duration-300">
+              <li key={n} className="group flex items-center gap-2.5 rounded-xl bg-white border border-[#E7D5BD] pl-2 pr-4 py-2 shadow-sm hover:shadow-[0_6px_16px_rgba(200,8,8,0.10)] hover:border-[#C80808] hover:-translate-y-1 transition-all duration-300">
                 <span className="w-9 h-9 rounded-lg bg-gradient-to-br from-[#C80808] to-[#E0A21A] text-white flex items-center justify-center group-hover:rotate-6 group-hover:scale-110 transition-transform"><I className="w-[18px] h-[18px]" /></span>
                 <span className="leading-tight"><span className="block text-[12.5px] font-extrabold text-[#17191C]">{n}</span><span className="block text-[10.5px] font-semibold text-[#4a5159]">{sub}</span></span>
               </li>

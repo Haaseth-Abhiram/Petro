@@ -87,7 +87,7 @@ export default function IndustriesPage() {
                   <div className="pt-4 border-t border-[#D8DDE2] flex items-center justify-between">
                     <Link
                       href={`/request-a-quote?industry=${encodeURIComponent(ind.name)}`}
-                      className="font-['Plus_Jakarta_Sans'] text-xs font-bold text-[#C80808] hover:text-[#8A0A0A] inline-flex items-center"
+                      className="font-['Plus_Jakarta_Sans'] text-xs font-bold text-[#C80808] hover:text-[#A81010] inline-flex items-center"
                     >
                       <span>Request {ind.name} Quote</span>
                       <ArrowRight className="w-3.5 h-3.5 ml-1" />
