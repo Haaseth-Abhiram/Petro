@@ -68,7 +68,7 @@ export default function Dropdown({
       </button>
 
       {open && (
-        <ul role="listbox" className={`absolute z-40 mt-2 max-h-72 min-w-full overflow-y-auto rounded-2xl border border-[#E4E4E7] bg-white p-1.5 shadow-[0_24px_48px_-16px_rgba(23,25,28,0.35)] animate-[routefade_.16s_ease-out_both] ${align === "right" ? "right-0" : "left-0"} ${menuClassName || "w-max max-w-[320px]"}`}>
+        <ul role="listbox" className={`absolute z-40 mt-2 max-h-72 min-w-full overflow-y-auto rounded-2xl border border-[#E4E4E7] bg-white p-1.5 shadow-[0_24px_48px_-16px_rgba(23,25,28,0.16)] animate-[routefade_.16s_ease-out_both] ${align === "right" ? "right-0" : "left-0"} ${menuClassName || "w-max max-w-[320px]"}`}>
           {options.map((o, i) => {
             const isSel = o.value === value;
             return (

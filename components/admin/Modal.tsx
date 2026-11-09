@@ -42,9 +42,9 @@ export function ModalFrame({
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-[#14161A]/70 p-3 backdrop-blur-sm sm:items-center sm:p-5" onClick={onClose}>
       <div role="dialog" aria-modal="true" onClick={(e) => e.stopPropagation()} className={`relative my-4 flex max-h-[94vh] w-full ${SIZES[size]} flex-col overflow-hidden rounded-[26px] bg-white shadow-[0_40px_120px_rgba(0,0,0,0.5)] animate-[routepop2_.35s_cubic-bezier(.2,.9,.25,1.1)_both]`}>
-        <div className="relative shrink-0 overflow-hidden bg-gradient-to-r from-[#17191C] via-[#22171A] to-[#2D161A] px-6 py-4 text-white sm:px-7">
+        <div className="relative shrink-0 overflow-hidden bg-gradient-to-r from-[#191B1F] via-[#1E191C] to-[#24191C] px-6 py-4 text-white sm:px-7">
           <div className="pointer-events-none absolute -right-8 -top-10 h-32 w-48 rounded-full bg-[#E0A21A]/15 blur-3xl" />
-          <span className="absolute inset-x-0 bottom-0 h-[3px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#F2B93B]" />
+          <span className="absolute inset-x-0 bottom-0 h-[2.5px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#F2B93B] opacity-60" />
           <button type="button" onClick={onClose} className="absolute right-4 top-4 rounded-full bg-white/10 p-2 text-white transition-colors hover:bg-white/25" aria-label="Close"><X className="h-4 w-4" /></button>
           {eyebrow && <p className="text-[10.5px] font-extrabold uppercase tracking-[0.2em] text-[#F2B93B]">{eyebrow}</p>}
           <h3 className="pr-10 text-[1.15rem] font-black leading-tight !text-white">{title}</h3>
@@ -83,9 +83,9 @@ export function ConfirmDialog({
   return (
     <div className="fixed inset-0 z-[60] flex items-center justify-center overflow-y-auto bg-[#14161A]/70 p-4 backdrop-blur-sm" onClick={onClose}>
       <div role="alertdialog" aria-modal="true" onClick={(e) => e.stopPropagation()} className="w-full max-w-lg overflow-hidden rounded-[26px] bg-white shadow-[0_40px_120px_rgba(0,0,0,0.5)] animate-[routepop2_.3s_cubic-bezier(.2,.9,.25,1.1)_both]">
-        <div className="relative overflow-hidden bg-gradient-to-r from-[#17191C] via-[#22171A] to-[#2D161A] px-7 py-5 text-white">
+        <div className="relative overflow-hidden bg-gradient-to-r from-[#191B1F] via-[#1E191C] to-[#24191C] px-7 py-5 text-white">
           <div className="pointer-events-none absolute -right-8 -top-10 h-32 w-48 rounded-full bg-[#E0A21A]/15 blur-3xl" />
-          <span className="absolute inset-x-0 bottom-0 h-[3px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#F2B93B]" />
+          <span className="absolute inset-x-0 bottom-0 h-[2.5px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#F2B93B] opacity-60" />
           <button type="button" onClick={onClose} className="absolute right-4 top-4 rounded-full bg-white/10 p-2 text-white transition-colors hover:bg-white/25" aria-label="Close"><X className="h-4 w-4" /></button>
           <div className="flex items-center gap-4 pr-10">
             <span className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl ring-1 ring-white/25 ${danger ? "bg-[#C80808]" : "bg-white/15"}`}>{danger ? <Trash2 className="h-5 w-5" /> : <AlertTriangle className="h-5 w-5" />}</span>

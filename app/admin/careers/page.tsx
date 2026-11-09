@@ -76,7 +76,7 @@ const APP_STATUS: Record<string, string> = {
   New: "bg-[#C80808] text-white",
   "Under Review": "bg-[#E0A21A] text-[#17191C]",
   Shortlisted: "bg-[#2E3239] text-white",
-  Interview: "bg-[#8A0A0A] text-white",
+  Interview: "bg-[#A81010] text-white",
   Selected: "bg-emerald-600 text-white",
   Rejected: "bg-[#52525B] text-white",
 };
@@ -131,20 +131,20 @@ export default function CareersDashboardPage() {
   const closed = s?.closedJobs ?? 0;
 
   const funnel = [
-    { l: "New", v: s?.newApplications ?? 0, Icon: Inbox, grad: "from-[#E21212] to-[#C80808]", dark: false },
-    { l: "Under review", v: s?.underReviewApplications ?? 0, Icon: Search, grad: "from-[#F2B93B] to-[#D4950F]", dark: true },
+    { l: "New", v: s?.newApplications ?? 0, Icon: Inbox, grad: "from-[#E21212]/85 to-[#C80808]/80", dark: false },
+    { l: "Under review", v: s?.underReviewApplications ?? 0, Icon: Search, grad: "from-[#F2B93B]/85 to-[#D4950F]/80", dark: true },
     { l: "Shortlisted", v: s?.shortlistedApplications ?? 0, Icon: Star, grad: "from-[#2E3239] to-[#14161A]", dark: false },
-    { l: "Interview", v: s?.interviewApplications ?? 0, Icon: CalendarCheck, grad: "from-[#C80808] to-[#E0A21A]", dark: false },
+    { l: "Interview", v: s?.interviewApplications ?? 0, Icon: CalendarCheck, grad: "from-[#C80808]/85 to-[#E0A21A]/80", dark: false },
     { l: "Selected", v: s?.selectedApplications ?? 0, Icon: Trophy, grad: "from-[#059669] to-[#047857]", dark: false },
     { l: "Rejected", v: s?.rejectedApplications ?? 0, Icon: XCircle, grad: "from-[#71717A] to-[#3F3F46]", dark: false },
   ];
 
   const quick = [
-    { href: "/admin/careers/jobs", l: "Post a job", sub: "Publish a new opening", Icon: Plus, tone: "bg-gradient-to-br from-[#E21212] to-[#C80808]" },
-    { href: "/admin/careers/applications", l: "Applications", sub: "Review candidates", Icon: Users, tone: "bg-gradient-to-br from-[#F2B93B] to-[#D4950F]" },
+    { href: "/admin/careers/jobs", l: "Post a job", sub: "Publish a new opening", Icon: Plus, tone: "bg-gradient-to-br from-[#E21212]/85 to-[#C80808]/80" },
+    { href: "/admin/careers/applications", l: "Applications", sub: "Review candidates", Icon: Users, tone: "bg-gradient-to-br from-[#F2B93B]/85 to-[#D4950F]/80" },
     { href: "/admin/careers/categories", l: "Job categories", sub: "Organise departments", Icon: Layers, tone: "bg-gradient-to-br from-[#2E3239] to-[#14161A]" },
-    { href: "/admin/careers/applications?tab=resumes", l: "Resume folder", sub: "Browse all CVs", Icon: FolderOpen, tone: "bg-gradient-to-br from-[#C80808] to-[#E0A21A]" },
-    { href: "/careers", l: "Careers page", sub: "View public site", Icon: ExternalLink, tone: "bg-gradient-to-br from-[#E21212] to-[#C80808]" },
+    { href: "/admin/careers/applications?tab=resumes", l: "Resume folder", sub: "Browse all CVs", Icon: FolderOpen, tone: "bg-gradient-to-br from-[#C80808]/85 to-[#E0A21A]/80" },
+    { href: "/careers", l: "Careers page", sub: "View public site", Icon: ExternalLink, tone: "bg-gradient-to-br from-[#E21212]/85 to-[#C80808]/80" },
   ];
 
   const maxPos = Math.max(...(data?.byPosition || []).map((x) => x.count), 1);
@@ -152,11 +152,11 @@ export default function CareersDashboardPage() {
   return (
     <div className="space-y-5">
       {/* Banner */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#17191C] via-[#22171A] to-[#2D161A] text-white shadow-[0_12px_28px_-16px_rgba(200,8,8,0.25)]">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#191B1F] via-[#1E191C] to-[#24191C] text-white shadow-[0_12px_28px_-16px_rgba(200,8,8,0.15)]">
         <div className="pointer-events-none absolute -right-10 -top-14 h-44 w-72 rounded-full bg-[#E0A21A]/15 blur-[60px]" />
         <div className="pointer-events-none absolute right-4 top-1/2 w-[170px] -translate-y-1/2 opacity-[0.08]"><PetroLogo part="flame" variant="dark" width="100%" /></div>
         <div className="pointer-events-none absolute inset-0 opacity-[0.05] [background-image:linear-gradient(#fff_1px,transparent_1px),linear-gradient(90deg,#fff_1px,transparent_1px)] [background-size:30px_30px]" />
-        <span className="absolute inset-x-0 bottom-0 h-[3px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#F2B93B]" />
+        <span className="absolute inset-x-0 bottom-0 h-[2.5px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#F2B93B] opacity-60" />
         <div className="relative flex flex-col gap-4 px-5 py-4 xl:flex-row xl:items-center xl:justify-between">
           <div className="min-w-0">
             <p className="inline-flex items-center gap-1.5 text-[10.5px] font-extrabold uppercase tracking-[0.2em] text-[#F2B93B]"><Sparkles className="h-3 w-3" />Hiring</p>
@@ -172,7 +172,7 @@ export default function CareersDashboardPage() {
               </Link>
             ))}
             <button onClick={fetchDashboard} disabled={refreshing} className="inline-flex items-center gap-1.5 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-[12px] font-bold backdrop-blur transition-colors hover:bg-white/20 disabled:opacity-60"><RefreshCw className={`h-3.5 w-3.5 ${refreshing ? "animate-spin" : ""}`} />Refresh</button>
-            <Link href="/admin/careers/jobs" className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full bg-gradient-to-r from-[#D40E0E] to-[#E0A21A] px-4 py-2 text-[12px] font-extrabold shadow-[0_8px_20px_-8px_rgba(224,100,20,0.8)] transition-transform hover:-translate-y-0.5"><Plus className="h-3.5 w-3.5" />Post a job</Link>
+            <Link href="/admin/careers/jobs" className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full bg-gradient-to-r from-[#D40E0E]/85 to-[#E0A21A]/80 px-4 py-2 text-[12px] font-extrabold shadow-[0_8px_20px_-8px_rgba(224,100,20,0.25)] transition-transform hover:-translate-y-0.5"><Plus className="h-3.5 w-3.5" />Post a job</Link>
           </div>
         </div>
       </div>
@@ -190,7 +190,7 @@ export default function CareersDashboardPage() {
             <div className="mb-3"><h3 className="text-[15px] font-extrabold text-[#18181B]">Hiring pipeline</h3><p className="text-[12.5px] text-[#71717A]">Where every candidate stands right now</p></div>
             <div className="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-6">
               {funnel.map((f) => (
-                <Link key={f.l} href="/admin/careers/applications" className={`group relative flex min-h-[112px] flex-col justify-between overflow-hidden rounded-2xl bg-gradient-to-br p-4 shadow-[0_14px_28px_-16px_rgba(23,25,28,0.55)] transition-all duration-300 hover:-translate-y-1 ${f.grad} ${f.dark ? "text-[#17191C]" : "text-white"}`}>
+                <Link key={f.l} href="/admin/careers/applications" className={`group relative flex min-h-[112px] flex-col justify-between overflow-hidden rounded-2xl bg-gradient-to-br p-4 shadow-[0_14px_28px_-16px_rgba(23,25,28,0.20)] transition-all duration-300 hover:-translate-y-1 ${f.grad} ${f.dark ? "text-[#17191C]" : "text-white"}`}>
                   <span className="pointer-events-none absolute -right-6 -top-8 h-24 w-24 rounded-full bg-white/10" />
                   <f.Icon className="pointer-events-none absolute -bottom-3 right-2 h-16 w-16 opacity-[0.15]" strokeWidth={1.4} />
                   <span className={`relative flex h-9 w-9 items-center justify-center rounded-xl border ${f.dark ? "border-black/10 bg-black/10" : "border-white/30 bg-white/15"}`}><f.Icon className="h-[18px] w-[18px]" /></span>
@@ -205,7 +205,7 @@ export default function CareersDashboardPage() {
             <div className="mb-3"><h3 className="text-[15px] font-extrabold text-[#18181B]">Quick links</h3><p className="text-[12.5px] text-[#71717A]">Jump straight into recruitment tasks</p></div>
             <div className="grid grid-cols-2 gap-3.5 md:grid-cols-3 xl:grid-cols-5">
               {quick.map(({ href, l, sub, Icon, tone }) => (
-                <Link key={l} href={href} className="group relative flex flex-col rounded-2xl border border-[#E4E4E7] bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-transparent hover:shadow-[0_18px_36px_-16px_rgba(23,25,28,0.35)]">
+                <Link key={l} href={href} className="group relative flex flex-col rounded-2xl border border-[#E4E4E7] bg-white p-4 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-transparent hover:shadow-[0_18px_36px_-16px_rgba(23,25,28,0.16)]">
                   <div className="flex items-start justify-between"><span className={`flex h-11 w-11 items-center justify-center rounded-2xl text-white shadow-lg transition-transform duration-300 group-hover:-rotate-3 group-hover:scale-105 ${tone}`}><Icon className="h-5 w-5" /></span><ArrowUpRight className="h-4 w-4 text-[#C3CAD1] transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-[#C80808]" /></div>
                   <p className="mt-3.5 text-[14px] font-extrabold leading-tight text-[#18181B]">{l}</p>
                   <p className="mt-0.5 text-[12px] text-[#71717A]">{sub}</p>
@@ -258,7 +258,7 @@ export default function CareersDashboardPage() {
                 <h3 className="text-[15px] font-extrabold text-[#18181B]">Applications by position</h3><p className="mb-4 text-[12.5px] text-[#71717A]">Which roles attract the most interest</p>
                 {data?.byPosition && data.byPosition.length > 0 ? (
                   <div className="space-y-3.5">{data.byPosition.map((item, i) => (
-                    <div key={item.role}><div className="mb-1 flex items-center justify-between text-[13px]"><span className="truncate font-semibold text-[#18181B]">{item.role}</span><b>{item.count}</b></div><div className="h-2 overflow-hidden rounded-full bg-[#F4F4F5]"><div className="h-full rounded-full" style={{ width: `${Math.max(6, (item.count / maxPos) * 100)}%`, background: ["#C80808", "#E0A21A", "#27272A", "#8A0A0A", "#D4950F"][i % 5] }} /></div></div>
+                    <div key={item.role}><div className="mb-1 flex items-center justify-between text-[13px]"><span className="truncate font-semibold text-[#18181B]">{item.role}</span><b>{item.count}</b></div><div className="h-2 overflow-hidden rounded-full bg-[#F4F4F5]"><div className="h-full rounded-full" style={{ width: `${Math.max(6, (item.count / maxPos) * 100)}%`, background: ["#C80808", "#E0A21A", "#27272A", "#A81010", "#D4950F"][i % 5] }} /></div></div>
                   ))}</div>
                 ) : <p className="rounded-xl border border-dashed border-[#D4D4D8] px-4 py-6 text-center text-[12.5px] text-[#A1A1AA]">No applications received yet.</p>}
               </section>

@@ -195,11 +195,11 @@ export default function AdminEnquiriesPage() {
   return (
     <div className="space-y-5">
       {/* Banner */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#17191C] via-[#22171A] to-[#2D161A] text-white shadow-[0_12px_28px_-16px_rgba(200,8,8,0.25)]">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#191B1F] via-[#1E191C] to-[#24191C] text-white shadow-[0_12px_28px_-16px_rgba(200,8,8,0.15)]">
         <div className="pointer-events-none absolute -right-10 -top-14 h-44 w-72 rounded-full bg-[#E0A21A]/15 blur-[60px]" />
         <div className="pointer-events-none absolute right-4 top-1/2 w-[170px] -translate-y-1/2 opacity-[0.08]"><PetroLogo part="flame" variant="dark" width="100%" /></div>
         <div className="pointer-events-none absolute inset-0 opacity-[0.05] [background-image:linear-gradient(#fff_1px,transparent_1px),linear-gradient(90deg,#fff_1px,transparent_1px)] [background-size:30px_30px]" />
-        <span className="absolute inset-x-0 bottom-0 h-[3px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#F2B93B]" />
+        <span className="absolute inset-x-0 bottom-0 h-[2.5px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#F2B93B] opacity-60" />
         <div className="relative flex flex-col gap-4 px-5 py-4 xl:flex-row xl:items-center xl:justify-between">
           <div className="min-w-0">
             <p className="inline-flex items-center gap-1.5 text-[10.5px] font-extrabold uppercase tracking-[0.2em] text-[#F2B93B]"><Sparkles className="h-3 w-3" />Inbox</p>
@@ -221,14 +221,14 @@ export default function AdminEnquiriesPage() {
       {/* Status summary */}
       <div className="grid grid-cols-2 gap-4 xl:grid-cols-4">
         {([
-          { k: "new", l: "New", sub: "Waiting for a reply", Icon: Inbox, grad: "from-[#E21212] to-[#C80808]", dark: false },
-          { k: "in_progress", l: "In progress", sub: "Being handled", Icon: Hourglass, grad: "from-[#F2B93B] to-[#D4950F]", dark: true },
+          { k: "new", l: "New", sub: "Waiting for a reply", Icon: Inbox, grad: "from-[#E21212]/85 to-[#C80808]/80", dark: false },
+          { k: "in_progress", l: "In progress", sub: "Being handled", Icon: Hourglass, grad: "from-[#F2B93B]/85 to-[#D4950F]/80", dark: true },
           { k: "responded", l: "Responded", sub: "Reply sent", Icon: CheckCheck, grad: "from-[#059669] to-[#047857]", dark: false },
           { k: "closed", l: "Closed", sub: "Finished", Icon: Archive, grad: "from-[#52525B] to-[#27272A]", dark: false },
         ] as const).map((c) => {
           const active = statusFilter === c.k;
           return (
-            <button key={c.k} onClick={() => setStatusFilter(active ? "all" : c.k)} className={`group relative flex items-center gap-3.5 overflow-hidden rounded-2xl bg-gradient-to-br p-4 text-left shadow-[0_14px_28px_-16px_rgba(23,25,28,0.55)] transition-all duration-300 hover:-translate-y-1 ${c.grad} ${c.dark ? "text-[#17191C]" : "text-white"} ${active ? "ring-4 ring-[#17191C]/20" : ""}`}>
+            <button key={c.k} onClick={() => setStatusFilter(active ? "all" : c.k)} className={`group relative flex items-center gap-3.5 overflow-hidden rounded-2xl bg-gradient-to-br p-4 text-left shadow-[0_14px_28px_-16px_rgba(23,25,28,0.20)] transition-all duration-300 hover:-translate-y-1 ${c.grad} ${c.dark ? "text-[#17191C]" : "text-white"} ${active ? "ring-4 ring-[#17191C]/20" : ""}`}>
               <span className="pointer-events-none absolute -right-6 -top-8 h-24 w-24 rounded-full bg-white/10" />
               <c.Icon className="pointer-events-none absolute -bottom-3 right-3 h-16 w-16 opacity-[0.14]" strokeWidth={1.4} />
               <span className={`relative flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border ${c.dark ? "border-black/10 bg-black/10" : "border-white/30 bg-white/15"}`}><c.Icon className="h-5 w-5" /></span>
@@ -271,7 +271,7 @@ export default function AdminEnquiriesPage() {
             const status = enq.status || "new";
             const isNew = status === "new";
             return (
-              <article key={enq.id} onClick={() => handleOpenDetail(enq)} className="group relative cursor-pointer overflow-hidden rounded-2xl border border-[#E4E4E7] bg-white shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-[#C80808]/30 hover:shadow-[0_20px_40px_-20px_rgba(23,25,28,0.35)]">
+              <article key={enq.id} onClick={() => handleOpenDetail(enq)} className="group relative cursor-pointer overflow-hidden rounded-2xl border border-[#E4E4E7] bg-white shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-[#C80808]/30 hover:shadow-[0_20px_40px_-20px_rgba(23,25,28,0.16)]">
                 <span className={`absolute inset-y-0 left-0 w-1.5 ${STATUS_BAR[status] || "bg-[#A1A1AA]"}`} />
                 <div className="grid gap-4 p-5 pl-6 lg:grid-cols-[minmax(230px,300px)_1fr_auto] lg:items-center lg:gap-6">
                   {/* sender */}
@@ -342,9 +342,9 @@ export default function AdminEnquiriesPage() {
           <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-[#14161A]/70 p-3 backdrop-blur-sm sm:items-center sm:p-5" onClick={() => setSelectedEnquiry(null)}>
             <div role="dialog" aria-modal="true" onClick={(e) => e.stopPropagation()} className="relative my-4 flex max-h-[94vh] w-full max-w-4xl flex-col overflow-hidden rounded-[26px] bg-white shadow-[0_40px_120px_rgba(0,0,0,0.5)] animate-[routepop2_.35s_cubic-bezier(.2,.9,.25,1.1)_both]">
               {/* header */}
-              <div className="relative shrink-0 overflow-hidden bg-gradient-to-r from-[#17191C] via-[#22171A] to-[#2D161A] px-6 py-4 text-white sm:px-7">
+              <div className="relative shrink-0 overflow-hidden bg-gradient-to-r from-[#191B1F] via-[#1E191C] to-[#24191C] px-6 py-4 text-white sm:px-7">
                 <div className="pointer-events-none absolute -right-8 -top-10 h-32 w-48 rounded-full bg-[#E0A21A]/15 blur-3xl" />
-                <span className="absolute inset-x-0 bottom-0 h-[3px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#F2B93B]" />
+                <span className="absolute inset-x-0 bottom-0 h-[2.5px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#F2B93B] opacity-60" />
                 <button onClick={() => setSelectedEnquiry(null)} className="absolute right-4 top-4 rounded-full bg-white/10 p-2 text-white transition-colors hover:bg-white/25" aria-label="Close"><X className="h-4 w-4" /></button>
                 <div className="flex items-center gap-4 pr-10">
                   <span className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl text-[18px] font-black ${sug ? "bg-gradient-to-br from-[#F2B93B] to-[#D4950F] text-[#17191C]" : "bg-white/15 text-white ring-1 ring-white/25"}`}>{String(selectedEnquiry.full_name || "?").trim().charAt(0).toUpperCase()}</span>
@@ -426,7 +426,7 @@ export default function AdminEnquiriesPage() {
                 <div className="flex items-center gap-3">
                   {saveSuccess && <span className="flex items-center gap-1 text-[12.5px] font-bold text-emerald-600"><CheckCircle2 className="h-4 w-4" />Saved</span>}
                   <button onClick={() => setSelectedEnquiry(null)} className="rounded-xl border-2 border-[#E7E9EE] px-4 py-2 text-[13px] font-bold text-[#17191C] transition-colors hover:border-[#17191C]">Close</button>
-                  <button onClick={handleUpdate} disabled={updating} className="rounded-xl bg-gradient-to-r from-[#C80808] to-[#E0A21A] px-5 py-2 text-[13px] font-extrabold text-white shadow-[0_10px_24px_-8px_rgba(200,8,8,0.6)] transition-transform hover:-translate-y-0.5 disabled:opacity-60">{updating ? "Saving…" : "Save status & notes"}</button>
+                  <button onClick={handleUpdate} disabled={updating} className="rounded-xl bg-gradient-to-r from-[#C80808] to-[#E0A21A] px-5 py-2 text-[13px] font-extrabold text-white shadow-[0_10px_24px_-8px_rgba(200,8,8,0.22)] transition-transform hover:-translate-y-0.5 disabled:opacity-60">{updating ? "Saving…" : "Save status & notes"}</button>
                 </div>
               </div>
             </div>

@@ -219,11 +219,11 @@ export default function AdminProductsPage() {
   return (
     <div className="space-y-5">
       {/* Banner */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#17191C] via-[#22171A] to-[#2D161A] text-white shadow-[0_12px_28px_-16px_rgba(200,8,8,0.25)]">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#191B1F] via-[#1E191C] to-[#24191C] text-white shadow-[0_12px_28px_-16px_rgba(200,8,8,0.15)]">
         <div className="pointer-events-none absolute -right-10 -top-14 h-44 w-72 rounded-full bg-[#E0A21A]/15 blur-[60px]" />
         <div className="pointer-events-none absolute right-4 top-1/2 w-[170px] -translate-y-1/2 opacity-[0.08]"><PetroLogo part="flame" variant="dark" width="100%" /></div>
         <div className="pointer-events-none absolute inset-0 opacity-[0.05] [background-image:linear-gradient(#fff_1px,transparent_1px),linear-gradient(90deg,#fff_1px,transparent_1px)] [background-size:30px_30px]" />
-        <span className="absolute inset-x-0 bottom-0 h-[3px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#F2B93B]" />
+        <span className="absolute inset-x-0 bottom-0 h-[2.5px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#F2B93B] opacity-60" />
         <div className="relative flex flex-col gap-4 px-5 py-4 min-[1400px]:flex-row min-[1400px]:items-center min-[1400px]:justify-between">
           <div className="min-w-0">
             <p className="inline-flex items-center gap-1.5 text-[10.5px] font-extrabold uppercase tracking-[0.2em] text-[#F2B93B]"><Sparkles className="h-3 w-3" />Catalogue</p>
@@ -238,7 +238,7 @@ export default function AdminProductsPage() {
               </button>
             ))}
             <button onClick={fetchProducts} className="inline-flex items-center gap-1.5 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-[12px] font-bold backdrop-blur transition-colors hover:bg-white/20" title="Refresh"><RefreshCw className={`h-3.5 w-3.5 ${loading ? "animate-spin" : ""}`} />Refresh</button>
-            <button onClick={handleOpenAdd} className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full bg-gradient-to-r from-[#D40E0E] to-[#E0A21A] px-4 py-2 text-[12px] font-extrabold shadow-[0_8px_20px_-8px_rgba(224,100,20,0.8)] transition-transform hover:-translate-y-0.5"><Plus className="h-3.5 w-3.5" />Add product</button>
+            <button onClick={handleOpenAdd} className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full bg-gradient-to-r from-[#D40E0E] to-[#E0A21A] px-4 py-2 text-[12px] font-extrabold shadow-[0_8px_20px_-8px_rgba(224,100,20,0.25)] transition-transform hover:-translate-y-0.5"><Plus className="h-3.5 w-3.5" />Add product</button>
           </div>
         </div>
       </div>
@@ -322,9 +322,9 @@ export default function AdminProductsPage() {
         <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-[#14161A]/70 p-4 backdrop-blur-sm sm:items-center" onClick={() => setShowModal(false)}>
           <div role="dialog" aria-modal="true" onClick={(e) => e.stopPropagation()} className="relative my-6 flex max-h-[92vh] w-full max-w-3xl flex-col overflow-hidden rounded-[28px] bg-white shadow-[0_40px_120px_rgba(0,0,0,0.5)] animate-[routepop2_.35s_cubic-bezier(.2,.9,.25,1.1)_both]">
             <div className="relative flex shrink-0 items-center justify-between gap-4 border-b border-[#EEF0F3] px-6 py-5 sm:px-8">
-              <span className="absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#F2B93B]" />
+              <span className="absolute inset-x-0 top-0 h-[2.5px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#F2B93B] opacity-60" />
               <div className="flex items-center gap-3.5">
-                <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-[#D40E0E] to-[#E0A21A] text-white shadow-[0_8px_18px_-6px_rgba(212,14,14,0.6)]">{editingProduct ? <Pencil className="h-5 w-5" /> : <Plus className="h-5 w-5" />}</span>
+                <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-[#D40E0E] to-[#E0A21A] text-white shadow-[0_8px_18px_-6px_rgba(200,8,8,0.20)]">{editingProduct ? <Pencil className="h-5 w-5" /> : <Plus className="h-5 w-5" />}</span>
                 <div><h3 className="text-[18px] font-black text-[#17191C]">{editingProduct ? "Edit product" : "Add a new product"}</h3><p className="text-[12.5px] text-[#5F6871]">{editingProduct ? editingProduct.name : "Fill in the details below. You can publish it right away or save it as a draft."}</p></div>
               </div>
               <button onClick={() => setShowModal(false)} className="rounded-xl p-2 text-[#5F6871] transition-colors hover:bg-[#F5F6F7] hover:text-[#17191C]" aria-label="Close"><X className="h-5 w-5" /></button>
@@ -379,7 +379,7 @@ export default function AdminProductsPage() {
 
               <div className="flex shrink-0 items-center justify-end gap-3 border-t border-[#EEF0F3] bg-white px-6 py-4 sm:px-8">
                 <button type="button" onClick={() => setShowModal(false)} className="rounded-xl border-2 border-[#E7E9EE] px-5 py-2.5 text-[13.5px] font-bold text-[#17191C] transition-colors hover:border-[#17191C]">Cancel</button>
-                <button type="submit" disabled={saving} className="rounded-xl bg-gradient-to-r from-[#C80808] to-[#E0A21A] px-6 py-2.5 text-[13.5px] font-extrabold text-white shadow-[0_10px_24px_-8px_rgba(200,8,8,0.6)] transition-transform hover:-translate-y-0.5 disabled:opacity-60">{saving ? "Saving…" : editingProduct ? "Save changes" : "Create product"}</button>
+                <button type="submit" disabled={saving} className="rounded-xl bg-gradient-to-r from-[#C80808] to-[#E0A21A] px-6 py-2.5 text-[13.5px] font-extrabold text-white shadow-[0_10px_24px_-8px_rgba(200,8,8,0.22)] transition-transform hover:-translate-y-0.5 disabled:opacity-60">{saving ? "Saving…" : editingProduct ? "Save changes" : "Create product"}</button>
               </div>
             </form>
           </div>

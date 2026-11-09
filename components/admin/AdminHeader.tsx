@@ -92,7 +92,7 @@ export default function AdminHeader({ onToggleSidebar, user, notifications = 0 }
       <div className="flex h-[76px] items-center justify-between gap-3 px-4 sm:px-8">
         <div className="flex min-w-0 items-center gap-3">
           <button onClick={onToggleSidebar} className="rounded-xl p-2 text-[#5F6871] transition-colors hover:bg-[#F5F6F7] hover:text-[#17191C] lg:hidden" aria-label="Open navigation"><Menu className="h-5 w-5" /></button>
-          <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[#D40E0E] to-[#E0A21A] text-white shadow-[0_10px_22px_-8px_rgba(212,14,14,0.65)]"><Icon className="h-[22px] w-[22px]" /></span>
+          <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[#D40E0E]/85 to-[#E0A21A]/85 text-white shadow-[0_10px_22px_-8px_rgba(200,8,8,0.20)]"><Icon className="h-[22px] w-[22px]" /></span>
           <div className="min-w-0">
             <p className="hidden items-center gap-1.5 text-[13px] font-medium text-[#5F6871] sm:flex">Admin <span className="text-[#C3CAD1]">/</span> {section}</p>
             <h1 className="truncate text-[20px] font-black leading-tight tracking-tight text-[#17191C] sm:text-[22px]">{title}</h1>
@@ -125,7 +125,7 @@ export default function AdminHeader({ onToggleSidebar, user, notifications = 0 }
               <ChevronDown className={`hidden h-4 w-4 text-[#5F6871] transition-transform sm:block ${menuOpen ? "rotate-180" : ""}`} />
             </button>
             {menuOpen && (
-              <div role="menu" className="absolute right-0 top-[calc(100%+10px)] z-50 w-[270px] overflow-hidden rounded-2xl border border-[#E7E9EE] bg-white shadow-[0_24px_60px_-18px_rgba(23,25,28,0.35)] animate-[routefade_.18s_ease-out_both]">
+              <div role="menu" className="absolute right-0 top-[calc(100%+10px)] z-50 w-[270px] overflow-hidden rounded-2xl border border-[#E7E9EE] bg-white shadow-[0_24px_60px_-18px_rgba(23,25,28,0.16)] animate-[routefade_.18s_ease-out_both]">
                 <div className="flex items-center gap-3 border-b border-[#EEF0F3] bg-[#FAFAFB] p-4">
                   <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[#E0A21A] to-[#C80808] text-[16px] font-black text-white">{initial}</span>
                   <div className="min-w-0"><p className="truncate text-[14px] font-bold text-[#17191C]">{user?.name || "Administrator"}</p><p className="truncate text-[12px] text-[#5F6871]">{user?.email || "admin@petroeng.in"}</p><span className="mt-1 inline-block rounded-full bg-[#FBE9EC] px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-[#C80808]">{user?.role || "Admin"}</span></div>

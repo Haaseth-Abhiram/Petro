@@ -79,8 +79,8 @@ export default function AdminSidebar({ isOpen, onClose, user, enquiriesBadge = 0
       {isOpen && <div className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm lg:hidden" onClick={onClose} />}
 
       <aside className={`fixed bottom-0 left-0 top-0 z-50 flex w-[17.5rem] flex-col bg-gradient-to-b from-[#17191D] via-[#141619] to-[#111215] text-white transition-transform duration-200 ease-in-out lg:translate-x-0 ${isOpen ? "translate-x-0" : "-translate-x-full"}`}>
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-64 bg-[radial-gradient(ellipse_at_top_left,rgba(200,8,8,0.18),transparent_70%)]" />
-        <div className="pointer-events-none absolute -bottom-24 -right-24 h-72 w-72 rounded-full bg-[#E0A21A]/10 blur-3xl" />
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-64 bg-[radial-gradient(ellipse_at_top_left,rgba(200,8,8,0.06),transparent_70%)]" />
+        <div className="pointer-events-none absolute -bottom-24 -right-24 h-72 w-72 rounded-full bg-[#E0A21A]/05 blur-3xl" />
 
         {/* Brand — large, clearly visible logo */}
         <div className="relative shrink-0 px-4 pb-3 pt-5">
@@ -107,7 +107,7 @@ export default function AdminSidebar({ isOpen, onClose, user, enquiriesBadge = 0
                       key={item.href}
                       href={item.href}
                       onClick={() => { if (window.innerWidth < 1024) onClose(); }}
-                      className={`group flex items-center justify-between rounded-xl px-3.5 py-2.5 text-[13px] font-semibold transition-all ${active ? "bg-gradient-to-r from-[#D40E0E] to-[#E0A21A] text-white shadow-[0_6px_18px_-6px_rgba(224,100,20,0.32)]" : "text-white/65 hover:bg-white/[0.07] hover:text-white"}`}
+                      className={`group flex items-center justify-between rounded-xl px-3.5 py-2.5 text-[13px] font-semibold transition-all ${active ? "bg-gradient-to-r from-[#D40E0E]/85 to-[#E0A21A]/80 text-white shadow-[0_6px_18px_-6px_rgba(224,100,20,0.18)]" : "text-white/65 hover:bg-white/[0.07] hover:text-white"}`}
                     >
                       <span className="flex items-center gap-3">
                         <Icon className={`h-[17px] w-[17px] shrink-0 transition-colors ${active ? "text-white" : "text-white/50 group-hover:text-[#F2B93B]"}`} />
