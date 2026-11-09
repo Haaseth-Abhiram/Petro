@@ -199,7 +199,7 @@ export default function AdminCategoriesPage() {
       <button onClick={() => handleOpenEdit(c)} className="inline-flex items-center gap-1.5 rounded-lg border border-[#E4E7EC] px-2.5 py-1.5 text-[12px] font-bold text-[#17191C] transition-colors hover:border-[#C80808]/40 hover:text-[#C80808]" title="Edit category"><Pencil className="h-3.5 w-3.5" />Edit</button>
       {deleteConfirmId === c.id ? (
         <span className="inline-flex items-center gap-1">
-          <button onClick={() => handleDelete(c.id)} className="rounded-lg bg-[#C80808] px-2.5 py-1.5 text-[11.5px] font-bold text-white hover:bg-[#8A0A0A]">Delete</button>
+          <button onClick={() => handleDelete(c.id)} className="rounded-lg bg-[#C80808] px-2.5 py-1.5 text-[11.5px] font-bold text-white hover:bg-[#A81010]">Delete</button>
           <button onClick={() => setDeleteConfirmId(null)} className="rounded-lg p-1.5 text-[#5F6871] hover:bg-[#F5F6F7]" aria-label="Cancel"><X className="h-4 w-4" /></button>
         </span>
       ) : (
@@ -358,7 +358,7 @@ export default function AdminCategoriesPage() {
 
             <form onSubmit={handleSave} className="flex min-h-0 flex-1 flex-col">
               <div className="min-h-0 flex-1 space-y-6 overflow-y-auto px-6 py-6 sm:px-8">
-                {formError && <div className="flex items-start gap-2 rounded-xl border border-[#C80808]/25 bg-[#FBE9EC] p-3 text-[13px] text-[#8A0A0A]"><AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />{formError}</div>}
+                {formError && <div className="flex items-start gap-2 rounded-xl border border-[#C80808]/25 bg-[#FBE9EC] p-3 text-[13px] text-[#C80808]"><AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />{formError}</div>}
 
                 <section>
                   <h4 className="mb-3 text-[11px] font-extrabold uppercase tracking-[0.18em] text-[#C80808]">Basics</h4>

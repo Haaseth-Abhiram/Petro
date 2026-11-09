@@ -303,8 +303,8 @@ export default function JobManagementPage() {
   return (
     <div className="space-y-5">
       {/* Banner */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#14161A] via-[#2B1115] to-[#8A0A0A] text-white shadow-[0_16px_36px_-20px_rgba(138,10,10,0.7)]">
-        <div className="pointer-events-none absolute -right-10 -top-14 h-44 w-72 rounded-full bg-[#E0A21A]/25 blur-[60px]" />
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#17191C] via-[#22171A] to-[#2D161A] text-white shadow-[0_12px_28px_-16px_rgba(200,8,8,0.25)]">
+        <div className="pointer-events-none absolute -right-10 -top-14 h-44 w-72 rounded-full bg-[#E0A21A]/15 blur-[60px]" />
         <div className="pointer-events-none absolute right-4 top-1/2 w-[170px] -translate-y-1/2 opacity-[0.08]"><PetroLogo part="flame" variant="dark" width="100%" /></div>
         <div className="pointer-events-none absolute inset-0 opacity-[0.05] [background-image:linear-gradient(#fff_1px,transparent_1px),linear-gradient(90deg,#fff_1px,transparent_1px)] [background-size:30px_30px]" />
         <span className="absolute inset-x-0 bottom-0 h-[3px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#F2B93B]" />
@@ -360,7 +360,7 @@ export default function JobManagementPage() {
             <article key={job.id} className="group flex flex-col overflow-hidden rounded-2xl border border-[#E4E4E7] bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_22px_44px_-18px_rgba(23,25,28,0.35)]">
               <div className="relative h-36 overflow-hidden bg-[#17191C]">
                 <Cover src={job.image} alt={job.title} className="h-full w-full opacity-90 transition-transform duration-700 group-hover:scale-105" />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0E1013] via-[#0E1013]/45 to-[#8A0A0A]/20" />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0E1013] via-[#0E1013]/45 to-[#A81010]/20" />
                 <span className={`absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[10.5px] font-extrabold uppercase tracking-wider shadow-sm ${STATUS_STYLE[job.status]}`}><span className="h-1.5 w-1.5 rounded-full bg-white" />{STATUS_LABEL[job.status] || job.status}</span>
                 {typeof job.application_count === "number" && <span className="absolute right-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1 text-[11px] font-extrabold text-[#17191C] shadow-sm"><Users className="h-3.5 w-3.5 text-[#C80808]" />{job.application_count} applied</span>}
                 <div className="absolute inset-x-4 bottom-3"><p className="text-[10.5px] font-extrabold uppercase tracking-[0.16em] text-[#F2B93B]">{job.role}</p><h3 className="truncate text-[1.05rem] font-black leading-tight !text-white" title={job.title}>{job.title}</h3></div>
@@ -397,8 +397,8 @@ export default function JobManagementPage() {
       {modalOpen && (
         <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-[#14161A]/70 p-3 backdrop-blur-sm sm:items-center sm:p-5" onClick={() => setModalOpen(false)}>
           <div role="dialog" aria-modal="true" onClick={(e) => e.stopPropagation()} className="relative my-4 flex max-h-[94vh] w-full max-w-3xl flex-col overflow-hidden rounded-[26px] bg-white shadow-[0_40px_120px_rgba(0,0,0,0.5)] animate-[routepop2_.35s_cubic-bezier(.2,.9,.25,1.1)_both]">
-            <div className="relative shrink-0 overflow-hidden bg-gradient-to-r from-[#14161A] via-[#2B1115] to-[#8A0A0A] px-6 py-4 text-white sm:px-7">
-              <div className="pointer-events-none absolute -right-8 -top-10 h-32 w-48 rounded-full bg-[#E0A21A]/25 blur-3xl" />
+            <div className="relative shrink-0 overflow-hidden bg-gradient-to-r from-[#17191C] via-[#22171A] to-[#2D161A] px-6 py-4 text-white sm:px-7">
+              <div className="pointer-events-none absolute -right-8 -top-10 h-32 w-48 rounded-full bg-[#E0A21A]/15 blur-3xl" />
               <span className="absolute inset-x-0 bottom-0 h-[3px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#F2B93B]" />
               <button type="button" onClick={() => setModalOpen(false)} className="absolute right-4 top-4 rounded-full bg-white/10 p-2 text-white transition-colors hover:bg-white/25" aria-label="Close"><X className="h-4 w-4" /></button>
               <p className="text-[10.5px] font-extrabold uppercase tracking-[0.2em] text-[#F2B93B]">{editingJob ? "Edit job vacancy" : "Create new opening"}</p>
@@ -407,7 +407,7 @@ export default function JobManagementPage() {
 
             <form onSubmit={handleSaveJob} className="flex min-h-0 flex-1 flex-col">
               <div className="min-h-0 flex-1 space-y-6 overflow-y-auto px-6 py-6 sm:px-7">
-                {modalError && <div className="flex items-start gap-2 rounded-xl border border-[#C80808]/25 bg-[#FBE9EC] p-3 text-[13px] text-[#8A0A0A]"><AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />{modalError}</div>}
+                {modalError && <div className="flex items-start gap-2 rounded-xl border border-[#C80808]/25 bg-[#FBE9EC] p-3 text-[13px] text-[#C80808]"><AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />{modalError}</div>}
 
                 <section>
                   <h4 className={sectionTitle}>Position</h4>

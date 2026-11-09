@@ -131,20 +131,20 @@ export default function CareersDashboardPage() {
   const closed = s?.closedJobs ?? 0;
 
   const funnel = [
-    { l: "New", v: s?.newApplications ?? 0, Icon: Inbox, grad: "from-[#E21212] to-[#8A0A0A]", dark: false },
+    { l: "New", v: s?.newApplications ?? 0, Icon: Inbox, grad: "from-[#E21212] to-[#C80808]", dark: false },
     { l: "Under review", v: s?.underReviewApplications ?? 0, Icon: Search, grad: "from-[#F2B93B] to-[#D4950F]", dark: true },
     { l: "Shortlisted", v: s?.shortlistedApplications ?? 0, Icon: Star, grad: "from-[#2E3239] to-[#14161A]", dark: false },
-    { l: "Interview", v: s?.interviewApplications ?? 0, Icon: CalendarCheck, grad: "from-[#8A0A0A] to-[#E0A21A]", dark: false },
+    { l: "Interview", v: s?.interviewApplications ?? 0, Icon: CalendarCheck, grad: "from-[#C80808] to-[#E0A21A]", dark: false },
     { l: "Selected", v: s?.selectedApplications ?? 0, Icon: Trophy, grad: "from-[#059669] to-[#047857]", dark: false },
     { l: "Rejected", v: s?.rejectedApplications ?? 0, Icon: XCircle, grad: "from-[#71717A] to-[#3F3F46]", dark: false },
   ];
 
   const quick = [
-    { href: "/admin/careers/jobs", l: "Post a job", sub: "Publish a new opening", Icon: Plus, tone: "bg-gradient-to-br from-[#E21212] to-[#8A0A0A]" },
+    { href: "/admin/careers/jobs", l: "Post a job", sub: "Publish a new opening", Icon: Plus, tone: "bg-gradient-to-br from-[#E21212] to-[#C80808]" },
     { href: "/admin/careers/applications", l: "Applications", sub: "Review candidates", Icon: Users, tone: "bg-gradient-to-br from-[#F2B93B] to-[#D4950F]" },
     { href: "/admin/careers/categories", l: "Job categories", sub: "Organise departments", Icon: Layers, tone: "bg-gradient-to-br from-[#2E3239] to-[#14161A]" },
-    { href: "/admin/careers/applications?tab=resumes", l: "Resume folder", sub: "Browse all CVs", Icon: FolderOpen, tone: "bg-gradient-to-br from-[#8A0A0A] to-[#E0A21A]" },
-    { href: "/careers", l: "Careers page", sub: "View public site", Icon: ExternalLink, tone: "bg-gradient-to-br from-[#E21212] to-[#8A0A0A]" },
+    { href: "/admin/careers/applications?tab=resumes", l: "Resume folder", sub: "Browse all CVs", Icon: FolderOpen, tone: "bg-gradient-to-br from-[#C80808] to-[#E0A21A]" },
+    { href: "/careers", l: "Careers page", sub: "View public site", Icon: ExternalLink, tone: "bg-gradient-to-br from-[#E21212] to-[#C80808]" },
   ];
 
   const maxPos = Math.max(...(data?.byPosition || []).map((x) => x.count), 1);
@@ -152,8 +152,8 @@ export default function CareersDashboardPage() {
   return (
     <div className="space-y-5">
       {/* Banner */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#14161A] via-[#2B1115] to-[#8A0A0A] text-white shadow-[0_16px_36px_-20px_rgba(138,10,10,0.7)]">
-        <div className="pointer-events-none absolute -right-10 -top-14 h-44 w-72 rounded-full bg-[#E0A21A]/25 blur-[60px]" />
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#17191C] via-[#22171A] to-[#2D161A] text-white shadow-[0_12px_28px_-16px_rgba(200,8,8,0.25)]">
+        <div className="pointer-events-none absolute -right-10 -top-14 h-44 w-72 rounded-full bg-[#E0A21A]/15 blur-[60px]" />
         <div className="pointer-events-none absolute right-4 top-1/2 w-[170px] -translate-y-1/2 opacity-[0.08]"><PetroLogo part="flame" variant="dark" width="100%" /></div>
         <div className="pointer-events-none absolute inset-0 opacity-[0.05] [background-image:linear-gradient(#fff_1px,transparent_1px),linear-gradient(90deg,#fff_1px,transparent_1px)] [background-size:30px_30px]" />
         <span className="absolute inset-x-0 bottom-0 h-[3px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#F2B93B]" />
@@ -178,7 +178,7 @@ export default function CareersDashboardPage() {
       </div>
 
       {error && (
-        <div className="flex items-start gap-3 rounded-2xl border border-[#C80808]/30 bg-white p-4 text-[13px] text-[#8A0A0A]"><AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-[#C80808]" /><div><p className="font-bold">Could not load careers data</p><p className="text-[#71717A]">{error}</p></div><button onClick={fetchDashboard} className="ml-auto rounded-lg bg-[#17191C] px-3 py-1.5 text-[12px] font-bold text-white hover:bg-[#C80808]">Try again</button></div>
+        <div className="flex items-start gap-3 rounded-2xl border border-[#C80808]/30 bg-white p-4 text-[13px] text-[#C80808]"><AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-[#C80808]" /><div><p className="font-bold">Could not load careers data</p><p className="text-[#71717A]">{error}</p></div><button onClick={fetchDashboard} className="ml-auto rounded-lg bg-[#17191C] px-3 py-1.5 text-[12px] font-bold text-white hover:bg-[#C80808]">Try again</button></div>
       )}
 
       {loading ? (

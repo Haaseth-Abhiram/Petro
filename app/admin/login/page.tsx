@@ -129,9 +129,9 @@ export default function AdminLoginPage() {
           priority
           className="object-cover opacity-35"
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-[#17191C]/92 via-[#2A1515]/80 to-[#C80808]/65" />
-        <div className="absolute -top-24 -right-16 w-[440px] h-[440px] rounded-full bg-[#FFA028]/25 blur-[110px] animate-blob" />
-        <div className="absolute -bottom-32 -left-20 w-[420px] h-[420px] rounded-full bg-[#C80808]/30 blur-[110px] animate-blob" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#17191C]/80 via-[#1F171A]/60 to-[#C80808]/40" />
+        <div className="absolute -top-24 -right-16 w-[440px] h-[440px] rounded-full bg-[#FFA028]/15 blur-[110px] animate-blob" />
+        <div className="absolute -bottom-32 -left-20 w-[420px] h-[420px] rounded-full bg-[#C80808]/15 blur-[110px] animate-blob" />
         <div className="absolute inset-0 dot-grid opacity-20" />
 
         <div className="relative flex items-center justify-between">
@@ -191,8 +191,8 @@ export default function AdminLoginPage() {
 
       {/* Form panel */}
       <main className="relative flex items-center justify-center px-5 sm:px-10 overflow-hidden">
-        <div className="absolute -top-24 -right-20 w-[360px] h-[360px] rounded-full bg-[#FFA028]/[0.18] blur-[90px]" />
-        <div className="absolute -bottom-24 -left-20 w-[360px] h-[360px] rounded-full bg-[#C80808]/[0.08] blur-[90px]" />
+        <div className="absolute -top-24 -right-20 w-[360px] h-[360px] rounded-full bg-[#FFA028]/[0.10] blur-[90px]" />
+        <div className="absolute -bottom-24 -left-20 w-[360px] h-[360px] rounded-full bg-[#C80808]/[0.05] blur-[90px]" />
         <Link
           href="/"
           className="lg:hidden absolute top-4 left-4 inline-flex items-center gap-1.5 text-[12px] font-semibold text-[#4a5159]"
@@ -336,7 +336,7 @@ export default function AdminLoginPage() {
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="group w-full inline-flex items-center justify-center gap-2 text-[14.5px] font-extrabold bg-gradient-to-r from-[#C80808] via-[#8A0A0A] to-[#FFA028] bg-[length:200%_100%] hover:bg-right text-white py-3 rounded-xl shadow-[0_12px_28px_rgba(255,75,50,0.30)] hover:-translate-y-0.5 disabled:opacity-70 transition-all duration-500"
+                      className="group w-full inline-flex items-center justify-center gap-2 text-[14.5px] font-extrabold bg-gradient-to-r from-[#C80808] to-[#FFA028] bg-[length:200%_100%] hover:bg-right text-white py-3 rounded-xl shadow-[0_8px_22px_rgba(200,8,8,0.22)] hover:-translate-y-0.5 disabled:opacity-70 transition-all duration-500"
                     >
                       {isSubmitting ? (
                         <>
@@ -447,7 +447,7 @@ export default function AdminLoginPage() {
                     <button
                       type="submit"
                       disabled={suBusy}
-                      className="group w-full inline-flex items-center justify-center gap-2 text-[14.5px] font-extrabold bg-gradient-to-r from-[#C80808] via-[#8A0A0A] to-[#FFA028] bg-[length:200%_100%] hover:bg-right text-white py-3 rounded-xl shadow-[0_12px_28px_rgba(255,75,50,0.30)] hover:-translate-y-0.5 disabled:opacity-70 transition-all duration-500"
+                      className="group w-full inline-flex items-center justify-center gap-2 text-[14.5px] font-extrabold bg-gradient-to-r from-[#C80808] to-[#FFA028] bg-[length:200%_100%] hover:bg-right text-white py-3 rounded-xl shadow-[0_8px_22px_rgba(200,8,8,0.22)] hover:-translate-y-0.5 disabled:opacity-70 transition-all duration-500"
                     >
                       {suBusy ? (
                         <>

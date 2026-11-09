@@ -42,8 +42,8 @@ export function ModalFrame({
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-[#14161A]/70 p-3 backdrop-blur-sm sm:items-center sm:p-5" onClick={onClose}>
       <div role="dialog" aria-modal="true" onClick={(e) => e.stopPropagation()} className={`relative my-4 flex max-h-[94vh] w-full ${SIZES[size]} flex-col overflow-hidden rounded-[26px] bg-white shadow-[0_40px_120px_rgba(0,0,0,0.5)] animate-[routepop2_.35s_cubic-bezier(.2,.9,.25,1.1)_both]`}>
-        <div className="relative shrink-0 overflow-hidden bg-gradient-to-r from-[#14161A] via-[#2B1115] to-[#8A0A0A] px-6 py-4 text-white sm:px-7">
-          <div className="pointer-events-none absolute -right-8 -top-10 h-32 w-48 rounded-full bg-[#E0A21A]/25 blur-3xl" />
+        <div className="relative shrink-0 overflow-hidden bg-gradient-to-r from-[#17191C] via-[#22171A] to-[#2D161A] px-6 py-4 text-white sm:px-7">
+          <div className="pointer-events-none absolute -right-8 -top-10 h-32 w-48 rounded-full bg-[#E0A21A]/15 blur-3xl" />
           <span className="absolute inset-x-0 bottom-0 h-[3px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#F2B93B]" />
           <button type="button" onClick={onClose} className="absolute right-4 top-4 rounded-full bg-white/10 p-2 text-white transition-colors hover:bg-white/25" aria-label="Close"><X className="h-4 w-4" /></button>
           {eyebrow && <p className="text-[10.5px] font-extrabold uppercase tracking-[0.2em] text-[#F2B93B]">{eyebrow}</p>}
@@ -83,8 +83,8 @@ export function ConfirmDialog({
   return (
     <div className="fixed inset-0 z-[60] flex items-center justify-center overflow-y-auto bg-[#14161A]/70 p-4 backdrop-blur-sm" onClick={onClose}>
       <div role="alertdialog" aria-modal="true" onClick={(e) => e.stopPropagation()} className="w-full max-w-lg overflow-hidden rounded-[26px] bg-white shadow-[0_40px_120px_rgba(0,0,0,0.5)] animate-[routepop2_.3s_cubic-bezier(.2,.9,.25,1.1)_both]">
-        <div className="relative overflow-hidden bg-gradient-to-r from-[#14161A] via-[#2B1115] to-[#8A0A0A] px-7 py-5 text-white">
-          <div className="pointer-events-none absolute -right-8 -top-10 h-32 w-48 rounded-full bg-[#E0A21A]/25 blur-3xl" />
+        <div className="relative overflow-hidden bg-gradient-to-r from-[#17191C] via-[#22171A] to-[#2D161A] px-7 py-5 text-white">
+          <div className="pointer-events-none absolute -right-8 -top-10 h-32 w-48 rounded-full bg-[#E0A21A]/15 blur-3xl" />
           <span className="absolute inset-x-0 bottom-0 h-[3px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#F2B93B]" />
           <button type="button" onClick={onClose} className="absolute right-4 top-4 rounded-full bg-white/10 p-2 text-white transition-colors hover:bg-white/25" aria-label="Close"><X className="h-4 w-4" /></button>
           <div className="flex items-center gap-4 pr-10">
@@ -95,7 +95,7 @@ export function ConfirmDialog({
         <div className="px-7 py-6 text-[14px] leading-relaxed text-[#52525B]">{message}</div>
         <div className="flex items-center justify-end gap-3 border-t border-[#EEF0F3] bg-[#FAFAFB] px-7 py-4">
           <button type="button" onClick={onClose} className="rounded-xl border-2 border-[#E7E9EE] bg-white px-5 py-2.5 text-[13.5px] font-bold text-[#17191C] transition-colors hover:border-[#17191C]">Cancel</button>
-          <button type="button" onClick={onConfirm} disabled={busy} className={`rounded-xl px-6 py-2.5 text-[13.5px] font-extrabold text-white transition-colors disabled:opacity-60 ${danger ? "bg-[#C80808] hover:bg-[#8A0A0A]" : "bg-[#17191C] hover:bg-[#C80808]"}`}>{busy ? "Please wait…" : confirmLabel}</button>
+          <button type="button" onClick={onConfirm} disabled={busy} className={`rounded-xl px-6 py-2.5 text-[13.5px] font-extrabold text-white transition-colors disabled:opacity-60 ${danger ? "bg-[#C80808] hover:bg-[#A81010]" : "bg-[#17191C] hover:bg-[#C80808]"}`}>{busy ? "Please wait…" : confirmLabel}</button>
         </div>
       </div>
     </div>

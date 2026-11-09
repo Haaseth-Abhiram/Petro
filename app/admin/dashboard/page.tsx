@@ -118,25 +118,25 @@ export default function AdminDashboardPage() {
   checks.sort((a, b) => Number(a.ok) - Number(b.ok));
 
   const cols = [
-    { t: "Quotations", Icon: FileSpreadsheet, total: stats.rfqs?.total ?? 0, n: rfqNew, href: "/admin/quote-requests", head: "bg-gradient-to-r from-[#E21212] to-[#8A0A0A]", dark: false, accent: "border-l-[#C80808]", avatar: "bg-[#C80808] text-white", empty: "No quotation requests yet", items: d.recentRfqs.map((r: any) => ({ id: "r" + r.id, a: r.product_name, b: `${r.company_name || r.full_name}${r.quantity ? " · " + r.quantity : ""}`, s: r.status, t: r.created_at })) },
+    { t: "Quotations", Icon: FileSpreadsheet, total: stats.rfqs?.total ?? 0, n: rfqNew, href: "/admin/quote-requests", head: "bg-gradient-to-r from-[#E21212] to-[#C80808]", dark: false, accent: "border-l-[#C80808]", avatar: "bg-[#C80808] text-white", empty: "No quotation requests yet", items: d.recentRfqs.map((r: any) => ({ id: "r" + r.id, a: r.product_name, b: `${r.company_name || r.full_name}${r.quantity ? " · " + r.quantity : ""}`, s: r.status, t: r.created_at })) },
     { t: "Enquiries", Icon: Mail, total: stats.enquiries?.total ?? 0, n: enqNew, href: "/admin/enquiries", head: "bg-gradient-to-r from-[#F2B93B] to-[#D4950F]", dark: true, accent: "border-l-[#E0A21A]", avatar: "bg-[#E0A21A] text-[#17191C]", empty: "No enquiries yet", items: d.recentEnquiries.map((r: any) => ({ id: "e" + r.id, a: r.subject, b: `${r.full_name}${r.company_name ? " · " + r.company_name : ""}`, s: r.status, t: r.created_at })) },
     { t: "Applications", Icon: Users, total: stats.applications?.total ?? 0, n: appNew, href: "/admin/careers/applications", head: "bg-gradient-to-r from-[#2E3239] to-[#14161A]", dark: false, accent: "border-l-[#17191C]", avatar: "bg-[#27272A] text-white", empty: "No applications yet", items: d.recentApplications.map((r: any) => ({ id: "a" + r.id, a: r.full_name, b: r.job_title || "General application", s: String(r.status || "new").toLowerCase().replace(" ", "_"), t: r.created_at })) },
   ];
 
   const quick: { href: string; l: string; sub: string; Icon: LucideIcon; tone: string; count: number }[] = [
-    { href: "/admin/products", l: "Add product", sub: "New chemical or instrument", Icon: Plus, tone: "bg-gradient-to-br from-[#E21212] to-[#8A0A0A]", count: 0 },
+    { href: "/admin/products", l: "Add product", sub: "New chemical or instrument", Icon: Plus, tone: "bg-gradient-to-br from-[#E21212] to-[#C80808]", count: 0 },
     { href: "/admin/quote-requests", l: "Process RFQs", sub: "Review and quote requests", Icon: FileSpreadsheet, tone: "bg-gradient-to-br from-[#F2B93B] to-[#D4950F]", count: rfqNew },
     { href: "/admin/enquiries", l: "Enquiries", sub: "Reply to contact messages", Icon: Mail, tone: "bg-gradient-to-br from-[#2E3239] to-[#14161A]", count: enqNew },
-    { href: "/admin/careers/jobs", l: "Post a job", sub: "Publish a new opening", Icon: Briefcase, tone: "bg-gradient-to-br from-[#8A0A0A] to-[#E0A21A]", count: 0 },
-    { href: "/admin/content", l: "Website content", sub: "Edit headlines and contacts", Icon: FileEdit, tone: "bg-gradient-to-br from-[#E21212] to-[#8A0A0A]", count: 0 },
+    { href: "/admin/careers/jobs", l: "Post a job", sub: "Publish a new opening", Icon: Briefcase, tone: "bg-gradient-to-br from-[#C80808] to-[#E0A21A]", count: 0 },
+    { href: "/admin/content", l: "Website content", sub: "Edit headlines and contacts", Icon: FileEdit, tone: "bg-gradient-to-br from-[#E21212] to-[#C80808]", count: 0 },
     { href: "/admin/documents", l: "Brochures", sub: "Manage downloadable files", Icon: FileText, tone: "bg-gradient-to-br from-[#F2B93B] to-[#D4950F]", count: 0 },
   ];
 
   return (
     <div className="space-y-5">
       {/* 1 — Banner (compact, clickable counters) */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#14161A] via-[#2B1115] to-[#8A0A0A] text-white shadow-[0_16px_36px_-20px_rgba(138,10,10,0.7)]">
-        <div className="pointer-events-none absolute -right-10 -top-14 h-44 w-72 rounded-full bg-[#E0A21A]/25 blur-[60px]" />
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#17191C] via-[#22171A] to-[#2D161A] text-white shadow-[0_12px_28px_-16px_rgba(200,8,8,0.25)]">
+        <div className="pointer-events-none absolute -right-10 -top-14 h-44 w-72 rounded-full bg-[#E0A21A]/15 blur-[60px]" />
         <div className="pointer-events-none absolute right-4 top-1/2 w-[170px] -translate-y-1/2 opacity-[0.08]"><PetroLogo part="flame" variant="dark" width="100%" /></div>
         <div className="pointer-events-none absolute inset-0 opacity-[0.05] [background-image:linear-gradient(#fff_1px,transparent_1px),linear-gradient(90deg,#fff_1px,transparent_1px)] [background-size:30px_30px]" />
         <span className="absolute inset-x-0 bottom-0 h-[3px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#F2B93B]" />

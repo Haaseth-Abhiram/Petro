@@ -44,7 +44,7 @@ export default function CookieConsent() {
           <span className="hidden sm:inline text-[13.5px] font-bold text-[#17191C] whitespace-nowrap">We use cookies</span>
           <button type="button" onClick={() => setPanel(true)} className="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1.5 text-[13px] font-semibold text-[#4a5159] hover:bg-[#FFF8F0] hover:text-[#17191C] whitespace-nowrap"><SlidersHorizontal className="w-4 h-4" />Customize</button>
           <button type="button" onClick={() => save({ analytics: false, marketing: false })} className="rounded-full border border-[#D8DDE2] px-3.5 py-1.5 text-[13px] font-bold text-[#17191C] hover:bg-[#F5F6F7]">Decline</button>
-          <button type="button" onClick={() => save({ analytics: true, marketing: true })} className="rounded-full bg-[#C80808] hover:bg-[#8A0A0A] text-white px-4 py-1.5 text-[13px] font-extrabold whitespace-nowrap transition-colors">Accept All</button>
+          <button type="button" onClick={() => save({ analytics: true, marketing: true })} className="rounded-full bg-[#C80808] hover:bg-[#A81010] text-white px-4 py-1.5 text-[13px] font-extrabold whitespace-nowrap transition-colors">Accept All</button>
         </div>
       ) : (
         <div className="pointer-events-auto w-full max-w-[450px] rounded-3xl bg-white border border-[#E7E9EE] shadow-[0_24px_70px_rgba(23,25,28,0.35)] p-5 animate-[routefade_.4s_ease-out_both]" role="dialog" aria-label="Customize cookie preferences">
@@ -67,7 +67,7 @@ export default function CookieConsent() {
           </div>
           <div className="flex justify-end gap-2.5 mt-4">
             <button type="button" onClick={() => save({ analytics: false, marketing: false })} className="rounded-full border border-[#17191C] px-4 py-2 text-[13px] font-bold text-[#17191C] hover:bg-[#17191C] hover:text-white transition-colors">Decline all</button>
-            <button type="button" onClick={() => save(prefs)} className="rounded-full bg-[#C80808] hover:bg-[#8A0A0A] text-white px-5 py-2 text-[13px] font-extrabold transition-colors">Save preferences</button>
+            <button type="button" onClick={() => save(prefs)} className="rounded-full bg-[#C80808] hover:bg-[#A81010] text-white px-5 py-2 text-[13px] font-extrabold transition-colors">Save preferences</button>
           </div>
         </div>
       )}

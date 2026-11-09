@@ -21,7 +21,7 @@
   --ink-raised: #1F2327;
   --ink-line: #2A2E34;
   --red: #C80808;
-  --red-dark: #8A0A0A;
+  --red-dark: #A81010;
   --red-tint: rgba(200,8,8, 0.08);
   --gold: #C80808;
   --gold-tint: rgba(200,8,8, 0.12);
@@ -112,8 +112,8 @@ h4 { font-size: 1.05rem; letter-spacing: -0.01em; }
   box-shadow: 0 4px 14px rgba(200,8,8, 0.28);
 }
 .btn-primary:hover {
-  background: #8A0A0A;
-  border-color: #8A0A0A;
+  background: #A81010;
+  border-color: #A81010;
   color: #FFFFFF;
   box-shadow: 0 6px 20px rgba(200,8,8, 0.38);
 }

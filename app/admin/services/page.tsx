@@ -142,7 +142,7 @@ export default function AdminServicesPage() {
 
         <button
           onClick={handleOpenAdd}
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-[#C80808] hover:bg-[#8A0A0A] text-white text-xs font-bold transition-all shadow-sm"
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-[#C80808] hover:bg-[#A81010] text-white text-xs font-bold transition-all shadow-sm"
         >
           <Plus className="w-4 h-4" />
           <span>Add New Service</span>

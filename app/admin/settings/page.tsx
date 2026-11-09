@@ -181,7 +181,7 @@ export default function AdminSettingsPage() {
         <div className="flex items-center justify-end">
           <button
             type="submit"
-            className="px-6 py-2.5 rounded-lg bg-[#C80808] hover:bg-[#8A0A0A] text-white text-xs font-bold shadow-[0_4px_12px_rgba(200,8,8,0.3)] transition-all"
+            className="px-6 py-2.5 rounded-lg bg-[#C80808] hover:bg-[#A81010] text-white text-xs font-bold shadow-[0_4px_12px_rgba(200,8,8,0.3)] transition-all"
           >
             Save Settings
           </button>

@@ -50,7 +50,7 @@ export default function SuggestionPopup({ className, children }: { className?: s
                   <input aria-label="Name" className={inp} placeholder="Name (optional)" value={f.name} onChange={(e) => setF({ ...f, name: e.target.value })} />
                   <input aria-label="Email" type="email" className={inp} placeholder="Email (optional)" value={f.email} onChange={(e) => setF({ ...f, email: e.target.value })} />
                 </div>
-                {msg && !msg.ok && <div className="flex gap-2 rounded-lg bg-[#FBE9EC] border border-[#C80808]/30 text-[#8A0A0A] text-[12.5px] p-2.5"><AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />{msg.t}</div>}
+                {msg && !msg.ok && <div className="flex gap-2 rounded-lg bg-[#FBE9EC] border border-[#C80808]/30 text-[#C80808] text-[12.5px] p-2.5"><AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />{msg.t}</div>}
                 <button type="submit" disabled={busy} className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#C80808] to-[#E0A21A] text-white text-[14px] font-extrabold py-3 disabled:opacity-60"><Send className="w-4 h-4" />{busy ? "Sending…" : "Submit suggestion"}</button>
               </form>
             )}

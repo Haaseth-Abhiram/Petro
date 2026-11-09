@@ -6,11 +6,12 @@ export const metadata = {
   description: "Administrative control center for products, RFQs, enquiries, content, and system configuration.",
   icons: {
     icon: [
+      { url: "/favicon.ico", sizes: "any" },
       { url: "/icon.svg", type: "image/svg+xml" },
-      { url: "/icon.png", type: "image/png" },
-      { url: "/assets/img/flame-logo-clean.png", type: "image/png" },
+      { url: "/icon.png", type: "image/png", sizes: "512x512" },
+      { url: "/icon-32.png", type: "image/png", sizes: "32x32" },
     ],
-    shortcut: "/icon.png",
+    shortcut: "/favicon.ico",
     apple: "/apple-icon.png",
   },
 };

@@ -219,8 +219,8 @@ export default function AdminProductsPage() {
   return (
     <div className="space-y-5">
       {/* Banner */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#14161A] via-[#2B1115] to-[#8A0A0A] text-white shadow-[0_16px_36px_-20px_rgba(138,10,10,0.7)]">
-        <div className="pointer-events-none absolute -right-10 -top-14 h-44 w-72 rounded-full bg-[#E0A21A]/25 blur-[60px]" />
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#17191C] via-[#22171A] to-[#2D161A] text-white shadow-[0_12px_28px_-16px_rgba(200,8,8,0.25)]">
+        <div className="pointer-events-none absolute -right-10 -top-14 h-44 w-72 rounded-full bg-[#E0A21A]/15 blur-[60px]" />
         <div className="pointer-events-none absolute right-4 top-1/2 w-[170px] -translate-y-1/2 opacity-[0.08]"><PetroLogo part="flame" variant="dark" width="100%" /></div>
         <div className="pointer-events-none absolute inset-0 opacity-[0.05] [background-image:linear-gradient(#fff_1px,transparent_1px),linear-gradient(90deg,#fff_1px,transparent_1px)] [background-size:30px_30px]" />
         <span className="absolute inset-x-0 bottom-0 h-[3px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#F2B93B]" />
@@ -295,7 +295,7 @@ export default function AdminProductsPage() {
                 <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-4 bg-[#0E1013]/90 p-5 text-center backdrop-blur-sm">
                   <span className="flex h-12 w-12 items-center justify-center rounded-full bg-[#C80808]/20 text-[#FF6A4D]"><Trash2 className="h-5 w-5" /></span>
                   <p className="text-[14px] font-bold text-white">Delete this product?</p>
-                  <div className="flex gap-2.5"><button onClick={() => handleDelete(p.id)} className="rounded-full bg-[#C80808] px-5 py-2 text-[12.5px] font-bold text-white hover:bg-[#8A0A0A]">Delete</button><button onClick={() => setDeleteConfirmId(null)} className="rounded-full bg-white/15 px-5 py-2 text-[12.5px] font-bold text-white hover:bg-white/25">Cancel</button></div>
+                  <div className="flex gap-2.5"><button onClick={() => handleDelete(p.id)} className="rounded-full bg-[#C80808] px-5 py-2 text-[12.5px] font-bold text-white hover:bg-[#A81010]">Delete</button><button onClick={() => setDeleteConfirmId(null)} className="rounded-full bg-white/15 px-5 py-2 text-[12.5px] font-bold text-white hover:bg-white/25">Cancel</button></div>
                 </div>
               )}
             </article>
@@ -332,7 +332,7 @@ export default function AdminProductsPage() {
 
             <form onSubmit={handleSave} className="flex min-h-0 flex-1 flex-col">
               <div className="min-h-0 flex-1 space-y-6 overflow-y-auto px-6 py-6 sm:px-8">
-                {formError && <div className="flex items-start gap-2 rounded-xl border border-[#C80808]/25 bg-[#FBE9EC] p-3 text-[13px] text-[#8A0A0A]"><AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />{formError}</div>}
+                {formError && <div className="flex items-start gap-2 rounded-xl border border-[#C80808]/25 bg-[#FBE9EC] p-3 text-[13px] text-[#C80808]"><AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />{formError}</div>}
 
                 <section>
                   <h4 className="mb-3 text-[11px] font-extrabold uppercase tracking-[0.18em] text-[#C80808]">Basics</h4>

@@ -58,7 +58,7 @@ export default function HeroSlider({ slides }: { slides: Slide[] }) {
                 </h1>
                 <p className="text-white/80 text-[14px] sm:text-base leading-relaxed mb-5 max-w-[600px]">{s.text}</p>
                 <div className="flex flex-col sm:flex-row justify-center gap-3 mb-5 w-full sm:w-auto">
-                  <Link href={s.primary.href} className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#C80808] hover:bg-[#8A0A0A] text-white font-bold text-sm px-6 py-3 transition-colors shadow-lg">{s.primary.label} <ArrowRight className="w-4 h-4" /></Link>
+                  <Link href={s.primary.href} className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#C80808] hover:bg-[#A81010] text-white font-bold text-sm px-6 py-3 transition-colors shadow-lg">{s.primary.label} <ArrowRight className="w-4 h-4" /></Link>
                   <Link href={s.secondary.href} className="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-white/60 hover:bg-white hover:text-[#17191C] text-white font-bold text-sm px-6 py-3 transition-colors">{s.secondary.label}</Link>
                 </div>
                 <ul className="flex flex-wrap justify-center gap-x-6 gap-y-1.5 text-[12px] font-bold text-white/90">

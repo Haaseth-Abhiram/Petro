@@ -76,7 +76,7 @@ export default function HeaderCompact() {
 
   return (
     <header className="sticky top-0 z-50 bg-white shadow-[0_1px_3px_rgba(23,25,28,0.08)]">
-      <div className="h-[3px] bg-gradient-to-r from-[#8A0A0A] via-[#C80808] to-[#F2B93B]" />
+      <div className="h-[3px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#F2B93B]" />
       {/* top bar */}
       <div className="bg-[#17191C] text-[12.5px] hidden md:block">
         <div className="max-w-[1240px] mx-auto px-5 sm:px-8 h-10 flex items-center justify-between">

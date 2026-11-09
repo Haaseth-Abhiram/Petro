@@ -462,7 +462,7 @@ export default function JobCategoriesPage() {
           message={<>
             You are about to delete <b className="text-[#17191C]">{activeCategory.name}</b>. This cannot be undone.
             {Number(activeCategory.job_count) > 0 && (
-              <span className="mt-3 block rounded-xl border border-[#C80808]/25 bg-[#FBE9EC] px-4 py-3 text-[13px] font-semibold text-[#8A0A0A]">
+              <span className="mt-3 block rounded-xl border border-[#C80808]/25 bg-[#FBE9EC] px-4 py-3 text-[13px] font-semibold text-[#C80808]">
                 {activeCategory.job_count} job(s) are assigned to this category. Reassign or remove them before deleting.
               </span>
             )}

@@ -330,7 +330,7 @@ export default function HomePage() {
           <div className="flex flex-wrap gap-2 mb-5">
             {["Mission-led", "Compliant", "Single point of contact"].map((x) => (<span key={x} className="rounded-full bg-white border border-[#E7E9EE] px-3 py-1 text-[12px] font-bold text-[#17191C]">{x}</span>))}
           </div>
-          <div><Link href="/about" className="inline-flex items-center gap-2 rounded-lg bg-[#C80808] hover:bg-[#8A0A0A] text-white text-sm font-bold px-5 py-2.5 transition-colors">Learn More <ArrowRight className="w-4 h-4" /></Link></div>
+          <div><Link href="/about" className="inline-flex items-center gap-2 rounded-lg bg-[#C80808] hover:bg-[#A81010] text-white text-sm font-bold px-5 py-2.5 transition-colors">Learn More <ArrowRight className="w-4 h-4" /></Link></div>
         </Reveal>
         <Reveal variant="right" className="relative min-h-[300px] lg:[clip-path:polygon(14%_0,100%_0,100%_100%,0_100%)] overflow-hidden group">
           <Image src="/assets/img/service-technical-consultation.jpg" alt="Engineers providing technical consultation on equipment selection" fill sizes="(max-width:1024px) 100vw, 50vw" className="object-cover group-hover:scale-105 transition-transform duration-[1400ms]" />
@@ -348,8 +348,8 @@ export default function HomePage() {
           </Reveal>
           <div className="grid md:grid-cols-2 gap-3 sm:gap-4 max-w-[820px] mx-auto">
             {[
-              { icon: FlaskConical, t: "Chemical & Water Treatment", d: "RO, cooling, boiler and ETP chemistry, complete treatment and sewage plants, filtration media, and the laboratory instruments to verify performance.", pills: ["Chemicals", "Treatment plants", "Filtration", "Lab instruments"], href: "/chemicals", cta: "View all chemicals", ic: "bg-[#C80808]", btn: "bg-[#C80808] hover:bg-[#8A0A0A]" },
-              { icon: Cog, t: "Instrumentation & Valves", d: "Precision tube and pipe fittings, needle, ball, manifold and check valves, seamless tubing and analyser systems in SS316 and specialist alloys.", pills: ["Fittings", "Valves", "Tubing", "Analyser systems"], href: "/instrumentation", cta: "View instrumentation", ic: "bg-[#17191C]", btn: "bg-[#D4950F] hover:bg-[#8A0A0A]" },
+              { icon: FlaskConical, t: "Chemical & Water Treatment", d: "RO, cooling, boiler and ETP chemistry, complete treatment and sewage plants, filtration media, and the laboratory instruments to verify performance.", pills: ["Chemicals", "Treatment plants", "Filtration", "Lab instruments"], href: "/chemicals", cta: "View all chemicals", ic: "bg-[#C80808]", btn: "bg-[#C80808] hover:bg-[#A81010]" },
+              { icon: Cog, t: "Instrumentation & Valves", d: "Precision tube and pipe fittings, needle, ball, manifold and check valves, seamless tubing and analyser systems in SS316 and specialist alloys.", pills: ["Fittings", "Valves", "Tubing", "Analyser systems"], href: "/instrumentation", cta: "View instrumentation", ic: "bg-[#17191C]", btn: "bg-[#D4950F] hover:bg-[#A81010]" },
             ].map((c, k) => (
               <Reveal key={c.t} delay={k * 120} variant={k ? "right" : "left"}>
                 <article className="group h-full rounded-2xl bg-white/[0.07] border border-white/15 backdrop-blur p-4 sm:p-5 hover:bg-white/[0.12] hover:-translate-y-1.5 transition-all duration-500 flex flex-col">
@@ -408,7 +408,7 @@ export default function HomePage() {
             ))}
           </div>
 
-          <div className="text-center mt-7"><Link href="/chemicals" className="inline-flex items-center gap-2 rounded-lg bg-[#C80808] hover:bg-[#8A0A0A] text-white text-sm font-bold px-5 py-2.5 transition-colors">View the full chemical portfolio <ArrowRight className="w-4 h-4" /></Link></div>
+          <div className="text-center mt-7"><Link href="/chemicals" className="inline-flex items-center gap-2 rounded-lg bg-[#C80808] hover:bg-[#A81010] text-white text-sm font-bold px-5 py-2.5 transition-colors">View the full chemical portfolio <ArrowRight className="w-4 h-4" /></Link></div>
         </div>
       </section>
 
@@ -420,7 +420,7 @@ export default function HomePage() {
             <h2 className="text-[1.7rem] sm:text-4xl font-black tracking-tight leading-[1.1] text-[#17191C] mb-5">Based in Mumbai, delivering to plants worldwide</h2>
             <p className="text-[15px] sm:text-lg leading-relaxed mb-5">Petro Engineering supplies water treatment chemistry and process instrumentation from a base in Mumbai — to plants across India, and on export. Two divisions, one accountable point of contact.</p>
             <p className="text-[15px] leading-relaxed mb-7">We support refineries, petrochemical plants, EPC contractors and system integrators with certified equipment, dosing chemistry, treatment plants and precision fittings from manufacturers we have already qualified.</p>
-            <Link href="/request-a-quote" className="inline-flex items-center gap-2 rounded-lg bg-[#C80808] hover:bg-[#8A0A0A] text-white font-bold px-7 py-4 transition-colors">Start your enquiry <ArrowRight className="w-4 h-4" /></Link>
+            <Link href="/request-a-quote" className="inline-flex items-center gap-2 rounded-lg bg-[#C80808] hover:bg-[#A81010] text-white font-bold px-7 py-4 transition-colors">Start your enquiry <ArrowRight className="w-4 h-4" /></Link>
           </Reveal>
           <Reveal variant="right" className="lg:col-span-6">
             <div className="grid gap-4">
@@ -490,7 +490,7 @@ export default function HomePage() {
         <div className="relative h-full max-w-[1320px] mx-auto px-5 sm:px-8 flex items-center">
           <Reveal className="max-w-[700px]">
             <h2 className="text-white text-[1.6rem] sm:text-4xl font-black tracking-tight leading-[1.15] mb-4">Right equipment. Fully compliant. <span className="text-[#E0A21A]">Delivered on time.</span></h2>
-            <Link href="/request-a-quote" className="inline-flex items-center gap-2 rounded-lg bg-[#C80808] hover:bg-[#8A0A0A] text-white font-bold px-7 py-3.5 transition-colors">Request a Quotation <ArrowRight className="w-4 h-4" /></Link>
+            <Link href="/request-a-quote" className="inline-flex items-center gap-2 rounded-lg bg-[#C80808] hover:bg-[#A81010] text-white font-bold px-7 py-3.5 transition-colors">Request a Quotation <ArrowRight className="w-4 h-4" /></Link>
           </Reveal>
         </div>
       </section>
@@ -545,7 +545,7 @@ export default function HomePage() {
                         <span className="text-[11px] font-bold tracking-widest text-[#F2B93B]">HOVER / TAP FOR DETAILS</span>
                       </div>
                     </div>
-                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#C80808] to-[#8A0A0A] text-white p-5 [backface-visibility:hidden] [transform:rotateY(180deg)] flex flex-col justify-center">
+                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#C80808] to-[#E0241A] text-white p-5 [backface-visibility:hidden] [transform:rotateY(180deg)] flex flex-col justify-center">
                       <h3 className="text-lg font-black text-white mb-1">{e.t}</h3>
                       <p className="text-[13px] text-white/85 mb-3">{e.d}</p>
                       <ul className="space-y-1.5 text-[13px] text-white">
@@ -572,7 +572,7 @@ export default function HomePage() {
             <p className="text-[14px]">From single-item replacement orders to complete tender package consolidation — we manage compliance, expediting and third-party inspection.</p>
           </div>
           <ServiceRoute services={services.map((s, k) => ({ ...s, img: ["/assets/img/pipe-fittings.jpg","/assets/img/gas-analytics.jpg","/assets/img/service-inspection-qa.jpg","/assets/img/tube-fittings.jpg","/assets/img/tubing-coils.jpg","/assets/img/service-technical-consultation.jpg"][k] }))} />
-          <div className="text-center mt-5"><Link href="/services" className="inline-flex items-center gap-2 rounded-lg bg-[#C80808] hover:bg-[#8A0A0A] text-white text-sm font-bold px-5 py-2.5 transition-colors">View all services <ArrowRight className="w-4 h-4" /></Link></div>
+          <div className="text-center mt-5"><Link href="/services" className="inline-flex items-center gap-2 rounded-lg bg-[#C80808] hover:bg-[#A81010] text-white text-sm font-bold px-5 py-2.5 transition-colors">View all services <ArrowRight className="w-4 h-4" /></Link></div>
         </div>
       </section>
 

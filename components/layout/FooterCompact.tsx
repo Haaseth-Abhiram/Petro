@@ -58,7 +58,7 @@ export default function FooterCompact() {
   const c = COMPANY_INFO.contact;
   return (
     <footer className="bg-gradient-to-b from-[#FFF8F0] to-[#FBEBD9] text-[#4a5159]">
-      <div className="bg-gradient-to-r from-[#8A0A0A] via-[#C80808] to-[#8A0A0A]">
+      <div className="bg-gradient-to-r from-[#A81010] via-[#C80808] to-[#A81010]">
         <div className="max-w-[1240px] mx-auto px-5 sm:px-8 py-3.5 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-white text-[15px] font-extrabold">Have a line list or datasheet? <span className="font-medium text-white/85">Our engineers reply within one business day.</span></p>
           <Link href="/request-a-quote" className="inline-flex items-center gap-2 rounded-full bg-white text-[#C80808] text-[13px] font-extrabold px-5 py-2 hover:-translate-y-0.5 hover:shadow-lg transition-all whitespace-nowrap">Request a Quote <ArrowRight className="w-4 h-4" /></Link>

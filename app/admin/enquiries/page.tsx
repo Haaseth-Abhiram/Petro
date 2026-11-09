@@ -195,8 +195,8 @@ export default function AdminEnquiriesPage() {
   return (
     <div className="space-y-5">
       {/* Banner */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#14161A] via-[#2B1115] to-[#8A0A0A] text-white shadow-[0_16px_36px_-20px_rgba(138,10,10,0.7)]">
-        <div className="pointer-events-none absolute -right-10 -top-14 h-44 w-72 rounded-full bg-[#E0A21A]/25 blur-[60px]" />
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#17191C] via-[#22171A] to-[#2D161A] text-white shadow-[0_12px_28px_-16px_rgba(200,8,8,0.25)]">
+        <div className="pointer-events-none absolute -right-10 -top-14 h-44 w-72 rounded-full bg-[#E0A21A]/15 blur-[60px]" />
         <div className="pointer-events-none absolute right-4 top-1/2 w-[170px] -translate-y-1/2 opacity-[0.08]"><PetroLogo part="flame" variant="dark" width="100%" /></div>
         <div className="pointer-events-none absolute inset-0 opacity-[0.05] [background-image:linear-gradient(#fff_1px,transparent_1px),linear-gradient(90deg,#fff_1px,transparent_1px)] [background-size:30px_30px]" />
         <span className="absolute inset-x-0 bottom-0 h-[3px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#F2B93B]" />
@@ -221,7 +221,7 @@ export default function AdminEnquiriesPage() {
       {/* Status summary */}
       <div className="grid grid-cols-2 gap-4 xl:grid-cols-4">
         {([
-          { k: "new", l: "New", sub: "Waiting for a reply", Icon: Inbox, grad: "from-[#E21212] to-[#8A0A0A]", dark: false },
+          { k: "new", l: "New", sub: "Waiting for a reply", Icon: Inbox, grad: "from-[#E21212] to-[#C80808]", dark: false },
           { k: "in_progress", l: "In progress", sub: "Being handled", Icon: Hourglass, grad: "from-[#F2B93B] to-[#D4950F]", dark: true },
           { k: "responded", l: "Responded", sub: "Reply sent", Icon: CheckCheck, grad: "from-[#059669] to-[#047857]", dark: false },
           { k: "closed", l: "Closed", sub: "Finished", Icon: Archive, grad: "from-[#52525B] to-[#27272A]", dark: false },
@@ -342,8 +342,8 @@ export default function AdminEnquiriesPage() {
           <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-[#14161A]/70 p-3 backdrop-blur-sm sm:items-center sm:p-5" onClick={() => setSelectedEnquiry(null)}>
             <div role="dialog" aria-modal="true" onClick={(e) => e.stopPropagation()} className="relative my-4 flex max-h-[94vh] w-full max-w-4xl flex-col overflow-hidden rounded-[26px] bg-white shadow-[0_40px_120px_rgba(0,0,0,0.5)] animate-[routepop2_.35s_cubic-bezier(.2,.9,.25,1.1)_both]">
               {/* header */}
-              <div className="relative shrink-0 overflow-hidden bg-gradient-to-r from-[#14161A] via-[#2B1115] to-[#8A0A0A] px-6 py-4 text-white sm:px-7">
-                <div className="pointer-events-none absolute -right-8 -top-10 h-32 w-48 rounded-full bg-[#E0A21A]/25 blur-3xl" />
+              <div className="relative shrink-0 overflow-hidden bg-gradient-to-r from-[#17191C] via-[#22171A] to-[#2D161A] px-6 py-4 text-white sm:px-7">
+                <div className="pointer-events-none absolute -right-8 -top-10 h-32 w-48 rounded-full bg-[#E0A21A]/15 blur-3xl" />
                 <span className="absolute inset-x-0 bottom-0 h-[3px] bg-gradient-to-r from-[#C80808] via-[#E0A21A] to-[#F2B93B]" />
                 <button onClick={() => setSelectedEnquiry(null)} className="absolute right-4 top-4 rounded-full bg-white/10 p-2 text-white transition-colors hover:bg-white/25" aria-label="Close"><X className="h-4 w-4" /></button>
                 <div className="flex items-center gap-4 pr-10">
@@ -418,7 +418,7 @@ export default function AdminEnquiriesPage() {
               <div className="flex shrink-0 flex-wrap items-center justify-between gap-3 border-t border-[#EEF0F3] bg-white px-6 py-3.5 sm:px-7">
                 <div>
                   {deleteConfirmId === selectedEnquiry.id ? (
-                    <div className="inline-flex items-center gap-2"><button onClick={() => handleDelete(selectedEnquiry.id)} className="rounded-xl bg-[#C80808] px-3.5 py-2 text-[12.5px] font-bold text-white hover:bg-[#8A0A0A]">Confirm delete</button><button onClick={() => setDeleteConfirmId(null)} className="px-2 text-[12.5px] font-semibold text-[#5F6871]">Cancel</button></div>
+                    <div className="inline-flex items-center gap-2"><button onClick={() => handleDelete(selectedEnquiry.id)} className="rounded-xl bg-[#C80808] px-3.5 py-2 text-[12.5px] font-bold text-white hover:bg-[#A81010]">Confirm delete</button><button onClick={() => setDeleteConfirmId(null)} className="px-2 text-[12.5px] font-semibold text-[#5F6871]">Cancel</button></div>
                   ) : (
                     <button onClick={() => setDeleteConfirmId(selectedEnquiry.id)} className="inline-flex items-center gap-1.5 text-[12.5px] font-bold text-[#C80808] hover:underline"><Trash2 className="h-3.5 w-3.5" />Delete record</button>
                   )}
