@@ -1,18 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { ArrowRight, Mail, Users, Wrench, ShieldCheck, TrendingUp, Home as HomeIcon, ChevronRight } from "lucide-react";
 import Reveal from "@/components/common/Reveal";
 import CareersBoard, { Job } from "@/components/common/CareersBoard";
 import CareerForm from "@/components/forms/CareerForm";
 import { COMPANY_INFO } from "@/data/company";
-import { query } from "@/lib/db";
-
-export const metadata = {
-  title: "Careers | Petro Engineering",
-  description: "Build a career in industrial sourcing, process instrumentation and water treatment with Petro Engineering Private Limited.",
-};
-
-export const dynamic = "force-dynamic";
 
 const perks = [
   { icon: Wrench, t: "Learning & Development", d: "Hands-on work with valves, fittings, analysers and RO chemistry, and a clear path to advance." },
@@ -30,84 +22,73 @@ const fallbackJobs: Job[] = [
   { role: "General Application", title: "Don't see your role?", d: "Send a general application and tell us how you can contribute. We keep every profile on file for upcoming needs.", img: "/assets/img/service-technical-consultation.jpg", exp: "Any level", resp: ["Tell us about your background", "Share the work you want to do", "We contact you when a role matches"], location: "India", employment_type: "Full-time", department: "General" },
 ];
 
-async function getPublishedJobs(): Promise<{ jobs: Job[]; departmentCount: number }> {
-  try {
-    const res = await query(`
-      SELECT 
-        j.id,
-        j.role,
-        j.title,
-        j.slug,
-        j.department,
-        j.location,
-        j.employment_type,
-        j.experience,
-        j.short_description,
-        j.description,
-        j.responsibilities,
-        j.image,
-        j.display_order
-      FROM jobs j
-      WHERE j.status = 'published'
-      ORDER BY j.display_order ASC, j.created_at DESC;
-    `);
+export default function CareersPage() {
+  const [jobs, setJobs] = useState<Job[]>(fallbackJobs);
+  const [departmentCount, setDepartmentCount] = useState<number>(5);
 
-    if (res.rows && res.rows.length > 0) {
-      const mappedJobs: Job[] = res.rows.map((r: any) => {
-        let respArr: string[] = [];
-        if (Array.isArray(r.responsibilities)) {
-          respArr = r.responsibilities;
-        } else if (typeof r.responsibilities === "string") {
-          try {
-            respArr = JSON.parse(r.responsibilities);
-          } catch {
-            respArr = [r.responsibilities];
+  useEffect(() => {
+    fetch("/api/careers/jobs")
+      .then((res) => {
+        if (!res.ok) throw new Error("Network response was not ok");
+        return res.json();
+      })
+      .then((data) => {
+        const rows = data.jobs || data.data || (Array.isArray(data) ? data : null);
+        if (rows && rows.length > 0) {
+          const published = rows.filter((r: any) => !r.status || r.status === "published");
+          if (published.length > 0) {
+            const mappedJobs: Job[] = published.map((r: any) => {
+              let respArr: string[] = [];
+              if (Array.isArray(r.responsibilities)) {
+                respArr = r.responsibilities;
+              } else if (typeof r.responsibilities === "string") {
+                try {
+                  respArr = JSON.parse(r.responsibilities);
+                } catch {
+                  respArr = [r.responsibilities];
+                }
+              }
+
+              return {
+                id: r.id,
+                role: r.role || r.title,
+                title: r.title,
+                d: r.short_description || r.description || "",
+                img: r.image || "/assets/img/service-technical-consultation.jpg",
+                exp: r.experience || "2+ years",
+                resp: respArr,
+                location: r.location || "Mumbai, India",
+                employment_type: r.employment_type || "Full-time",
+                department: r.department || "Engineering",
+                slug: r.slug,
+              };
+            });
+
+            const hasGeneral = mappedJobs.some((j) => j.role.toLowerCase().includes("general"));
+            if (!hasGeneral) {
+              mappedJobs.push({
+                role: "General Application",
+                title: "Don't see your role?",
+                d: "Send a general application and tell us how you can contribute. We keep every profile on file for upcoming needs.",
+                img: "/assets/img/service-technical-consultation.jpg",
+                exp: "Any level",
+                resp: ["Tell us about your background", "Share the work you want to do", "We contact you when a role matches"],
+                location: "India",
+                employment_type: "Full-time",
+                department: "General",
+              });
+            }
+
+            setJobs(mappedJobs);
+            const departments = new Set(mappedJobs.map((j) => j.department).filter(Boolean));
+            setDepartmentCount(departments.size || 5);
           }
         }
-
-        return {
-          id: r.id,
-          role: r.role || r.title,
-          title: r.title,
-          d: r.short_description || r.description || "",
-          img: r.image || "/assets/img/service-technical-consultation.jpg",
-          exp: r.experience || "2+ years",
-          resp: respArr,
-          location: r.location || "Mumbai, India",
-          employment_type: r.employment_type || "Full-time",
-          department: r.department || "Engineering",
-          slug: r.slug,
-        };
+      })
+      .catch(() => {
+        // Fallback already set
       });
-
-      // Always include General Application card if not already in mapped list
-      const hasGeneral = mappedJobs.some((j) => j.role.toLowerCase().includes("general"));
-      if (!hasGeneral) {
-        mappedJobs.push({
-          role: "General Application",
-          title: "Don't see your role?",
-          d: "Send a general application and tell us how you can contribute. We keep every profile on file for upcoming needs.",
-          img: "/assets/img/service-technical-consultation.jpg",
-          exp: "Any level",
-          resp: ["Tell us about your background", "Share the work you want to do", "We contact you when a role matches"],
-          location: "India",
-          employment_type: "Full-time",
-          department: "General",
-        });
-      }
-
-      const departments = new Set(mappedJobs.map((j) => j.department).filter(Boolean));
-      return { jobs: mappedJobs, departmentCount: departments.size || 5 };
-    }
-  } catch (err) {
-    console.error("Failed to query published jobs in CareersPage, using fallback:", err);
-  }
-
-  return { jobs: fallbackJobs, departmentCount: 5 };
-}
-
-export default async function CareersPage() {
-  const { jobs, departmentCount } = await getPublishedJobs();
+  }, []);
 
   return (
     <div className="w-full">

@@ -506,9 +506,9 @@ body{top:0!important}
 @media (min-width: 3500px) { :root { --z: 2.3; } html { zoom: 2.3; } }
 .h-screen { height: calc(100vh / var(--z)); }
 .min-h-screen { min-height: calc(100vh / var(--z)); }
-.min-h-[70vh] { min-height: calc(70vh / var(--z)); }
-.max-h-[90vh] { max-height: calc(90vh / var(--z)); }
-.max-h-[50vh] { max-height: calc(50vh / var(--z)); }
+.\min-h-\[70vh\] { min-height: calc(70vh / var(--z)); }
+.\max-h-\[90vh\] { max-height: calc(90vh / var(--z)); }
+.\max-h-\[50vh\] { max-height: calc(50vh / var(--z)); }
 
 @keyframes routepop2{0%{opacity:0;transform:translateY(24px) scale(.95)}100%{opacity:1;transform:none}}
 

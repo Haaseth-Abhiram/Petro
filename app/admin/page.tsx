@@ -1,11 +1,6 @@
-import { redirect } from "next/navigation";
-import { getCurrentAdmin } from "@/lib/admin-session";
+import React from "react";
+import { Navigate } from "react-router-dom";
 
-export default async function AdminRootPage() {
-  const admin = await getCurrentAdmin();
-  if (admin) {
-    redirect("/admin/dashboard");
-  } else {
-    redirect("/login");
-  }
+export default function AdminRootPage() {
+  return <Navigate to="/admin/dashboard" replace />;
 }
