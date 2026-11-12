@@ -284,7 +284,19 @@ export async function handlePublicSupabaseFallback(
 
   // 7. POST /api/auth/logout
   if (method === "POST" && cleanPath === "/api/auth/logout") {
-    await supabase.auth.signOut();
+    try {
+      await supabase.auth.signOut();
+    } catch {}
+    if (typeof window !== "undefined") {
+      try {
+        window.localStorage.removeItem("petronex_admin_token");
+        Object.keys(window.localStorage).forEach((k) => {
+          if (k.startsWith("sb-") && k.endsWith("-auth-token")) {
+            window.localStorage.removeItem(k);
+          }
+        });
+      } catch {}
+    }
     return jsonResponse({ success: true, message: "Logged out successfully." });
   }
 

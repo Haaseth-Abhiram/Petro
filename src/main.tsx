@@ -19,9 +19,9 @@ if (typeof window !== "undefined") {
     let nextInit: RequestInit = init ? { ...init } : {};
     if (isApiCall) {
       if (!nextInit.credentials) nextInit.credentials = "include";
-      // Clear local token if logging out
+      // Clear both local tokens & Supabase Auth session when logging out
       if (rawUrl.startsWith("/api/auth/logout")) {
-        try { window.localStorage.removeItem("petronex_admin_token"); } catch {}
+        await handlePublicSupabaseFallback("/api/auth/logout", { method: "POST" }).catch(() => {});
       } else {
         // Attach Bearer token from localStorage so cross-origin & serverless auth always persists
         try {
