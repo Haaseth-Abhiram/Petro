@@ -59,8 +59,18 @@ export default function HeaderCompact() {
   }, []);
 
   const logout = async () => {
-    try { await fetch("/api/auth/logout", { method: "POST" }); } catch (e) {}
     setAdmin(null);
+    try {
+      window.localStorage.removeItem("petronex_admin_token");
+      Object.keys(window.localStorage).forEach((k) => {
+        if (k.startsWith("sb-") && k.endsWith("-auth-token")) {
+          window.localStorage.removeItem(k);
+        }
+      });
+    } catch {}
+    try {
+      await fetch("/api/auth/logout", { method: "POST", cache: "no-store" });
+    } catch (e) {}
     window.location.href = "/";
   };
 
