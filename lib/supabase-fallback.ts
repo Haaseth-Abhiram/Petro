@@ -1,4 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
+import { handleAdminSupabaseFallback } from "./supabase-admin-fallback";
 
 const SUPABASE_URL =
   ((import.meta as any).env?.VITE_SUPABASE_URL as string) ||
@@ -308,6 +309,11 @@ export async function handlePublicSupabaseFallback(
       },
       201
     );
+  }
+
+  // 9. All /api/admin/* operations (when running without Express/DATABASE_URL)
+  if (cleanPath.startsWith("/api/admin/")) {
+    return handleAdminSupabaseFallback(supabase, urlPath, init);
   }
 
   return null;
