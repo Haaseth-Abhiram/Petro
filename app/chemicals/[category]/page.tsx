@@ -22,6 +22,7 @@ export default function ChemicalCategoryPage({ params }: PageProps) {
 
   if (!category) {
     notFound();
+    return null;
   }
 
   return (

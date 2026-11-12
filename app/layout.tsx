@@ -1,10 +1,11 @@
-import type { Metadata } from "next";
 import { Suspense } from "react";
 import "./globals.css";
 import SiteLayoutWrapper from "@/components/layout/SiteLayoutWrapper";
 import InitialLoader from "@/components/common/InitialLoader";
 import CookieConsent from "@/components/common/CookieConsent";
 import PageTransitionLoader from "@/components/common/PageTransitionLoader";
+
+type Metadata = Record<string, unknown>;
 
 export const metadata: Metadata = {
   title: "Petro Engineering | Industrial Solutions & Precision Sourcing",
