@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const fs = require("fs");
+const os = require("os");
 const multer = require("multer");
 const { randomUUID } = require("crypto");
 const { createClient } = require("@supabase/supabase-js");
@@ -11,9 +12,15 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://gznvueerosc
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_PUBLISHABLE_KEY || "sb_publishable_Uje5n9Scgfli0rncEI2qIw_dThOfEto";
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-const rfqDir = path.resolve(process.cwd(), "uploads", "rfqs");
-if (!fs.existsSync(rfqDir)) {
-  fs.mkdirSync(rfqDir, { recursive: true });
+const rfqDir = process.env.VERCEL
+  ? path.join(os.tmpdir(), "petronex_uploads", "rfqs")
+  : path.resolve(process.cwd(), "uploads", "rfqs");
+try {
+  if (!fs.existsSync(rfqDir)) {
+    fs.mkdirSync(rfqDir, { recursive: true });
+  }
+} catch (e) {
+  console.warn("Could not create local rfqDir:", e.message);
 }
 
 const rfqUpload = multer({

@@ -10,6 +10,25 @@ export interface AuthResult {
   };
 }
 
+async function safeParseJson(res: Response): Promise<AuthResult> {
+  const text = await res.text();
+  if (!text) {
+    return {
+      success: false,
+      message: `Authentication server returned empty response (HTTP ${res.status}).`,
+    };
+  }
+  try {
+    return JSON.parse(text);
+  } catch {
+    return {
+      success: false,
+      message: `Unexpected server response (HTTP ${res.status}).`,
+      error: text.slice(0, 120),
+    };
+  }
+}
+
 export async function authenticateAdmin(credentials: {
   email: string;
   password: string;
@@ -22,8 +41,7 @@ export async function authenticateAdmin(credentials: {
       body: JSON.stringify(credentials),
     });
 
-    const data = await res.json();
-    return data;
+    return await safeParseJson(res);
   } catch (err: any) {
     return {
       success: false,
@@ -47,8 +65,7 @@ export async function registerUser(details: {
       body: JSON.stringify(details),
     });
 
-    const data = await res.json();
-    return data;
+    return await safeParseJson(res);
   } catch (err: any) {
     return {
       success: false,

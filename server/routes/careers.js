@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const fs = require("fs");
+const os = require("os");
 const multer = require("multer");
 const { randomUUID } = require("crypto");
 const { createClient } = require("@supabase/supabase-js");
@@ -13,10 +14,16 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 const router = express.Router();
 
-// Multer storage for candidate resumes
-const resumeDir = path.resolve(process.cwd(), "uploads", "resumes");
-if (!fs.existsSync(resumeDir)) {
-  fs.mkdirSync(resumeDir, { recursive: true });
+// Multer storage for candidate resumes (use os.tmpdir() on serverless/Vercel)
+const resumeDir = process.env.VERCEL
+  ? path.join(os.tmpdir(), "petronex_uploads", "resumes")
+  : path.resolve(process.cwd(), "uploads", "resumes");
+try {
+  if (!fs.existsSync(resumeDir)) {
+    fs.mkdirSync(resumeDir, { recursive: true });
+  }
+} catch (e) {
+  console.warn("Could not create local resumeDir:", e.message);
 }
 
 const storage = multer.diskStorage({
@@ -740,18 +747,38 @@ router.post(["/applications/:id/notes", "/admin/applications/:id/notes"], requir
 router.get(["/applications/:id/cv", "/admin/applications/:id/cv"], requireAdmin, async (req, res) => {
   try {
     const { id } = req.params;
-    const r = await query("SELECT resume_storage_path, resume_original_name FROM applications WHERE id = $1;", [id]);
+    const r = await query(
+      "SELECT application_reference, resume_storage_path, resume_original_name FROM applications WHERE id = $1;",
+      [id]
+    );
     if (r.rows.length === 0 || !r.rows[0].resume_storage_path) {
       return res.status(404).json({ success: false, message: "CV file not found" });
     }
 
-    const absPath = path.resolve(process.cwd(), r.rows[0].resume_storage_path);
-    if (!fs.existsSync(absPath)) {
-      return res.status(404).json({ success: false, message: "File does not exist on disk" });
+    const row = r.rows[0];
+    const isPreview = req.query.preview === "true" || req.query.inline === "true";
+    const filename = row.resume_original_name || path.basename(row.resume_storage_path) || "resume.pdf";
+
+    // If stored as full Supabase Storage URL
+    if (row.resume_storage_path.startsWith("http://") || row.resume_storage_path.startsWith("https://")) {
+      return res.redirect(
+        isPreview ? row.resume_storage_path : `${row.resume_storage_path}?download=${encodeURIComponent(filename)}`
+      );
     }
 
-    const isPreview = req.query.preview === "true" || req.query.inline === "true";
-    const filename = r.rows[0].resume_original_name || path.basename(absPath) || "resume.pdf";
+    const absPath = path.resolve(process.cwd(), row.resume_storage_path);
+    if (!fs.existsSync(absPath)) {
+      // Serverless/Vercel fallback: check Supabase Storage bucket 'resumes'
+      const candidateKey = `${row.application_reference}-${filename}`;
+      const { data: pub } = supabase.storage.from("resumes").getPublicUrl(candidateKey);
+      if (pub?.publicUrl) {
+        return res.redirect(
+          isPreview ? pub.publicUrl : `${pub.publicUrl}?download=${encodeURIComponent(filename)}`
+        );
+      }
+      return res.status(404).json({ success: false, message: "File does not exist on disk or storage" });
+    }
+
     const ext = path.extname(filename).toLowerCase();
 
     if (isPreview) {

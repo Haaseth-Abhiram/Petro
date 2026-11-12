@@ -220,5 +220,95 @@ export async function handlePublicSupabaseFallback(
     });
   }
 
+  // 5. POST /api/auth/login (via Supabase Authenticator)
+  if (method === "POST" && cleanPath === "/api/auth/login") {
+    const { fields } = await parseRequestBody(init);
+    if (!fields.email || !fields.password) {
+      return jsonResponse({ success: false, message: "Email and password are required." }, 400);
+    }
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: fields.email.toLowerCase().trim(),
+      password: fields.password,
+    });
+    if (error || !data?.user) {
+      return jsonResponse({ success: false, message: error?.message || "Invalid email or password." }, 401);
+    }
+    const u = data.user;
+    const meta = u.user_metadata || {};
+    return jsonResponse({
+      success: true,
+      message: `Welcome back, ${meta.full_name || u.email}!`,
+      token: data.session?.access_token,
+      user: {
+        id: u.id,
+        email: u.email,
+        name: meta.full_name || "Administrator",
+        role: meta.role || "Admin",
+      },
+      redirectTo: "/admin/dashboard",
+    });
+  }
+
+  // 6. GET /api/auth/me (via Supabase Session)
+  if (method === "GET" && cleanPath === "/api/auth/me") {
+    const { data } = await supabase.auth.getUser();
+    if (!data?.user) {
+      return jsonResponse({ authenticated: false }, 401);
+    }
+    const u = data.user;
+    const meta = u.user_metadata || {};
+    return jsonResponse({
+      authenticated: true,
+      user: {
+        id: u.id,
+        email: u.email,
+        name: meta.full_name || "Administrator",
+        role: meta.role || "Admin",
+      },
+    });
+  }
+
+  // 7. POST /api/auth/logout
+  if (method === "POST" && cleanPath === "/api/auth/logout") {
+    await supabase.auth.signOut();
+    return jsonResponse({ success: true, message: "Logged out successfully." });
+  }
+
+  // 8. POST /api/auth/signup (via Supabase Authenticator)
+  if (method === "POST" && cleanPath === "/api/auth/signup") {
+    const { fields } = await parseRequestBody(init);
+    if (!fields.fullName || !fields.email || !fields.password) {
+      return jsonResponse({ success: false, message: "Full name, email, and password are required." }, 400);
+    }
+    const { data, error } = await supabase.auth.signUp({
+      email: fields.email.toLowerCase().trim(),
+      password: fields.password,
+      options: {
+        data: {
+          full_name: fields.fullName.trim(),
+          company: fields.company || null,
+          phone: fields.phone || null,
+          role: "Pending",
+        },
+      },
+    });
+    if (error) {
+      return jsonResponse({ success: false, message: error.message }, 400);
+    }
+    return jsonResponse(
+      {
+        success: true,
+        message: "Account created successfully! Your request has been submitted for role assignment.",
+        user: {
+          id: data.user?.id,
+          email: data.user?.email,
+          full_name: fields.fullName.trim(),
+          role: "Pending",
+        },
+      },
+      201
+    );
+  }
+
   return null;
 }

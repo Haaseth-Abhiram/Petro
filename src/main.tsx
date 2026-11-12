@@ -24,8 +24,13 @@ if (typeof window !== "undefined") {
       try {
         const res = await originalFetch(input, init);
         const ct = (res.headers.get("content-type") || "").toLowerCase();
-        // On static hosts (Lovable/Vercel without API server), /api returns 404 or index.html (text/html)
-        if (res.status === 404 || res.status === 405 || (ct && !ct.includes("application/json") && !ct.includes("text/csv") && !ct.includes("application/pdf"))) {
+        // On static hosts (Lovable) or unconfigured serverless backends, /api returns 404/405/500/503 or non-JSON
+        const isUnreachable =
+          res.status === 404 ||
+          res.status === 405 ||
+          res.status >= 500 ||
+          (ct && !ct.includes("application/json") && !ct.includes("text/csv") && !ct.includes("application/pdf"));
+        if (isUnreachable) {
           const fallback = await handlePublicSupabaseFallback(rawUrl, init);
           if (fallback) return fallback;
         }

@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const fs = require("fs");
+const os = require("os");
 const multer = require("multer");
 const bcrypt = require("bcryptjs");
 const { query } = require("../db");
@@ -8,10 +9,16 @@ const { authenticate, requireAdmin, requireSuperAdmin, logAdminAction } = requir
 
 const router = express.Router();
 
-// Multer storage for image uploads
-const imageDir = path.resolve(process.cwd(), "public", "uploads", "images");
-if (!fs.existsSync(imageDir)) {
-  fs.mkdirSync(imageDir, { recursive: true });
+// Multer storage for image uploads (use os.tmpdir() on serverless/Vercel read-only FS)
+const imageDir = process.env.VERCEL
+  ? path.join(os.tmpdir(), "petronex_uploads", "images")
+  : path.resolve(process.cwd(), "public", "uploads", "images");
+try {
+  if (!fs.existsSync(imageDir)) {
+    fs.mkdirSync(imageDir, { recursive: true });
+  }
+} catch (e) {
+  console.warn("Could not create local imageDir:", e.message);
 }
 
 const imageStorage = multer.diskStorage({

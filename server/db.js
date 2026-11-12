@@ -36,6 +36,11 @@ pool.on("error", (err) => {
 });
 
 async function query(text, params) {
+  if (!rawConn) {
+    const err = new Error("DATABASE_URL is not configured in environment.");
+    err.code = "NO_DB";
+    throw err;
+  }
   const start = Date.now();
   try {
     const res = await pool.query(text, params);
