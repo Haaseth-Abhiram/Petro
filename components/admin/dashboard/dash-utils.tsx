@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, useRef } from "react";
 
 export type DayPoint = { day: string; rfqs: number; enquiries: number; applications: number };
 
@@ -11,6 +11,9 @@ export function useDashboard() {
   const [refreshing, setRefreshing] = useState(false);
   const [updatedAt, setUpdatedAt] = useState("");
   const [error, setError] = useState<string | null>(null);
+
+  const dataRef = useRef<any>(null);
+  dataRef.current = data;
 
   const load = useCallback(async (forceRefresh = false) => {
     const controller = new AbortController();
@@ -32,7 +35,7 @@ export function useDashboard() {
       if (s.success) {
         setData(s);
         setUpdatedAt(new Date().toLocaleString(undefined, { day: "numeric", month: "short", hour: "numeric", minute: "2-digit" }));
-      } else if (!data) {
+      } else if (!dataRef.current) {
         setError(s.message || "Failed to load dashboard data");
       }
 
@@ -40,14 +43,14 @@ export function useDashboard() {
     } catch (e: any) {
       if (e.name !== "AbortError") {
         console.error("Dashboard fetch error:", e);
-        if (!data) setError("Unable to connect to the backend database. Please check connection and try again.");
+        if (!dataRef.current) setError("Unable to connect to the backend database. Please check connection and try again.");
       }
     } finally {
       clearTimeout(timeoutId);
       setLoading(false);
       setRefreshing(false);
     }
-  }, [data]);
+  }, []);
 
   useEffect(() => {
     load();

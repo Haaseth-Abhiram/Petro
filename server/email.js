@@ -61,7 +61,7 @@ async function sendEmail({ to, toName, subject, html, text, type, referenceId })
     await query(
       `INSERT INTO email_logs (
         recipient_email, recipient_name, subject, email_type, reference_id,
-        status, error_message, sent_at
+        status, error_message, created_at
       )
       VALUES ($1, $2, $3, $4, $5, $6, $7, NOW());`,
       [to, toName || null, subject, type, referenceId ? String(referenceId) : null, emailStatus, errorMessage]

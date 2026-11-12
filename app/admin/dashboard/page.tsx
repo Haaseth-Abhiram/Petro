@@ -1,7 +1,8 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import {
   RefreshCw,
   Plus,
@@ -20,11 +21,18 @@ import {
   AlertTriangle,
   UserCheck,
   Sparkles,
+  ShieldCheck,
   type LucideIcon,
 } from "lucide-react";
 import WorkspaceLoader from "@/components/admin/WorkspaceLoader";
 import PetroLogo from "@/components/common/PetroLogo";
 import { useDashboard, greeting, ago, LineChart, Donut } from "@/components/admin/dashboard/dash-utils";
+import {
+  HRDashboardView,
+  EmployeeDashboardView,
+  ClientDashboardView,
+  PendingDashboardView,
+} from "@/components/admin/dashboard/RoleDashboards";
 
 const panel = "rounded-2xl border border-[#E4E4E7] bg-white";
 const BADGE: Record<string, string> = {
@@ -84,6 +92,12 @@ function Breakdown({ title, rows, href }: { title: string; rows: { status: strin
 export default function AdminDashboardPage() {
   const d = useDashboard();
   const { stats, ins } = d;
+  const searchParams = useSearchParams();
+  const queryRole = searchParams.get("rolePreview");
+  const [selectedRole, setSelectedRole] = useState<string | null>(null);
+
+  const rawRole = selectedRole || queryRole || d.user?.role || "Admin";
+  const activeRole = rawRole.toLowerCase();
 
   const rfqNew = stats.rfqs?.new ?? 0, enqNew = stats.enquiries?.new ?? 0, appNew = stats.applications?.new ?? 0;
   const pending = rfqNew + enqNew + appNew;
@@ -132,8 +146,91 @@ export default function AdminDashboardPage() {
     { href: "/admin/documents", l: "Brochures", sub: "Manage downloadable files", Icon: FileText, tone: "bg-gradient-to-br from-[#F2B93B]/70 to-[#D4950F]/70", count: 0 },
   ];
 
+  const roleSwitcher = (
+    <div className="flex flex-wrap items-center justify-between gap-3 p-3.5 rounded-2xl bg-white border border-[#E7E9EE] shadow-sm">
+      <div className="flex items-center gap-2.5">
+        <span className="p-2 rounded-xl bg-[#C80808]/10 text-[#C80808]">
+          <ShieldCheck className="w-5 h-5" />
+        </span>
+        <div>
+          <span className="text-[12px] font-black text-[#17191C] uppercase tracking-wider block">
+            Portal View: <span className="text-[#C80808] capitalize">{activeRole} Dashboard</span>
+          </span>
+          <span className="text-[11.5px] text-[#5F6871]">
+            Assigned user: <b className="text-[#17191C]">{d.user?.name || d.user?.email || "User"}</b> ({d.user?.role || "Admin"}) · Switch role to preview:
+          </span>
+        </div>
+      </div>
+      <div className="flex flex-wrap items-center gap-1.5">
+        {[
+          { key: "admin", label: "Admin", color: "bg-rose-600 text-white" },
+          { key: "hr", label: "HR", color: "bg-purple-600 text-white" },
+          { key: "employee", label: "Employee", color: "bg-blue-600 text-white" },
+          { key: "client", label: "Client", color: "bg-emerald-600 text-white" },
+          { key: "pending", label: "Pending", color: "bg-[#FFA028] text-white" },
+        ].map((r) => (
+          <button
+            key={r.key}
+            type="button"
+            onClick={() => setSelectedRole(r.key)}
+            className={`px-3 py-1.5 rounded-xl text-[12px] font-extrabold transition-all cursor-pointer ${
+              activeRole === r.key
+                ? `${r.color} shadow-md scale-105`
+                : "bg-neutral-100 text-[#4a5159] hover:bg-neutral-200"
+            }`}
+          >
+            {r.label}
+          </button>
+        ))}
+        <Link
+          href="/admin/roles"
+          className="ml-1 px-3 py-1.5 rounded-xl text-[11.5px] font-bold text-[#C80808] bg-[#FFF1EF] hover:bg-[#FFE5E2] border border-[#C80808]/20 transition-colors"
+        >
+          Manage Roles →
+        </Link>
+      </div>
+    </div>
+  );
+
+  if (activeRole === "pending") {
+    return (
+      <div className="space-y-5">
+        {roleSwitcher}
+        <PendingDashboardView user={d.user} />
+      </div>
+    );
+  }
+
+  if (activeRole === "hr") {
+    return (
+      <div className="space-y-5">
+        {roleSwitcher}
+        <HRDashboardView stats={stats} ins={ins} user={d.user} d={d} />
+      </div>
+    );
+  }
+
+  if (activeRole === "employee") {
+    return (
+      <div className="space-y-5">
+        {roleSwitcher}
+        <EmployeeDashboardView stats={stats} ins={ins} user={d.user} d={d} />
+      </div>
+    );
+  }
+
+  if (activeRole === "client") {
+    return (
+      <div className="space-y-5">
+        {roleSwitcher}
+        <ClientDashboardView stats={stats} ins={ins} user={d.user} d={d} />
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-5">
+      {roleSwitcher}
       {/* 1 — Banner (compact, clickable counters) */}
       <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-[#191B1F] via-[#1E191C] to-[#24191C] text-white shadow-[0_12px_28px_-16px_rgba(200,8,8,0.15)]">
         <div className="pointer-events-none absolute -right-10 -top-14 h-44 w-72 rounded-full bg-[#E0A21A]/15 blur-[60px]" />

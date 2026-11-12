@@ -2,7 +2,7 @@ import pg from "pg";
 
 const connectionString =
   process.env.DATABASE_URL ||
-  "postgresql://postgres.gznvueeroscdfymfuyxf:XQ3FttXtDTdiL46M@aws-0-eu-north-1.pooler.supabase.com:6543/postgres?sslmode=require";
+  process.env.DATABASE_URL;
 
 async function setupEmailLogs() {
   const cleanUrl = connectionString.split("?")[0];

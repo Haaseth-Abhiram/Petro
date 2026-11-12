@@ -13,10 +13,11 @@ if (typeof dns.setDefaultResultOrder === "function") {
 
 const { Pool } = require("pg");
 
-const rawConn =
-  process.env.DATABASE_URL ||
-  "postgresql://postgres.gznvueeroscdfymfuyxf:XQ3FttXtDTdiL46M@aws-0-eu-north-1.pooler.supabase.com:6543/postgres";
-const connectionString = rawConn.split("?")[0];
+const rawConn = process.env.DATABASE_URL;
+if (!rawConn) {
+  console.error("FATAL: DATABASE_URL is not set in environment or .env.local.");
+}
+const connectionString = (rawConn || "").split("?")[0];
 
 const pool = new Pool({
   connectionString,

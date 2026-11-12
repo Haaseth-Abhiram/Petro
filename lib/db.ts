@@ -11,9 +11,7 @@ declare global {
   var _pgPool: Pool | undefined;
 }
 
-const rawConn =
-  process.env.DATABASE_URL ||
-  "postgresql://postgres.gznvueeroscdfymfuyxf:XQ3FttXtDTdiL46M@aws-0-eu-north-1.pooler.supabase.com:6543/postgres";
+const rawConn = process.env.DATABASE_URL || "";
 const connectionString = rawConn.split("?")[0];
 
 export const pool =

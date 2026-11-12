@@ -10,7 +10,7 @@ export interface LinkProps extends Omit<React.AnchorHTMLAttributes<HTMLAnchorEle
 }
 
 export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
-  ({ href, replace, children, ...props }, ref) => {
+  ({ href, replace, scroll, prefetch, children, ...rest }, ref) => {
     let to = "/";
     if (typeof href === "string") {
       to = href;
@@ -25,14 +25,14 @@ export const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(
     // External link
     if (to.startsWith("http://") || to.startsWith("https://") || to.startsWith("mailto:") || to.startsWith("tel:")) {
       return (
-        <a ref={ref} href={to} {...props}>
+        <a ref={ref} href={to} {...rest}>
           {children}
         </a>
       );
     }
 
     return (
-      <RouterLink ref={ref} to={to} replace={replace} {...props}>
+      <RouterLink ref={ref} to={to} replace={replace} {...rest}>
         {children}
       </RouterLink>
     );

@@ -25,7 +25,7 @@ import {
 } from "lucide-react";
 import PetroLogo from "@/components/common/PetroLogo";
 import { adminLoginSchema, AdminLoginFormData } from "@/lib/validations";
-import { authenticateAdmin, AuthResult } from "@/lib/auth";
+import { authenticateAdmin, registerUser, AuthResult } from "@/lib/auth";
 
 export default function AdminLoginPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -71,36 +71,47 @@ export default function AdminLoginPage() {
   };
 
   const [mode, setMode] = useState<"login" | "signup">("login");
-  const [su, setSu] = useState({ name: "", company: "", email: "", phone: "" });
+  const [su, setSu] = useState({ name: "", company: "", email: "", phone: "", password: "" });
+  const [showSuPassword, setShowSuPassword] = useState(false);
   const [suBusy, setSuBusy] = useState(false);
   const [suMsg, setSuMsg] = useState<{ ok: boolean; text: string } | null>(null);
 
   const submitSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     setSuMsg(null);
-    if (su.name.trim().length < 2 || !/^\S+@\S+\.\S+$/.test(su.email) || su.company.trim().length < 2) {
-      setSuMsg({ ok: false, text: "Please enter your name, company and a valid email." });
+    if (su.name.trim().length < 2) {
+      setSuMsg({ ok: false, text: "Please enter your full name." });
       return;
     }
+    if (!/^\S+@\S+\.\S+$/.test(su.email)) {
+      setSuMsg({ ok: false, text: "Please enter a valid email address." });
+      return;
+    }
+    if (!su.password || su.password.length < 6) {
+      setSuMsg({ ok: false, text: "Password must be at least 6 characters long." });
+      return;
+    }
+
     setSuBusy(true);
     try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          fullName: su.name,
-          companyName: su.company,
-          email: su.email,
-          phone: su.phone,
-          division: "Account request",
-          subject: "Account / portal access request",
-          message: `Requesting a customer account.\nName: ${su.name}\nCompany: ${su.company}\nEmail: ${su.email}\nPhone: ${su.phone || "not provided"}`,
-        }),
+      const result = await registerUser({
+        fullName: su.name,
+        company: su.company,
+        email: su.email,
+        phone: su.phone,
+        password: su.password,
       });
-      const out = await res.json();
-      if (!res.ok || !out.success) throw new Error(out.message || "Could not send request");
-      setSuMsg({ ok: true, text: "Request received. Our team will set up your account and email you." });
-      setSu({ name: "", company: "", email: "", phone: "" });
+
+      if (!result.success) {
+        throw new Error(result.message || result.error || "Failed to create account");
+      }
+
+      setSuMsg({
+        ok: true,
+        text: "Account created successfully! Your sign-up has been sent to the Admin under Roles for role assignment (HR, Employee, Client, Admin).",
+      });
+      // Reset password field only
+      setSu((prev) => ({ ...prev, password: "" }));
     } catch (err: any) {
       setSuMsg({ ok: false, text: err.message || "Something went wrong. Please try again." });
     } finally {
@@ -444,6 +455,31 @@ export default function AdminLoginPage() {
                         />
                       </div>
                     </div>
+                    <div>
+                      <label htmlFor="su-password" className={lbl}>
+                        Password <span className="text-[#C80808]">*</span>
+                      </label>
+                      <div className="relative">
+                        <Lock className={ico} />
+                        <input
+                          id="su-password"
+                          type={showSuPassword ? "text" : "password"}
+                          value={su.password}
+                          onChange={(e) => setSu({ ...su, password: e.target.value })}
+                          placeholder="At least 6 characters"
+                          className={`${fieldCls(false)} pr-11`}
+                        />
+                        <button
+                          type="button"
+                          onClick={() => setShowSuPassword(!showSuPassword)}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-[#929DA7] hover:text-[#17191C] p-1"
+                          aria-label={showSuPassword ? "Hide password" : "Show password"}
+                        >
+                          {showSuPassword ? <EyeOff className="w-[17px] h-[17px]" /> : <Eye className="w-[17px] h-[17px]" />}
+                        </button>
+                      </div>
+                      <p className="text-[11px] text-[#4a5159] mt-1">Must be at least 6 characters.</p>
+                    </div>
                     <button
                       type="submit"
                       disabled={suBusy}
@@ -452,15 +488,27 @@ export default function AdminLoginPage() {
                       {suBusy ? (
                         <>
                           <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                          <span>Sending...</span>
+                          <span>Creating account...</span>
                         </>
                       ) : (
                         <>
-                          <span>Request access</span>
+                          <span>Create account</span>
                           <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                         </>
                       )}
                     </button>
+                    {suMsg?.ok && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setMode("login");
+                          setSuMsg(null);
+                        }}
+                        className="w-full text-center py-2 text-[13px] font-bold text-[#C80808] hover:underline"
+                      >
+                        Proceed to Login →
+                      </button>
+                    )}
                   </form>
                   <p className="text-center text-[12.5px] text-[#4a5159] mt-4">
                     Already have an account?{" "}

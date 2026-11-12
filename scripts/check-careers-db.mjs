@@ -1,7 +1,7 @@
 import pg from 'pg';
 const { Client } = pg;
 
-const uri = process.env.DATABASE_URL || "postgresql://postgres.gznvueeroscdfymfuyxf:XQ3FttXtDTdiL46M@aws-0-eu-north-1.pooler.supabase.com:6543/postgres";
+const uri = process.env.DATABASE_URL || process.env.DATABASE_URL;
 const client = new Client({
   connectionString: uri.split('?')[0],
   ssl: { rejectUnauthorized: false },

@@ -1,6 +1,44 @@
 const express = require("express");
+const path = require("path");
+const fs = require("fs");
+const multer = require("multer");
+const { randomUUID } = require("crypto");
+const { createClient } = require("@supabase/supabase-js");
 const { query } = require("../db");
 const { sendEnquiryStatusUpdateEmail, sendRfqStatusUpdateEmail } = require("../email");
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://gznvueeroscdfymfuyxf.supabase.co";
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.VITE_SUPABASE_PUBLISHABLE_KEY || "sb_publishable_Uje5n9Scgfli0rncEI2qIw_dThOfEto";
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+const rfqDir = path.resolve(process.cwd(), "uploads", "rfqs");
+if (!fs.existsSync(rfqDir)) {
+  fs.mkdirSync(rfqDir, { recursive: true });
+}
+
+const rfqUpload = multer({
+  storage: multer.diskStorage({
+    destination: (req, file, cb) => cb(null, rfqDir),
+    filename: (req, file, cb) => {
+      const ext = path.extname(file.originalname).toLowerCase();
+      cb(null, `${Date.now()}-${randomUUID()}${ext}`);
+    },
+  }),
+  limits: { fileSize: 15 * 1024 * 1024 }, // 15MB
+});
+
+const handleOptionalRfqUpload = (req, res, next) => {
+  const ct = req.headers["content-type"] || "";
+  if (ct.includes("multipart/form-data")) {
+    return rfqUpload.single("attachment")(req, res, (err) => {
+      if (err) {
+        return res.status(400).json({ success: false, message: err.message || "Attachment upload failed." });
+      }
+      next();
+    });
+  }
+  next();
+};
 
 const router = express.Router();
 
@@ -107,7 +145,7 @@ router.post("/contact", async (req, res) => {
 });
 
 // POST /api/rfq
-router.post("/rfq", async (req, res) => {
+router.post("/rfq", handleOptionalRfqUpload, async (req, res) => {
   try {
     const {
       fullName,
@@ -136,14 +174,43 @@ router.post("/rfq", async (req, res) => {
       return res.status(400).json({ success: false, message: "Full name and email are required to request a quote." });
     }
 
+    const uploadedFile = req.file;
+    const finalAttachmentName = uploadedFile ? uploadedFile.originalname : (attachmentName || "");
+    const finalAttachmentSize = uploadedFile ? Math.round(uploadedFile.size) : null;
+    let finalAttachmentPath = uploadedFile ? `uploads/rfqs/${uploadedFile.filename}` : null;
+
+    if (uploadedFile && fs.existsSync(uploadedFile.path)) {
+      try {
+        const fileBuffer = fs.readFileSync(uploadedFile.path);
+        const cloudPath = `rfqs/${Date.now()}-${uploadedFile.originalname}`;
+        const { error: cloudErr } = await supabase.storage
+          .from("uploads")
+          .upload(cloudPath, fileBuffer, {
+            contentType: uploadedFile.mimetype || "application/octet-stream",
+            upsert: true,
+          });
+        if (!cloudErr) {
+          const { data: pub } = supabase.storage.from("uploads").getPublicUrl(cloudPath);
+          if (pub?.publicUrl) {
+            finalAttachmentPath = pub.publicUrl;
+          }
+          console.log(`✓ RFQ attachment uploaded to Supabase Storage: uploads/${cloudPath}`);
+        } else {
+          console.warn("Supabase Storage RFQ upload warning:", cloudErr.message);
+        }
+      } catch (cloudEx) {
+        console.warn("Could not upload RFQ attachment to Supabase Storage:", cloudEx.message);
+      }
+    }
+
     const result = await query(
       `INSERT INTO rfq_submissions (
         full_name, company_name, email, phone, industry,
         product_category, product_name, quantity, unit_of_measurement,
         technical_specifications, delivery_location, required_delivery_date,
-        additional_comments, attachment_name, status
+        additional_comments, attachment_name, attachment_path, attachment_size, status
       )
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, 'new')
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, 'new')
       RETURNING id, full_name, company_name, product_name, created_at;`,
       [
         fullName,
@@ -159,7 +226,9 @@ router.post("/rfq", async (req, res) => {
         deliveryLocation || "",
         requiredDeliveryDate || "",
         additionalComments || "",
-        attachmentName || "",
+        finalAttachmentName,
+        finalAttachmentPath,
+        finalAttachmentSize,
       ]
     );
 

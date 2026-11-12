@@ -3,7 +3,7 @@ import pg from "pg";
 
 const connectionString =
   (process.env.DATABASE_URL ||
-  "postgresql://postgres.gznvueeroscdfymfuyxf:XQ3FttXtDTdiL46M@aws-0-eu-north-1.pooler.supabase.com:6543/postgres").split("?")[0];
+  process.env.DATABASE_URL).split("?")[0];
 
 async function testEmailNotifications() {
   console.log("=== TESTING AUTOMATED EMAIL NOTIFICATION SERVICE ===");

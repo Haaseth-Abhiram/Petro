@@ -9,7 +9,7 @@ const { INDUSTRIES } = require('./temp-data/industries.js');
 const { RESOURCES } = require('./temp-data/resources.js');
 
 const { Client } = pg;
-const uri = process.env.DATABASE_URL || "postgresql://postgres.gznvueeroscdfymfuyxf:XQ3FttXtDTdiL46M@aws-0-eu-north-1.pooler.supabase.com:6543/postgres";
+const uri = process.env.DATABASE_URL || process.env.DATABASE_URL;
 
 async function seedCatalogue() {
   const client = new Client({

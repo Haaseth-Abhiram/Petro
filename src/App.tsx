@@ -44,6 +44,7 @@ import AdminDocumentsPage from "@/app/admin/documents/page";
 import AdminServicesPage from "@/app/admin/services/page";
 import AdminIndustriesPage from "@/app/admin/industries/page";
 import AdminUsersPage from "@/app/admin/users/page";
+import AdminRolesPage from "@/app/admin/roles/page";
 import AdminAuditLogsPage from "@/app/admin/audit-logs/page";
 import AdminLoginPage from "@/app/admin/login/page";
 
@@ -59,8 +60,7 @@ function InstrumentationProductWrapper() {
 }
 
 function AdminApplicationDetailWrapper() {
-  const params = useParams<{ id: string }>();
-  return <AdminCareerApplicationDetailPage params={{ id: params.id || "" }} />;
+  return <AdminCareerApplicationDetailPage />;
 }
 
 // Public layout wrapper
@@ -134,6 +134,7 @@ export default function App() {
         <Route path="services" element={<AdminServicesPage />} />
         <Route path="industries" element={<AdminIndustriesPage />} />
         <Route path="users" element={<AdminUsersPage />} />
+        <Route path="roles" element={<AdminRolesPage />} />
         <Route path="audit-logs" element={<AdminAuditLogsPage />} />
       </Route>
 

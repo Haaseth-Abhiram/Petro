@@ -617,6 +617,16 @@ export default function CandidateApplicationsPage() {
 
               <div className="flex items-center gap-2.5">
                 <a
+                  href={`/api/admin/careers/applications/${previewApp.id}/cv?preview=true`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs font-bold transition"
+                  title="Open PDF in a new browser tab"
+                >
+                  <ExternalLink className="w-3.5 h-3.5 text-white" />
+                  <span>Open in Tab</span>
+                </a>
+                <a
                   href={`/api/admin/careers/applications/${previewApp.id}/cv`}
                   target="_blank"
                   rel="noreferrer"

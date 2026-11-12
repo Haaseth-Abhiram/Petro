@@ -32,3 +32,28 @@ export async function authenticateAdmin(credentials: {
     };
   }
 }
+
+export async function registerUser(details: {
+  fullName: string;
+  email: string;
+  password: string;
+  company?: string;
+  phone?: string;
+}): Promise<AuthResult> {
+  try {
+    const res = await fetch("/api/auth/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(details),
+    });
+
+    const data = await res.json();
+    return data;
+  } catch (err: any) {
+    return {
+      success: false,
+      message: "Connection to registration API failed.",
+      error: err.message,
+    };
+  }
+}

@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs';
 
 const { Client } = pg;
 
-const uri = process.env.DATABASE_URL || "postgresql://postgres.gznvueeroscdfymfuyxf:XQ3FttXtDTdiL46M@aws-0-eu-north-1.pooler.supabase.com:6543/postgres";
+const uri = process.env.DATABASE_URL || process.env.DATABASE_URL;
 
 async function setupDatabase() {
   console.log("Connecting to Supabase PostgreSQL cluster...");
@@ -37,7 +37,7 @@ async function setupDatabase() {
     console.log("✓ admin_users table configured.");
 
     // Seed/Update Default Admin User
-    const adminPasswordHash = bcrypt.hashSync("Admin@123456", 10);
+    const adminPasswordHash = bcrypt.hashSync("Admin_Petro_2026", 10);
     await client.query(`
       INSERT INTO admin_users (email, password_hash, full_name, role, is_active)
       VALUES ($1, $2, $3, $4, true)
@@ -48,7 +48,7 @@ async function setupDatabase() {
         role = EXCLUDED.role,
         is_active = true;
     `, ['admin@petroeng.in', adminPasswordHash, 'System Administrator', 'Super Admin']);
-    console.log("✓ Default admin seeded (admin@petroeng.in / Admin@123456)");
+    console.log("✓ Default admin seeded (admin@petroeng.in / Admin_Petro_2026)");
 
     // 2. Product Categories Table
     await client.query(`

@@ -28,7 +28,9 @@ export default function RFQForm({
   initialIndustry = "",
 }: RFQFormProps) {
   const [selectedFile, setSelectedFile] = useState<{ name: string; size: string } | null>(null);
+  const [attachedFile, setAttachedFile] = useState<File | null>(null);
   const [submittedData, setSubmittedData] = useState<RFQFormData | null>(null);
+  const [submittedRfqId, setSubmittedRfqId] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const {
@@ -60,17 +62,21 @@ export default function RFQForm({
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const sizeInMB = (file.size / (1024 * 1024)).toFixed(2);
+      const sizeInKB = file.size < 1024 * 1024
+        ? `${(file.size / 1024).toFixed(1)} KB`
+        : `${(file.size / (1024 * 1024)).toFixed(2)} MB`;
       setSelectedFile({
         name: file.name,
-        size: `${sizeInMB} MB`,
+        size: sizeInKB,
       });
+      setAttachedFile(file);
       setValue("attachmentName", file.name);
     }
   };
 
   const handleRemoveFile = () => {
     setSelectedFile(null);
+    setAttachedFile(null);
     setValue("attachmentName", "");
   };
 
@@ -80,15 +86,25 @@ export default function RFQForm({
     setIsSubmitting(true);
     setSubmitError(null);
     try {
+      const fd = new FormData();
+      Object.entries(data).forEach(([key, val]) => {
+        if (val !== undefined && val !== null) {
+          fd.append(key, String(val));
+        }
+      });
+      if (attachedFile) {
+        fd.append("attachment", attachedFile);
+      }
+
       const res = await fetch("/api/rfq", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: fd,
       });
       const result = await res.json();
       if (!res.ok || !result.success) {
         throw new Error(result.message || "Failed to submit quote request");
       }
+      setSubmittedRfqId(result.rfqId || null);
       setSubmittedData(data);
     } catch (err: any) {
       setSubmitError(err.message || "Failed to submit RFQ. Please try again.");
@@ -99,7 +115,9 @@ export default function RFQForm({
 
   const handleReset = () => {
     setSubmittedData(null);
+    setSubmittedRfqId(null);
     setSelectedFile(null);
+    setAttachedFile(null);
     reset();
   };
 
@@ -134,7 +152,7 @@ export default function RFQForm({
                   RFQ Submission Summary
                 </span>
                 <span className="text-xs font-mono bg-[#C80808]/10 text-[#C80808] px-2 py-0.5 rounded font-bold">
-                  PETRO-RFQ-{(Math.random() * 90000 + 10000).toFixed(0)}
+                  {submittedRfqId ? `PETRO-RFQ-${submittedRfqId.slice(0, 8).toUpperCase()}` : "LOGGED"}
                 </span>
               </div>
 
@@ -160,7 +178,7 @@ export default function RFQForm({
                   <span>{submittedData.deliveryLocation}</span>
                 </div>
                 <div>
-                  <strong className="block text-[#17191C]">Selected Attachment:</strong>
+                  <strong className="block text-[#17191C]">Uploaded Attachment:</strong>
                   <span>{selectedFile ? `${selectedFile.name} (${selectedFile.size})` : "None attached"}</span>
                 </div>
               </div>
@@ -173,9 +191,9 @@ export default function RFQForm({
               </div>
             </div>
 
-            <div className="p-3 bg-[#C80808]/5 border border-[#C80808]/20 rounded-[4px] text-xs text-[#5F6871] flex items-start space-x-2">
+            <div className="p-3 bg-[#F5F6F7] border border-[#D8DDE2] rounded-[4px] text-xs text-[#5F6871] flex items-start space-x-2">
               <Info className="w-4 h-4 text-[#C80808] shrink-0 mt-0.5" />
-              <span>Phase 1 Frontend Demonstration. The form is ready to be bound to a backend API handler in Phase 2.</span>
+              <span>Your quotation request and technical specifications have been logged securely. Our engineering sales team will review and respond within 24 business hours.</span>
             </div>
 
             <button

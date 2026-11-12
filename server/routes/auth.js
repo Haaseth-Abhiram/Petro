@@ -10,6 +10,71 @@ const {
 
 const router = express.Router();
 
+// POST /api/auth/signup
+router.post("/signup", async (req, res) => {
+  try {
+    const { fullName, email, password, company, phone } = req.body || {};
+
+    if (!fullName || !email || !password) {
+      return res.status(400).json({
+        success: false,
+        message: "Full name, email, and password are required.",
+      });
+    }
+
+    if (String(password).length < 6) {
+      return res.status(400).json({
+        success: false,
+        message: "Password must be at least 6 characters long.",
+      });
+    }
+
+    const cleanEmail = String(email).toLowerCase().trim();
+    const cleanName = String(fullName).trim();
+    const cleanCompany = company ? String(company).trim() : null;
+    const cleanPhone = phone ? String(phone).trim() : null;
+
+    // Check if user already exists
+    const existing = await query("SELECT id FROM admin_users WHERE email = $1;", [cleanEmail]);
+    if (existing.rows.length > 0) {
+      return res.status(400).json({
+        success: false,
+        message: "An account with this email address already exists. Please log in.",
+      });
+    }
+
+    const passwordHash = bcrypt.hashSync(password, 10);
+
+    const result = await query(
+      `INSERT INTO admin_users (email, password_hash, full_name, company, phone, role, is_active)
+       VALUES ($1, $2, $3, $4, $5, 'Pending', true)
+       RETURNING id, email, full_name, company, phone, role, is_active, created_at;`,
+      [cleanEmail, passwordHash, cleanName, cleanCompany, cleanPhone]
+    );
+
+    const newUser = result.rows[0];
+
+    await logAdminAction(cleanEmail, "USER_SIGNUP", "admin_users", newUser.id, {
+      company: cleanCompany || "",
+      phone: cleanPhone || "",
+      assignedRole: "Pending",
+    });
+
+    return res.status(201).json({
+      success: true,
+      message: "Account created successfully! Your request has been submitted for role assignment. Once assigned (HR, Employee, Client, or Admin), you can sign in to access your dashboard.",
+      user: newUser,
+    });
+  } catch (err) {
+    console.error("Auth signup error:", err);
+    return res.status(500).json({
+      success: false,
+      message: "Account registration service error.",
+      error: err.message,
+    });
+  }
+});
+
 // POST /api/auth/login
 router.post("/login", async (req, res) => {
   try {

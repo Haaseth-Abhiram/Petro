@@ -19,6 +19,8 @@ import {
   X,
   Briefcase,
   UserCheck,
+  ShieldCheck,
+  Users,
   type LucideIcon,
 } from "lucide-react";
 import PetroLogo from "@/components/common/PetroLogo";
@@ -30,11 +32,20 @@ interface AdminSidebarProps {
   enquiriesBadge?: number;
   rfqBadge?: number;
   applicationsBadge?: number;
+  pendingRolesBadge?: number;
 }
 
 type Item = { label: string; href: string; icon: LucideIcon; badge?: number; exact?: boolean };
 
-export default function AdminSidebar({ isOpen, onClose, user, enquiriesBadge = 0, rfqBadge = 0, applicationsBadge = 0 }: AdminSidebarProps) {
+export default function AdminSidebar({
+  isOpen,
+  onClose,
+  user,
+  enquiriesBadge = 0,
+  rfqBadge = 0,
+  applicationsBadge = 0,
+  pendingRolesBadge = 0,
+}: AdminSidebarProps) {
   const pathname = usePathname() || "";
 
   const handleLogout = async () => {
@@ -44,32 +55,86 @@ export default function AdminSidebar({ isOpen, onClose, user, enquiriesBadge = 0
     window.location.href = "/login";
   };
 
+  const userRole = (user?.role || "Admin").toLowerCase();
+  const isAdmin = userRole === "admin" || userRole === "super admin";
+  const isHR = userRole === "hr";
+  const isEmployee = userRole === "employee";
+  const isClient = userRole === "client";
+
   const groups: { title: string; items: Item[] }[] = [
-    { title: "Overview", items: [{ label: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard, exact: true }] },
     {
-      title: "Catalogue",
-      items: [
-        { label: "Products", href: "/admin/products", icon: Package },
-        { label: "Categories", href: "/admin/categories", icon: Layers },
-      ],
+      title: "Overview",
+      items: [{ label: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard, exact: true }],
     },
-    {
-      title: "Inbox",
-      items: [
-        { label: "Enquiries", href: "/admin/enquiries", icon: Mail, badge: enquiriesBadge },
-        { label: "Quote Requests", href: "/admin/quote-requests", icon: FileSpreadsheet, badge: rfqBadge },
-      ],
-    },
-    {
-      title: "Hiring",
-      items: [
-        { label: "Careers", href: "/admin/careers", icon: Briefcase, exact: true },
-        { label: "Jobs", href: "/admin/careers/jobs", icon: Briefcase },
-        { label: "Job Applications", href: "/admin/careers/applications", icon: UserCheck, badge: applicationsBadge },
-        { label: "Job Categories", href: "/admin/careers/categories", icon: Layers },
-        { label: "Settings", href: "/admin/careers/settings", icon: Settings },
-      ],
-    },
+    ...(isAdmin
+      ? [
+          {
+            title: "Access & Roles",
+            items: [
+              { label: "Roles", href: "/admin/roles", icon: ShieldCheck, badge: pendingRolesBadge },
+              { label: "Users", href: "/admin/users", icon: Users },
+            ],
+          },
+          {
+            title: "Catalogue",
+            items: [
+              { label: "Products", href: "/admin/products", icon: Package },
+              { label: "Categories", href: "/admin/categories", icon: Layers },
+            ],
+          },
+          {
+            title: "Inbox",
+            items: [
+              { label: "Enquiries", href: "/admin/enquiries", icon: Mail, badge: enquiriesBadge },
+              { label: "Quote Requests", href: "/admin/quote-requests", icon: FileSpreadsheet, badge: rfqBadge },
+            ],
+          },
+          {
+            title: "Hiring",
+            items: [
+              { label: "Careers", href: "/admin/careers", icon: Briefcase, exact: true },
+              { label: "Jobs", href: "/admin/careers/jobs", icon: Briefcase },
+              { label: "Job Applications", href: "/admin/careers/applications", icon: UserCheck, badge: applicationsBadge },
+              { label: "Job Categories", href: "/admin/careers/categories", icon: Layers },
+              { label: "Settings", href: "/admin/careers/settings", icon: Settings },
+            ],
+          },
+        ]
+      : isHR
+      ? [
+          {
+            title: "HR Portal",
+            items: [
+              { label: "Careers Overview", href: "/admin/careers", icon: Briefcase, exact: true },
+              { label: "Job Postings", href: "/admin/careers/jobs", icon: Briefcase },
+              { label: "Applications", href: "/admin/careers/applications", icon: UserCheck, badge: applicationsBadge },
+              { label: "Job Categories", href: "/admin/careers/categories", icon: Layers },
+            ],
+          },
+        ]
+      : isEmployee
+      ? [
+          {
+            title: "Employee Portal",
+            items: [
+              { label: "Assigned Enquiries", href: "/admin/enquiries", icon: Mail, badge: enquiriesBadge },
+              { label: "Quote Requests", href: "/admin/quote-requests", icon: FileSpreadsheet, badge: rfqBadge },
+              { label: "Product Catalogue", href: "/admin/products", icon: Package },
+            ],
+          },
+        ]
+      : isClient
+      ? [
+          {
+            title: "Client Portal",
+            items: [
+              { label: "My Quotations", href: "/admin/quote-requests", icon: FileSpreadsheet, badge: rfqBadge },
+              { label: "My Enquiries", href: "/admin/enquiries", icon: Mail, badge: enquiriesBadge },
+              { label: "Product Catalogue", href: "/admin/products", icon: Package },
+            ],
+          },
+        ]
+      : []),
   ];
 
   const initial = (user?.name || user?.email || "A").charAt(0).toUpperCase();
@@ -129,8 +194,13 @@ export default function AdminSidebar({ isOpen, onClose, user, enquiriesBadge = 0
           <div className="flex items-center gap-3">
             <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#E0A21A]/70 to-[#C80808]/70 text-[15px] font-black text-white">{initial}</span>
             <div className="min-w-0 flex-1">
-              <p className="truncate text-[13px] font-bold text-white">{user?.name || "Admin"}</p>
-              <p className="truncate text-[11px] text-white/45">{user?.email || "admin@petroeng.in"}</p>
+              <div className="flex items-center gap-1.5">
+                <p className="truncate text-[13px] font-bold text-white">{user?.name || "User"}</p>
+                <span className="shrink-0 rounded px-1.5 py-0.2 text-[9.5px] font-black uppercase tracking-wider bg-[#F2B93B]/20 text-[#F2B93B] border border-[#F2B93B]/40">
+                  {user?.role || "Admin"}
+                </span>
+              </div>
+              <p className="truncate text-[11px] text-white/45">{user?.email || "user@petroeng.in"}</p>
             </div>
             <Link href="/" title="View public website" aria-label="View public website" className="rounded-lg p-2 text-white/70 transition-colors hover:bg-white/[0.08] hover:text-white"><ExternalLink className="h-[18px] w-[18px]" /></Link>
             <button onClick={handleLogout} title="Sign out" aria-label="Sign out" className="rounded-lg p-2 text-white/70 transition-colors hover:bg-[#C80808]/25 hover:text-[#FF6A4D]"><LogOut className="h-[18px] w-[18px]" /></button>

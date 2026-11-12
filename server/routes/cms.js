@@ -4,7 +4,7 @@ const fs = require("fs");
 const multer = require("multer");
 const bcrypt = require("bcryptjs");
 const { query } = require("../db");
-const { requireAdmin, requireSuperAdmin, logAdminAction } = require("../auth");
+const { authenticate, requireAdmin, requireSuperAdmin, logAdminAction } = require("../auth");
 
 const router = express.Router();
 
@@ -377,6 +377,97 @@ router.delete("/industries", requireAdmin, async (req, res) => {
     if (r.rows.length === 0) return res.status(404).json({ success: false, message: "Industry not found" });
 
     return res.json({ success: true, message: "Industry deleted successfully" });
+  } catch (err) {
+    return res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+/* ========================================================
+   ROLES & ACCESS MANAGEMENT
+   ======================================================== */
+router.get("/roles/users", authenticate, async (req, res) => {
+  try {
+    const r = await query(`
+      SELECT id, email, full_name, company, phone, role, is_active, last_login, created_at 
+      FROM admin_users 
+      ORDER BY 
+        CASE WHEN role = 'Pending' OR role IS NULL THEN 0 ELSE 1 END,
+        created_at DESC;
+    `);
+    return res.json({ success: true, users: r.rows });
+  } catch (err) {
+    return res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+router.patch("/roles/assign", authenticate, async (req, res) => {
+  try {
+    const { userId, role } = req.body || {};
+    if (!userId || !role) {
+      return res.status(400).json({ success: false, message: "User ID and role are required." });
+    }
+
+    const validRoles = ["HR", "Employee", "Client", "Admin", "Pending"];
+    const matchedRole = validRoles.find((r) => r.toLowerCase() === String(role).toLowerCase()) || role;
+
+    const r = await query(
+      `UPDATE admin_users SET role = $1 WHERE id = $2 
+       RETURNING id, email, full_name, company, phone, role, is_active;`,
+      [matchedRole, userId]
+    );
+
+    if (r.rows.length === 0) {
+      return res.status(404).json({ success: false, message: "User not found." });
+    }
+
+    if (req.admin) {
+      await logAdminAction(req.admin.email || "admin", "ROLE_ASSIGNED", "admin_users", userId, {
+        assignedRole: matchedRole,
+        userEmail: r.rows[0].email,
+      });
+    }
+
+    return res.json({
+      success: true,
+      message: `Role "${matchedRole}" successfully assigned to ${r.rows[0].full_name || r.rows[0].email}.`,
+      user: r.rows[0],
+    });
+  } catch (err) {
+    return res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+router.patch("/roles/status", authenticate, async (req, res) => {
+  try {
+    const { userId, isActive } = req.body || {};
+    if (!userId) return res.status(400).json({ success: false, message: "User ID is required." });
+
+    const r = await query(
+      `UPDATE admin_users SET is_active = $1 WHERE id = $2 RETURNING id, email, full_name, is_active;`,
+      [Boolean(isActive), userId]
+    );
+
+    if (r.rows.length === 0) return res.status(404).json({ success: false, message: "User not found." });
+
+    return res.json({ success: true, user: r.rows[0] });
+  } catch (err) {
+    return res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+router.delete("/roles/users/:id", authenticate, async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (!id) return res.status(400).json({ success: false, message: "User ID is required." });
+
+    if (req.admin && req.admin.id === id) {
+      return res.status(400).json({ success: false, message: "You cannot delete your own account." });
+    }
+
+    const r = await query("DELETE FROM admin_users WHERE id = $1 RETURNING id, email, full_name;", [id]);
+    if (r.rows.length === 0) return res.status(404).json({ success: false, message: "User not found." });
+
+    return res.json({ success: true, message: "User deleted successfully." });
   } catch (err) {
     return res.status(500).json({ success: false, error: err.message });
   }

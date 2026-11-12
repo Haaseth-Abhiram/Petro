@@ -24,6 +24,7 @@ import {
   Briefcase,
   UserCheck,
   Settings,
+  CheckCircle2,
   type LucideIcon,
 } from "lucide-react";
 
@@ -33,6 +34,12 @@ interface AdminHeaderProps {
   onRefresh?: () => void;
   isRefreshing?: boolean;
   notifications?: number;
+  notificationDetails?: {
+    applications?: number;
+    rfqs?: number;
+    enquiries?: number;
+    pendingRoles?: number;
+  };
 }
 
 const ICONS: [string, LucideIcon][] = [
@@ -62,30 +69,58 @@ const SECTION: [string, string][] = [
 
 const titleCase = (s: string) => s.charAt(0).toUpperCase() + s.slice(1).replace(/-/g, " ");
 
-export default function AdminHeader({ onToggleSidebar, user, notifications = 0 }: AdminHeaderProps) {
+export default function AdminHeader({
+  onToggleSidebar,
+  user,
+  notifications = 0,
+  notificationDetails = {},
+}: AdminHeaderProps) {
   const pathname = usePathname() || "";
   const segments = pathname.split("/").filter(Boolean).filter((s) => s !== "admin").map(titleCase);
   const title = segments[segments.length - 1] || "Dashboard";
   const Icon = (ICONS.find(([p]) => pathname.startsWith(p)) || ["", LayoutDashboard])[1] as LucideIcon;
   const section = (SECTION.find(([p]) => pathname.startsWith(p)) || ["", "Content"])[1];
   const initial = (user?.name || user?.email || "A").charAt(0).toUpperCase();
-  const [menuOpen, setMenuOpen] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => { setMenuOpen(false); }, [pathname]);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [notifOpen, setNotifOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const notifRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    if (!menuOpen) return;
-    const onDown = (e: MouseEvent) => { if (menuRef.current && !menuRef.current.contains(e.target as Node)) setMenuOpen(false); };
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setMenuOpen(false); };
+    setMenuOpen(false);
+    setNotifOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!menuOpen && !notifOpen) return;
+    const onDown = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) setMenuOpen(false);
+      if (notifRef.current && !notifRef.current.contains(e.target as Node)) setNotifOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setMenuOpen(false);
+        setNotifOpen(false);
+      }
+    };
     document.addEventListener("mousedown", onDown);
     document.addEventListener("keydown", onKey);
-    return () => { document.removeEventListener("mousedown", onDown); document.removeEventListener("keydown", onKey); };
-  }, [menuOpen]);
+    return () => {
+      document.removeEventListener("mousedown", onDown);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [menuOpen, notifOpen]);
 
   const signOut = async () => {
     try { await fetch("/api/auth/logout", { method: "POST" }); } catch (e) {}
     window.location.href = "/login";
   };
+
+  const appCount = notificationDetails.applications || 0;
+  const rfqCount = notificationDetails.rfqs || 0;
+  const enqCount = notificationDetails.enquiries || 0;
+  const rolesCount = notificationDetails.pendingRoles || 0;
 
   return (
     <header className="sticky top-0 z-20 border-b border-transparent bg-white/90 backdrop-blur-xl">
@@ -107,10 +142,173 @@ export default function AdminHeader({ onToggleSidebar, user, notifications = 0 }
         </div>
 
         <div className="flex items-center gap-2.5 sm:gap-3">
-          <button className="relative rounded-2xl border border-[#E4E7EC] bg-white p-3 text-[#17191C] shadow-[0_1px_2px_rgba(23,25,28,0.04)] transition-colors hover:border-[#C80808]/40 hover:bg-[#F4F4F5]" aria-label="Notifications">
-            <Bell className="h-[18px] w-[18px]" />
-            {notifications > 0 && <span className="absolute -right-1 -top-1 min-w-[19px] rounded-full bg-[#C80808] px-1 text-center text-[10px] font-extrabold leading-[19px] text-white ring-2 ring-white">{notifications > 99 ? "99+" : notifications}</span>}
-          </button>
+          {/* Notifications Dropdown */}
+          <div ref={notifRef} className="relative">
+            <button
+              type="button"
+              onClick={() => setNotifOpen((o) => !o)}
+              aria-haspopup="menu"
+              aria-expanded={notifOpen}
+              className={`relative rounded-2xl border p-3 text-[#17191C] shadow-[0_1px_2px_rgba(23,25,28,0.04)] transition-colors ${
+                notifOpen ? "border-[#C80808]/40 bg-[#F4F4F5]" : "border-[#E4E7EC] bg-white hover:border-[#C80808]/40 hover:bg-[#F4F4F5]"
+              }`}
+              aria-label="Notifications"
+            >
+              <Bell className="h-[18px] w-[18px]" />
+              {notifications > 0 && (
+                <span className="absolute -right-1 -top-1 min-w-[19px] rounded-full bg-[#C80808] px-1 text-center text-[10px] font-extrabold leading-[19px] text-white ring-2 ring-white">
+                  {notifications > 99 ? "99+" : notifications}
+                </span>
+              )}
+            </button>
+
+            {notifOpen && (
+              <div
+                role="menu"
+                className="absolute right-0 top-[calc(100%+10px)] z-50 w-[330px] sm:w-[380px] overflow-hidden rounded-2xl border border-[#E7E9EE] bg-white shadow-[0_24px_60px_-18px_rgba(23,25,28,0.16)] animate-[routefade_.18s_ease-out_both]"
+              >
+                <div className="flex items-center justify-between border-b border-[#EEF0F3] bg-[#FAFAFB] px-4 py-3.5">
+                  <div className="flex items-center gap-2">
+                    <Bell className="h-4 w-4 text-[#C80808]" />
+                    <h4 className="text-[14px] font-extrabold text-[#17191C]">Notifications</h4>
+                  </div>
+                  {notifications > 0 ? (
+                    <span className="rounded-full bg-[#FBE9EC] px-2 py-0.5 text-[11px] font-black text-[#C80808]">
+                      {notifications} New
+                    </span>
+                  ) : (
+                    <span className="text-xs font-semibold text-[#5F6871]">0 new</span>
+                  )}
+                </div>
+
+                <div className="p-2 space-y-1">
+                  {/* Job Applications */}
+                  {appCount > 0 && (
+                    <Link
+                      href="/admin/careers/applications"
+                      onClick={() => setNotifOpen(false)}
+                      className="flex items-start gap-3 rounded-xl p-3 transition-colors hover:bg-[#F5F6F7]"
+                    >
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-purple-50 text-purple-600 border border-purple-200">
+                        <UserCheck className="h-4 w-4" />
+                      </span>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[13px] font-bold text-[#17191C]">
+                          {appCount} New Job Application{appCount > 1 ? "s" : ""}
+                        </p>
+                        <p className="text-[11.5px] text-[#5F6871] truncate">
+                          Candidate submissions waiting in Careers.
+                        </p>
+                      </div>
+                      <span className="rounded-full bg-purple-100 text-purple-700 px-2 py-0.5 text-[10.5px] font-extrabold">
+                        {appCount}
+                      </span>
+                    </Link>
+                  )}
+
+                  {/* Quote Requests */}
+                  {rfqCount > 0 && (
+                    <Link
+                      href="/admin/quote-requests"
+                      onClick={() => setNotifOpen(false)}
+                      className="flex items-start gap-3 rounded-xl p-3 transition-colors hover:bg-[#F5F6F7]"
+                    >
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-amber-50 text-amber-600 border border-amber-200">
+                        <FileSpreadsheet className="h-4 w-4" />
+                      </span>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[13px] font-bold text-[#17191C]">
+                          {rfqCount} New Quote Request{rfqCount > 1 ? "s" : ""} (RFQ)
+                        </p>
+                        <p className="text-[11.5px] text-[#5F6871] truncate">
+                          Customer quotation inquiries waiting in Inbox.
+                        </p>
+                      </div>
+                      <span className="rounded-full bg-amber-100 text-amber-700 px-2 py-0.5 text-[10.5px] font-extrabold">
+                        {rfqCount}
+                      </span>
+                    </Link>
+                  )}
+
+                  {/* Contact Enquiries */}
+                  {enqCount > 0 && (
+                    <Link
+                      href="/admin/enquiries"
+                      onClick={() => setNotifOpen(false)}
+                      className="flex items-start gap-3 rounded-xl p-3 transition-colors hover:bg-[#F5F6F7]"
+                    >
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600 border border-blue-200">
+                        <Mail className="h-4 w-4" />
+                      </span>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[13px] font-bold text-[#17191C]">
+                          {enqCount} Contact Message{enqCount > 1 ? "s" : ""}
+                        </p>
+                        <p className="text-[11.5px] text-[#5F6871] truncate">
+                          New messages from website contact form.
+                        </p>
+                      </div>
+                      <span className="rounded-full bg-blue-100 text-blue-700 px-2 py-0.5 text-[10.5px] font-extrabold">
+                        {enqCount}
+                      </span>
+                    </Link>
+                  )}
+
+                  {/* Pending Roles */}
+                  {rolesCount > 0 && (
+                    <Link
+                      href="/admin/roles"
+                      onClick={() => setNotifOpen(false)}
+                      className="flex items-start gap-3 rounded-xl p-3 transition-colors hover:bg-[#F5F6F7]"
+                    >
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-200">
+                        <UserCog className="h-4 w-4" />
+                      </span>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[13px] font-bold text-[#17191C]">
+                          {rolesCount} Role Assignment Request{rolesCount > 1 ? "s" : ""}
+                        </p>
+                        <p className="text-[11.5px] text-[#5F6871] truncate">
+                          Pending new signups waiting for role assignment.
+                        </p>
+                      </div>
+                      <span className="rounded-full bg-emerald-100 text-emerald-700 px-2 py-0.5 text-[10.5px] font-extrabold">
+                        {rolesCount}
+                      </span>
+                    </Link>
+                  )}
+
+                  {/* All caught up state */}
+                  {notifications === 0 && (
+                    <div className="p-6 text-center">
+                      <CheckCircle2 className="w-8 h-8 text-emerald-500 mx-auto mb-2" />
+                      <p className="text-[13.5px] font-bold text-[#17191C]">All caught up!</p>
+                      <p className="text-[12px] text-[#5F6871] mt-0.5">
+                        No pending inquiries, quotes, or applications.
+                      </p>
+                    </div>
+                  )}
+                </div>
+
+                <div className="border-t border-[#EEF0F3] bg-[#FAFAFB] px-4 py-2.5 flex items-center justify-between text-xs">
+                  <Link
+                    href="/admin/dashboard"
+                    onClick={() => setNotifOpen(false)}
+                    className="font-bold text-[#C80808] hover:underline"
+                  >
+                    View Dashboard
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={() => setNotifOpen(false)}
+                    className="font-medium text-[#5F6871] hover:text-[#17191C]"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
           <Link href="/" className="hidden items-center gap-2 rounded-2xl border border-[#E4E7EC] bg-white px-4 py-3 text-[14px] font-semibold text-[#17191C] shadow-[0_1px_2px_rgba(23,25,28,0.04)] transition-colors hover:border-[#C80808]/40 hover:text-[#C80808] lg:inline-flex" title="Open public website"><ExternalLink className="h-4 w-4" />View site</Link>
           <div ref={menuRef} className="relative">
             <button type="button" onClick={() => setMenuOpen((o) => !o)} aria-haspopup="menu" aria-expanded={menuOpen} className={`flex items-center gap-3 rounded-2xl border bg-white py-1.5 pl-1.5 pr-3 shadow-[0_1px_2px_rgba(23,25,28,0.04)] transition-colors ${menuOpen ? "border-[#C80808]/40" : "border-[#E4E7EC] hover:border-[#C80808]/30"}`}>

@@ -19,6 +19,7 @@ export default function AdminShell({ children }: AdminShellProps) {
   const [enquiriesBadge, setEnquiriesBadge] = useState(0);
   const [rfqBadge, setRfqBadge] = useState(0);
   const [applicationsBadge, setApplicationsBadge] = useState(0);
+  const [pendingRolesBadge, setPendingRolesBadge] = useState(0);
   const checkedAuthRef = useRef(false);
 
   // The admin console should never get the large-screen zoom used on the public website
@@ -46,6 +47,7 @@ export default function AdminShell({ children }: AdminShellProps) {
             setEnquiriesBadge(sData.stats.enquiries?.new || 0);
             setRfqBadge(sData.stats.rfqs?.new || 0);
             setApplicationsBadge(sData.stats.applications?.new || 0);
+            setPendingRolesBadge(sData.stats.pendingRoles || 0);
           }
         })
         .catch(() => {});
@@ -75,6 +77,7 @@ export default function AdminShell({ children }: AdminShellProps) {
                 setEnquiriesBadge(sData.stats.enquiries?.new || 0);
                 setRfqBadge(sData.stats.rfqs?.new || 0);
                 setApplicationsBadge(sData.stats.applications?.new || 0);
+                setPendingRolesBadge(sData.stats.pendingRoles || 0);
               }
             })
             .catch(() => {});
@@ -96,7 +99,7 @@ export default function AdminShell({ children }: AdminShellProps) {
       clearTimeout(timeoutId);
       controller.abort();
     };
-  }, [pathname, isLoginPage, router, user]);
+  }, [pathname, isLoginPage, router]);
 
   if (isLoginPage) {
     return <>{children}</>;
@@ -112,11 +115,22 @@ export default function AdminShell({ children }: AdminShellProps) {
         enquiriesBadge={enquiriesBadge}
         rfqBadge={rfqBadge}
         applicationsBadge={applicationsBadge}
+        pendingRolesBadge={pendingRolesBadge}
       />
 
       {/* Main Content Area */}
       <div className="flex-1 flex flex-col min-w-0 lg:pl-[17.5rem] transition-all duration-200">
-        <AdminHeader onToggleSidebar={() => setSidebarOpen(true)} user={user} notifications={enquiriesBadge + rfqBadge + applicationsBadge} />
+        <AdminHeader
+          onToggleSidebar={() => setSidebarOpen(true)}
+          user={user}
+          notifications={enquiriesBadge + rfqBadge + applicationsBadge + pendingRolesBadge}
+          notificationDetails={{
+            applications: applicationsBadge,
+            rfqs: rfqBadge,
+            enquiries: enquiriesBadge,
+            pendingRoles: pendingRolesBadge,
+          }}
+        />
         <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto">
           <div className="max-w-[1480px] mx-auto">{loading ? <WorkspaceLoader /> : children}</div>
         </main>

@@ -2,7 +2,7 @@ const crypto = require("crypto");
 const { query } = require("./db");
 
 const SESSION_COOKIE_NAME = "petronex_admin_session";
-const SESSION_SECRET = process.env.SESSION_SECRET || "petronex_secure_admin_session_key_2026_super_secret";
+const SESSION_SECRET = process.env.SESSION_SECRET || crypto.randomBytes(32).toString("hex");
 
 function createSessionToken(user) {
   const header = Buffer.from(JSON.stringify({ alg: "HS256", typ: "JWT" })).toString("base64url");

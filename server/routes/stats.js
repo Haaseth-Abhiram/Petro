@@ -37,7 +37,9 @@ router.get("/stats", requireAdmin, async (req, res) => {
           (SELECT json_build_object('total', COUNT(*), 'new', COUNT(*) FILTER (WHERE status = 'New')) FROM applications) AS applications,
           (SELECT COUNT(*) FROM documents WHERE is_published = true) AS documents,
           (SELECT COUNT(*) FROM services WHERE is_published = true) AS services,
-          (SELECT COUNT(*) FROM industries WHERE is_published = true) AS industries;
+          (SELECT COUNT(*) FROM industries WHERE is_published = true) AS industries,
+          (SELECT COUNT(*) FROM admin_users WHERE role = 'Pending' OR role IS NULL) AS pending_roles,
+          (SELECT COUNT(*) FROM admin_users) AS total_users;
       `),
       // 2. Recent Enquiries
       query("SELECT id, full_name, company_name, email, subject, status, created_at FROM contact_messages ORDER BY created_at DESC LIMIT 5;"),
@@ -108,6 +110,8 @@ router.get("/stats", requireAdmin, async (req, res) => {
       documents: parseInt(cRow.documents || "0", 10),
       services: parseInt(cRow.services || "0", 10),
       industries: parseInt(cRow.industries || "0", 10),
+      pendingRoles: parseInt(cRow.pending_roles || "0", 10),
+      totalUsers: parseInt(cRow.total_users || "0", 10),
     };
 
     const insights = {

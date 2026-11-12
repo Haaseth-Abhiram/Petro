@@ -34,6 +34,10 @@ import {
   Package,
   Factory,
   ExternalLink,
+  Paperclip,
+  Download,
+  Eye,
+  FileText,
 } from "lucide-react";
 
 const RFQ_STATUS_STEPS = [
@@ -405,6 +409,48 @@ export default function AdminQuoteRequestsPage() {
                       </div>
                       <div className="relative mt-3 whitespace-pre-wrap rounded-2xl border border-[#E4E4E7] bg-[#FAFAFA] p-4 pl-5 text-[13.5px] leading-relaxed text-[#17191C]"><span className="absolute inset-y-3 left-0 w-1 rounded-r-full bg-gradient-to-b from-[#C80808]/70 to-[#E0A21A]/70" /><p className="mb-1 text-[10px] font-bold uppercase tracking-wider text-[#A1A1AA]">Technical specifications · {selectedRfq.product_category || "General"}</p>{selectedRfq.technical_specifications || "No detailed technical specifications provided."}</div>
                       {selectedRfq.additional_comments && <div className="mt-3 whitespace-pre-wrap rounded-2xl border border-dashed border-[#D4D4D8] bg-white p-4 text-[13px] leading-relaxed text-[#52525B]"><p className="mb-1 text-[10px] font-bold uppercase tracking-wider text-[#A1A1AA]">Additional comments</p>{selectedRfq.additional_comments}</div>}
+                      {(selectedRfq.attachment_name || selectedRfq.attachment_path) && (
+                        <div className="mt-3 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[#E4E4E7] bg-white p-4 shadow-sm">
+                          <div className="flex items-center gap-3 min-w-0">
+                            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#FBE9EC] text-[#C80808] border border-[#C80808]/20">
+                              <Paperclip className="h-4 w-4" />
+                            </span>
+                            <div className="min-w-0">
+                              <p className="text-[10px] font-bold uppercase tracking-wider text-[#A1A1AA]">Attached Technical Document / BOQ</p>
+                              <p className="truncate text-[13px] font-extrabold text-[#17191C]">
+                                {selectedRfq.attachment_name || "Attached Document"}
+                              </p>
+                              {selectedRfq.attachment_size ? (
+                                <p className="text-[11px] text-[#71717A]">{(selectedRfq.attachment_size / 1024).toFixed(1)} KB</p>
+                              ) : !selectedRfq.attachment_path ? (
+                                <p className="text-[11px] text-amber-600">Filename recorded (file upload enabled for new submissions)</p>
+                              ) : null}
+                            </div>
+                          </div>
+                          {selectedRfq.attachment_path && (
+                            <div className="flex items-center gap-2 shrink-0">
+                              <a
+                                href={`/api/admin/quote-requests/${selectedRfq.id}/attachment?preview=true`}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="inline-flex items-center gap-1.5 rounded-xl border border-[#E4E4E7] bg-white px-3 py-1.5 text-[12px] font-bold text-[#17191C] hover:border-[#C80808] hover:text-[#C80808] transition-colors"
+                              >
+                                <Eye className="h-3.5 w-3.5" />
+                                <span>Preview</span>
+                              </a>
+                              <a
+                                href={`/api/admin/quote-requests/${selectedRfq.id}/attachment`}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="inline-flex items-center gap-1.5 rounded-xl bg-[#17191C] px-3 py-1.5 text-[12px] font-bold text-white hover:bg-[#C80808] transition-colors"
+                              >
+                                <Download className="h-3.5 w-3.5" />
+                                <span>Download</span>
+                              </a>
+                            </div>
+                          )}
+                        </div>
+                      )}
                     </div>
                   </div>
 
