@@ -234,6 +234,11 @@ export async function handlePublicSupabaseFallback(
     if (error || !data?.user) {
       return jsonResponse({ success: false, message: error?.message || "Invalid email or password." }, 401);
     }
+    if (data.session?.access_token && typeof window !== "undefined") {
+      try {
+        window.localStorage.setItem("petronex_admin_token", data.session.access_token);
+      } catch {}
+    }
     const u = data.user;
     const meta = u.user_metadata || {};
     return jsonResponse({
@@ -252,9 +257,17 @@ export async function handlePublicSupabaseFallback(
 
   // 6. GET /api/auth/me (via Supabase Session)
   if (method === "GET" && cleanPath === "/api/auth/me") {
-    const { data } = await supabase.auth.getUser();
+    const [{ data }, { data: sessData }] = await Promise.all([
+      supabase.auth.getUser(),
+      supabase.auth.getSession(),
+    ]);
     if (!data?.user) {
       return jsonResponse({ authenticated: false }, 401);
+    }
+    if (sessData?.session?.access_token && typeof window !== "undefined") {
+      try {
+        window.localStorage.setItem("petronex_admin_token", sessData.session.access_token);
+      } catch {}
     }
     const u = data.user;
     const meta = u.user_metadata || {};

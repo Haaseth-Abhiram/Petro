@@ -46,12 +46,11 @@ if (typeof window !== "undefined") {
       try {
         const res = await originalFetch(input, nextInit);
         const ct = (res.headers.get("content-type") || "").toLowerCase();
-        const isAuthMe = rawUrl.split("?")[0] === "/api/auth/me";
         const isUnreachable =
           res.status === 404 ||
           res.status === 405 ||
           res.status >= 500 ||
-          (isAuthMe && res.status === 401) ||
+          res.status === 401 ||
           (ct && !ct.includes("application/json") && !ct.includes("text/csv") && !ct.includes("application/pdf"));
         if (isUnreachable) {
           const fallback = await handlePublicSupabaseFallback(rawUrl, nextInit);
