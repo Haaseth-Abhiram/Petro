@@ -1,7 +1,10 @@
+export const ADMIN_TOKEN_KEY = "petronex_admin_token";
+
 export interface AuthResult {
   success: boolean;
   message: string;
   error?: string;
+  token?: string;
   user?: {
     id: string;
     email: string;
@@ -41,7 +44,15 @@ export async function authenticateAdmin(credentials: {
       body: JSON.stringify(credentials),
     });
 
-    return await safeParseJson(res);
+    const data = await safeParseJson(res);
+    if (data.success && data.token && typeof window !== "undefined") {
+      try {
+        window.localStorage.setItem(ADMIN_TOKEN_KEY, data.token);
+      } catch {
+        // ignore storage quota errors
+      }
+    }
+    return data;
   } catch (err: any) {
     return {
       success: false,
@@ -65,7 +76,15 @@ export async function registerUser(details: {
       body: JSON.stringify(details),
     });
 
-    return await safeParseJson(res);
+    const data = await safeParseJson(res);
+    if (data.success && data.token && typeof window !== "undefined") {
+      try {
+        window.localStorage.setItem(ADMIN_TOKEN_KEY, data.token);
+      } catch {
+        // ignore storage quota errors
+      }
+    }
+    return data;
   } catch (err: any) {
     return {
       success: false,

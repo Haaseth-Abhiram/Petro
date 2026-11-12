@@ -1,8 +1,22 @@
 const crypto = require("crypto");
+const { createClient } = require("@supabase/supabase-js");
 const { query } = require("./db");
 
 const SESSION_COOKIE_NAME = "petronex_admin_session";
-const SESSION_SECRET = process.env.SESSION_SECRET || crypto.randomBytes(32).toString("hex");
+// Deterministic secret across serverless instances if SESSION_SECRET env is omitted
+const SESSION_SECRET =
+  process.env.SESSION_SECRET ||
+  crypto
+    .createHash("sha256")
+    .update(process.env.DATABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL || "petronex-session-salt-2026")
+    .digest("hex");
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://gznvueeroscdfymfuyxf.supabase.co";
+const supabaseKey =
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
+  process.env.VITE_SUPABASE_PUBLISHABLE_KEY ||
+  "sb_publishable_Uje5n9Scgfli0rncEI2qIw_dThOfEto";
+const supabaseAuth = createClient(supabaseUrl, supabaseKey);
 
 function createSessionToken(user) {
   const header = Buffer.from(JSON.stringify({ alg: "HS256", typ: "JWT" })).toString("base64url");
@@ -73,21 +87,38 @@ function extractToken(req) {
   return null;
 }
 
-function authenticate(req, res, next) {
+async function resolveUserFromRequest(req) {
   const token = extractToken(req);
-  if (!token) {
-    req.admin = null;
-    return next();
-  }
+  if (!token) return null;
 
-  const user = verifySessionToken(token);
-  req.admin = user;
+  const localUser = verifySessionToken(token);
+  if (localUser) return localUser;
+
+  // Fallback: verify Supabase Auth JWT if signed in via Supabase Authenticator
+  try {
+    const { data, error } = await supabaseAuth.auth.getUser(token);
+    if (!error && data?.user) {
+      const meta = data.user.user_metadata || {};
+      return {
+        id: data.user.id,
+        email: data.user.email,
+        name: meta.full_name || "Administrator",
+        role: meta.role || "Admin",
+      };
+    }
+  } catch {
+    // ignore invalid token
+  }
+  return null;
+}
+
+async function authenticate(req, res, next) {
+  req.admin = await resolveUserFromRequest(req);
   next();
 }
 
-function requireAdmin(req, res, next) {
-  const token = extractToken(req);
-  const user = token ? verifySessionToken(token) : null;
+async function requireAdmin(req, res, next) {
+  const user = await resolveUserFromRequest(req);
   if (!user) {
     return res.status(401).json({
       success: false,
@@ -98,9 +129,8 @@ function requireAdmin(req, res, next) {
   next();
 }
 
-function requireSuperAdmin(req, res, next) {
-  const token = extractToken(req);
-  const user = token ? verifySessionToken(token) : null;
+async function requireSuperAdmin(req, res, next) {
+  const user = await resolveUserFromRequest(req);
   if (!user) {
     return res.status(401).json({
       success: false,

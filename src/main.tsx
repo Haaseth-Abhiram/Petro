@@ -13,30 +13,53 @@ if (typeof window !== "undefined") {
   const originalFetch = window.fetch.bind(window);
   window.fetch = async function (input: RequestInfo | URL, init?: RequestInit) {
     const rawUrl = typeof input === "string" ? input : input instanceof URL ? input.pathname : "";
+    const isApiCall = typeof input === "string" && input.startsWith("/api");
+    const isUploadsCall = typeof input === "string" && input.startsWith("/uploads");
 
-    if (API_BASE && typeof input === "string" && (input.startsWith("/api") || input.startsWith("/uploads"))) {
-      const nextInit: RequestInit = init ? { ...init } : {};
+    let nextInit: RequestInit = init ? { ...init } : {};
+    if (isApiCall) {
+      if (!nextInit.credentials) nextInit.credentials = "include";
+      // Clear local token if logging out
+      if (rawUrl.startsWith("/api/auth/logout")) {
+        try { window.localStorage.removeItem("petronex_admin_token"); } catch {}
+      } else {
+        // Attach Bearer token from localStorage so cross-origin & serverless auth always persists
+        try {
+          const token = window.localStorage.getItem("petronex_admin_token");
+          if (token) {
+            const headers = new Headers(nextInit.headers || undefined);
+            if (!headers.has("Authorization")) {
+              headers.set("Authorization", `Bearer ${token}`);
+            }
+            nextInit.headers = headers;
+          }
+        } catch {}
+      }
+    }
+
+    if (API_BASE && (isApiCall || isUploadsCall)) {
       if (!nextInit.credentials) nextInit.credentials = "include";
       return originalFetch(`${API_BASE}${input}`, nextInit);
     }
 
-    if (!API_BASE && typeof input === "string" && input.startsWith("/api")) {
+    if (!API_BASE && isApiCall) {
       try {
-        const res = await originalFetch(input, init);
+        const res = await originalFetch(input, nextInit);
         const ct = (res.headers.get("content-type") || "").toLowerCase();
-        // On static hosts (Lovable) or unconfigured serverless backends, /api returns 404/405/500/503 or non-JSON
+        const isAuthMe = rawUrl.split("?")[0] === "/api/auth/me";
         const isUnreachable =
           res.status === 404 ||
           res.status === 405 ||
           res.status >= 500 ||
+          (isAuthMe && res.status === 401) ||
           (ct && !ct.includes("application/json") && !ct.includes("text/csv") && !ct.includes("application/pdf"));
         if (isUnreachable) {
-          const fallback = await handlePublicSupabaseFallback(rawUrl, init);
-          if (fallback) return fallback;
+          const fallback = await handlePublicSupabaseFallback(rawUrl, nextInit);
+          if (fallback && (fallback.ok || res.status !== 401)) return fallback;
         }
         return res;
       } catch (err) {
-        const fallback = await handlePublicSupabaseFallback(rawUrl, init);
+        const fallback = await handlePublicSupabaseFallback(rawUrl, nextInit);
         if (fallback) return fallback;
         throw err;
       }
